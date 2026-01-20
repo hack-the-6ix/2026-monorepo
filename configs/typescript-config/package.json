@@ -1,0 +1,12 @@
+{
+  "name": "@hackthe6ix/typescript-config",
+  "version": "1.0.0",
+  "private": true,
+  "main": "base.json",
+  "files": [
+    "base.json",
+    "nextjs.json",
+    "react.json",
+    "node.json"
+  ]
+}

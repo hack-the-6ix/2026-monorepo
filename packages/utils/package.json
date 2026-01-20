@@ -1,0 +1,23 @@
+{
+  "name": "@hackthe6ix/utils",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "lint": "echo 'No linting configured for utils'"
+  },
+  "devDependencies": {
+    "@hackthe6ix/typescript-config": "workspace:*",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@hackthe6ix/ui",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./src/index.tsx",
+  "module": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "import": "./src/index.tsx",
+      "require": "./src/index.tsx",
+      "types": "./src/index.tsx"
+    }
+  },
+  "scripts": {
+    "lint": "echo 'No linting configured for ui'",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@hackthe6ix/eslint-config": "workspace:*",
+    "@hackthe6ix/tailwind-config": "workspace:*",
+    "@hackthe6ix/typescript-config": "workspace:*",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "typescript": "^5.7.2"
+  }
+}
