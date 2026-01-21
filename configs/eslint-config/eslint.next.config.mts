@@ -1,7 +1,8 @@
+import { defineConfig, globalIgnores } from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
-import { defineConfig, globalIgnores } from 'eslint/config';
-import baseConfig from "./eslint.config.mts";
+
+import baseConfig from './eslint.react.config.mts';
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -9,10 +10,9 @@ const eslintConfig = defineConfig([
   ...baseConfig,
   globalIgnores([
     'node_modules/**',
-    '.wrangler/**',
     '.next/**',
-    'build/**',
-    'out/**',
+    '.open-next/**',
+    '.wrangler/**',
     'next-env.d.ts',
   ]),
 ]);

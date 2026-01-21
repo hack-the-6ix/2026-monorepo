@@ -1,19 +1,19 @@
 {
   "name": "@hackthe6ix/eslint-config",
   "version": "1.0.0",
+  "type": "module",
   "private": true,
-  "main": "next.js",
   "exports": {
     ".": "./eslint.config.mts",
     "./next": "./eslint.next.config.mts",
     "./react": "./eslint.react.config.mts"
   },
   "scripts": {
-    "lint": "eslint --fix ."
+    "lint": "eslint --cache --fix .",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@eslint/js": "^9.39.2",
-    "@eslint/json": "^0.14.0",
     "eslint": "catalog:",
     "eslint-config-next": "^16.1.4",
     "eslint-config-prettier": "^10.1.8",
@@ -24,9 +24,10 @@
     "globals": "^17.0.0",
     "jiti": "^2.6.1",
     "typescript-eslint": "^8.53.1",
-    "prettier": "catalog:"
+    "typescript": "catalog:"
   },
   "devDependencies": {
+    "@hackthe6ix/typescript-config": "workspace:",
     "eslint": "catalog:"
   }
 }

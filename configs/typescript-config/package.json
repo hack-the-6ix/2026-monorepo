@@ -1,6 +1,7 @@
 {
   "name": "@hackthe6ix/typescript-config",
   "version": "1.0.0",
+  "type": "module",
   "private": true,
   "exports": {
     ".": "./tsconfig.base.json",
@@ -8,12 +9,13 @@
     "./react": "./tsconfig.react.json"
   },
   "scripts": {
-    "lint": "eslint --fix ."
+    "lint": "eslint --cache --fix ."
   },
   "dependencies": {
     "typescript": "catalog:"
   },
   "devDependencies": {
+    "@hackthe6ix/eslint-config": "workspace:",
     "eslint": "catalog:"
   }
 }

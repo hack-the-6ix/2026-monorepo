@@ -4,10 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --parallel --filter \"./apps/*\" dev",
-    "dev:dashboard": "pnpm --filter dashboard dev",
+    "dev:landing": "pnpm --filter landing dev",
     "build": "pnpm --parallel --filter \"./apps/*\" build",
-    "build:dashboard": "pnpm --filter dashboard build",
+    "build:landing": "pnpm --filter landing build",
+    "type-check": "pnpm -r type-check",
     "lint": "pnpm -r lint"
+  },
+  "devDependencies": {
+    "prettier": "catalog:"
   },
   "engines": {
     "node": ">=18",

@@ -1,16 +1,16 @@
 {
-  "name": "@hackthe6ix/dashboard",
+  "name": "@hackthe6ix/landing",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --fix .",
+    "lint": "eslint --cache --fix .",
+    "type-check": "tsc --noEmit",
     "cf:build": "opennextjs-cloudflare build",
-    "cf:deploy": "pnpm run cf:build && opennextjs-cloudflare deploy",
-    "cf:upload": "pnpm run cf:build && opennextjs-cloudflare upload",
-    "cf:preview": "pnpm run cf:build && opennextjs-cloudflare preview",
+    "cf:deploy": "opennextjs-cloudflare deploy",
+    "cf:upload": "opennextjs-cloudflare upload",
     "cf:typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
   },
   "dependencies": {

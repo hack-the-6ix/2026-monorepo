@@ -1,27 +1,25 @@
-import json from "@eslint/json";
-import { defineConfig, globalIgnores } from "eslint/config";
-import eslintPrettierRecommended from "eslint-plugin-prettier/recommended";
-import simpleImportSort from "eslint-plugin-simple-import-sort";
+import js from '@eslint/js';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import eslintPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import tseslint from 'typescript-eslint';
 
 export default defineConfig([
-  globalIgnores(["package-lock.json"]),
-  {
-    files: ["**/*.json"],
-    language: "json/jsonc",
-    extends: [json.configs.recommended],
-  },
+  globalIgnores(['node_modules/**']),
+  js.configs.recommended,
+  tseslint.configs.recommended,
   {
     plugins: {
-      "simple-import-sort": simpleImportSort,
+      'simple-import-sort': simpleImportSort,
     },
     rules: {
-      "simple-import-sort/imports": [
-        "error",
+      'simple-import-sort/imports': [
+        'error',
         {
-          groups: [["^react", "^@?\\w"], ["^[^.]", "^\\."], [".(css|scss)$"]],
+          groups: [['^react', '^@?\\w'], ['^[^.]', '^\\.'], ['.(css|scss)$']],
         },
       ],
-      "simple-import-sort/exports": "error",
+      'simple-import-sort/exports': 'error',
     },
   },
   eslintPrettierRecommended,
