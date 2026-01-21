@@ -4,34 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --parallel --filter \"./apps/*\" dev",
-    "dev:landing": "pnpm --filter landing dev",
-    "dev:apply": "pnpm --filter apply dev",
     "dev:dashboard": "pnpm --filter dashboard dev",
-    "dev:api": "pnpm --filter api-server dev",
-    "build": "pnpm -r --filter \"./apps/*\" build",
-    "build:landing": "pnpm --filter landing build",
-    "build:apply": "pnpm --filter apply build",
+    "build": "pnpm --parallel --filter \"./apps/*\" build",
     "build:dashboard": "pnpm --filter dashboard build",
-    "build:api": "pnpm --filter api-server build",
-    "lint": "pnpm -r lint",
-    "type-check": "pnpm -r type-check",
-    "clean": "pnpm -r exec rm -rf node_modules .next dist && rm -rf node_modules"
-  },
-  "devDependencies": {
-    "next": "catalog:",
-    "react": "^19",
-    "react-dom": "^19",
-    "typescript": "catalog:"
+    "lint": "pnpm -r lint"
   },
   "engines": {
     "node": ">=18",
     "pnpm": ">=8"
   },
-  "packageManager": "pnpm@9.5.0",
-  "dependencies": {
-    "@tailwindcss/postcss": "catalog:",
-    "autoprefixer": "catalog:",
-    "postcss": "catalog:",
-    "tailwindcss": "catalog:"
-  }
+  "packageManager": "pnpm@9.5.0"
 }

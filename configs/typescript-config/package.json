@@ -2,11 +2,18 @@
   "name": "@hackthe6ix/typescript-config",
   "version": "1.0.0",
   "private": true,
-  "main": "base.json",
-  "files": [
-    "base.json",
-    "nextjs.json",
-    "react.json",
-    "node.json"
-  ]
+  "exports": {
+    ".": "./tsconfig.base.json",
+    "./next": "./tsconfig.next.json",
+    "./react": "./tsconfig.react.json"
+  },
+  "scripts": {
+    "lint": "eslint --fix ."
+  },
+  "dependencies": {
+    "typescript": "catalog:"
+  },
+  "devDependencies": {
+    "eslint": "catalog:"
+  }
 }
