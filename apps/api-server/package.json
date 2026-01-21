@@ -13,16 +13,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^5.2.1"
+    "cors": "catalog:",
+    "dotenv": "catalog:",
+    "express": "catalog:"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.0.9",
-    "nodemon": "^3.1.11",
-    "tsx": "^4.21.0",
-    "typescript": "^5.7.2"
+    "@types/cors": "catalog:",
+    "@types/express": "catalog:",
+    "@types/node": "catalog:",
+    "nodemon": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   }
 }

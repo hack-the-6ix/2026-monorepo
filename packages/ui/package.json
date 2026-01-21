@@ -28,6 +28,6 @@
     "@hackthe6ix/eslint-config": "workspace:*",
     "@hackthe6ix/tailwind-config": "workspace:*",
     "@hackthe6ix/typescript-config": "workspace:*",
-    "typescript": "^5.7.2"
+    "typescript": "catalog:"
   }
 }
