@@ -9,7 +9,6 @@ A monorepo for Hack the 6ix 2026 hackathon platform using pnpm workspaces.
 │   ├── landing/          # Main landing page (2026.hackthe6ix.com)
 │   ├── apply/            # Application portal (2026.apply.hackthe6ix.com)
 │   ├── dashboard/        # Hacker dashboard (2026.dash.hackthe6ix.com)
-│   └── api-server/       # Backend API server
 ├── packages/
 │   ├── ui/               # Shared React components
 │   └── utils/            # Shared utilities
@@ -32,7 +31,7 @@ pnpm install
 
 ### Development
 
-Run all apps in parallel:
+Run all apps in parallel at root:
 ```bash
 pnpm dev
 ```
@@ -42,7 +41,6 @@ Run individual apps at root:
 pnpm dev:landing    # http://localhost:3000
 pnpm dev:apply      # http://localhost:3001
 pnpm dev:dash       # http://localhost:3002
-pnpm dev:api        # http://localhost:4000
 ```
 or go into the individual app folder and 
 ```bash

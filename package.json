@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "pnpm --parallel --filter \"./apps/*\" dev",
     "dev:landing": "pnpm --filter landing dev",
+    "dev:apply": "pnpm --filter apply dev",
     "build": "pnpm --parallel --filter \"./apps/*\" build",
     "build:landing": "pnpm --filter landing build",
+    "build:apply": "pnpm --filter apply build",
     "type-check": "pnpm -r type-check",
     "lint": "pnpm -r lint"
   },

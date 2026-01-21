@@ -21,6 +21,16 @@ export default defineConfig([
       ],
       'simple-import-sort/exports': 'error',
     },
+    languageOptions: {
+      parserOptions: {
+        project: [
+          './configs/*/tsconfig.json',
+          './apps/*/tsconfig.json',
+          './packages/*/tsconfig.json',
+        ],
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
   },
   eslintPrettierRecommended,
 ]);
