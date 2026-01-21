@@ -37,12 +37,16 @@ Run all apps in parallel:
 pnpm dev
 ```
 
-Run individual apps:
+Run individual apps at root:
 ```bash
 pnpm dev:landing    # http://localhost:3000
 pnpm dev:apply      # http://localhost:3001
 pnpm dev:dash       # http://localhost:3002
 pnpm dev:api        # http://localhost:4000
+```
+or go into the individual app folder and 
+```bash
+pnpm dev
 ```
 
 ### Type Checking
