@@ -17,19 +17,17 @@
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@hackthe6ix/eslint-config": "workspace:*",
     "@hackthe6ix/tailwind-config": "workspace:*",
     "@hackthe6ix/typescript-config": "workspace:*",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
     "typescript": "^5.7.2"
   }
 }

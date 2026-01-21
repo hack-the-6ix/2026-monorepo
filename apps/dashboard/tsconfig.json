@@ -1,0 +1,18 @@
+{
+  "extends": "../../configs/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "paths": {
+      "@hackthe6ix/ui": ["../../packages/ui/src"],
+      "@hackthe6ix/utils": ["../../packages/utils/src"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/app/**/*",
+    "src/components/**/*",
+    "src/pages/**/*",
+    "types/**/*"
+  ],
+  "exclude": ["node_modules", ".next", "dist"]
+}

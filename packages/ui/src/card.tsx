@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface CardProps {
   children: React.ReactNode;
@@ -8,16 +8,17 @@ export interface CardProps {
 
 export const Card: React.FC<CardProps> = ({
   children,
-  className = "",
+  className = '',
   hover = false,
 }) => {
-  const hoverStyles = hover
-    ? "hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-    : "";
+  const hoverStyles =
+    hover ?
+      'hover:shadow-lg hover:-translate-y-1 transition-all duration-300'
+    : '';
 
   return (
     <div
-      className={`bg-white rounded-xl shadow-md p-6 ${hoverStyles} ${className}`}
+      className={`bg-blue-200 rounded-xl shadow-md p-6 ${hoverStyles} ${className}`}
     >
       {children}
     </div>

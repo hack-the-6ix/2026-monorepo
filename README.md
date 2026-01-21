@@ -1,6 +1,6 @@
 # Hack the 6ix 2026 Monorepo
 
-A monorepo for Hack the 6ix 2026 hackathon frontend.
+A monorepo for Hack the 6ix 2026 hackathon platform using pnpm workspaces.
 
 ## Structure
 ```

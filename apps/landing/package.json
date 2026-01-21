@@ -1,0 +1,26 @@
+{
+  "name": "@hackthe6ix/landing",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "devDependencies": {
+    "@hackthe6ix/eslint-config": "workspace:*",
+    "@hackthe6ix/tailwind-config": "workspace:*",
+    "@hackthe6ix/typescript-config": "workspace:*",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "next": "^16.1.4",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "peerDependencies": {
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  }
+}
