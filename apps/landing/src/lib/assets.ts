@@ -1,40 +1,62 @@
 /**
  * Asset mapping for landing page graphics
- * Source assets are in packages/assets/
- * Next.js serves from public/assets, so assets should be:
- * - Symlinked: public/assets -> packages/assets (recommended for dev)
- * - Or copied during build
+ * All assets are located in packages/assets/
+ * Assets are imported directly as static imports (handled by webpack)
  */
 
-// Asset paths - Next.js serves from /assets (public/assets folder)
-const ASSETS_BASE = '/assets';
+// Import assets directly from packages/assets
+// These will be processed by webpack and bundled appropriately
+import logo from '../../../../packages/assets/Logo.svg';
+import vector259 from '../../../../packages/assets/vector-259.svg';
+import vector82 from '../../../../packages/assets/vector-82.svg';
+import group499 from '../../../../packages/assets/group-499.svg';
+import cnTowerBg from '../../../../packages/assets/cn-tower-bg.svg';
+import spotlight from '../../../../packages/assets/spotlight.svg';
+import group112 from '../../../../packages/assets/group-112.svg';
+import group55 from '../../../../packages/assets/group-55.svg';
+import group56 from '../../../../packages/assets/group-56.svg';
+import group57 from '../../../../packages/assets/group-57.svg';
+import ellipse1 from '../../../../packages/assets/ellipse-1.svg';
+import ellipse2 from '../../../../packages/assets/ellipse-2.svg';
+import group73 from '../../../../packages/assets/group-73.svg';
+import group74 from '../../../../packages/assets/group-74.svg';
+import union from '../../../../packages/assets/union.svg';
+import union1 from '../../../../packages/assets/union-1.svg';
+import group14 from '../../../../packages/assets/group-14.svg';
+import group71 from '../../../../packages/assets/group-71.svg';
+import group116 from '../../../../packages/assets/group-116.svg';
+import group103 from '../../../../packages/assets/group-103.svg';
+import group104 from '../../../../packages/assets/group-104.svg';
+import group117 from '../../../../packages/assets/group-117.svg';
+import group120 from '../../../../packages/assets/group-120.svg';
+import butterflies from '../../../../packages/assets/butterflies.svg';
 
 export const assets = {
-  logo: `${ASSETS_BASE}/Logo.svg`,
-  vector259: `${ASSETS_BASE}/vector-259.svg`,
-  vector82: `${ASSETS_BASE}/vector-82.svg`,
-  group499: `${ASSETS_BASE}/group-499.svg`,
-  cnTowerBg: `${ASSETS_BASE}/cn-tower-bg.svg`,
-  spotlight: `${ASSETS_BASE}/spotlight.svg`,
-  group112: `${ASSETS_BASE}/group-112.svg`,
-  group55: `${ASSETS_BASE}/group-55.svg`,
-  group56: `${ASSETS_BASE}/group-56.svg`,
-  group57: `${ASSETS_BASE}/group-57.svg`,
-  ellipse1: `${ASSETS_BASE}/ellipse-1.svg`,
-  ellipse2: `${ASSETS_BASE}/ellipse-2.svg`,
-  group73: `${ASSETS_BASE}/group-73.svg`,
-  group74: `${ASSETS_BASE}/group-74.svg`,
-  union: `${ASSETS_BASE}/union.svg`,
-  union1: `${ASSETS_BASE}/union-1.svg`,
-  group14: `${ASSETS_BASE}/group-14.svg`,
-  group71: `${ASSETS_BASE}/group-71.svg`,
-  group116: `${ASSETS_BASE}/group-116.svg`,
-  group103: `${ASSETS_BASE}/group-103.svg`,
-  group104: `${ASSETS_BASE}/group-104.svg`,
-  group117: `${ASSETS_BASE}/group-117.svg`,
-  group120: `${ASSETS_BASE}/group-120.svg`,
-  butterflies: `${ASSETS_BASE}/butterflies.svg`,
-  expandIcon: `${ASSETS_BASE}/expand-icon.svg`, // May not exist yet
+  logo,
+  vector259,
+  vector82,
+  group499,
+  cnTowerBg,
+  spotlight,
+  group112,
+  group55,
+  group56,
+  group57,
+  ellipse1,
+  ellipse2,
+  group73,
+  group74,
+  union,
+  union1,
+  group14,
+  group71,
+  group116,
+  group103,
+  group104,
+  group117,
+  group120,
+  butterflies,
+  expandIcon: '', // Will use inline SVG for expand icon
 } as const;
 
 // Helper function to get asset path
