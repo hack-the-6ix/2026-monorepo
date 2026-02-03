@@ -12,7 +12,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'Hack the 6ix 2026',
-  description: 'Hack the 6ix 2026 - July 17-19, 2026 at Bahen Centre. In-Person.',
+  description:
+    'Hack the 6ix 2026 - July 17-19, 2026 at Bahen Centre. In-Person.',
 };
 
 export default function RootLayout({
@@ -21,13 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
       </head>
-      <body
-        className={`${inter.variable} font-sans antialiased`}
-      >
+      <body className={`${inter.variable} font-sans antialiased h-full`}>
         {children}
       </body>
     </html>
