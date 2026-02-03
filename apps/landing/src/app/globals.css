@@ -8,6 +8,7 @@
 	--color-text-placeholder: #99a1af;
 	--color-input-bg: rgba(249, 250, 251, 0.2);
 	--color-border-primary: #2da990;
+	--color-highlight-gold: #f6bd55;
 	
 	/* Design Tokens - Spacing */
 	--spacing-xs: 8px;
@@ -20,8 +21,16 @@
 	--radius-full: 360px;
 	--radius-lg: 32px;
 	
+	/* Design Tokens - Z-Index Layers */
+	--z-background: 0;
+	--z-decorative: 10;
+	--z-content: 20;
+	
 	/* Typography */
 	--font-inter: var(--font-inter);
+	
+	/* Background Gradient */
+	--bg-gradient: linear-gradient(151deg, rgba(24, 34, 82, 1) 0%, rgba(38, 26, 85, 1) 10%, rgba(43, 23, 119, 1) 14%, rgba(25, 18, 69, 1) 23%, rgba(17, 15, 46, 1) 30%);
 }
 
 @theme inline {
@@ -30,11 +39,11 @@
 
 html,
 body {
-	height: 100%;
-	width: 100%;
+	width: 1440px;
+	height: 1080px;
 	margin: 0;
 	padding: 0;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 body {
@@ -44,6 +53,19 @@ body {
 }
 
 #__next {
-	height: 100%;
-	width: 100%;
+	width: 1440px;
+	height: 1080px;
+	overflow: hidden;
+}
+
+/* Hide scrollbars */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+	display: none;
+}
+
+html,
+body {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }
