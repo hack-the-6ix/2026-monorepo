@@ -1,0 +1,22 @@
+{
+  "name": "@hackthe6ix/assets",
+  "version": "1.0.0",
+  "description": "Shared assets for Hack the 6ix applications",
+  "main": "index.ts",
+  "types": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./*": "./*"
+  },
+  "files": [
+    "*.svg",
+    "*.png",
+    "organic/**/*",
+    "index.ts"
+  ],
+  "keywords": [
+    "hackthe6ix",
+    "assets"
+  ],
+  "license": "MIT"
+}

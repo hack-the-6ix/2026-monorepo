@@ -1,686 +1,481 @@
-/* Landing Page Styles - page_bug.tsx */
+/**
+ * Landing Page Styles
+ * Fixed viewport: 1440x1080px
+ * 
+ * Z-Index Layers:
+ * - z-0: Background (gradient, cn tower, spotlight)
+ * - z-10: Decorative elements (flowers, butterflies, unions, groups)
+ * - z-20: Content (logo, text, form, button)
+ */
 
-/* Base Typography - Applied to all text */
-.text {
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -0.52px;
+/* ==========================================================================
+   Base Container
+   ========================================================================== */
+
+.landingPage {
+  position: relative;
+  width: 1440px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--bg-gradient);
 }
 
-/* Main Container - data-node-id="892:165" */
-.landingPage {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-image:
-      linear-gradient(116.3976707158774deg, rgb(24, 34, 82) 0%, rgb(38, 26, 85) 9.2283%, rgb(43, 23, 119) 12.441%, rgb(25, 18, 69) 21.251%, rgb(17, 15, 46) 27.247%),
-      linear-gradient(96.99256045017205deg, rgb(204, 255, 209) 1.3488%, rgb(186, 255, 231) 12.63%, rgb(97, 222, 226) 116.93%),
-      linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%);
-  }
-  
-  /* Decorative Background Elements */
-  
-  /* data-node-id="892:193" */
-  .vector259 {
-    position: absolute;
-    height: 655.526px;
-    left: 1145.22px;
-    top: 2644px;
-    width: 294.778px;
-  }
-  
-  /* data-node-id="892:194" */
-  .vector82 {
-    position: absolute;
-    height: 1365.5px;
-    left: 1201px;
-    top: 1366.5px;
-    width: 238.5px;
-  }
-  
-  /* data-node-id="892:196" */
-  .group499 {
-    position: absolute;
-    height: 2095.096px;
-    left: -271px;
-    top: -369.9px;
-    width: 2022px;
-  }
-  
-  /* data-name="cn tower bg" data-node-id="892:203" */
-  .cnTowerBg {
-    position: absolute;
-    height: 480.018px;
-    left: -573.66px;
-    top: 636.89px;
-    width: 2668.116px;
-  }
-  
-  .cnTowerBgInner {
-    position: absolute;
-    inset: -1.04% -0.15% -0.83% -0.15%;
-  }
-  
-  /* Spotlight Container */
-  .spotlightContainer {
-    position: absolute;
-    display: flex;
-    height: 1292.717px;
-    align-items: center;
-    justify-content: center;
-    left: -505.71px;
-    top: -319px;
-    width: 1904.814px;
-  }
-  
-  .spotlightRotate {
-    flex: none;
-    transform: rotate(99.58deg);
-  }
-  
-  /* data-name="spotlight" data-node-id="892:195" */
-  .spotlight {
-    height: 1760.657px;
-    position: relative;
-    width: 1013.899px;
-  }
-  
-  .spotlightInner {
-    position: absolute;
-    inset: -1.42% -2.47%;
-  }
-  
-  /* data-node-id="892:217" */
-  .group112 {
-    position: absolute;
-    height: 561.5px;
-    left: 558px;
-    top: 1009px;
-    width: 882px;
-  }
-  
-  /* Top Graphics - data-name="top graphics" data-node-id="892:299" */
-  .topGraphics {
-    position: absolute;
-    display: contents;
-    left: 945px;
-    top: -95px;
-  }
-  
-  /* data-node-id="892:300" container */
-  .topGraphic1Container {
-    position: absolute;
-    display: flex;
-    height: 268.032px;
-    align-items: center;
-    justify-content: center;
-    left: 945px;
-    top: -95px;
-    width: 224.447px;
-  }
-  
-  .topGraphic1Rotate {
-    flex: none;
-    transform: rotate(-154.63deg);
-  }
-  
-  /* data-node-id="892:300" */
-  .group55 {
-    height: 230.729px;
-    position: relative;
-    width: 139px;
-  }
-  
-  .group55Inner {
-    position: absolute;
-    inset: -0.67% -1.11%;
-  }
-  
-  /* data-node-id="892:308" container */
-  .topGraphic2Container {
-    position: absolute;
-    display: flex;
-    height: 261.563px;
-    align-items: center;
-    justify-content: center;
-    left: 1057px;
-    top: -28px;
-    width: 201.148px;
-  }
-  
-  .topGraphic2Rotate {
-    flex: none;
-    transform: rotate(162.76deg);
-  }
-  
-  /* data-node-id="892:308" */
-  .group56 {
-    height: 230.729px;
-    position: relative;
-    width: 139px;
-  }
-  
-  .group56Inner {
-    position: absolute;
-    inset: -0.67% -1.11%;
-  }
-  
-  /* data-node-id="892:316" container */
-  .topGraphic3Container {
-    position: absolute;
-    display: flex;
-    height: 260.103px;
-    align-items: center;
-    justify-content: center;
-    left: 1285px;
-    top: 57px;
-    width: 197.208px;
-  }
-  
-  .topGraphic3Rotate {
-    flex: none;
-    transform: rotate(-164deg);
-  }
-  
-  /* data-node-id="892:316" */
-  .group57 {
-    height: 230.729px;
-    position: relative;
-    width: 139px;
-  }
-  
-  .group57Inner {
-    position: absolute;
-    inset: -0.67% -1.11%;
-  }
-  
-  /* Elliptical Shapes */
-  
-  /* data-node-id="892:324" */
-  .ellipse1 {
-    position: absolute;
-    height: 222px;
-    left: 990px;
-    top: 718px;
-    width: 180px;
-  }
-  
-  /* data-node-id="892:325" */
-  .ellipse2 {
-    position: absolute;
-    height: 398px;
-    left: 1105px;
-    top: 534px;
-    width: 229px;
-  }
-  
-  /* Additional Decorative Groups */
-  
-  /* data-node-id="892:326" */
-  .group73 {
-    position: absolute;
-    height: 326.5px;
-    left: 910px;
-    top: 682.5px;
-    width: 534px;
-  }
-  
-  /* data-name="Union" data-node-id="892:548" */
-  .union {
-    position: absolute;
-    height: 673.5px;
-    left: 0;
-    top: 746px;
-    width: 1162px;
-  }
-  
-  /* data-node-id="892:551" */
-  .group74 {
-    position: absolute;
-    height: 278px;
-    left: 0;
-    top: 720px;
-    width: 1162px;
-  }
-  
-  /* data-name="Union" data-node-id="892:553" */
-  .union1 {
-    position: absolute;
-    height: 256.5px;
-    left: 1006px;
-    top: 903px;
-    width: 434.5px;
-  }
-  
-  /* data-node-id="892:556" */
-  .group14 {
-    position: absolute;
-    height: 101.869px;
-    left: 1010px;
-    top: 859px;
-    width: 52.492px;
-  }
-  
-  .group14Inner {
-    position: absolute;
-    inset: -9.82% -19.05%;
-  }
-  
-  /* data-node-id="892:589" */
-  .group71 {
-    position: absolute;
-    height: 76.526px;
-    left: 1334px;
-    top: 855px;
-    width: 64.28px;
-  }
-  
-  .group71Inner {
-    position: absolute;
-    inset: -11.43% -15.06% -13.07% -13.48%;
-  }
-  
-  /* data-node-id="892:626" */
-  .group116 {
-    position: absolute;
-    height: 898.999px;
-    left: 1286px;
-    top: 1508px;
-    width: 182.438px;
-  }
-  
-  .group116Inner {
-    position: absolute;
-    inset: -0.56% -2.74%;
-  }
-  
-  /* data-node-id="892:629" */
-  .group103 {
-    position: absolute;
-    height: 105.059px;
-    left: 16.05px;
-    top: 696.68px;
-    width: 140.983px;
-  }
-  
-  .group103Inner {
-    position: absolute;
-    inset: -2.61% -1.94% -4.17% -1.94%;
-  }
-  
-  /* data-node-id="892:633" */
-  .group104 {
-    position: absolute;
-    height: 127.427px;
-    left: 45px;
-    top: 697px;
-    width: 171px;
-  }
-  
-  .group104Inner {
-    position: absolute;
-    inset: -3.92% -2.92% -6.28% -2.92%;
-  }
-  
-  /* data-node-id="892:637" */
-  .group117 {
-    position: absolute;
-    height: 106.685px;
-    left: 1262.42px;
-    top: 614.66px;
-    width: 143.164px;
-  }
-  
-  .group117Inner {
-    position: absolute;
-    inset: -3.92% -2.92% -6.28% -2.92%;
-  }
-  
-  /* data-node-id="892:641" */
-  .group120 {
-    position: absolute;
-    height: 347.228px;
-    left: -3px;
-    top: 956px;
-    width: 1013.101px;
-  }
-  
-  .group120Inner {
-    position: absolute;
-    inset: -1.44% -0.49%;
-  }
-  
-  /* data-name="butterflies" data-node-id="892:751" */
-  .butterflies {
-    position: absolute;
-    height: 533.079px;
-    left: 946px;
-    top: 318px;
-    width: 213.923px;
-  }
-  
-  .butterfliesInner {
-    position: absolute;
-    inset: -0.12% -1.87% -0.75% 0;
-  }
-  
-  /* Main UI Content - data-name="ui" data-node-id="892:806" */
-  .ui {
-    position: absolute;
-    display: contents;
-    left: 59px;
-    top: 37px;
-  }
-  
-  /* Logo - data-name="Logo" data-node-id="892:330" */
-  .logo {
-    position: absolute;
-    bottom: 967px;
-    left: 59px;
-    right: 1351px;
-    top: 37px;
-    width: 30px;
-  }
-  
-  /* Hero Content - data-name="content" data-node-id="892:756" */
-  .content {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    align-items: flex-start;
-    left: 125px;
-    box-shadow: 0px 0px 10px 0px rgba(255, 255, 255);
-    top: 37px;
-    width: 911px;
-  }
-  
-  /* Event Info - data-node-id="892:757" */
-  .eventInfo {
-    align-content: stretch;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    align-items: flex-start;
-    justify-content: center;
-    font-style: normal;
-    position: relative;
-    flex-shrink: 0;
-    width: 100%;
-  }
-  
-/* data-node-id="892:758" */
+/* ==========================================================================
+   Z-Index Layer Containers
+   ========================================================================== */
+
+.backgroundLayer {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-background);
+  pointer-events: none;
+}
+
+.decorativeLayer {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-decorative);
+  pointer-events: none;
+}
+
+.contentLayer {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-content);
+}
+
+/* ==========================================================================
+   Background Elements (from Figma coordinates)
+   ========================================================================== */
+
+.backgroundGraphics {
+  position: absolute;
+  left: -270.66px;
+  top: -370.01px;
+  width: 2022px;
+  height: 2095.1px;
+}
+
+.spotlight {
+  position: absolute;
+  left: -505.37px;
+  top: -319.11px;
+  width: 1904.81px;
+  height: 1292.72px;
+  filter: blur(25px);
+}
+
+.cnTowerBg {
+  position: absolute;
+  left: -573.32px;
+  top: 636.77px;
+  width: 201.45px;
+  height: 241.76px;
+}
+
+/* ==========================================================================
+   Decorative Elements (from Figma coordinates)
+   ========================================================================== */
+
+/* Top Graphics Group */
+.topGraphics {
+  position: absolute;
+  left: 945.34px;
+  top: -95.11px;
+  width: 537.21px;
+  height: 412.1px;
+}
+
+.group55 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 224.45px;
+  height: 268.03px;
+}
+
+.group56 {
+  position: absolute;
+  left: 112px;
+  top: 67px;
+  width: 201.15px;
+  height: 261.56px;
+}
+
+.group57 {
+  position: absolute;
+  left: 340px;
+  top: 152px;
+  width: 197.21px;
+  height: 260.1px;
+}
+
+/* Trees/Ellipse area */
+.trees {
+  position: absolute;
+  left: 990.34px;
+  top: 533.89px;
+  width: 344px;
+  height: 406px;
+}
+
+/* Cave graphics */
+.caveGraphics {
+  position: absolute;
+  left: 910.34px;
+  top: 614.54px;
+  width: 534px;
+  height: 394.34px;
+}
+
+/* Butterflies */
+.butterflies {
+  position: absolute;
+  left: 946.34px;
+  top: 317.89px;
+  width: 213.92px;
+  height: 533.08px;
+}
+
+/* Cave column (far right decorative) */
+.caveColumn {
+  position: absolute;
+  left: 1201.34px;
+  top: 1366.39px;
+  width: 267.44px;
+  height: 1365.5px;
+}
+
+/* Vector 259 */
+.vector259 {
+  position: absolute;
+  left: 1145.56px;
+  top: 2643.89px;
+  width: 294.78px;
+  height: 655.53px;
+}
+
+/* Lower right graphics */
+.lowerRightGraphics {
+  position: absolute;
+  left: 558.34px;
+  top: 854.89px;
+  width: 882.5px;
+  height: 715.5px;
+}
+
+.group112 {
+  position: absolute;
+  left: 0;
+  top: 154px;
+  width: 882px;
+  height: 561.5px;
+}
+
+.union1 {
+  position: absolute;
+  left: 448px;
+  top: 48px;
+  width: 434.5px;
+  height: 256.5px;
+}
+
+.group71 {
+  position: absolute;
+  left: 776px;
+  top: 0;
+  width: 64.28px;
+  height: 76.53px;
+}
+
+/* Lower left graphics */
+.lowerLeftGraphics {
+  position: absolute;
+  left: -2.66px;
+  top: 696.56px;
+  width: 1107px;
+  height: 722.82px;
+}
+
+.union {
+  position: absolute;
+  left: 3px;
+  top: 49.32px;
+  width: 1058px;
+  height: 673.5px;
+}
+
+.group74 {
+  position: absolute;
+  left: 3px;
+  top: 23.32px;
+  width: 1104px;
+  height: 278px;
+}
+
+.group103 {
+  position: absolute;
+  left: 19.05px;
+  top: 0;
+  width: 140.98px;
+  height: 105.06px;
+}
+
+.group104 {
+  position: absolute;
+  left: 48px;
+  top: 0.32px;
+  width: 171px;
+  height: 127.43px;
+}
+
+.group120 {
+  position: absolute;
+  left: 0;
+  top: 259.32px;
+  width: 1013.1px;
+  height: 347.23px;
+  filter: blur(4px);
+}
+
+.group14 {
+  position: absolute;
+  left: 1013px;
+  top: 162.32px;
+  width: 52.49px;
+  height: 101.87px;
+}
+
+/* ==========================================================================
+   Content Elements (Hero UI from Figma)
+   ========================================================================== */
+
+.heroUi {
+  position: absolute;
+  left: 59.34px;
+  top: 36.89px;
+  width: 977px;
+  height: 631px;
+}
+
+/* Logo */
+.logo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 75.64px;
+}
+
+.logoImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Content container */
+.content {
+  position: absolute;
+  left: 66px;
+  top: 319px;
+  width: 911px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Event info frame */
+.eventInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Typography (from Figma text styles)
+   ========================================================================== */
+
+/* Event Details Row */
 .eventDetails {
   display: flex;
+  flex-direction: row;
   gap: 8px;
   align-items: flex-start;
-  position: relative;
-  flex-shrink: 0;
   width: 100%;
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -0.52px;
 }
-  
-/* data-node-id="892:759", "892:761", "892:763" */
+
 .eventDetailText {
-  position: relative;
-  flex-shrink: 0;
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
+  font-family: var(--font-inter), 'Inter', sans-serif;
   font-weight: 500;
+  font-size: 26px;
   line-height: 32px;
   letter-spacing: -0.52px;
+  color: var(--color-text-primary-white);
+  margin: 0;
 }
-  
-/* data-node-id="892:760", "892:762" */
+
 .eventDetailDot {
-  position: relative;
-  flex-shrink: 0;
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
+  font-family: var(--font-inter), 'Inter', sans-serif;
   font-weight: 500;
+  font-size: 26px;
   line-height: 32px;
   letter-spacing: -0.52px;
+  color: var(--color-text-primary-white);
+  margin: 0;
 }
-  
-/* Main Title - data-node-id="892:764" */
+
+/* Main Title */
 .mainTitle {
-  position: relative;
-  flex-shrink: 0;
-  text-align: center;
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -0.52px;
+  font-family: var(--font-inter), 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 60px;
+  line-height: 76px;
+  letter-spacing: -1.32px;
+  color: var(--color-text-primary-white);
+  margin: 0;
 }
-  
-/* Subtitle - data-node-id="892:765" */
+
+/* Subtitle */
 .subtitle {
-  min-width: 100%;
-  position: relative;
-  flex-shrink: 0;
-  width: min-content;
-  white-space: pre-wrap;
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
+  font-family: var(--font-inter), 'Inter', sans-serif;
   font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -0.52px;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.704px;
+  margin: 0;
 }
 
 .subtitleWhite {
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -0.52px;
+  color: var(--color-text-primary-white);
 }
 
 .subtitleGold {
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -0.52px;
-}
-  
-  /* Form Section - data-node-id="892:766" */
-  .formSection {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
-    position: relative;
-    flex-shrink: 0;
-    width: 100%;
-  }
-  
-/* data-node-id="892:767" */
-.formDescription {
-  min-width: 100%;
-  position: relative;
-  flex-shrink: 0;
-  width: min-content;
-  white-space: pre-wrap;
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -0.52px;
-}
-  
-  /* data-node-id="892:768" */
-  .formRow {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    position: relative;
-    flex-shrink: 0;
-  }
-  
-  /* Text Field w/ Label - data-name="Text Field w/ Label" data-node-id="892:769" */
-  .textFieldWrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: flex-start;
-    position: relative;
-    flex-shrink: 0;
-  }
-  
-  /* Text Field - data-name="Text Field" data-node-id="I892:769;1:3946" */
-  .textField {
-    background-color: var(--input-bg-input, rgba(249, 250, 251, 0.2));
-    border: 1px solid var(--border-border-primary, #2da990);
-    display: flex;
-    gap: var(--spacing-spacingxs, 8px);
-    align-items: center;
-    padding: var(--spacing-spacingsm, 12px) var(--gap-4, 16px);
-    position: relative;
-    border-radius: var(--radius-radiusfull, 360px);
-    flex-shrink: 0;
-    width: 100%;
-  }
-  
-  /* .Placeholder - data-name=".Placeholder" data-node-id="I892:769;1:3946;1:3957" */
-  .placeholder {
-    display: flex;
-    flex: 1 0 0;
-    align-items: flex-start;
-    min-height: 1px;
-    min-width: 1px;
-    position: relative;
-  }
-  
-/* data-node-id="I892:769;1:3946;1:3957;1:3930" */
-.placeholderText {
-  position: relative;
-  flex-shrink: 0;
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -0.52px;
-}
-  
-  /* Icon - data-name="Icon" data-node-id="I892:769;1:3946;1:3958" */
-  .icon {
-    position: relative;
-    flex-shrink: 0;
-    width: 18px;
-    height: 18px;
-  }
-  
-  /* expand_more - data-name="expand_more" data-node-id="I892:769;1:3946;1:3958;115:2690" */
-  .expandMore {
-    position: absolute;
-    left: 0;
-    width: 24px;
-    height: 24px;
-    top: 0;
-  }
-  
-  /* Button - data-name="Button" data-node-id="892:770" */
-  .button {
-    background-color: var(--bg-bg-primary, #2da990);
-    border: 1px solid var(--border-border-primary, #2da990);
-    display: flex;
-    gap: var(--gap-2, 8px);
-    align-items: center;
-    justify-content: center;
-    overflow: clip;
-    padding: var(--gap-3, 12px) var(--gap-6, 24px);
-    position: relative;
-    border-radius: var(--gap-8, 32px);
-    flex-shrink: 0;
-  }
-  
-/* data-node-id="I892:770;1:3488" */
-.buttonText {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  flex-shrink: 0;
-  text-align: center;
-  white-space: nowrap;
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -0.52px;
+  color: var(--color-highlight-gold);
+  font-weight: 700;
 }
 
-.buttonTextInner {
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -0.52px;
+/* ==========================================================================
+   Form Section
+   ========================================================================== */
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
 }
-  
-/* Placeholder Section - data-node-id="892:814" */
-.placeholderSection {
+
+.formDescription {
+  font-family: var(--font-inter), 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.34px;
+  color: var(--color-text-primary-white);
+  margin: 0;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Text Field */
+.textFieldWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 406px;
+}
+
+.textField {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-full);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.textFieldInput {
+  flex: 1;
+  font-family: var(--font-inter), 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.176px;
+  color: var(--color-text-primary-white);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.textFieldInput::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+/* ==========================================================================
+   Button (Placeholder)
+   ========================================================================== */
+
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--color-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.buttonText {
+  font-family: var(--font-inter), 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.176px;
+  color: var(--color-text-primary-white);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Asset Images (common styles)
+   ========================================================================== */
+
+.assetImage {
+  display: block;
+  max-width: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Screen reader only (accessibility) */
+.srOnly {
   position: absolute;
-  left: 286.34px;
-  top: 1915.89px;
-  /* Typography */
-  color: var(--text-text-primary-white, #F9FAFB);
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 32px;
-  letter-spacing: -0.52px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
-  
-  /* Shared Image Styles */
-  .image {
-    display: block;
-    max-width: none;
-    width: 100%;
-    height: 100%;
-  }
-  
