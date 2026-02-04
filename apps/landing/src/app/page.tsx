@@ -1,73 +1,283 @@
+'use client';
+
+import React from 'react';
 import Image from 'next/image';
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{' '}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import { assets } from '../lib/assets';
+import { EVENT_INFO, HERO_CONTENT, FORM_CONTENT } from '../lib/constants';
+import styles from './page.module.css';
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+/**
+ * Landing Page Component
+ * 
+ * Fixed viewport: 1440x1080px (no scroll)
+ * 
+ * Structure:
+ * - Layer 1 (z-0): Background elements (gradient, spotlight, CN Tower)
+ * - Layer 2 (z-10): Decorative SVGs (flowers, butterflies, unions, groups)
+ * - Layer 3 (z-20): Static content (logo, hero text, placeholder button)
+ */
+export default function LandingPage() {
+  return (
+    <div className={styles.landingPage} data-name="landing page">
+      {/* ============================================================
+          LAYER 1: Background Elements (z-index: 0)
+          ============================================================ */}
+      <div className={styles.backgroundLayer}>
+        {/* Background graphics - large decorative SVG */}
+        <div className={styles.backgroundGraphics}>
+          <Image
+            src={assets.group499}
+            alt=""
+            width={2022}
+            height={2095}
+            className={styles.assetImage}
+            priority
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+
+        {/* Spotlight effect */}
+        <div className={styles.spotlight}>
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src={assets.spotlight}
+            alt=""
+            width={1905}
+            height={1293}
+            className={styles.assetImage}
+            priority
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        </div>
+
+        {/* CN Tower skyline background */}
+        <div className={styles.cnTowerBg}>
           <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
+            src={assets.cnTowerBg}
+            alt=""
+            width={2668}
+            height={480}
+            className={styles.assetImage}
+            priority
           />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+      </div>
+
+      {/* ============================================================
+          LAYER 2: Decorative Elements (z-index: 10)
+          ============================================================ */}
+      <div className={styles.decorativeLayer}>
+        {/* Top Graphics - flower shapes */}
+        <div className={styles.topGraphics}>
+          <div className={styles.group55}>
+            <Image
+              src={assets.group55}
+              alt=""
+              width={224}
+              height={268}
+              className={styles.assetImage}
+            />
+          </div>
+          <div className={styles.group56}>
+            <Image
+              src={assets.group56}
+              alt=""
+              width={201}
+              height={262}
+              className={styles.assetImage}
+            />
+          </div>
+          <div className={styles.group57}>
+            <Image
+              src={assets.group57}
+              alt=""
+              width={197}
+              height={260}
+              className={styles.assetImage}
+            />
+          </div>
+        </div>
+
+        {/* Butterflies */}
+        <div className={styles.butterflies}>
+          <Image
+            src={assets.butterflies}
+            alt=""
+            width={214}
+            height={533}
+            className={styles.assetImage}
+          />
+        </div>
+
+        {/* Trees/Cave graphics area */}
+        <div className={styles.caveGraphics}>
+          <Image
+            src={assets.group73}
+            alt=""
+            width={534}
+            height={394}
+            className={styles.assetImage}
+          />
+        </div>
+
+        {/* Lower Right Graphics Group */}
+        <div className={styles.lowerRightGraphics}>
+          <div className={styles.group112}>
+            <Image
+              src={assets.group112}
+              alt=""
+              width={882}
+              height={562}
+              className={styles.assetImage}
+            />
+          </div>
+          <div className={styles.union1}>
+            <Image
+              src={assets.union1}
+              alt=""
+              width={435}
+              height={257}
+              className={styles.assetImage}
+            />
+          </div>
+          <div className={styles.group71}>
+            <Image
+              src={assets.group71}
+              alt=""
+              width={64}
+              height={77}
+              className={styles.assetImage}
+            />
+          </div>
+        </div>
+
+        {/* Lower Left Graphics Group */}
+        <div className={styles.lowerLeftGraphics}>
+          <div className={styles.union}>
+            <Image
+              src={assets.union}
+              alt=""
+              width={1058}
+              height={674}
+              className={styles.assetImage}
+            />
+          </div>
+          <div className={styles.group74}>
+            <Image
+              src={assets.group74}
+              alt=""
+              width={1104}
+              height={278}
+              className={styles.assetImage}
+            />
+          </div>
+          <div className={styles.group103}>
+            <Image
+              src={assets.group103}
+              alt=""
+              width={141}
+              height={105}
+              className={styles.assetImage}
+            />
+          </div>
+          <div className={styles.group104}>
+            <Image
+              src={assets.group104}
+              alt=""
+              width={171}
+              height={127}
+              className={styles.assetImage}
+            />
+          </div>
+          <div className={styles.group120}>
+            <Image
+              src={assets.group120}
+              alt=""
+              width={1013}
+              height={347}
+              className={styles.assetImage}
+            />
+          </div>
+          <div className={styles.group14}>
+            <Image
+              src={assets.group14}
+              alt=""
+              width={52}
+              height={102}
+              className={styles.assetImage}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* ============================================================
+          LAYER 3: Content Elements (z-index: 20)
+          ============================================================ */}
+      <div className={styles.contentLayer}>
+        <div className={styles.heroUi}>
+          {/* Logo */}
+          <div className={styles.logo}>
+            <Image
+              src={assets.logo}
+              alt="Hack the 6ix Logo"
+              width={30}
+              height={76}
+              className={styles.logoImage}
+              priority
+            />
+          </div>
+
+          {/* Hero Content */}
+          <div className={styles.content}>
+            {/* Event Info */}
+            <div className={styles.eventInfo}>
+              <div className={styles.eventDetails}>
+                <p className={styles.eventDetailText}>{EVENT_INFO.date}</p>
+                <p className={styles.eventDetailDot}>⋅</p>
+                <p className={styles.eventDetailText}>{EVENT_INFO.location}</p>
+                <p className={styles.eventDetailDot}>⋅</p>
+                <p className={styles.eventDetailText}>{EVENT_INFO.format}</p>
+              </div>
+
+              {/* Main Title */}
+              <h1 className={styles.mainTitle}>{HERO_CONTENT.title}</h1>
+
+              {/* Subtitle */}
+              <p className={styles.subtitle}>
+                <span className={styles.subtitleWhite}>{HERO_CONTENT.subtitlePrefix}</span>
+                <span className={styles.subtitleGold}>{HERO_CONTENT.subtitleHighlight}</span>
+              </p>
+            </div>
+
+            {/* Form Section */}
+            <div className={styles.formSection}>
+              <p className={styles.formDescription}>{FORM_CONTENT.description}</p>
+
+              <div className={styles.formRow}>
+                {/* Text Field */}
+                <div className={styles.textFieldWrapper}>
+                  <label htmlFor="email" className={styles.srOnly}>
+                    Email address
+                  </label>
+                  <div className={styles.textField}>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder={FORM_CONTENT.placeholder}
+                      className={styles.textFieldInput}
+                    />
+                  </div>
+                </div>
+
+                {/* Placeholder Button */}
+                <button type="button" className={styles.button} aria-label="Sign up for updates">
+                  <span className={styles.buttonText}>{FORM_CONTENT.buttonText}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
