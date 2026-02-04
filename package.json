@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm --parallel --filter \"./apps/*\" dev",
+    "dev": "pnpm --parallel --filter \"./packages/*\" dev",
     "dev:landing": "pnpm --filter landing dev",
     "dev:apply": "pnpm --filter apply dev",
     "build": "pnpm --parallel --filter \"./apps/*\" build",

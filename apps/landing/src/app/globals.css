@@ -1,11 +1,14 @@
 @import "tailwindcss";
+@import '@hackthe6ix/ui/theme.css';
+
+@source '../../node_modules/@hackthe6ix/ui';
 
 :root {
 	--background: #ffffff;
 	--foreground: #171717;
 }
 
-@theme inline {
+@theme {
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--font-sans: var(--font-geist-sans);

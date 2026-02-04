@@ -16,7 +16,9 @@
   "dependencies": {
     "@hackthe6ix/eslint-config": "workspace:*",
     "@hackthe6ix/typescript-config": "workspace:*",
+    "@hackthe6ix/ui": "workspace:*",
     "@opennextjs/cloudflare": "^1.14.4",
+    "flyonui": "^2.4.1",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"

@@ -18,6 +18,9 @@ catalogs:
     '@types/react-dom':
       specifier: ^19
       version: 19.2.3
+    classnames:
+      specifier: ^2.5.1
+      version: 2.5.1
     eslint:
       specifier: ^9
       version: 9.39.2
@@ -105,9 +108,15 @@ importers:
       '@hackthe6ix/typescript-config':
         specifier: workspace:*
         version: link:../../configs/typescript-config
+      '@hackthe6ix/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@opennextjs/cloudflare':
         specifier: ^1.14.4
         version: 1.14.10(next@16.1.4(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(wrangler@4.59.3)
+      flyonui:
+        specifier: ^2.4.1
+        version: 2.4.1
       next:
         specifier: 'catalog:'
         version: 16.1.4(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -204,6 +213,9 @@ importers:
 
   packages/ui:
     dependencies:
+      classnames:
+        specifier: 'catalog:'
+        version: 2.5.1
       react:
         specifier: 'catalog:'
         version: 19.2.3
@@ -1069,6 +1081,15 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@floating-ui/core@1.7.4':
+    resolution: {integrity: sha512-C3HlIdsBxszvm5McXlB8PeOEWfBhcGBTZGkGlWc2U0KFY5IwG5OQEuQ8rq52DZmcHDlPLd+YFBK+cZcytwIFWg==}
+
+  '@floating-ui/dom@1.7.5':
+    resolution: {integrity: sha512-N0bD2kIPInNHUHehXhMke1rBGs1dwqvC9O9KYMyyjK7iXt7GAhnro7UlcuYcGdS/yYOlq0MAVgrow8IbWJwyqg==}
+
+  '@floating-ui/utils@0.2.10':
+    resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2198,6 +2219,9 @@ packages:
     resolution: {integrity: sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
+  classnames@2.5.1:
+    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
+
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
 
@@ -2634,6 +2658,9 @@ packages:
 
   flatted@3.3.3:
     resolution: {integrity: sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==}
+
+  flyonui@2.4.1:
+    resolution: {integrity: sha512-WgP/YP1nZXbEtRkl3ThJIcIaisXOyON3zS2Qz2IwikQA/2X/PmqnP6E+eOz7WLBzEQI4ec7wViYAcRf9vljcbg==}
 
   for-each@0.3.5:
     resolution: {integrity: sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg==}
@@ -5316,6 +5343,17 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
+  '@floating-ui/core@1.7.4':
+    dependencies:
+      '@floating-ui/utils': 0.2.10
+
+  '@floating-ui/dom@1.7.5':
+    dependencies:
+      '@floating-ui/core': 1.7.4
+      '@floating-ui/utils': 0.2.10
+
+  '@floating-ui/utils@0.2.10': {}
+
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.7':
@@ -6627,6 +6665,8 @@ snapshots:
 
   chalk@5.6.2: {}
 
+  classnames@2.5.1: {}
+
   client-only@0.0.1: {}
 
   cliui@9.0.1:
@@ -7273,6 +7313,10 @@ snapshots:
       keyv: 4.5.4
 
   flatted@3.3.3: {}
+
+  flyonui@2.4.1:
+    dependencies:
+      '@floating-ui/dom': 1.7.5
 
   for-each@0.3.5:
     dependencies:
