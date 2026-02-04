@@ -3,16 +3,25 @@ packages:
   - packages/*
   - configs/*
 catalog:
-  "@tailwindcss/postcss": ^4
-  "@types/node": ^25.0.9
+  # Opennext related stuff
+  "@opennextjs/cloudflare": 1.16.2
+  wrangler: 4.62.0
+
+  # React stuff
   "@types/react": ^19
   "@types/react-dom": ^19
-  classnames: ^2.5.1
   react: ^19
   react-dom: ^19
-  eslint: ^9
   next: ^16
-  postcss: ^8.4.49
+
+  # Tailwind stuff
+  "@tailwindcss/postcss": ^4
   tailwindcss: ^4
-  typescript: ^5.9.3
-  prettier: ^3.8.0
+  classnames: ^2.5.1
+  postcss: ^8
+
+  # Tooling stuff
+  "@types/node": ^25
+  typescript: ^5.9
+  prettier: ^3.8
+  eslint: ^9

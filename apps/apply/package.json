@@ -16,7 +16,7 @@
   "dependencies": {
     "@hackthe6ix/eslint-config": "workspace:*",
     "@hackthe6ix/typescript-config": "workspace:*",
-    "@opennextjs/cloudflare": "^1.14.4",
+    "@opennextjs/cloudflare": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
@@ -30,6 +30,6 @@
     "eslint": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
-    "wrangler": "^4.59.3"
+    "wrangler": "catalog:"
   }
 }
