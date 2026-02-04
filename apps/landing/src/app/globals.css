@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import '@hackthe6ix/ui/theme.css';
+
+@source '../../node_modules/@hackthe6ix/ui';
 
 :root {
 	/* Design Tokens - Colors */

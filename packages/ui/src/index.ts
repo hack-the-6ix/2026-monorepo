@@ -1,3 +1,1 @@
-export function owo() {
-  return 'owo';
-}
+export * from './Button';

@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "type": "module",
   "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./theme.css": "./src/index.css"
+  },
   "scripts": {
     "lint": "eslint --cache --fix .",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "classnames": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
   },
@@ -16,7 +21,7 @@
     "@hackthe6ix/typescript-config": "workspace:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "typescript": "catalog:",
-    "eslint": "catalog:"
+    "eslint": "catalog:",
+    "typescript": "catalog:"
   }
 }
