@@ -4,14 +4,13 @@ import React from 'react';
 import Image from 'next/image';
 
 import { assets } from '../lib/assets';
-import { EVENT_INFO, HERO_CONTENT, FORM_CONTENT } from '../lib/constants';
-import styles from './page.module.css';
+import { EVENT_INFO, FORM_CONTENT, HERO_CONTENT } from '../lib/constants';
 
 /**
  * Landing Page Component
- * 
+ *
  * Fixed viewport: 1440x1080px (no scroll)
- * 
+ *
  * Structure:
  * - Layer 1 (z-0): Background elements (gradient, spotlight, CN Tower)
  * - Layer 2 (z-10): Decorative SVGs (flowers, butterflies, unions, groups)
@@ -19,43 +18,47 @@ import styles from './page.module.css';
  */
 export default function LandingPage() {
   return (
-    <div className={styles.landingPage} data-name="landing page">
+    <div
+      className="relative w-[1440px] h-[1080px] overflow-hidden"
+      style={{ background: 'var(--bg-gradient)' }}
+      data-name="landing page"
+    >
       {/* ============================================================
           LAYER 1: Background Elements (z-index: 0)
           ============================================================ */}
-      <div className={styles.backgroundLayer}>
+      <div className="layer-background">
         {/* Background graphics - large decorative SVG */}
-        <div className={styles.backgroundGraphics}>
+        <div className="absolute left-[-270.66px] top-0 w-[2022px] h-[2095.1px]">
           <Image
-            src={assets.group499}
+            src={assets.bgGraphics}
             alt=""
             width={2022}
             height={2095}
-            className={styles.assetImage}
+            className="asset-image"
             priority
           />
         </div>
 
         {/* Spotlight effect */}
-        <div className={styles.spotlight}>
+        <div className="absolute left-[-505.37px] top-[-319.11px] w-[1904.81px] h-[1292.72px] blur-[25px]">
           <Image
             src={assets.spotlight}
             alt=""
             width={1905}
             height={1293}
-            className={styles.assetImage}
+            className="asset-image"
             priority
           />
         </div>
 
         {/* CN Tower skyline background */}
-        <div className={styles.cnTowerBg}>
+        <div className="absolute left-[-573.32px] top-[636.77px] w-[2668.12px] h-[480px]">
           <Image
             src={assets.cnTowerBg}
             alt=""
             width={2668}
             height={480}
-            className={styles.assetImage}
+            className="asset-image"
             priority
           />
         </div>
@@ -64,145 +67,169 @@ export default function LandingPage() {
       {/* ============================================================
           LAYER 2: Decorative Elements (z-index: 10)
           ============================================================ */}
-      <div className={styles.decorativeLayer}>
-        {/* Top Graphics - flower shapes */}
-        <div className={styles.topGraphics}>
-          <div className={styles.group55}>
+      <div className="layer-decorative">
+        {/* Top Graphics - Leaves */}
+        <div className="absolute left-[945.34px] top-[-95.11px] w-[537.21px] h-[412.1px]">
+          <div className="absolute left-0 top-0 w-[139px] h-[231px]">
             <Image
-              src={assets.group55}
+              src={assets.leafbase}
               alt=""
-              width={224}
-              height={268}
-              className={styles.assetImage}
+              width={139}
+              height={231}
+              className="asset-image rotate-[205.37deg]"
             />
           </div>
-          <div className={styles.group56}>
+          <div className="absolute left-[112px] top-[67px] w-[139px] h-[231px]">
             <Image
-              src={assets.group56}
+              src={assets.leafbase}
               alt=""
-              width={201}
-              height={262}
-              className={styles.assetImage}
+              width={139}
+              height={231}
+              className="asset-image rotate-[162.76deg]"
             />
           </div>
-          <div className={styles.group57}>
+          {/* should be left-[340px] */}
+          <div className="absolute left-[370px] top-[152px] w-[139px] h-[231px]"> 
             <Image
-              src={assets.group57}
+              src={assets.leafbase}
               alt=""
-              width={197}
-              height={260}
-              className={styles.assetImage}
+              width={139}
+              height={231}
+              className="asset-image rotate-[196deg]"
             />
           </div>
         </div>
 
+        {/* Trees*/}
+        <div className="absolute left-[990.34px] top-[533.89px] w-[344px] h-[406px]">
+          <div className="absolute left-[0px] top-[184px] w-[180px] h-[222px]">
+            <Image
+              src={assets.ellipse1}
+              alt=""
+              width={180}
+              height={222}
+              className="asset-image"
+            />
+          </div>
+          <div className="absolute left-[115px] top-[0px] w-[229px] h-[398px]">
+            <Image
+              src={assets.ellipse2}
+              alt=""
+              width={229}
+              height={398}
+              className="asset-image"
+            />
+          </div>
+        </div>
+
+        {/* Cave graphics area */}
+        <div className="absolute left-[910.34px] top-[682.39px] w-[534px] h-[326px]">
+          <Image
+            src={assets.group73}
+            alt=""
+            width={534}
+            height={326}
+            className="asset-image"
+          />
+        </div>
+
+        
         {/* Butterflies */}
-        <div className={styles.butterflies}>
+        <div className="absolute left-[946.34px] top-[317.89px] w-[213.92px] h-[533.08px]">
           <Image
             src={assets.butterflies}
             alt=""
             width={214}
             height={533}
-            className={styles.assetImage}
-          />
-        </div>
-
-        {/* Trees/Cave graphics area */}
-        <div className={styles.caveGraphics}>
-          <Image
-            src={assets.group73}
-            alt=""
-            width={534}
-            height={394}
-            className={styles.assetImage}
+            className="asset-image"
           />
         </div>
 
         {/* Lower Right Graphics Group */}
-        <div className={styles.lowerRightGraphics}>
-          <div className={styles.group112}>
+        <div className="absolute left-[558.34px] top-[854.89px] w-[882.5px] h-[715.5px]">
+          <div className="absolute left-0 top-[154px] w-[882px] h-[561.5px]">
             <Image
               src={assets.group112}
               alt=""
               width={882}
               height={562}
-              className={styles.assetImage}
+              className="asset-image"
             />
           </div>
-          <div className={styles.union1}>
+          <div className="absolute left-[448px] top-[48px] w-[434.5px] h-[256.5px]">
             <Image
               src={assets.union1}
               alt=""
               width={435}
               height={257}
-              className={styles.assetImage}
+              className="asset-image"
             />
           </div>
-          <div className={styles.group71}>
+          <div className="absolute left-[776px] top-0 w-[64px] h-[77px]">
             <Image
-              src={assets.group71}
+              src={assets.shroom1}
               alt=""
               width={64}
               height={77}
-              className={styles.assetImage}
+              className="asset-image"
             />
           </div>
         </div>
 
         {/* Lower Left Graphics Group */}
-        <div className={styles.lowerLeftGraphics}>
-          <div className={styles.union}>
+        <div className="absolute left-[-2.66px] top-[696.56px] w-[1107px] h-[722.82px]">
+          <div className="absolute left-[3px] top-[49.32px] w-[1058px] h-[673.5px]">
             <Image
               src={assets.union}
               alt=""
               width={1058}
-              height={674}
-              className={styles.assetImage}
+              height={673.5}
+              className="asset-image"
             />
           </div>
-          <div className={styles.group74}>
+          <div className="absolute left-[3px] top-[23.32px] w-[1104px] h-[278px]">
             <Image
               src={assets.group74}
               alt=""
               width={1104}
               height={278}
-              className={styles.assetImage}
+              className="asset-image"
             />
           </div>
-          <div className={styles.group103}>
+          <div className="absolute left-[19.05px] top-0 w-[140.98px] h-[105.06px]">
             <Image
               src={assets.group103}
               alt=""
               width={141}
               height={105}
-              className={styles.assetImage}
+              className="asset-image"
             />
           </div>
-          <div className={styles.group104}>
+          <div className="absolute left-[48px] top-[0.32px] w-[171px] h-[127.43px]">
             <Image
               src={assets.group104}
               alt=""
               width={171}
               height={127}
-              className={styles.assetImage}
+              className="asset-image"
             />
           </div>
-          <div className={styles.group120}>
+          <div className="absolute left-0 top-[259.32px] w-[1013.1px] h-[347.23px] blur-[4px]">
             <Image
               src={assets.group120}
               alt=""
               width={1013}
               height={347}
-              className={styles.assetImage}
+              className="asset-image"
             />
           </div>
-          <div className={styles.group14}>
+          <div className="absolute left-[1013px] top-[162.32px] w-[52.49px] h-[101.87px]">
             <Image
-              src={assets.group14}
+              src={assets.shroom2}
               alt=""
               width={52}
               height={102}
-              className={styles.assetImage}
+              className="asset-image"
             />
           </div>
         </div>
@@ -211,67 +238,91 @@ export default function LandingPage() {
       {/* ============================================================
           LAYER 3: Content Elements (z-index: 20)
           ============================================================ */}
-      <div className={styles.contentLayer}>
-        <div className={styles.heroUi}>
+      <div className="layer-content">
+        <div className="absolute left-[59.34px] top-[36.89px] w-[977px] h-[631px]">
           {/* Logo */}
-          <div className={styles.logo}>
+          <div className="absolute left-0 top-0 w-[30px] h-[75.64px]">
             <Image
               src={assets.logo}
               alt="Hack the 6ix Logo"
               width={30}
               height={76}
-              className={styles.logoImage}
+              className="block w-full h-full"
               priority
             />
           </div>
 
           {/* Hero Content */}
-          <div className={styles.content}>
+          <div className="absolute left-[66px] top-[319px] w-[911px] flex flex-col gap-8">
             {/* Event Info */}
-            <div className={styles.eventInfo}>
-              <div className={styles.eventDetails}>
-                <p className={styles.eventDetailText}>{EVENT_INFO.date}</p>
-                <p className={styles.eventDetailDot}>⋅</p>
-                <p className={styles.eventDetailText}>{EVENT_INFO.location}</p>
-                <p className={styles.eventDetailDot}>⋅</p>
-                <p className={styles.eventDetailText}>{EVENT_INFO.format}</p>
+            <div className="flex flex-col gap-6 items-start justify-center w-full">
+              <div className="flex flex-row gap-2 items-start w-full">
+                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0">
+                  {EVENT_INFO.date}
+                </p>
+                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0">
+                  ⋅
+                </p>
+                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0">
+                  {EVENT_INFO.location}
+                </p>
+                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0">
+                  ⋅
+                </p>
+                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0">
+                  {EVENT_INFO.format}
+                </p>
               </div>
 
               {/* Main Title */}
-              <h1 className={styles.mainTitle}>{HERO_CONTENT.title}</h1>
+              <h1 className="font-bold text-[60px] leading-[76px] tracking-[-1.32px] text-[var(--color-text-primary-white)] m-0">
+                {HERO_CONTENT.title}
+              </h1>
 
               {/* Subtitle */}
-              <p className={styles.subtitle}>
-                <span className={styles.subtitleWhite}>{HERO_CONTENT.subtitlePrefix}</span>
-                <span className={styles.subtitleGold}>{HERO_CONTENT.subtitleHighlight}</span>
+              <p className="font-medium text-[32px] leading-[40px] tracking-[-0.704px] m-0">
+                <span className="text-[var(--color-text-primary-white)]">
+                  {HERO_CONTENT.subtitlePrefix}
+                </span>
+                <span className="text-[var(--color-highlight-gold)] font-bold">
+                  {HERO_CONTENT.subtitleHighlight}
+                </span>
               </p>
             </div>
 
             {/* Form Section */}
-            <div className={styles.formSection}>
-              <p className={styles.formDescription}>{FORM_CONTENT.description}</p>
+            <div className="flex flex-col gap-4 w-full">
+              <p className="font-medium text-[20px] leading-[24px] tracking-[-0.34px] text-[var(--color-text-primary-white)] m-0">
+                {FORM_CONTENT.description}
+              </p>
 
-              <div className={styles.formRow}>
+              <div className="flex flex-row gap-4 items-center">
                 {/* Text Field */}
-                <div className={styles.textFieldWrapper}>
-                  <label htmlFor="email" className={styles.srOnly}>
+                <div className="flex flex-col gap-1 w-[406px]">
+                  <label htmlFor="email" className="sr-only">
                     Email address
                   </label>
-                  <div className={styles.textField}>
+                  <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border">
                     <input
                       id="email"
                       name="email"
                       type="email"
                       autoComplete="email"
                       placeholder={FORM_CONTENT.placeholder}
-                      className={styles.textFieldInput}
+                      className="flex-1 font-medium text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
                     />
                   </div>
                 </div>
 
                 {/* Placeholder Button */}
-                <button type="button" className={styles.button} aria-label="Sign up for updates">
-                  <span className={styles.buttonText}>{FORM_CONTENT.buttonText}</span>
+                <button
+                  type="button"
+                  className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90"
+                  aria-label="Sign up for updates"
+                >
+                  <span className="font-semibold text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] text-center">
+                    {FORM_CONTENT.buttonText}
+                  </span>
                 </button>
               </div>
             </div>

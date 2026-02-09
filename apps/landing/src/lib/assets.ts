@@ -5,43 +5,37 @@
  */
 
 // Main SVG assets
-import logo from '../../../../packages/assets/Logo.svg';
 import butterflies from '../../../../packages/assets/butterflies.svg';
-import cnTowerBg from '../../../../packages/assets/cn-tower-bg.svg';
-import spotlight from '../../../../packages/assets/spotlight.svg';
-
+import cnTowerBg from '../assets/cn-tower-bg.svg';
 // Ellipses
-import ellipse1 from '../../../../packages/assets/ellipse-1.svg';
-import ellipse2 from '../../../../packages/assets/ellipse-2.svg';
-
-// Vectors
-import vector82 from '../../../../packages/assets/vector-82.svg';
-import vector259 from '../../../../packages/assets/vector-259.svg';
-
-// Union shapes
-import union from '../../../../packages/assets/union.svg';
-import union1 from '../../../../packages/assets/union-1.svg';
-
+import ellipse1 from '../assets/ellipse-1.svg';
+import ellipse2 from '../assets/ellipse-2.svg';
 // Groups
-import group14 from '../../../../packages/assets/group-14.svg';
-import group55 from '../../../../packages/assets/group-55.svg';
-import group56 from '../../../../packages/assets/group-56.svg';
-import group57 from '../../../../packages/assets/group-57.svg';
-import group71 from '../../../../packages/assets/group-71.svg';
-import group73 from '../../../../packages/assets/group-73.svg';
-import group74 from '../../../../packages/assets/group-74.svg';
+import shroom1 from '../../../../packages/assets/organic/mushroom-1.svg';
+import shroom2 from '../../../../packages/assets/organic/mushroom-2.svg';
+
+import leaf1 from '../assets/leaf-1.svg';
+import leaf2 from '../assets/leaf-2.svg';
+import leaf3 from '../assets/leaf-3.svg';
+import leafbase from '../assets/leaf-base.svg';
+
+import group73 from '../assets/group-73.svg';
+import group74 from '../assets/group-74.svg';
 import group103 from '../../../../packages/assets/group-103.svg';
 import group104 from '../../../../packages/assets/group-104.svg';
 import group112 from '../../../../packages/assets/group-112.svg';
 import group116 from '../../../../packages/assets/group-116.svg';
 import group117 from '../../../../packages/assets/group-117.svg';
-import group120 from '../../../../packages/assets/group-120.svg';
-import group499 from '../../../../packages/assets/group-499.svg';
-
-// Organic assets (PNG)
-import grass1 from '../../../../packages/assets/organic/grass_1.png';
-import shroom1 from '../../../../packages/assets/organic/shroom_1.png';
-import shroom2 from '../../../../packages/assets/organic/shroom_2.png';
+import group120 from '../assets/group-120.svg';
+import bgGraphics from '../assets/bg-graphics.svg';
+import logo from '../../../../packages/assets/Logo.svg';
+import spotlight from '../assets/spotlight.svg';
+// Union shapes
+import union from '../assets/union.svg';
+import union1 from '../assets/union-1.svg';
+// Vectors
+import vector82 from '../../../../packages/assets/vector-82.svg';
+import vector259 from '../../../../packages/assets/vector-259.svg';
 
 export const assets = {
   // Main assets
@@ -49,25 +43,26 @@ export const assets = {
   butterflies,
   cnTowerBg,
   spotlight,
-  
+
   // Ellipses
   ellipse1,
   ellipse2,
-  
+
   // Vectors
   vector82,
   vector259,
-  
+
   // Union shapes
   union,
   union1,
-  
+
   // Groups
-  group14,
-  group55,
-  group56,
-  group57,
-  group71,
+  shroom1,
+  shroom2,
+  leaf1,
+  leaf2,
+  leaf3,
+  leafbase,
   group73,
   group74,
   group103,
@@ -76,12 +71,7 @@ export const assets = {
   group116,
   group117,
   group120,
-  group499,
-  
-  // Organic assets
-  grass1,
-  shroom1,
-  shroom2,
+  bgGraphics,
 } as const;
 
 // Helper function to get asset path

@@ -22,11 +22,11 @@ export { default as union } from './union.svg';
 export { default as union1 } from './union-1.svg';
 
 // Groups
-export { default as group14 } from './group-14.svg';
-export { default as group55 } from './group-55.svg';
-export { default as group56 } from './group-56.svg';
-export { default as group57 } from './group-57.svg';
-export { default as group71 } from './group-71.svg';
+export { default as shroom2 } from './organic/mushroom-2.svg';
+export { default as leaf1 } from './group-55.svg';
+export { default as leaf2 } from './group-56.svg';
+export { default as leaf3 } from './group-57.svg';
+export { default as shroom1 } from './organic/mushroom-1.svg';
 export { default as group73 } from './group-73.svg';
 export { default as group74 } from './group-74.svg';
 export { default as group103 } from './group-103.svg';
@@ -35,9 +35,6 @@ export { default as group112 } from './group-112.svg';
 export { default as group116 } from './group-116.svg';
 export { default as group117 } from './group-117.svg';
 export { default as group120 } from './group-120.svg';
-export { default as group499 } from './group-499.svg';
+export { default as bgGraphics } from './bg-graphics.svg';
 
-// Organic assets (PNG)
-export { default as grass1 } from './organic/grass_1.png';
-export { default as shroom1 } from './organic/shroom_1.png';
-export { default as shroom2 } from './organic/shroom_2.png';
+export {default as leafbase} from './leaf-base.svg';

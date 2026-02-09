@@ -1,9 +1,9 @@
-<svg width="1162" height="674" viewBox="0 0 1162 674" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_n_892_548)">
-<path d="M771.948 146.5H923.711L1162 278H1004.85L867 361L634.5 374.5L450 420L422 460H319C288 460 205.5 534 189.5 530C173.5 526 72.5 564.5 72.5 564.5L0 673.5V0L771.948 146.5Z" fill="url(#paint0_linear_892_548)"/>
+<svg width="1058" height="674" viewBox="0 0 1058 674" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_n_1166_410)">
+<path d="M663.663 147.554H794.137L951.396 249.224L1058 246L867 361L634.5 374.5L450 420L422 460H319C288 460 205.5 534 189.5 530C173.5 526 72.5 564.5 72.5 564.5L0 673.5V0L663.663 147.554Z" fill="url(#paint0_linear_1166_410)"/>
 </g>
 <defs>
-<filter id="filter0_n_892_548" x="0" y="0" width="1162" height="673.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_n_1166_410" x="0" y="0" width="1058" height="673.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feTurbulence type="fractalNoise" baseFrequency="2 2" stitchTiles="stitch" numOctaves="3" result="noise" seed="5796" />
@@ -14,12 +14,12 @@
 <feComposite operator="in" in2="shape" in="coloredNoise1" result="noise1Clipped" />
 <feFlood flood-color="rgba(0, 0, 0, 0.25)" result="color1Flood" />
 <feComposite operator="in" in2="noise1Clipped" in="color1Flood" result="color1" />
-<feMerge result="effect1_noise_892_548">
+<feMerge result="effect1_noise_1166_410">
 <feMergeNode in="shape" />
 <feMergeNode in="color1" />
 </feMerge>
 </filter>
-<linearGradient id="paint0_linear_892_548" x1="368.5" y1="48" x2="448" y2="490" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint0_linear_1166_410" x1="368.5" y1="48" x2="448" y2="490" gradientUnits="userSpaceOnUse">
 <stop stop-color="#755B67"/>
 <stop offset="0.354153" stop-color="#634050"/>
 <stop offset="1" stop-color="#663578"/>

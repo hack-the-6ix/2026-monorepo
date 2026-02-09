@@ -7,7 +7,12 @@ interface PlaceholderProps {
   name?: string;
 }
 
-export function Placeholder({ width, height, className = '', name = 'Asset' }: PlaceholderProps) {
+export function Placeholder({
+  width,
+  height,
+  className = '',
+  name = 'Asset',
+}: PlaceholderProps) {
   return (
     <div
       className={`bg-purple-900/20 border border-purple-500/30 rounded ${className}`}

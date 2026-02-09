@@ -1,7 +1,7 @@
 @import "tailwindcss";
-@import '@hackthe6ix/ui/theme.css';
+@import '../../../../packages/ui/src/index.css';
 
-@source '../../node_modules/@hackthe6ix/ui';
+@source '../../../../packages/ui/src';
 
 :root {
 	/* Design Tokens - Colors */
@@ -38,6 +38,39 @@
 
 @theme inline {
 	--font-sans: var(--font-inter);
+	
+	/* Colors */
+	--color-primary: #2da990;
+	--color-text-primary: #3b3d69;
+	--color-text-primary-white: #f9fafb;
+	--color-text-placeholder: #99a1af;
+	--color-input-bg: rgba(249, 250, 251, 0.2);
+	--color-border-primary: #2da990;
+	--color-highlight-gold: #f6bd55;
+	
+	/* Z-Index Layers */
+	--z-background: 0;
+	--z-decorative: 10;
+	--z-content: 20;
+}
+
+/* Utility component classes for reusable patterns */
+@layer components {
+	.asset-image {
+		@apply block max-w-none w-full h-full object-contain;
+	}
+	
+	.layer-background {
+		@apply absolute inset-0 z-[var(--z-background)] pointer-events-none;
+	}
+	
+	.layer-decorative {
+		@apply absolute inset-0 z-[var(--z-decorative)] pointer-events-none;
+	}
+	
+	.layer-content {
+		@apply absolute inset-0 z-[var(--z-content)];
+	}
 }
 
 html,

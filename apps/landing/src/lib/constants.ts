@@ -16,14 +16,15 @@ export const HERO_CONTENT = {
 } as const;
 
 export const FORM_CONTENT = {
-  description: 'Applications open soon! Sign up to receive the latest updates in your inbox.',
+  description:
+    'Applications open soon! Sign up to receive the latest updates in your inbox.',
   placeholder: 'name@email.com',
   buttonText: 'Sign Up',
 } as const;
 
 export const META = {
   title: 'Hack the 6ix 2026',
-  description: 'Toronto\'s largest summer hackathon',
+  description: "Toronto's largest summer hackathon",
 } as const;
 
 /**
@@ -94,5 +95,5 @@ export const VIEWPORT = {
 /**
  * Background gradient from Figma
  */
-export const BACKGROUND_GRADIENT = 
+export const BACKGROUND_GRADIENT =
   'linear-gradient(151deg, rgba(24, 34, 82, 1) 0%, rgba(38, 26, 85, 1) 10%, rgba(43, 23, 119, 1) 14%, rgba(25, 18, 69, 1) 23%, rgba(17, 15, 46, 1) 30%)';
