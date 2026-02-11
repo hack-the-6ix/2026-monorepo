@@ -214,6 +214,8 @@ importers:
         specifier: 'catalog:'
         version: 9.39.2(jiti@2.6.1)
 
+  packages/assets: {}
+
   packages/ui:
     dependencies:
       classnames:

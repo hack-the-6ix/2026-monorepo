@@ -28,6 +28,12 @@ export const META = {
 } as const;
 
 /**
+ * Night overlay opacity (0-100 scale)
+ * 0 = fully transparent, 100 = fully opaque
+ */
+export const NIGHT_OVERLAY_OPACITY = 0;
+
+/**
  * Design tokens from Figma
  */
 export const DESIGN_TOKENS = {
