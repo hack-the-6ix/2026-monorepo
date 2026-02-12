@@ -7,7 +7,16 @@
 // Main SVG assets
 // BG
 import cnTowerBg from '../assets/cn-tower-bg.svg';
+import cnTower from '../assets/cn-tower.svg';
+import mistLeft from '../assets/mist-left.svg';
+import mistRight from '../assets/mist-right.svg';
+
 import bgGraphics from '../assets/bg-graphics.svg';
+import cloudLeft from '../assets/cloud-left-1.svg';
+import cloudRight from '../assets/cloud-right-1.svg';
+import lightLeft1 from '../assets/test-light.svg';
+import lightLeft2 from '../assets/light-left-2.svg';
+import lightRight from '../assets/light-right.svg';
 import spotlight from '../assets/spotlight.svg';
 
 // Night overlay
@@ -21,6 +30,7 @@ import cliffLeft3 from '../assets/cliff-left-3.svg';
 // Right cliff shapes
 import cliffRight1 from '../assets/cliff-right-1.svg';
 import cliffRight2 from '../assets/cliff-right-2.svg';
+import cliffRight3 from '../assets/cliff-right-3.svg';
 import caveRight from '../assets/cave-right.svg';
 
 // Trees
@@ -47,8 +57,19 @@ import shroom2 from '../../../../packages/assets/organic/mushroom-2.svg';
 export const assets = {
   // Main SVG assets
   cnTowerBg,
+  cnTower,
+  mistLeft,
+  mistRight,
+
   bgGraphics,
+  cloudLeft,
+  cloudRight,
+  lightLeft1,
+  lightLeft2,
+  lightRight,
+
   spotlight,
+
   nightColorOverlay,
 
   // Left cliff shapes
@@ -59,6 +80,7 @@ export const assets = {
   // Right cliff shapes
   cliffRight1,
   cliffRight2,
+  cliffRight3,
   caveRight,
 
   // Trees

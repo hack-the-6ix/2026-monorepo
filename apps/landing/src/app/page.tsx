@@ -5,54 +5,87 @@ import Image from 'next/image';
 
 import { assets } from '../lib/assets';
 import { EVENT_INFO, FORM_CONTENT, HERO_CONTENT, NIGHT_OVERLAY_OPACITY } from '../lib/constants';
+import { useViewportScale } from '../lib/hooks';
 
 /**
  * Landing Page Component
  *
- * Fixed viewport: 1440x1080px (no scroll)
+ * Responsive design: min 1440px wide, scales vertically for smaller viewports
+ *
+ * Positioning Strategy:
+ * - Left-anchored: Logo, hero content, lower-left cliff group, CN Tower skyline
+ * - Right-anchored: Leaves, trees, cave, butterflies, lower-right cliff group, spotlight
  *
  * Structure:
  * - Layer 1 (z-0): Background elements (gradient, spotlight, CN Tower)
- * - Layer 2 (z-10): Decorative SVGs (flowers, butterflies, cliffLefts, groups)
+ * - Layer 2 (z-10): Decorative SVGs (flowers, butterflies, cliffs, groups)
  * - Layer 3 (z-20): Night overlay (full-screen with adjustable opacity)
  * - Layer 4 (z-30): Static content (logo, hero text, placeholder button)
  */
 export default function LandingPage() {
+  const { transformStyle } = useViewportScale();
+
   return (
     <div
-      className="relative w-[1440px] h-[1080px] overflow-hidden"
-      style={{ background: 'var(--bg-gradient)' }}
+      className="relative w-full min-w-[1440px] h-screen min-h-[1080px] overflow-hidden"
+      style={{ ...transformStyle }}
       data-name="landing page"
     >
       {/* ============================================================
           LAYER 1: Background Elements (z-index: 0)
           ============================================================ */}
       <div className="layer-background">
-        {/* Background graphics - large decorative SVG */}
-        <div className="absolute left-[-270.66px] top-0 w-[2022px] h-[2095.1px]">
+        {/* Background graphics - large decorative SVG, left-anchored */}
+        <div className="absolute left-[-270.66px] top-[-370.01px] w-[2022px] h-[2095.1px]">
+          <div className ="absolute left-0 top-[464.89px] w-[1903px] h-[877px]">
+            <Image
+              src={assets.cloudLeft}
+              alt=""
+              width={1903}
+              height={877}
+              className="asset-image"
+              priority
+            />
+          </div>
+        </div>
+        {/* Light effect - full width, top-anchored, maintains aspect ratio */}
+        <div className="absolute inset-x-0 top-0 w-full overflow-hidden">
           <Image
-            src={assets.bgGraphics}
+            src={assets.lightLeft1}
             alt=""
-            width={2022}
-            height={2095}
-            className="asset-image"
+            width={1920}
+            height={1080}
+            className="w-full h-auto object-cover object-top"
             priority
           />
         </div>
 
-        {/* Spotlight effect */}
-        <div className="absolute left-[-505.37px] top-[-319.11px] w-[1904.81px] h-[1292.72px] blur-[25px]">
-          <Image
-            src={assets.spotlight}
-            alt=""
-            width={1905}
-            height={1293}
-            className="asset-image"
-            priority
+        {/* Spotlight effect - right-anchored */}
+        <div className="absolute right-[41px] top-[-319.11px] w-[1904.81px] h-[1292.72px] ">
+          <div className="absolute left-[737.15px] top-[439px] w-[1520px] h-[874px]">
+            <Image
+              src={assets.cloudRight}
+              alt=""
+              width={1520}
+              height={874}
+              className="asset-image"
+              priority
+            />
+          </div>
+          <div className="absolute left-[0.81px] top-[0.61px] w-[1904px] h-[1292px] blur-[5px]">
+            <Image
+              src={assets.spotlight}
+              alt=""
+              width={1905}
+              height={1293}
+              className="asset-image"
+              priority
           />
+          </div>
+          
         </div>
 
-        {/* CN Tower skyline background */}
+        {/* CN Tower skyline background - left-anchored */}
         <div className="absolute left-[-573.32px] top-[636.77px] w-[2668.12px] h-[480px]">
           <Image
             src={assets.cnTowerBg}
@@ -69,8 +102,8 @@ export default function LandingPage() {
           LAYER 2: Decorative Elements (z-index: 10)
           ============================================================ */}
       <div className="layer-decorative">
-        {/* Top Graphics - Leaves */}
-        <div className="absolute left-[945.34px] top-[-95.11px] w-[537.21px] h-[412.1px]">
+        {/* Top Graphics - Leaves (right-anchored) */}
+        <div className="absolute right-[-42px] top-[-95.11px] w-[537.21px] h-[412.1px]">
           {/* should be left-0 top-0 */}
           <div className="absolute left-[20px] top-[20px] w-[139px] h-[231px]">
             <Image
@@ -103,8 +136,8 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Trees*/}
-        <div className="absolute left-[990.34px] top-[533.89px] w-[344px] h-[406px]">
+        {/* Trees (right-anchored) */}
+        <div className="absolute right-[106px] top-[533.89px] w-[344px] h-[406px]">
           <div className="absolute left-[0px] top-[184px] w-[180px] h-[222px]">
             <Image
               src={assets.tree1}
@@ -125,8 +158,8 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Cave graphics area */}
-        <div className="absolute left-[910.34px] top-[682.39px] w-[534px] h-[326px]">
+        {/* Right Cave graphics area (right-anchored) */}
+        <div className="absolute right-[-4px] top-[682.39px] w-[534px] h-[326px]">
           <Image
             src={assets.caveRight}
             alt=""
@@ -135,10 +168,9 @@ export default function LandingPage() {
             className="asset-image"
           />
         </div>
-
         
-        {/* Butterflies */}
-        <div className="absolute left-[946.34px] top-[317.89px] w-[213.92px] h-[533.08px]">
+        {/* Butterflies (right-anchored) */}
+        <div className="absolute right-[280px] top-[317.89px] w-[213.92px] h-[533.08px]">
           <Image
             src={assets.butterflies}
             alt=""
@@ -148,8 +180,8 @@ export default function LandingPage() {
           />
         </div>
 
-        {/* Lower Right Graphics Group */}
-        <div className="absolute left-[558.34px] top-[854.89px] w-[882.5px] h-[715.5px]">
+        {/* Lower Right Graphics Group (right-anchored) */}
+        <div className="absolute right-0 top-[854.89px] w-[882.5px] h-[715.5px]">
           <div className="absolute left-0 top-[154px] w-[882px] h-[561.5px]">
             <Image
               src={assets.cliffRight2}
@@ -165,6 +197,15 @@ export default function LandingPage() {
               alt=""
               width={435}
               height={257}
+              className="asset-image"
+            />
+          </div>
+          <div className="absolute left-[-10px] top-[108.5px] w-[542px] h-[121.5px]">
+            <Image
+              src={assets.cliffRight3}
+              alt=""
+              width={542}
+              height={122}
               className="asset-image"
             />
           </div>
