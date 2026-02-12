@@ -26,6 +26,7 @@ import nightColorOverlay from '../assets/night-color-overlay.svg';
 import cliffLeft1 from '../assets/cliff-left-1.svg';
 import cliffLeft2 from '../assets/cliff-left-2.svg';
 import cliffLeft3 from '../assets/cliff-left-3.svg';
+import kys from '../assets/cliff-lEfT.svg';
 
 // Right cliff shapes
 import cliffRight1 from '../assets/cliff-right-1.svg';
@@ -76,6 +77,7 @@ export const assets = {
   cliffLeft1,
   cliffLeft2,
   cliffLeft3,
+  kys,
 
   // Right cliff shapes
   cliffRight1,

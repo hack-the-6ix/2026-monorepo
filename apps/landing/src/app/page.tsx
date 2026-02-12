@@ -4,7 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 
 import { assets } from '../lib/assets';
-import { EVENT_INFO, FORM_CONTENT, HERO_CONTENT, NIGHT_OVERLAY_OPACITY } from '../lib/constants';
+import {
+  EVENT_INFO,
+  FORM_CONTENT,
+  HERO_CONTENT,
+  NIGHT_OVERLAY_OPACITY,
+} from '../lib/constants';
 import { useViewportScale } from '../lib/hooks';
 
 /**
@@ -23,7 +28,7 @@ import { useViewportScale } from '../lib/hooks';
  * - Layer 4 (z-30): Static content (logo, hero text, placeholder button)
  */
 export default function LandingPage() {
-  const { transformStyle } = useViewportScale();
+  const { transformStyle, widthToFixedGap } = useViewportScale();
 
   return (
     <div
@@ -36,14 +41,25 @@ export default function LandingPage() {
           ============================================================ */}
       <div className="layer-background">
         {/* Background graphics - large decorative SVG, left-anchored */}
-        <div className="absolute left-[-270.66px] top-[-370.01px] w-[2022px] h-[2095.1px]">
-          <div className ="absolute left-0 top-[464.89px] w-[1903px] h-[877px]">
+        <div
+          className="absolute top-[-370.01px] h-[2095.1px]"
+          style={{
+            left: -270.66,
+            width: Math.max(2022, widthToFixedGap(-270.66, -311.34)),
+          }}
+        >
+          <div
+            className="absolute top-[464.89px] h-[877px]"
+            style={{
+              left: 0,
+              width: Math.max(1903, widthToFixedGap(-270.66, -311.34) - 119),
+            }}
+          >
             <Image
               src={assets.cloudLeft}
               alt=""
-              width={1903}
-              height={877}
-              className="asset-image"
+              fill
+              className="object-cover object-left"
               priority
             />
           </div>
@@ -80,19 +96,55 @@ export default function LandingPage() {
               height={1293}
               className="asset-image"
               priority
-          />
+            />
           </div>
-          
         </div>
 
-        {/* CN Tower skyline background - left-anchored */}
-        <div className="absolute left-[-573.32px] top-[636.77px] w-[2668.12px] h-[480px]">
+        {/* Skyline background CN Tower - left-anchored */}
+        <div
+          className="absolute top-[636.77px] left[699.68] w-[201.45] h-[241.76px]"
+          style={{
+            left: 699.68,
+            width: 201.45,
+          }}
+        >
           <Image
-            src={assets.cnTowerBg}
+            src={assets.cnTower}
             alt=""
-            width={2668}
-            height={480}
-            className="asset-image"
+            fill
+            className="object-cover object-left"
+            priority
+          />
+        </div>
+        {/* Skyline background left mist - left-anchored */}
+        <div
+          className="absolute top-[660.77px] h-[456px]"
+          style={{
+            left: -573.32,
+            width: Math.max(2428.12, widthToFixedGap(-573.32, -654.8)),
+          }}
+        >
+          <Image
+            src={assets.mistLeft}
+            alt=""
+            fill
+            className="object-cover object-left"
+            priority
+          />
+        </div>
+        {/* Skyline background right mist - left-anchored */}
+        <div
+          className="absolute top-[660.77px] h-[456px]"
+          style={{
+            left: -573.32,
+            width: Math.max(2428.12, widthToFixedGap(-573.32, -654.8)),
+          }}
+        >
+          <Image
+            src={assets.mistRight}
+            alt=""
+            fill
+            className="object-cover object-right"
             priority
           />
         </div>
@@ -125,7 +177,7 @@ export default function LandingPage() {
             />
           </div>
           {/* should be left-[340px] */}
-          <div className="absolute left-[370px] top-[152px] w-[139px] h-[231px]"> 
+          <div className="absolute left-[370px] top-[152px] w-[139px] h-[231px]">
             <Image
               src={assets.leafbase}
               alt=""
@@ -168,7 +220,7 @@ export default function LandingPage() {
             className="asset-image"
           />
         </div>
-        
+
         {/* Butterflies (right-anchored) */}
         <div className="absolute right-[280px] top-[317.89px] w-[213.92px] h-[533.08px]">
           <Image
@@ -200,12 +252,12 @@ export default function LandingPage() {
               className="asset-image"
             />
           </div>
-          <div className="absolute left-[-10px] top-[108.5px] w-[542px] h-[121.5px]">
+          <div className="absolute left-[-10px] top-[106px] w-[542px] h-[121.5px]">
             <Image
               src={assets.cliffRight3}
               alt=""
               width={542}
-              height={122}
+              height={118}
               className="asset-image"
             />
           </div>
@@ -230,26 +282,31 @@ export default function LandingPage() {
         </div>
 
         {/* Lower Left Graphics Group */}
-        <div className="absolute left-[-2.66px] top-[696.56px] w-[1107px] h-[722.82px]">
-          <div className="absolute left-[3px] top-[49.32px] w-[1058px] h-[673.5px]">
+        <div
+          className="absolute top-[696.56px] h-[722.82px]"
+          style={{
+            left: -2.66,
+            width: Math.max(1107, widthToFixedGap(-2.66, 336.5)),
+          }}
+        >
+          <div
+            className="absolute top-[49.32px] h-[673.5px]"
+            style={{
+              left: -2.66,
+              width: Math.max(1107, widthToFixedGap(-2.66, 336.5) - 49),
+            }}
+          >
             <Image
-              src={assets.cliffLeft1}
+              src={assets.kys}
               alt=""
-              width={1058}
-              height={673.5}
-              className="asset-image"
+              fill
+              className="object-cover object-right"
             />
           </div>
-          <div className="absolute left-[3px] top-[23.32px] w-[1104px] h-[278px]">
-            <Image
-              src={assets.cliffLeft3}
-              alt=""
-              width={1104}
-              height={278}
-              className="asset-image"
-            />
-          </div>
-          <div className="absolute left-[19.05px] top-0 w-[140.98px] h-[105.06px]">
+          <div
+            className="absolute w-[140.98px] h-[105.06px]"
+            style={{ left: 19.05, top: 0 }}
+          >
             <Image
               src={assets.grass1Shadow}
               alt=""
@@ -258,7 +315,10 @@ export default function LandingPage() {
               className="asset-image"
             />
           </div>
-          <div className="absolute left-[48px] top-[0.32px] w-[171px] h-[127.43px]">
+          <div
+            className="absolute w-[171px] h-[127.43px]"
+            style={{ left: 48, top: 0.32 }}
+          >
             <Image
               src={assets.grass1}
               alt=""
@@ -267,16 +327,13 @@ export default function LandingPage() {
               className="asset-image"
             />
           </div>
-          <div className="absolute left-0 top-[259.32px] w-[1013.1px] h-[347.23px] blur-[4px]">
-            <Image
-              src={assets.cliffLeft2}
-              alt=""
-              width={1013}
-              height={347}
-              className="asset-image"
-            />
-          </div>
-          <div className="absolute left-[1013px] top-[162.32px] w-[52.49px] h-[101.87px]">
+          <div
+            className="absolute w-[52.49px] h-[101.87px]"
+            style={{
+              right: 42,
+              top: 162.32,
+            }}
+          >
             <Image
               src={assets.shroom2}
               alt=""
@@ -292,7 +349,7 @@ export default function LandingPage() {
           LAYER 2: Night Overlay (z-index: 20)
           Topmost layer - covers entire viewport with adjustable opacity
           ============================================================ */}
-      <div 
+      <div
         className="layer-overlay"
         style={{ opacity: NIGHT_OVERLAY_OPACITY / 100 }}
       >
@@ -399,8 +456,6 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
-
-      
     </div>
   );
 }
