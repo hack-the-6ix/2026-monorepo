@@ -8,6 +8,7 @@ import {
   EVENT_INFO,
   FORM_CONTENT,
   HERO_CONTENT,
+  LAYOUT_TIERS,
   NIGHT_OVERLAY_OPACITY,
 } from '../lib/constants';
 import { useViewportScale } from '../lib/hooks';
@@ -28,7 +29,20 @@ import { useViewportScale } from '../lib/hooks';
  * - Layer 4 (z-30): Static content (logo, hero text, placeholder button)
  */
 export default function LandingPage() {
-  const { transformStyle, widthToFixedGap } = useViewportScale();
+  const { transformStyle, widthToFixedGap, effectiveWidth, layoutTier } =
+    useViewportScale();
+
+  const tier = LAYOUT_TIERS[layoutTier];
+  const ll = tier.lowerLeft;
+  const llOuterWidth =
+    ll.widthRatio != null ?
+      effectiveWidth * ll.widthRatio
+    : Math.max(ll.minWidth, widthToFixedGap(ll.left, ll.gapFromRight));
+
+  const cliffAsset =
+    layoutTier === 'ultrawide' ? assets.cliffLeftExtrawide
+    : layoutTier === '16:9' ? assets.cliffLeftWide
+    : assets.kys;
 
   return (
     <div
@@ -52,7 +66,10 @@ export default function LandingPage() {
             className="absolute top-[464.89px] h-[877px]"
             style={{
               left: 0,
-              width: Math.max(1903, widthToFixedGap(-270.66, -311.34) - 119),
+              width: Math.min(
+                tier.cloudLeft.maxInnerWidth,
+                Math.max(1903, widthToFixedGap(-270.66, -311.34) - 119),
+              ),
             }}
           >
             <Image
@@ -64,14 +81,37 @@ export default function LandingPage() {
             />
           </div>
         </div>
-        {/* Light effect - full width, top-anchored, maintains aspect ratio */}
-        <div className="absolute inset-x-0 top-0 w-full overflow-hidden">
+        {/* Light effects - individually positioned, left-1 and left-2 are left-anchored, right is right-anchored */}
+        <div className="absolute left-0 top-0 w-[756px] h-[381px]">
           <Image
             src={assets.lightLeft1}
             alt=""
-            width={1920}
-            height={1080}
-            className="w-full h-auto object-cover object-top"
+            width={756}
+            height={381}
+            className="asset-image"
+            priority
+          />
+        </div>
+        <div
+          className="absolute left-0 w-[774px] h-[640px]"
+          style={{ top: 90.74 }}
+        >
+          <Image
+            src={assets.lightLeft2}
+            alt=""
+            width={774}
+            height={640}
+            className="asset-image"
+            priority
+          />
+        </div>
+        <div className="absolute right-0 top-0 w-[742px] h-[501px]">
+          <Image
+            src={assets.lightRight}
+            alt=""
+            width={742}
+            height={501}
+            className="asset-image"
             priority
           />
         </div>
@@ -100,12 +140,12 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Skyline background CN Tower - left-anchored */}
+        {/* Skyline background CN Tower - right-anchored (right offset constant across tiers) */}
         <div
-          className="absolute top-[636.77px] left[699.68] w-[201.45] h-[241.76px]"
+          className="absolute w-[201.45px] h-[241.76px]"
           style={{
-            left: 699.68,
-            width: 201.45,
+            right: tier.cnTower.right,
+            top: tier.cnTower.top,
           }}
         >
           <Image
@@ -281,23 +321,27 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Lower Left Graphics Group */}
+        {/* Lower Left Graphics Group - tier-aware positions and cliff asset */}
         <div
-          className="absolute top-[696.56px] h-[722.82px]"
+          className="absolute"
           style={{
-            left: -2.66,
-            width: Math.max(1107, widthToFixedGap(-2.66, 336.5)),
+            left: ll.left,
+            top: ll.top,
+            height: ll.height,
+            width: llOuterWidth,
           }}
         >
           <div
-            className="absolute top-[49.32px] h-[673.5px]"
+            className="absolute"
             style={{
-              left: -2.66,
-              width: Math.max(1107, widthToFixedGap(-2.66, 336.5) - 49),
+              left: 0,
+              top: ll.innerTopOffset,
+              height: ll.innerHeight,
+              width: llOuterWidth,
             }}
           >
             <Image
-              src={assets.kys}
+              src={cliffAsset}
               alt=""
               fill
               className="object-cover object-right"
@@ -305,7 +349,7 @@ export default function LandingPage() {
           </div>
           <div
             className="absolute w-[140.98px] h-[105.06px]"
-            style={{ left: 19.05, top: 0 }}
+            style={{ left: 19.05 - ll.left, top: 0 }}
           >
             <Image
               src={assets.grass1Shadow}
@@ -317,7 +361,7 @@ export default function LandingPage() {
           </div>
           <div
             className="absolute w-[171px] h-[127.43px]"
-            style={{ left: 48, top: 0.32 }}
+            style={{ left: 48 - ll.left, top: 0.32 }}
           >
             <Image
               src={assets.grass1}
@@ -330,8 +374,8 @@ export default function LandingPage() {
           <div
             className="absolute w-[52.49px] h-[101.87px]"
             style={{
-              right: 42,
-              top: 162.32,
+              right: tier.shroom2.rightOffsetFromCliff,
+              top: tier.shroom2.topOffset,
             }}
           >
             <Image

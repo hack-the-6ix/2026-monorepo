@@ -3,6 +3,8 @@
  * Centralized text content for easy updates and maintainability
  */
 
+import type { LayoutTier } from './hooks';
+
 export const EVENT_INFO = {
   date: 'July 17-19, 2026',
   location: 'Bahen Centre',
@@ -103,3 +105,75 @@ export const VIEWPORT = {
  */
 export const BACKGROUND_GRADIENT =
   'linear-gradient(151deg, rgba(24, 34, 82, 1) 0%, rgba(38, 26, 85, 1) 10%, rgba(43, 23, 119, 1) 14%, rgba(25, 18, 69, 1) 23%, rgba(17, 15, 46, 1) 30%)';
+
+/**
+ * Per-tier layout positions extracted from Figma designs.
+ * Each tier defines base positions for elements that reposition at breakpoints.
+ * Left-anchored elements still stretch via widthToFixedGap within a tier.
+ */
+interface TierLayout {
+  minWidth: number;
+  lowerLeft: {
+    left: number;
+    top: number;
+    height: number;
+    innerTopOffset: number;
+    innerHeight: number;
+    minWidth: number;
+    gapFromRight: number;
+    widthRatio?: number;
+  };
+  cnTower: { right: number; top: number };
+  shroom2: { rightOffsetFromCliff: number; topOffset: number };
+  cloudLeft: { maxInnerWidth: number };
+}
+
+export const LAYOUT_TIERS: Record<LayoutTier, TierLayout> = {
+  '4:3': {
+    minWidth: 1440,
+    lowerLeft: {
+      left: -2.66,
+      top: 696.56,
+      height: 722.82,
+      innerTopOffset: 49.32,
+      innerHeight: 673.5,
+      minWidth: 1107,
+      gapFromRight: 336.5,
+    },
+    cnTower: { right: 539, top: 636.77 },
+    shroom2: { rightOffsetFromCliff: 42, topOffset: 162.32 },
+    cloudLeft: { maxInnerWidth: 1903 },
+  },
+  '16:9': {
+    minWidth: 1920,
+    lowerLeft: {
+      left: -4,
+      top: 688.52,
+      height: 795.48,
+      innerTopOffset: 29.57,
+      innerHeight: 765.91,
+      minWidth: 1568,
+      gapFromRight: 352,
+      widthRatio: 1568 / 1920,
+    },
+    cnTower: { right: 539, top: 636.77 },
+    shroom2: { rightOffsetFromCliff: 33.5, topOffset: 170.37 },
+    cloudLeft: { maxInnerWidth: 1903 },
+  },
+  ultrawide: {
+    minWidth: 2560,
+    lowerLeft: {
+      left: -4,
+      top: 670.52,
+      height: 844.48,
+      innerTopOffset: 29.57,
+      innerHeight: 814.91,
+      minWidth: 2212,
+      gapFromRight: 348,
+      widthRatio: 2212 / 2560,
+    },
+    cnTower: { right: 539, top: 636.77 },
+    shroom2: { rightOffsetFromCliff: 33.5, topOffset: 170.37 },
+    cloudLeft: { maxInnerWidth: 1903 },
+  },
+} as const;
