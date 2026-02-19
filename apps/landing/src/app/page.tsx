@@ -226,7 +226,10 @@ export default function LandingPage() {
 
       {/* Top-anchored layer for small screens: leaves */}
       {isSmallScreen && (
-        <div className="pointer-events-none" style={topLayerStyle}>
+        <div
+          className="fixed top-0 left-0 w-full pointer-events-none z-[100]"
+          style={topLayerStyle}
+        >
           {leavesContent}
         </div>
       )}
@@ -538,7 +541,8 @@ export default function LandingPage() {
           Only rendered inside main container on large screens (non-portrait).
           Small screens use a separate fixed overlay for vertical centering.
           ============================================================ */}
-        {!isSmallScreen && !isPortrait && (
+        {/* Render fixed-position hero UI for both landscape and in-between aspect ratios */}
+        {(!isPortrait && (!isSmallScreen || isSmallScreen)) && (
           <div className="layer-content">
             <div className="absolute left-[59.34px] top-[36.89px] w-[977px] h-[631px]">
               <div className="absolute left-0 top-0 w-[30px] h-[75.64px]">
@@ -620,81 +624,65 @@ export default function LandingPage() {
       </div>
 
       {/* Small landscape text -- outside scaled container, vertically centered */}
-      {isSmallScreen && !isPortrait && (
-        <div className="fixed inset-0 z-30 flex items-center pointer-events-none">
-          <div
-            className="pointer-events-auto"
-            style={{
-              transform: `scale(${smallScale})`,
-              transformOrigin: 'left center',
-            }}
-          >
-            {heroTextContent}
-          </div>
-        </div>
-      )}
+      {/* Removed: in-between aspect ratio now uses fixed-position hero UI only */}
 
       {/* Portrait text layout -- outside scaled container, real viewport sizes */}
       {isPortrait && (
-        <div className="portrait-text">
-          <div className="flex flex-col gap-6">
-            <div className="w-[20px] h-[50px]">
-              <Image
-                src={assets.logo}
-                alt="Hack the 6ix Logo"
-                width={20}
-                height={50}
-                className="block w-full h-full"
-                priority
-              />
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <p className="portrait-event-info text-glow-subtle">
-                {EVENT_INFO.date} ⋅ {EVENT_INFO.location} ⋅ {EVENT_INFO.format}
-              </p>
-
-              <h1 className="portrait-title text-glow">{HERO_CONTENT.title}</h1>
-
-              <p className="portrait-subtitle text-glow">
-                <span className="text-[var(--color-text-primary-white)]">
-                  {HERO_CONTENT.subtitlePrefix}
-                </span>
-                <span className="text-[var(--color-highlight-gold)] font-bold">
-                  {HERO_CONTENT.subtitleHighlight}
-                </span>
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-3">
-              <p className="portrait-description text-glow-subtle">
-                {FORM_CONTENT.description}
-              </p>
-
-              <div className="flex flex-col gap-3 w-full">
-                <label htmlFor="email-portrait" className="sr-only">
-                  Email address
-                </label>
-                <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
-                  <input
-                    id="email-portrait"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder={FORM_CONTENT.placeholder}
-                    className="flex-1 font-medium text-[14px] leading-[18px] tracking-[-0.15px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
-                  />
-                </div>
-
-                <button
-                  type="button"
-                  className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow w-full"
-                  aria-label="Sign up for updates"
-                >
-                  <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.15px] text-[var(--color-text-primary-white)] text-center">
-                    {FORM_CONTENT.buttonText}
+        <div className="portrait-text flex flex-col min-h-screen">
+          <div className="w-[20px] h-[50px] mt-1 ml-1">
+            <Image
+              src={assets.logo}
+              alt="Hack the 6ix Logo"
+              width={20}
+              height={50}
+              className="block w-full h-full"
+              priority
+            />
+          </div>
+          <div className="flex-1 flex flex-col justify-center items-center">
+            <div className="flex flex-col gap-6 w-full" style={{ maxWidth: 500, margin: '0 12vw' }}>
+              <div className="flex flex-col gap-4">
+                <p className="portrait-event-info text-glow-subtle">
+                  {EVENT_INFO.date} ⋅ {EVENT_INFO.location} ⋅ {EVENT_INFO.format}
+                </p>
+                <h1 className="portrait-title text-glow">{HERO_CONTENT.title}</h1>
+                <p className="portrait-subtitle text-glow">
+                  <span className="text-[var(--color-text-primary-white)]">
+                    {HERO_CONTENT.subtitlePrefix}
                   </span>
-                </button>
+                  <span className="text-[var(--color-highlight-gold)] font-bold">
+                    {HERO_CONTENT.subtitleHighlight}
+                  </span>
+                </p>
+              </div>
+              <div className="flex flex-col gap-3">
+                <p className="portrait-description text-glow-subtle">
+                  {FORM_CONTENT.description}
+                </p>
+                <div className="flex flex-col gap-3 w-full">
+                  <label htmlFor="email-portrait" className="sr-only">
+                    Email address
+                  </label>
+                  <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
+                    <input
+                      id="email-portrait"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder={FORM_CONTENT.placeholder}
+                      className="flex-1 font-medium text-[14px] leading-[18px] tracking-[-0.15px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow w-full"
+                    aria-label="Sign up for updates"
+                  >
+                    <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.15px] text-[var(--color-text-primary-white)] text-center">
+                      {FORM_CONTENT.buttonText}
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
