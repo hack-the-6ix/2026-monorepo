@@ -128,12 +128,12 @@ export default function LandingPage() {
               priority
             />
           </div>
-          <div className="absolute left-[0.81px] top-[0.61px] w-[1904px] h-[1292px] blur-[5px]">
+          <div className="absolute right-[86.3px] top-[-597.85px] w-[2901.7px] h-[1882.76px] blur-[1px]">
             <Image
               src={assets.spotlight}
               alt=""
-              width={1905}
-              height={1293}
+              width={2902}
+              height={1883}
               className="asset-image"
               priority
             />

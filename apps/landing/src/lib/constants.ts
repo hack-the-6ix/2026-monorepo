@@ -157,7 +157,7 @@ export const LAYOUT_TIERS: Record<LayoutTier, TierLayout> = {
       widthRatio: 1568 / 1920,
     },
     cnTower: { right: 539, top: 636.77 },
-    shroom2: { rightOffsetFromCliff: 33.5, topOffset: 170.37 },
+    shroom2: { rightOffsetFromCliff: 33.5, topOffset: 188.37 },
     cloudLeft: { maxInnerWidth: 1903 },
   },
   ultrawide: {
@@ -173,7 +173,7 @@ export const LAYOUT_TIERS: Record<LayoutTier, TierLayout> = {
       widthRatio: 2212 / 2560,
     },
     cnTower: { right: 539, top: 636.77 },
-    shroom2: { rightOffsetFromCliff: 33.5, topOffset: 170.37 },
+    shroom2: { rightOffsetFromCliff: 33.5, topOffset: 206.37 },
     cloudLeft: { maxInnerWidth: 1903 },
   },
 } as const;

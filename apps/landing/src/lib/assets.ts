@@ -41,7 +41,7 @@ import mistLeft from '../assets/mist-left.svg';
 import mistRight from '../assets/mist-right.svg';
 // Night overlay
 import nightColorOverlay from '../assets/night-color-overlay.svg';
-import spotlight from '../assets/spotlight.svg';
+import spotlight from '../assets/spotlight-large.svg';
 // Trees
 import tree1 from '../assets/tree-1.svg';
 import tree2 from '../assets/tree-2.svg';
