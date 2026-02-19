@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 const DESIGN_WIDTH = 1440;
 const DESIGN_HEIGHT = 1080;
+const SMALL_SCREEN_CONTENT_HEIGHT = 1420; // bottom of cliff-lEfT.svg: 696.56 + 722.82 ≈ 1419.38
 
 export type LayoutTier = '4:3' | '16:9' | 'ultrawide';
 
@@ -47,14 +48,59 @@ export function useViewportScale() {
   }, [calculateDimensions]);
 
   const MAX_EFFECTIVE_WIDTH = 2560;
+  const aspect = dimensions.width / dimensions.height;
+  const isSmallScreen = aspect < 4 / 3;
+  const isPortrait = aspect <= 0.75;
+  const WIDE_ASPECT = 4 / 3;
+  const NARROW_ASPECT = 3 / 4;
+  const rideUpProgress = Math.max(
+    0,
+    Math.min(1, (WIDE_ASPECT - aspect) / (WIDE_ASPECT - NARROW_ASPECT)),
+  );
+  const contentHeight = Math.round(
+    DESIGN_HEIGHT +
+      rideUpProgress * (SMALL_SCREEN_CONTENT_HEIGHT - DESIGN_HEIGHT),
+  );
+
+  const smallScale = dimensions.width / DESIGN_WIDTH;
 
   const vScale = Math.max(
     dimensions.width / MAX_EFFECTIVE_WIDTH,
     Math.min(1, dimensions.height / DESIGN_HEIGHT),
   );
   const hScale = dimensions.width / DESIGN_WIDTH;
-  const effectiveWidth = dimensions.width / vScale;
+
+  const effectiveWidth =
+    isSmallScreen ? DESIGN_WIDTH : dimensions.width / vScale;
   const layoutTier = getTier(effectiveWidth);
+
+  const smallScreenStyle: React.CSSProperties = {
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    width: `${DESIGN_WIDTH}px`,
+    height: `${contentHeight}px`,
+    transform: `scale(${smallScale})`,
+    transformOrigin: 'bottom left',
+  };
+
+  const topLayerStyle: React.CSSProperties = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: `${DESIGN_WIDTH}px`,
+    height: `${DESIGN_HEIGHT}px`,
+    transform: `scale(${smallScale})`,
+    transformOrigin: 'top left',
+  };
+
+  const normalStyle: React.CSSProperties = {
+    transform: vScale !== 1 ? `scale(${vScale})` : undefined,
+    transformOrigin: 'top left',
+    width: vScale !== 1 ? `${100 / vScale}%` : '100%',
+    height: vScale !== 1 ? `${DESIGN_HEIGHT}px` : '100%',
+    minHeight: `${DESIGN_HEIGHT}px`,
+  };
 
   return {
     vScale,
@@ -63,6 +109,10 @@ export function useViewportScale() {
     viewportHeight: dimensions.height,
     effectiveWidth,
     layoutTier,
+    isSmallScreen,
+    isPortrait,
+    smallScale,
+    topLayerStyle,
 
     scaleWidth: (px: number) => px * hScale,
     scaleLeft: (px: number) => px * hScale,
@@ -75,15 +125,9 @@ export function useViewportScale() {
       return effectiveWidth - gapFromRight - baseLeft;
     },
 
-    transformStyle: {
-      transform: vScale !== 1 ? `scale(${vScale})` : undefined,
-      transformOrigin: 'top left',
-      width: vScale !== 1 ? `${100 / vScale}%` : '100%',
-      height: vScale !== 1 ? `${DESIGN_HEIGHT}px` : '100%',
-      minHeight: `${DESIGN_HEIGHT}px`,
-    } as React.CSSProperties,
+    transformStyle: isSmallScreen ? smallScreenStyle : normalStyle,
 
-    isScaled: vScale !== 1,
+    isScaled: isSmallScreen || vScale !== 1,
   };
 }
 
