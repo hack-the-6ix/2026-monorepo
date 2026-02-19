@@ -46,10 +46,14 @@ export function useViewportScale() {
     return () => window.removeEventListener('resize', handleResize);
   }, [calculateDimensions]);
 
-  const vScale = Math.min(1, dimensions.height / DESIGN_HEIGHT);
+  const MAX_EFFECTIVE_WIDTH = 2560;
+
+  const vScale = Math.max(
+    dimensions.width / MAX_EFFECTIVE_WIDTH,
+    Math.min(1, dimensions.height / DESIGN_HEIGHT),
+  );
   const hScale = dimensions.width / DESIGN_WIDTH;
-  const effectiveWidth =
-    vScale < 1 ? dimensions.width / vScale : dimensions.width;
+  const effectiveWidth = dimensions.width / vScale;
   const layoutTier = getTier(effectiveWidth);
 
   return {
@@ -72,14 +76,14 @@ export function useViewportScale() {
     },
 
     transformStyle: {
-      transform: vScale < 1 ? `scale(${vScale})` : undefined,
+      transform: vScale !== 1 ? `scale(${vScale})` : undefined,
       transformOrigin: 'top left',
-      width: vScale < 1 ? `${100 / vScale}%` : '100%',
-      height: vScale < 1 ? `${DESIGN_HEIGHT}px` : '100%',
+      width: vScale !== 1 ? `${100 / vScale}%` : '100%',
+      height: vScale !== 1 ? `${DESIGN_HEIGHT}px` : '100%',
       minHeight: `${DESIGN_HEIGHT}px`,
     } as React.CSSProperties,
 
-    isScaled: vScale < 1,
+    isScaled: vScale !== 1,
   };
 }
 
