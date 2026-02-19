@@ -46,8 +46,12 @@ export default function LandingPage() {
     : null;
   const innerTopBuffer =
     nextTierMinWidth != null ?
-      ((effectiveWidth - tier.minWidth) / (nextTierMinWidth - tier.minWidth)) *
-      INNER_TOP_MAX_BUFFER
+      Math.max(
+        0,
+        ((effectiveWidth - tier.minWidth) /
+          (nextTierMinWidth - tier.minWidth)) *
+          INNER_TOP_MAX_BUFFER,
+      )
     : 0;
 
   const cliffAsset =
@@ -284,7 +288,7 @@ export default function LandingPage() {
         </div>
 
         {/* Lower Right Graphics Group (right-anchored) */}
-        <div className="absolute right-0 top-[854.89px] w-[882.5px] h-[715.5px]">
+        <div className="absolute right-[-5px] top-[854.89px] w-[882.5px] h-[715.5px]">
           <div className="absolute left-0 top-[154px] w-[882px] h-[561.5px]">
             <Image
               src={assets.cliffRight2}
