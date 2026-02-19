@@ -39,6 +39,17 @@ export default function LandingPage() {
       effectiveWidth * ll.widthRatio
     : Math.max(ll.minWidth, widthToFixedGap(ll.left, ll.gapFromRight));
 
+  const INNER_TOP_MAX_BUFFER = 45;
+  const nextTierMinWidth =
+    layoutTier === '4:3' ? 1920
+    : layoutTier === '16:9' ? 2560
+    : null;
+  const innerTopBuffer =
+    nextTierMinWidth != null ?
+      ((effectiveWidth - tier.minWidth) / (nextTierMinWidth - tier.minWidth)) *
+      INNER_TOP_MAX_BUFFER
+    : 0;
+
   const cliffAsset =
     layoutTier === 'ultrawide' ? assets.cliffLeftExtrawide
     : layoutTier === '16:9' ? assets.cliffLeftWide
@@ -128,7 +139,7 @@ export default function LandingPage() {
               priority
             />
           </div>
-          <div className="absolute right-[86.3px] top-[-597.85px] w-[2901.7px] h-[1882.76px] blur-[1px]">
+          <div className="absolute right-[156.3px] top-[-597.85px] w-[2901.7px] h-[1882.76px] blur-[1px]">
             <Image
               src={assets.spotlight}
               alt=""
@@ -168,7 +179,7 @@ export default function LandingPage() {
             src={assets.mistLeft}
             alt=""
             fill
-            className="object-cover object-left"
+            className="object-left"
             priority
           />
         </div>
@@ -184,7 +195,7 @@ export default function LandingPage() {
             src={assets.mistRight}
             alt=""
             fill
-            className="object-cover object-right"
+            className="object-right"
             priority
           />
         </div>
@@ -335,7 +346,7 @@ export default function LandingPage() {
             className="absolute"
             style={{
               left: 0,
-              top: ll.innerTopOffset,
+              top: ll.innerTopOffset + innerTopBuffer,
               height: ll.innerHeight,
               width: llOuterWidth,
             }}

@@ -135,7 +135,7 @@ export const LAYOUT_TIERS: Record<LayoutTier, TierLayout> = {
       left: -2.66,
       top: 696.56,
       height: 722.82,
-      innerTopOffset: 49.32,
+      innerTopOffset: 40.32,
       innerHeight: 673.5,
       minWidth: 1107,
       gapFromRight: 336.5,
