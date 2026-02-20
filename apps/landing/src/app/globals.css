@@ -173,7 +173,9 @@ body {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	background: rgb(17, 15, 46); /* Match darkest gradient color */
+/*	background: rgb(17, 15, 46);  Match darkest gradient color */
+/* Use the gradient as a fallback if desired: */
+/* background: var(--bg-gradient), rgb(17, 15, 46); */
 }
 
 body {

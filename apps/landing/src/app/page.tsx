@@ -66,7 +66,7 @@ export default function LandingPage() {
   const cliffAsset =
     layoutTier === 'ultrawide' ? assets.cliffLeftExtrawide
     : layoutTier === '16:9' ? assets.cliffLeftWide
-    : assets.kys;
+    : assets.cliffLeft;
 
   const lightsContent = (
     <>
@@ -639,8 +639,8 @@ export default function LandingPage() {
               priority
             />
           </div>
-          <div className="flex-1 flex flex-col justify-center items-center">
-            <div className="flex flex-col gap-6 w-full" style={{ maxWidth: 500, margin: '0 12vw' }}>
+            <div className="flex-1 flex flex-col justify-center items-center">
+              <div className="flex flex-col gap-6 w-full px-8" style={{ maxWidth: 500 }}>
               <div className="flex flex-col gap-4">
                 <p className="portrait-event-info text-glow-subtle">
                   {EVENT_INFO.date} ⋅ {EVENT_INFO.location} ⋅ {EVENT_INFO.format}
@@ -663,7 +663,7 @@ export default function LandingPage() {
                   <label htmlFor="email-portrait" className="sr-only">
                     Email address
                   </label>
-                  <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
+                     <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] bg-opacity-90 border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
                     <input
                       id="email-portrait"
                       name="email"
