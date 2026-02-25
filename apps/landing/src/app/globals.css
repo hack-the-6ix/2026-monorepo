@@ -52,8 +52,16 @@
 	/* Z-Index Layers */
 	--z-background: 0;
 	--z-decorative: 10;
-	--z-content: 20;
-	--z-overlay: 30;
+	--z-content: 30;
+	--z-overlay: 20;
+
+	/* Custom animations */
+	--animate-subtle-bounce: subtle-bounce 1.2s ease-in-out infinite;
+}
+
+@keyframes subtle-bounce {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-8px); }
 }
 
 /* Utility component classes for reusable patterns */
@@ -71,7 +79,7 @@
 	}
 	
 	.layer-content {
-		@apply absolute inset-0 z-[var(--z-content)];
+		@apply absolute inset-0 z-[var(--z-content)] pointer-events-none;
 	}
 	
 	.layer-overlay {

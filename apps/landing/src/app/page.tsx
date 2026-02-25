@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { ButterfliesAnimated } from './ButterfliesAnimated';
 
 import { assets } from '../lib/assets';
 import {
@@ -37,7 +38,6 @@ export default function LandingPage() {
     layoutTier,
     isSmallScreen,
     isPortrait,
-    smallScale,
     topLayerStyle,
   } = useViewportScale();
 
@@ -392,15 +392,7 @@ export default function LandingPage() {
           </div>
 
           {/* Butterflies (right-anchored) */}
-          <div className="absolute right-[280px] top-[317.89px] w-[213.92px] h-[533.08px]">
-            <Image
-              src={assets.butterflies}
-              alt=""
-              width={214}
-              height={533}
-              className="asset-image"
-            />
-          </div>
+          <ButterfliesAnimated />
 
           {/* Lower Right Graphics Group (right-anchored) */}
           <div className="absolute right-[-5px] top-[854.89px] w-[882.5px] h-[715.5px]">
@@ -544,7 +536,7 @@ export default function LandingPage() {
         {/* Render fixed-position hero UI for both landscape and in-between aspect ratios */}
         {(!isPortrait && (!isSmallScreen || isSmallScreen)) && (
           <div className="layer-content">
-            <div className="absolute left-[59.34px] top-[36.89px] w-[977px] h-[631px]">
+            <div className="absolute left-[59.34px] top-[36.89px] w-[977px] h-[631px] pointer-events-auto">
               <div className="absolute left-0 top-0 w-[30px] h-[75.64px]">
                 <Image
                   src={assets.logo}
