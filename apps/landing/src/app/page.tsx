@@ -655,7 +655,7 @@ export default function LandingPage() {
                   <label htmlFor="email-portrait" className="sr-only">
                     Email address
                   </label>
-                     <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] bg-opacity-90 border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
+                     <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
                     <input
                       id="email-portrait"
                       name="email"

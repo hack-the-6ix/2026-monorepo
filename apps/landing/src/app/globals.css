@@ -3,52 +3,29 @@
 
 @source '../../../../packages/ui/src';
 
-:root {
-	/* Design Tokens - Colors */
-	--color-primary: #2da990;
-	--color-text-primary: #3b3d69;
-	--color-text-primary-white: #f9fafb;
-	--color-text-placeholder: #99a1af;
-	--color-input-bg: rgba(249, 250, 251, 0.2);
-	--color-border-primary: #2da990;
-	--color-highlight-gold: #f6bd55;
-	
-	/* Design Tokens - Spacing */
-	--spacing-xs: 8px;
-	--spacing-sm: 12px;
-	--spacing-md: 16px;
-	--spacing-lg: 24px;
-	--spacing-xl: 32px;
-	
-	/* Design Tokens - Radius */
-	--radius-full: 360px;
-	--radius-lg: 32px;
-	
-	/* Design Tokens - Z-Index Layers */
-	--z-background: 0;
-	--z-decorative: 10;
-	--z-overlay: 20;
-	--z-content: 30;
-	
-	/* Typography */
-	--font-inter: var(--font-inter);
-	
-	/* Background Gradient */
-	--bg-gradient: linear-gradient(151deg, rgba(24, 34, 82, 1) 0%, rgba(38, 26, 85, 1) 10%, rgba(43, 23, 119, 1) 14%, rgba(25, 18, 69, 1) 23%, rgba(17, 15, 46, 1) 30%);
-}
-
 @theme inline {
 	--font-sans: var(--font-inter);
-	
+
 	/* Colors */
 	--color-primary: #2da990;
 	--color-text-primary: #3b3d69;
 	--color-text-primary-white: #f9fafb;
 	--color-text-placeholder: #99a1af;
-	--color-input-bg: rgba(249, 250, 251, 0.2);
+	--color-input-bg: rgba(249, 250, 251, 0.4);
 	--color-border-primary: #2da990;
 	--color-highlight-gold: #f6bd55;
-	
+
+	/* Spacing */
+	--spacing-xs: 8px;
+	--spacing-sm: 12px;
+	--spacing-md: 16px;
+	--spacing-lg: 24px;
+	--spacing-xl: 32px;
+
+	/* Radius */
+	--radius-full: 360px;
+	--radius-lg: 32px;
+
 	/* Z-Index Layers */
 	--z-background: 0;
 	--z-decorative: 10;
@@ -86,7 +63,6 @@
 		@apply fixed inset-0 z-[var(--z-overlay)] pointer-events-none;
 	}
 	
-	/* Warm glow effect for text - creates a soft radiant halo around each character */
 	.text-glow {
 		text-shadow:
 			0 0 10px rgba(253, 218, 152, 0.4),
@@ -94,14 +70,12 @@
 			0 0 40px rgba(253, 218, 152, 0.1);
 	}
 	
-	/* Subtle glow variant for smaller text */
 	.text-glow-subtle {
 		text-shadow:
 			0 0 8px rgba(253, 218, 152, 0.4),
 			0 0 16px rgba(253, 218, 152, 0.2);
 	}
 	
-	/* Warm glow effect for containers - creates a soft radiant halo around the element */
 	.box-glow {
 		box-shadow:
 			0 0 10px rgba(253, 218, 152, 0.2),
@@ -109,7 +83,6 @@
 			0 0 40px rgba(253, 218, 152, 0.05);
 	}
 
-	/* Anchor positioning utilities */
 	.anchor-left {
 		position: absolute;
 		left: 0;
@@ -126,7 +99,6 @@
 		transform: translateX(-50%);
 	}
 
-	/* Portrait text layout for small portrait screens */
 	.portrait-text {
 		position: fixed;
 		inset: 0;
@@ -181,9 +153,6 @@ body {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-/*	background: rgb(17, 15, 46);  Match darkest gradient color */
-/* Use the gradient as a fallback if desired: */
-/* background: var(--bg-gradient), rgb(17, 15, 46); */
 }
 
 body {
