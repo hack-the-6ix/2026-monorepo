@@ -1,18 +1,15 @@
 /**
  * Asset mapping for landing page graphics
- * All assets are located in packages/assets/
- * Using relative imports until @hackthe6ix/assets package is properly linked
+ * Shared assets from @hackthe6ix/assets, local assets from src/assets/
  */
 
-// Main SVG assets
-// BG
-import grass1 from '../../../../packages/assets/grass-1.svg';
-import grass1Shadow from '../../../../packages/assets/grass-1-shadow.svg';
-
-// Shared assets
-import logo from '../../../../packages/assets/Logo.svg';
-import shroom1 from '../../../../packages/assets/organic/mushroom-1.svg';
-import shroom2 from '../../../../packages/assets/organic/mushroom-2.svg';
+import {
+  grass1,
+  grass1Shadow,
+  logo,
+  shroom1,
+  shroom2,
+} from '@hackthe6ix/assets';
 import butterflies from '../assets/butterflies.svg';
 import caveRight from '../assets/cave-right.svg';
 

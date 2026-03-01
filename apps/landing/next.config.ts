@@ -1,9 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  // Assets are imported directly from packages/assets/
-  // Webpack handles SVG imports automatically
+  transpilePackages: ['@hackthe6ix/assets'],
 };
 
 export default nextConfig;
