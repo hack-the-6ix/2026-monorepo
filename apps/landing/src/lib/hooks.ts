@@ -39,12 +39,21 @@ export function useViewportScale() {
   useEffect(() => {
     setDimensions(calculateDimensions());
 
+    let rafId: number | null = null;
+
     const handleResize = () => {
-      setDimensions(calculateDimensions());
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        setDimensions(calculateDimensions());
+        rafId = null;
+      });
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, [calculateDimensions]);
 
   const MAX_EFFECTIVE_WIDTH = 2560;
@@ -149,8 +158,22 @@ export function useViewportSize() {
     };
 
     updateSize();
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
+
+    let rafId: number | null = null;
+
+    const handleResize = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        updateSize();
+        rafId = null;
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return size;
