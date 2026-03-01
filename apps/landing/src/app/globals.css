@@ -29,8 +29,8 @@
 	/* Z-Index Layers */
 	--z-background: 0;
 	--z-decorative: 10;
-	--z-content: 30;
-	--z-overlay: 20;
+	--z-overlay: 20;   /* Night color overlay – below interactive content */
+	--z-content: 30;   /* Interactive hero content – above night overlay */
 
 	/* Custom animations */
 	--animate-subtle-bounce: subtle-bounce 1.2s ease-in-out infinite;

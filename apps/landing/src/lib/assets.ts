@@ -10,6 +10,7 @@ import {
   shroom1,
   shroom2,
 } from '@hackthe6ix/assets';
+import bgImage from '../assets/bg.png';
 import butterflies from '../assets/butterflies.svg';
 import caveRight from '../assets/cave-right.svg';
 
@@ -41,6 +42,9 @@ import tree1 from '../assets/tree-1.svg';
 import tree2 from '../assets/tree-2.svg';
 
 export const assets = {
+  // Background
+  bgImage,
+
   // Main SVG assets
   cnTower,
   mistLeft,

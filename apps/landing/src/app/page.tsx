@@ -6,7 +6,6 @@ import { ButterfliesAnimated } from './ButterfliesAnimated';
 
 import { assets } from '../lib/assets';
 import {
-  BACKGROUND_GRADIENT,
   EVENT_INFO,
   FORM_CONTENT,
   HERO_CONTENT,
@@ -68,40 +67,66 @@ export default function LandingPage() {
     : layoutTier === '16:9' ? assets.cliffLeftWide
     : assets.cliffLeft;
 
+  // CN Tower left-anchored position: track cliff right edge with per-tier gap
+  const cliffRightEdge = ll.left + llOuterWidth;
+  const nextTierGap =
+    layoutTier === '4:3' ? LAYOUT_TIERS['16:9'].cnTower.gapFromCliffRight
+    : layoutTier === '16:9' ? LAYOUT_TIERS['ultrawide'].cnTower.gapFromCliffRight
+    : null;
+  const tierProgress =
+    nextTierMinWidth != null ?
+      Math.max(
+        0,
+        Math.min(
+          1,
+          (effectiveWidth - tier.minWidth) /
+            (nextTierMinWidth - tier.minWidth),
+        ),
+      )
+    : 0;
+  const cnTowerGap =
+    nextTierGap != null ?
+      tier.cnTower.gapFromCliffRight +
+        tierProgress * (nextTierGap - tier.cnTower.gapFromCliffRight)
+    : tier.cnTower.gapFromCliffRight;
+  const cnTowerLeft = cliffRightEdge - cnTowerGap - 201.45;
+
   const lightsContent = (
     <>
-      <div className="absolute left-[-150px] top-0 w-[756px] h-[381px]">
-        <Image
-          src={assets.lightLeft1}
-          alt=""
-          width={756}
-          height={381}
-          className="asset-image"
-          priority
-        />
-      </div>
-      <div
-        className="absolute left-[-150px] w-[774px] h-[640px]"
-        style={{ top: 90.74 }}
-      >
-        <Image
-          src={assets.lightLeft2}
-          alt=""
-          width={774}
-          height={640}
-          className="asset-image"
-          priority
-        />
-      </div>
-      <div className="absolute right-[-112.16px] top-0 w-[742px] h-[501px]">
-        <Image
-          src={assets.lightRight}
-          alt=""
-          width={742}
-          height={501}
-          className="asset-image"
-          priority
-        />
+      <div style={{ opacity: 0.6 }}>
+        <div className="absolute left-[-150px] top-0 w-[756px] h-[381px]">
+          <Image
+            src={assets.lightLeft1}
+            alt=""
+            width={756}
+            height={381}
+            className="asset-image"
+            priority
+          />
+        </div>
+        <div
+          className="absolute left-[-150px] w-[874px] h-[640px]"
+          style={{ top: 100.74 }}
+        >
+          <Image
+            src={assets.lightLeft2}
+            alt=""
+            width={774}
+            height={640}
+            className="asset-image"
+            priority
+          />
+        </div>
+        <div className="absolute right-[-112.16px] top-0 w-[742px] h-[501px]">
+          <Image
+            src={assets.lightRight}
+            alt=""
+            width={742}
+            height={501}
+            className="asset-image"
+            priority
+          />
+        </div>
       </div>
     </>
   );
@@ -138,91 +163,18 @@ export default function LandingPage() {
     </div>
   );
 
-  const heroTextContent = (
-    <div style={{ paddingLeft: '125px', width: '977px' }}>
-      <div className="w-[30px] h-[75.64px] mb-8">
+  return (
+    <>
+      {/* Background image - fixed, full viewport, top-anchored */}
+      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -1 }}>
         <Image
-          src={assets.logo}
-          alt="Hack the 6ix Logo"
-          width={30}
-          height={76}
-          className="block w-full h-full"
+          src={assets.bgImage}
+          alt=""
+          fill
+          className="object-cover object-top"
           priority
         />
       </div>
-      <div className="w-[911px] flex flex-col gap-8">
-        <div className="flex flex-col gap-6 items-start justify-center w-full">
-          <div className="flex flex-row gap-2 items-start w-full">
-            <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-              {EVENT_INFO.date}
-            </p>
-            <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-              ⋅
-            </p>
-            <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-              {EVENT_INFO.location}
-            </p>
-            <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-              ⋅
-            </p>
-            <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-              {EVENT_INFO.format}
-            </p>
-          </div>
-          <h1 className="font-bold text-[60px] leading-[76px] tracking-[-1.32px] text-[var(--color-text-primary-white)] m-0 text-glow">
-            {HERO_CONTENT.title}
-          </h1>
-          <p className="font-medium text-[32px] leading-[40px] tracking-[-0.704px] m-0 text-glow">
-            <span className="text-[var(--color-text-primary-white)]">
-              {HERO_CONTENT.subtitlePrefix}
-            </span>
-            <span className="text-[var(--color-highlight-gold)] font-bold">
-              {HERO_CONTENT.subtitleHighlight}
-            </span>
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 w-full">
-          <p className="font-medium text-[20px] leading-[24px] tracking-[-0.34px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-            {FORM_CONTENT.description}
-          </p>
-          <div className="flex flex-row gap-4 items-center">
-            <div className="flex flex-col gap-1 w-[406px]">
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder={FORM_CONTENT.placeholder}
-                  className="flex-1 font-medium text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
-                />
-              </div>
-            </div>
-            <button
-              type="button"
-              className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow"
-              aria-label="Sign up for updates"
-            >
-              <span className="font-semibold text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] text-center">
-                {FORM_CONTENT.buttonText}
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <>
-      {/* Background gradient - fixed, full viewport, always top-anchored */}
-      <div
-        className="fixed inset-0 pointer-events-none"
-        style={{ background: BACKGROUND_GRADIENT, zIndex: -1 }}
-      />
 
       {/* Top-anchored layer for small screens: leaves */}
       {isSmallScreen && (
@@ -301,11 +253,11 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Skyline background CN Tower - right-anchored (right offset constant across tiers) */}
+          {/* Skyline background CN Tower - left-anchored, tracks cliff right edge */}
           <div
             className="absolute w-[201.45px] h-[241.76px]"
             style={{
-              right: tier.cnTower.right,
+              left: cnTowerLeft,
               top: tier.cnTower.top,
             }}
           >
@@ -513,7 +465,7 @@ export default function LandingPage() {
 
         {/* ============================================================
           LAYER 2: Night Overlay (z-index: 20)
-          Topmost layer - covers entire viewport with adjustable opacity
+          Semi-transparent color overlay; sits below interactive content (z-30)
           ============================================================ */}
         <div
           className="layer-overlay"
@@ -534,19 +486,21 @@ export default function LandingPage() {
           Small screens use a separate fixed overlay for vertical centering.
           ============================================================ */}
         {/* Render fixed-position hero UI for both landscape and in-between aspect ratios */}
-        {(!isPortrait && (!isSmallScreen || isSmallScreen)) && (
+        {!isPortrait && (
           <div className="layer-content">
             <div className="absolute left-[59.34px] top-[36.89px] w-[977px] h-[631px] pointer-events-auto">
-              <div className="absolute left-0 top-0 w-[30px] h-[75.64px]">
-                <Image
-                  src={assets.logo}
-                  alt="Hack the 6ix Logo"
-                  width={30}
-                  height={76}
-                  className="block w-full h-full"
-                  priority
-                />
-              </div>
+              {!isSmallScreen && (
+                <div className="absolute left-0 top-0 w-[30px] h-[75.64px]">
+                  <Image
+                    src={assets.logo}
+                    alt="Hack the 6ix Logo"
+                    width={30}
+                    height={76}
+                    className="block w-full h-full"
+                    priority
+                  />
+                </div>
+              )}
               <div className="absolute left-[66px] top-[319px] w-[911px] flex flex-col gap-8">
                 <div className="flex flex-col gap-6 items-start justify-center w-full">
                   <div className="flex flex-row gap-2 items-start w-full">
@@ -615,8 +569,27 @@ export default function LandingPage() {
         )}
       </div>
 
-      {/* Small landscape text -- outside scaled container, vertically centered */}
-      {/* Removed: in-between aspect ratio now uses fixed-position hero UI only */}
+      {/* Fixed logo for in-between aspect ratios (between portrait and landscape) */}
+      {isSmallScreen && !isPortrait && (
+        <div
+          className="fixed pointer-events-none z-[30]"
+          style={{
+            left: '4.12vw',
+            top: '2.56vw',
+            width: '2.082vw',
+            height: 'auto',
+          }}
+        >
+          <Image
+            src={assets.logo}
+            alt="Hack the 6ix Logo"
+            width={30}
+            height={76}
+            className="block w-full h-auto"
+            priority
+          />
+        </div>
+      )}
 
       {/* Portrait text layout -- outside scaled container, real viewport sizes */}
       {isPortrait && (
@@ -632,7 +605,7 @@ export default function LandingPage() {
             />
           </div>
             <div className="flex-1 flex flex-col justify-center items-center">
-              <div className="flex flex-col gap-6 w-full px-8" style={{ maxWidth: 500 }}>
+              <div className="flex flex-col gap-6 w-full px-10" style={{ maxWidth: 500 }}>
               <div className="flex flex-col gap-4">
                 <p className="portrait-event-info text-glow-subtle">
                   {EVENT_INFO.date} ⋅ {EVENT_INFO.location} ⋅ {EVENT_INFO.format}
