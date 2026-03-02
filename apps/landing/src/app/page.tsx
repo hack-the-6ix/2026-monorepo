@@ -1,8 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { ButterfliesAnimated } from './ButterfliesAnimated';
 
 import { assets } from '../lib/assets';
 import {
@@ -13,6 +12,9 @@ import {
   NIGHT_OVERLAY_OPACITY,
 } from '../lib/constants';
 import { useViewportScale } from '../lib/hooks';
+import { ButterfliesAnimated } from './ButterfliesAnimated';
+
+import styles from './page.module.css';
 
 /**
  * Landing Page Component
@@ -71,7 +73,8 @@ export default function LandingPage() {
   const cliffRightEdge = ll.left + llOuterWidth;
   const nextTierGap =
     layoutTier === '4:3' ? LAYOUT_TIERS['16:9'].cnTower.gapFromCliffRight
-    : layoutTier === '16:9' ? LAYOUT_TIERS['ultrawide'].cnTower.gapFromCliffRight
+    : layoutTier === '16:9' ?
+      LAYOUT_TIERS['ultrawide'].cnTower.gapFromCliffRight
     : null;
   const tierProgress =
     nextTierMinWidth != null ?
@@ -79,15 +82,14 @@ export default function LandingPage() {
         0,
         Math.min(
           1,
-          (effectiveWidth - tier.minWidth) /
-            (nextTierMinWidth - tier.minWidth),
+          (effectiveWidth - tier.minWidth) / (nextTierMinWidth - tier.minWidth),
         ),
       )
     : 0;
   const cnTowerGap =
     nextTierGap != null ?
       tier.cnTower.gapFromCliffRight +
-        tierProgress * (nextTierGap - tier.cnTower.gapFromCliffRight)
+      tierProgress * (nextTierGap - tier.cnTower.gapFromCliffRight)
     : tier.cnTower.gapFromCliffRight;
   const cnTowerLeft = cliffRightEdge - cnTowerGap - 201.45;
 
@@ -162,6 +164,65 @@ export default function LandingPage() {
       </div>
     </div>
   );
+  const [email, setEmail] = useState<string>('');
+  const [submitStatus, setSubmitStatus] = useState<{
+    message: string;
+    isError: boolean;
+  } | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!email.trim()) {
+      setSubmitStatus({
+        message: 'Please provide an email',
+        isError: true,
+      });
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setSubmitStatus({
+        message: 'Please provide a valid email',
+        isError: true,
+      });
+      return;
+    }
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch(
+        'https://landingapi.hackthe6ix.com/api/subscribe',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        },
+      );
+
+      const data = await response.text();
+
+      if (response.ok) {
+        setSubmitStatus({
+          message: data,
+          isError: false,
+        });
+        setEmail('');
+      } else {
+        setSubmitStatus({
+          message: data || 'Failed to subscribe. Please try again.',
+          isError: true,
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus({
+        message: 'An error occurred. Please try again later.',
+        isError: true,
+      });
+    }
+  };
 
   return (
     <>
@@ -604,13 +665,19 @@ export default function LandingPage() {
               priority
             />
           </div>
-            <div className="flex-1 flex flex-col justify-center items-center">
-              <div className="flex flex-col gap-6 w-full px-10" style={{ maxWidth: 500 }}>
+          <div className="flex-1 flex flex-col justify-center items-center">
+            <div
+              className="flex flex-col gap-6 w-full px-10"
+              style={{ maxWidth: 500 }}
+            >
               <div className="flex flex-col gap-4">
                 <p className="portrait-event-info text-glow-subtle">
-                  {EVENT_INFO.date} ⋅ {EVENT_INFO.location} ⋅ {EVENT_INFO.format}
+                  {EVENT_INFO.date} ⋅ {EVENT_INFO.location} ⋅{' '}
+                  {EVENT_INFO.format}
                 </p>
-                <h1 className="portrait-title text-glow">{HERO_CONTENT.title}</h1>
+                <h1 className="portrait-title text-glow">
+                  {HERO_CONTENT.title}
+                </h1>
                 <p className="portrait-subtitle text-glow">
                   <span className="text-[var(--color-text-primary-white)]">
                     {HERO_CONTENT.subtitlePrefix}
@@ -628,7 +695,7 @@ export default function LandingPage() {
                   <label htmlFor="email-portrait" className="sr-only">
                     Email address
                   </label>
-                     <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
+                  <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
                     <input
                       id="email-portrait"
                       name="email"
@@ -647,6 +714,51 @@ export default function LandingPage() {
                       {FORM_CONTENT.buttonText}
                     </span>
                   </button>
+                </div>
+                {/* Form Section */}
+                <div className={styles.formSection}>
+                  <p className={styles.formDescription}>
+                    {FORM_CONTENT.description}
+                  </p>
+
+                  <div>
+                    <form onSubmit={handleSubmit} className={styles.formRow}>
+                      {/* Text Field */}
+                      <div className={styles.textFieldWrapper}>
+                        <label htmlFor="email" className={styles.srOnly}>
+                          Email address
+                        </label>
+                        <div className={styles.textField}>
+                          <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            autoComplete="email"
+                            placeholder={FORM_CONTENT.placeholder}
+                            className={styles.textFieldInput}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <button
+                        type="submit"
+                        className={styles.button}
+                        aria-label="Sign up for updates"
+                      >
+                        <span className={styles.buttonText}>
+                          {FORM_CONTENT.buttonText}
+                        </span>
+                      </button>
+                    </form>
+                    {submitStatus && (
+                      <p
+                        className={`text-sm ${submitStatus.isError ? 'text-red-600' : 'text-green-600'}`}
+                      >
+                        {submitStatus.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
