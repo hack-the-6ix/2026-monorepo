@@ -14,8 +14,6 @@ import {
 import { useViewportScale } from '../lib/hooks';
 import { ButterfliesAnimated } from './ButterfliesAnimated';
 
-import styles from './page.module.css';
-
 /**
  * Landing Page Component
  *
@@ -597,31 +595,45 @@ export default function LandingPage() {
                   <p className="font-medium text-[20px] leading-[24px] tracking-[-0.34px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
                     {FORM_CONTENT.description}
                   </p>
-                  <div className="flex flex-row gap-4 items-center">
-                    <div className="flex flex-col gap-1 w-[406px]">
-                      <label htmlFor="email" className="sr-only">
-                        Email address
-                      </label>
-                      <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
-                        <input
-                          id="email"
-                          name="email"
-                          type="email"
-                          autoComplete="email"
-                          placeholder={FORM_CONTENT.placeholder}
-                          className="flex-1 font-medium text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
-                        />
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow"
-                      aria-label="Sign up for updates"
+                  <div>
+                    <form
+                      onSubmit={handleSubmit}
+                      className="flex flex-row gap-4 items-center"
                     >
-                      <span className="font-semibold text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] text-center">
-                        {FORM_CONTENT.buttonText}
-                      </span>
-                    </button>
+                      <div className="flex flex-col gap-1 w-[406px]">
+                        <label htmlFor="email" className="sr-only">
+                          Email address
+                        </label>
+                        <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
+                          <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            autoComplete="email"
+                            placeholder={FORM_CONTENT.placeholder}
+                            className="flex-1 font-medium text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
+                          />
+                        </div>
+                      </div>
+                      <button
+                        type="submit"
+                        className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow"
+                        aria-label="Sign up for updates"
+                      >
+                        <span className="font-semibold text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] text-center">
+                          {FORM_CONTENT.buttonText}
+                        </span>
+                      </button>
+                    </form>
+                    {submitStatus && (
+                      <p
+                        className={`text-sm ${submitStatus.isError ? 'text-red-600' : 'text-green-600'}`}
+                      >
+                        {submitStatus.message}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -716,26 +728,29 @@ export default function LandingPage() {
                   </button>
                 </div>
                 {/* Form Section */}
-                <div className={styles.formSection}>
-                  <p className={styles.formDescription}>
+                <div className="flex flex-col gap-4 w-full">
+                  <p className="font-medium text-[20px] leading-[24px] tracking-[-0.34px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
                     {FORM_CONTENT.description}
                   </p>
 
                   <div>
-                    <form onSubmit={handleSubmit} className={styles.formRow}>
+                    <form
+                      onSubmit={handleSubmit}
+                      className="flex flex-row gap-4 items-center"
+                    >
                       {/* Text Field */}
-                      <div className={styles.textFieldWrapper}>
-                        <label htmlFor="email" className={styles.srOnly}>
+                      <div className="flex flex-col gap-1 w-[406px]">
+                        <label htmlFor="email" className="sr-only">
                           Email address
                         </label>
-                        <div className={styles.textField}>
+                        <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
                           <input
                             id="email"
                             name="email"
                             type="email"
                             autoComplete="email"
                             placeholder={FORM_CONTENT.placeholder}
-                            className={styles.textFieldInput}
+                            className="flex-1 font-medium text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                           />
@@ -743,10 +758,10 @@ export default function LandingPage() {
                       </div>
                       <button
                         type="submit"
-                        className={styles.button}
+                        className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow"
                         aria-label="Sign up for updates"
                       >
-                        <span className={styles.buttonText}>
+                        <span className="font-semibold text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] text-center">
                           {FORM_CONTENT.buttonText}
                         </span>
                       </button>
