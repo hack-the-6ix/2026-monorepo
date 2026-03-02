@@ -101,7 +101,6 @@ export default function LandingPage() {
             width={756}
             height={381}
             className="asset-image"
-            priority
           />
         </div>
         <div
@@ -114,7 +113,6 @@ export default function LandingPage() {
             width={774}
             height={640}
             className="asset-image"
-            priority
           />
         </div>
         <div className="absolute right-[-112.16px] top-0 w-[742px] h-[501px]">
@@ -124,7 +122,6 @@ export default function LandingPage() {
             width={742}
             height={501}
             className="asset-image"
-            priority
           />
         </div>
       </div>
@@ -230,6 +227,7 @@ export default function LandingPage() {
           src={assets.bgImage}
           alt=""
           fill
+          sizes="100vw"
           className="object-cover object-top"
           priority
         />
@@ -279,8 +277,8 @@ export default function LandingPage() {
                 src={assets.cloudLeft}
                 alt=""
                 fill
+                sizes="100vw"
                 className="object-cover object-left"
-                priority
               />
             </div>
           </div>
@@ -297,17 +295,15 @@ export default function LandingPage() {
                 width={1520}
                 height={874}
                 className="asset-image"
-                priority
               />
             </div>
-            <div className="absolute right-[156.3px] top-[-597.85px] w-[2901.7px] h-[1882.76px] blur-[1px]">
+            <div className="absolute right-[156.3px] top-[-597.85px] w-[2901.7px] h-[1882.76px]">
               <Image
                 src={assets.spotlight}
                 alt=""
                 width={2902}
                 height={1883}
                 className="asset-image"
-                priority
               />
             </div>
           </div>
@@ -324,8 +320,8 @@ export default function LandingPage() {
               src={assets.cnTower}
               alt=""
               fill
+              sizes="202px"
               className="object-cover object-left"
-              priority
             />
           </div>
           {/* Skyline background left mist - left-anchored */}
@@ -340,8 +336,8 @@ export default function LandingPage() {
               src={assets.mistLeft}
               alt=""
               fill
+              sizes="100vw"
               className="object-left"
-              priority
             />
           </div>
           {/* Skyline background right mist - left-anchored */}
@@ -356,8 +352,8 @@ export default function LandingPage() {
               src={assets.mistRight}
               alt=""
               fill
+              sizes="100vw"
               className="object-right"
-              priority
             />
           </div>
         </div>
@@ -477,6 +473,7 @@ export default function LandingPage() {
                 src={cliffAsset}
                 alt=""
                 fill
+                sizes="100vw"
                 className="object-cover object-right"
               />
             </div>
@@ -534,8 +531,8 @@ export default function LandingPage() {
             src={assets.nightColorOverlay}
             alt=""
             fill
+            sizes="100vw"
             className="object-cover"
-            priority
           />
         </div>
 

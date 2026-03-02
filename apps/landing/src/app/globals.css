@@ -72,8 +72,17 @@ body {
 		@apply absolute inset-0 z-[var(--z-content)] pointer-events-none;
 	}
 	
+	/*
+	 * The overlay lives inside the main container which uses CSS `zoom` on
+	 * mobile.  Unlike `transform`, `zoom` does NOT create a containing block
+	 * for `position: fixed` children, so `fixed` would escape to the viewport.
+	 * Using `absolute` keeps the overlay inside the container on all paths:
+	 *   - desktop (`transform: scale`) – fixed degrades to absolute anyway
+	 *   - mobile  (`zoom`)             – absolute is required
+	 * This also eliminates a wasted GPU compositing layer that `fixed` created.
+	 */
 	.layer-overlay {
-		@apply fixed inset-0 z-[var(--z-overlay)] pointer-events-none;
+		@apply absolute inset-0 z-[var(--z-overlay)] pointer-events-none;
 	}
 	
 	.text-glow {
