@@ -626,7 +626,7 @@ export default function LandingPage() {
                     </form>
                     {submitStatus && (
                       <p
-                        className={`text-sm ${submitStatus.isError ? 'text-red-600' : 'text-green-600'}`}
+                        className={`text-sm mt-3 ${submitStatus.isError ? 'text-red-600' : 'text-green-600'}`}
                       >
                         {submitStatus.message}
                       </p>
@@ -696,86 +696,51 @@ export default function LandingPage() {
                   </span>
                 </p>
               </div>
-              <div className="flex flex-col gap-3">
-                <p className="portrait-description text-glow-subtle">
-                  {FORM_CONTENT.description}
-                </p>
-                <div className="flex flex-col gap-3 w-full">
-                  <label htmlFor="email-portrait" className="sr-only">
-                    Email address
-                  </label>
-                  <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
-                    <input
-                      id="email-portrait"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      placeholder={FORM_CONTENT.placeholder}
-                      className="flex-1 font-medium text-[14px] leading-[18px] tracking-[-0.15px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow w-full"
-                    aria-label="Sign up for updates"
-                  >
-                    <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.15px] text-[var(--color-text-primary-white)] text-center">
-                      {FORM_CONTENT.buttonText}
-                    </span>
-                  </button>
-                </div>
-                {/* Form Section */}
-                <div className="flex flex-col gap-4 w-full">
-                  <p className="font-medium text-[20px] leading-[24px] tracking-[-0.34px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                <div className="flex flex-col gap-3">
+                  <p className="portrait-description text-glow-subtle">
                     {FORM_CONTENT.description}
                   </p>
-
-                  <div>
-                    <form
-                      onSubmit={handleSubmit}
-                      className="flex flex-row gap-4 items-center"
+                  <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-3 w-full"
+                  >
+                    <label htmlFor="email-portrait" className="sr-only">
+                      Email address
+                    </label>
+                    <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
+                      <input
+                        id="email-portrait"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        placeholder={FORM_CONTENT.placeholder}
+                        className="flex-1 font-medium text-[14px] leading-[18px] tracking-[-0.15px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow w-full"
+                      aria-label="Sign up for updates"
                     >
-                      {/* Text Field */}
-                      <div className="flex flex-col gap-1 w-[406px]">
-                        <label htmlFor="email" className="sr-only">
-                          Email address
-                        </label>
-                        <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
-                          <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            autoComplete="email"
-                            placeholder={FORM_CONTENT.placeholder}
-                            className="flex-1 font-medium text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                          />
-                        </div>
-                      </div>
-                      <button
-                        type="submit"
-                        className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow"
-                        aria-label="Sign up for updates"
-                      >
-                        <span className="font-semibold text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] text-center">
-                          {FORM_CONTENT.buttonText}
-                        </span>
-                      </button>
-                    </form>
-                    {submitStatus && (
-                      <p
-                        className={`text-sm ${submitStatus.isError ? 'text-red-600' : 'text-green-600'}`}
-                      >
-                        {submitStatus.message}
-                      </p>
-                    )}
-                  </div>
+                      <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.15px] text-[var(--color-text-primary-white)] text-center">
+                        {FORM_CONTENT.buttonText}
+                      </span>
+                    </button>
+                  </form>
+                  {submitStatus && (
+                    <p
+                      className={`text-sm mt-1 ${submitStatus.isError ? 'text-red-600' : 'text-green-600'}`}
+                    >
+                      {submitStatus.message}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        // </div>
       )}
     </>
   );
