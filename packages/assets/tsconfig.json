@@ -1,0 +1,16 @@
+{
+  "extends": "../../configs/typescript-config/tsconfig.base.json",
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "jsx": "react",
+    "types": ["node"]
+  },
+  "include": ["index.ts", "*.svg", "organic/**/*", "svg.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}

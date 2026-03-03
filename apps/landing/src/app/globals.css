@@ -1,63 +1,191 @@
 @import "tailwindcss";
-@import '@hackthe6ix/ui/theme.css';
+@import '../../../../packages/ui/src/index.css';
 
-@source '../../node_modules/@hackthe6ix/ui';
+@source '../../../../packages/ui/src';
 
-:root {
-	/* Design Tokens - Colors */
+@theme inline {
+	--font-sans: var(--font-inter);
+
+	/* Colors */
 	--color-primary: #2da990;
 	--color-text-primary: #3b3d69;
 	--color-text-primary-white: #f9fafb;
 	--color-text-placeholder: #99a1af;
-	--color-input-bg: rgba(249, 250, 251, 0.2);
+	--color-input-bg: rgba(249, 250, 251, 0.4);
 	--color-border-primary: #2da990;
 	--color-highlight-gold: #f6bd55;
-	
-	/* Design Tokens - Spacing */
+
+	/* Spacing */
 	--spacing-xs: 8px;
 	--spacing-sm: 12px;
 	--spacing-md: 16px;
 	--spacing-lg: 24px;
 	--spacing-xl: 32px;
-	
-	/* Design Tokens - Radius */
+
+	/* Radius */
 	--radius-full: 360px;
 	--radius-lg: 32px;
-	
-	/* Design Tokens - Z-Index Layers */
+
+	/* Z-Index Layers */
 	--z-background: 0;
 	--z-decorative: 10;
-	--z-content: 20;
-	
-	/* Typography */
-	--font-inter: var(--font-inter);
-	
-	/* Background Gradient */
-	--bg-gradient: linear-gradient(151deg, rgba(24, 34, 82, 1) 0%, rgba(38, 26, 85, 1) 10%, rgba(43, 23, 119, 1) 14%, rgba(25, 18, 69, 1) 23%, rgba(17, 15, 46, 1) 30%);
+	--z-overlay: 20;   /* Night color overlay – below interactive content */
+	--z-content: 30;   /* Interactive hero content – above night overlay */
+
+	/* Custom animations */
+	--animate-subtle-bounce: subtle-bounce 1.2s ease-in-out infinite;
 }
 
-@theme inline {
-	--font-sans: var(--font-inter);
+@keyframes subtle-bounce {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-8px); }
+}
+
+@keyframes fade-in {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+html {
+	background-color: rgb(17, 15, 46);
+}
+
+body {
+	animation: fade-in 2s ease-in-out forwards;
+}
+
+/* Utility component classes for reusable patterns */
+@layer components {
+	.asset-image {
+		@apply block max-w-none w-full h-full object-contain;
+	}
+	
+	.layer-background {
+		@apply absolute inset-0 z-[var(--z-background)] pointer-events-none;
+	}
+	
+	.layer-decorative {
+		@apply absolute inset-0 z-[var(--z-decorative)] pointer-events-none;
+	}
+	
+	.layer-content {
+		@apply absolute inset-0 z-[var(--z-content)] pointer-events-none;
+	}
+	
+	/*
+	 * The overlay lives inside the main container which uses CSS `zoom` on
+	 * mobile.  Unlike `transform`, `zoom` does NOT create a containing block
+	 * for `position: fixed` children, so `fixed` would escape to the viewport.
+	 * Using `absolute` keeps the overlay inside the container on all paths:
+	 *   - desktop (`transform: scale`) – fixed degrades to absolute anyway
+	 *   - mobile  (`zoom`)             – absolute is required
+	 * This also eliminates a wasted GPU compositing layer that `fixed` created.
+	 */
+	.layer-overlay {
+		@apply absolute inset-0 z-[var(--z-overlay)] pointer-events-none;
+	}
+	
+	.text-glow {
+		text-shadow:
+			0 0 10px rgba(253, 218, 152, 0.4),
+			0 0 20px rgba(253, 218, 152, 0.2),
+			0 0 40px rgba(253, 218, 152, 0.1);
+	}
+	
+	.text-glow-subtle {
+		text-shadow:
+			0 0 8px rgba(253, 218, 152, 0.4),
+			0 0 16px rgba(253, 218, 152, 0.2);
+	}
+	
+	.box-glow {
+		box-shadow:
+			0 0 10px rgba(253, 218, 152, 0.2),
+			0 0 20px rgba(253, 218, 152, 0.1),
+			0 0 40px rgba(253, 218, 152, 0.05);
+	}
+
+	.anchor-left {
+		position: absolute;
+		left: 0;
+	}
+
+	.anchor-right {
+		position: absolute;
+		right: 0;
+	}
+
+	.anchor-center-x {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.portrait-text {
+		position: fixed;
+		inset: 0;
+		z-index: 30;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 24px;
+		pointer-events: auto;
+	}
+
+	.portrait-text .portrait-title {
+		font-weight: 700;
+		font-size: clamp(28px, 8vw, 48px);
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+		color: var(--color-text-primary-white);
+		margin: 0;
+	}
+
+	.portrait-text .portrait-subtitle {
+		font-weight: 500;
+		font-size: clamp(18px, 5vw, 28px);
+		line-height: 1.3;
+		letter-spacing: -0.02em;
+		margin: 0;
+	}
+
+	.portrait-text .portrait-event-info {
+		font-weight: 500;
+		font-size: clamp(14px, 3.5vw, 20px);
+		line-height: 1.4;
+		letter-spacing: -0.02em;
+		color: var(--color-text-primary-white);
+		margin: 0;
+	}
+
+	.portrait-text .portrait-description {
+		font-weight: 500;
+		font-size: clamp(13px, 3vw, 16px);
+		line-height: 1.4;
+		letter-spacing: -0.02em;
+		color: var(--color-text-primary-white);
+		margin: 0;
+	}
 }
 
 html,
 body {
-	width: 1440px;
-	height: 1080px;
+	width: 100%;
+	height: 100%;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
 }
 
 body {
-	font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
 #__next {
-	width: 1440px;
-	height: 1080px;
+	width: 100%;
+	height: 100%;
 	overflow: hidden;
 }
 

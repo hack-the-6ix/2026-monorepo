@@ -8,6 +8,7 @@ const inter = Inter({
   variable: '--font-inter',
   weight: ['400', '500', '600', '700'],
   display: 'swap',
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
@@ -22,11 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
       </head>
-      <body className={`${inter.variable} font-sans antialiased h-full`}>
+      <body className={`${inter.className} ${inter.variable} antialiased h-full`} suppressHydrationWarning>
         {children}
       </body>
     </html>

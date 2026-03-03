@@ -108,6 +108,9 @@ importers:
 
   apps/landing:
     dependencies:
+      '@hackthe6ix/assets':
+        specifier: workspace:*
+        version: link:../../packages/assets
       '@hackthe6ix/eslint-config':
         specifier: workspace:*
         version: link:../../configs/eslint-config
@@ -213,6 +216,8 @@ importers:
       eslint:
         specifier: 'catalog:'
         version: 9.39.2(jiti@2.6.1)
+
+  packages/assets: {}
 
   packages/ui:
     dependencies:

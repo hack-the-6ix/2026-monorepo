@@ -1,6 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
-import { assets } from '../../lib/assets';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -8,7 +6,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export function Input({ label, className = '', ...props }: InputProps) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className={`flex flex-col gap-1 ${className}`}>
       {label && (
         <label className="text-sm font-medium text-white/80">{label}</label>
       )}

@@ -1,84 +1,87 @@
 /**
  * Asset mapping for landing page graphics
- * All assets are located in packages/assets/
- * Using relative imports until @hackthe6ix/assets package is properly linked
+ * Shared assets from @hackthe6ix/assets, local assets from src/assets/
  */
 
-// Main SVG assets
-import logo from '../../../../packages/assets/Logo.svg';
-import butterflies from '../../../../packages/assets/butterflies.svg';
-import cnTowerBg from '../../../../packages/assets/cn-tower-bg.svg';
-import spotlight from '../../../../packages/assets/spotlight.svg';
+import {
+  grass1,
+  grass1Shadow,
+  logo,
+  shroom1,
+  shroom2,
+} from '@hackthe6ix/assets';
+import bgImage from '../assets/bg.png';
+import butterflies from '../assets/butterflies.svg';
+import caveRight from '../assets/cave-right.svg';
 
-// Ellipses
-import ellipse1 from '../../../../packages/assets/ellipse-1.svg';
-import ellipse2 from '../../../../packages/assets/ellipse-2.svg';
+// Left cliff shapes
+import cliffLeftExtrawide from '../assets/cliff-left-extrawide.svg';
+import cliffLeftWide from '../assets/cliff-left-wide.svg';
+import cliffLeft from '../assets/cliff-left.svg';
 
-// Vectors
-import vector82 from '../../../../packages/assets/vector-82.svg';
-import vector259 from '../../../../packages/assets/vector-259.svg';
+// Right cliff shapes
+import cliffRight1 from '../assets/cliff-right-1.svg';
+import cliffRight2 from '../assets/cliff-right-2.svg';
+import cliffRight3 from '../assets/cliff-right-3.svg';
+import cloudLeft from '../assets/cloud-left.svg';
+import cloudRight from '../assets/cloud-right.svg';
+import cnTower from '../assets/cn-tower.svg';
 
-// Union shapes
-import union from '../../../../packages/assets/union.svg';
-import union1 from '../../../../packages/assets/union-1.svg';
-
-// Groups
-import group14 from '../../../../packages/assets/group-14.svg';
-import group55 from '../../../../packages/assets/group-55.svg';
-import group56 from '../../../../packages/assets/group-56.svg';
-import group57 from '../../../../packages/assets/group-57.svg';
-import group71 from '../../../../packages/assets/group-71.svg';
-import group73 from '../../../../packages/assets/group-73.svg';
-import group74 from '../../../../packages/assets/group-74.svg';
-import group103 from '../../../../packages/assets/group-103.svg';
-import group104 from '../../../../packages/assets/group-104.svg';
-import group112 from '../../../../packages/assets/group-112.svg';
-import group116 from '../../../../packages/assets/group-116.svg';
-import group117 from '../../../../packages/assets/group-117.svg';
-import group120 from '../../../../packages/assets/group-120.svg';
-import group499 from '../../../../packages/assets/group-499.svg';
-
-// Organic assets (PNG)
-import grass1 from '../../../../packages/assets/organic/grass_1.png';
-import shroom1 from '../../../../packages/assets/organic/shroom_1.png';
-import shroom2 from '../../../../packages/assets/organic/shroom_2.png';
+// Top Leaves
+import leafbase from '../assets/leaf-base.svg';
+import lightLeft1 from '../assets/light-left-1.svg';
+import lightLeft2 from '../assets/light-left-2.svg';
+import lightRight from '../assets/light-right.svg';
+import mistLeft from '../assets/mist-left.svg';
+import mistRight from '../assets/mist-right.svg';
+// Night overlay
+import nightColorOverlay from '../assets/night-color-overlay.svg';
+import spotlight from '../assets/spotlight-large.svg';
+// Trees
+import tree1 from '../assets/tree-1.svg';
+import tree2 from '../assets/tree-2.svg';
 
 export const assets = {
-  // Main assets
-  logo,
-  butterflies,
-  cnTowerBg,
+  // Background
+  bgImage,
+
+  // Main SVG assets
+  cnTower,
+  mistLeft,
+  mistRight,
+
+  cloudLeft,
+  cloudRight,
+  lightLeft1,
+  lightLeft2,
+  lightRight,
+
   spotlight,
-  
-  // Ellipses
-  ellipse1,
-  ellipse2,
-  
-  // Vectors
-  vector82,
-  vector259,
-  
-  // Union shapes
-  union,
-  union1,
-  
-  // Groups
-  group14,
-  group55,
-  group56,
-  group57,
-  group71,
-  group73,
-  group74,
-  group103,
-  group104,
-  group112,
-  group116,
-  group117,
-  group120,
-  group499,
-  
-  // Organic assets
+
+  nightColorOverlay,
+
+  // Left cliff shapes
+  cliffLeft,
+  cliffLeftWide,
+  cliffLeftExtrawide,
+
+  // Right cliff shapes
+  cliffRight1,
+  cliffRight2,
+  cliffRight3,
+  caveRight,
+
+  // Trees
+  tree1,
+  tree2,
+
+  // Top Leaves
+  leafbase,
+  butterflies,
+
+  // Shared assets
+  logo,
+  grass1Shadow,
   grass1,
   shroom1,
   shroom2,
