@@ -665,8 +665,8 @@ export default function LandingPage() {
 
       {/* Portrait text layout -- outside scaled container, real viewport sizes */}
       {isPortrait && (
-        <div className="portrait-text flex flex-col min-h-screen">
-          <div className="w-[20px] h-[50px] mt-1 ml-1">
+        <div className="portrait-text fixed inset-0 z-30 flex flex-col justify-center items-center p-6 pointer-events-auto">
+          <div className="absolute top-[24px] left-[24px] w-[20px] h-[50px]">
             <Image
               src={assets.logo}
               alt="Hack the 6ix Logo"
@@ -676,11 +676,7 @@ export default function LandingPage() {
               priority
             />
           </div>
-          <div className="flex-1 flex flex-col justify-center items-center">
-            <div
-              className="flex flex-col gap-6 w-full px-10"
-              style={{ maxWidth: 500 }}
-            >
+          <div className="flex flex-col gap-6 w-full px-10" style={{ maxWidth: 500 }}>
               <div className="flex flex-col gap-4">
                 <p className="portrait-event-info text-glow-subtle">
                   {EVENT_INFO.date} ⋅ {EVENT_INFO.location} ⋅{' '}
@@ -742,7 +738,6 @@ export default function LandingPage() {
                   )}
                 </div>
               </div>
-            </div>
           </div>
       )}
     </>
