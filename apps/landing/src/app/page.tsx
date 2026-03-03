@@ -596,6 +596,7 @@ export default function LandingPage() {
                     <form
                       onSubmit={handleSubmit}
                       className="flex flex-row gap-4 items-center"
+                      suppressHydrationWarning
                     >
                       <div className="flex flex-col gap-1 w-[406px]">
                         <label htmlFor="email" className="sr-only">
@@ -610,6 +611,7 @@ export default function LandingPage() {
                             onChange={(e) => setEmail(e.target.value)}
                             autoComplete="email"
                             placeholder={FORM_CONTENT.placeholder}
+                            suppressHydrationWarning
                             className="flex-1 font-medium text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
                           />
                         </div>
@@ -703,6 +705,7 @@ export default function LandingPage() {
                   <form
                     onSubmit={handleSubmit}
                     className="flex flex-col gap-3 w-full"
+                    suppressHydrationWarning
                   >
                     <label htmlFor="email-portrait" className="sr-only">
                       Email address
@@ -714,6 +717,7 @@ export default function LandingPage() {
                         type="email"
                         autoComplete="email"
                         placeholder={FORM_CONTENT.placeholder}
+                        suppressHydrationWarning
                         className="flex-1 font-medium text-[14px] leading-[18px] tracking-[-0.15px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -740,7 +744,6 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-        // </div>
       )}
     </>
   );
