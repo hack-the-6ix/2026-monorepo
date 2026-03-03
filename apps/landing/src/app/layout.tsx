@@ -15,8 +15,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'Hack the 6ix 2026',
-  description:
-    'Hack the 6ix 2026 - July 17-19, 2026 at Bahen Centre. In-Person.',
+  description: 'Hack the 6ix 2026 - July 17-19, 2026 in Toronto. In-Person.',
 };
 
 export default function RootLayout({
