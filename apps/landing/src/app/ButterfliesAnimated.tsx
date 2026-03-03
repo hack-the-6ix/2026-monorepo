@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+
 import { butterfliesFrames } from '../lib/butterfliesAssets';
 
 export function ButterfliesAnimated() {
@@ -9,7 +10,7 @@ export function ButterfliesAnimated() {
 
   React.useEffect(() => {
     const id = setInterval(() => {
-      setFrame(f => (f + 1) % butterfliesFrames.length);
+      setFrame((f) => (f + 1) % butterfliesFrames.length);
     }, 500);
     return () => clearInterval(id);
   }, []);
