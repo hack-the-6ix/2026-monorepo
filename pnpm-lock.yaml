@@ -219,8 +219,6 @@ importers:
 
   packages/assets: {}
 
-  packages/assets: {}
-
   packages/ui:
     dependencies:
       classnames:
