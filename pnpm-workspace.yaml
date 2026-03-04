@@ -1,3 +1,4 @@
+engineStrict: true
 packages:
   - apps/*
   - packages/*
@@ -21,7 +22,7 @@ catalog:
   postcss: ^8
 
   # Tooling stuff
-  "@types/node": ^25
+  "@types/node": ^24
   typescript: ^5.9
   prettier: ^3.8
   eslint: ^9
