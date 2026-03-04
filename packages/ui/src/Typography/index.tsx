@@ -9,5 +9,5 @@ export type TypographyProps<T extends ElementType = 'span'> = PolymorphicProps<
 >;
 
 export function Typography({ children, className }: TypographyProps) {
-  return <div className={cn('text-base', className)}>{children}</div>;
+  return <div className={cn('typography', className)}>{children}</div>;
 }
