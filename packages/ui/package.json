@@ -9,19 +9,29 @@
   },
   "scripts": {
     "lint": "eslint --cache --fix .",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "sb:start": "storybook dev -p 6006",
+    "sb:build": "storybook build"
   },
   "dependencies": {
     "classnames": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:"
   },
   "devDependencies": {
+    "@eslint/compat": "^2.0.2",
     "@hackthe6ix/eslint-config": "workspace:",
     "@hackthe6ix/typescript-config": "workspace:",
+    "@tailwindcss/postcss": "catalog:",
+    "@storybook/addon-themes": "^10.2.14",
+    "@storybook/react-vite": "^10.2.14",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "eslint": "catalog:",
-    "typescript": "catalog:"
+    "eslint-plugin-storybook": "^10.2.14",
+    "storybook": "^10.2.14",
+    "typescript": "catalog:",
+    "vite-tsconfig-paths": "^6.1.1"
   }
 }

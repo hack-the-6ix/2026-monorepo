@@ -1,10 +1,7 @@
 {
-  "extends": "@hackthe6ix/typescript-config/react",
-  "compilerOptions": {
-    "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-  },
-  "exclude": ["node_modules"],
-  "include": ["./src"]
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.build.json" },
+    { "path": "./tsconfig.storybook.json" }
+  ]
 }

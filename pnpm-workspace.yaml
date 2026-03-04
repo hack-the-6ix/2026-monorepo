@@ -4,8 +4,8 @@ packages:
   - configs/*
 catalog:
   # Opennext related stuff
-  "@opennextjs/cloudflare": 1.16.2
-  wrangler: 4.62.0
+  "@opennextjs/cloudflare": 1.17.1
+  wrangler: 4.70.0
 
   # React stuff
   "@types/react": ^19

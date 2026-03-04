@@ -1,8 +1,7 @@
 @theme {
-  /* Colors */
-  --color-primary: #2da990;
-  --color-text-primary: #3b3d69;
-  --color-text-primary-white: #f9fafb;
-  --color-highlight-gold: #f6bd55;
-  /* etc. */
+  --font-sans: var(--font-default), sans-serif;
+  --breakpoint-xl: 120rem;
+  --breakpoint-lg: 90rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-sm: 20rem;
 }
