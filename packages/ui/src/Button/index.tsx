@@ -1,8 +1,6 @@
 import { ElementType } from 'react';
 import cn from 'classnames';
-
-import type { PolymorphicProps } from '../index.d';
-import { ButtonColor, theme } from './theme';
+import { PolymorphicProps } from '..';
 
 export type ButtonProps<T extends ElementType = 'button'> = PolymorphicProps<
   {
@@ -10,7 +8,7 @@ export type ButtonProps<T extends ElementType = 'button'> = PolymorphicProps<
   },
   T
 >;
-export function Button<T extends ElementType = 'button'>({
+export function Button<T extends ElementType>({
   buttonColor = 'owo',
   as,
   ...props
