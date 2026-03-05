@@ -1,3 +1,62 @@
-.typography {
-  @apply text-base;
+@import 'tailwindcss';
+
+/* https://www.figma.com/design/55M6WT18vBpyzeZRF9EiqF/-OFFICIAL--HT6-Design-System?node-id=1-1699&m=dev */
+/* sizes slide down 1 for mobile */
+@theme {
+  --font-sans: var(--font-default), sans-serif;
+  --text-*: initial;
+
+  /* For mobile label */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-xs--letter-spacing: 0%;
+  --text-xs--font-weight: 400;
+
+  /* Label */
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-sm--letter-spacing: -0.6%;
+  --text-sm--font-weight: 400;
+
+  /* Paragraph sm */
+  --text-base: 1rem;
+  --text-base--line-height: 1.25rem;
+  --text-base--letter-spacing: -1.1%;
+  --text-base--font-weight: 400;
+
+  /* Paragraph lg */
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.5rem;
+  --text-lg--letter-spacing: -1.7%;
+  --text-lg--font-weight: 400;
+
+  /* Subtitle sm */
+  --text-xl: 1.625rem;
+  --text-xl--line-height: 2rem;
+  --text-xl--letter-spacing: -2%;
+  --text-xl--font-weight: 500;
+
+  /* Subtitle lg */
+  --text-2xl: 2rem;
+  --text-2xl--line-height: 2.5rem;
+  --text-2xl--letter-spacing: -2.2%;
+  --text-2xl--font-weight: 500;
+
+  /* Heading sm */
+  --text-3xl: 2.5rem;
+  --text-3xl--line-height: 3.25rem;
+  --text-3xl--letter-spacing: -2.2%;
+  --text-3xl--font-weight: 500;
+
+  /* Heading lg */
+  --text-4xl: 3rem;
+  --text-4xl--line-height: 3.75rem;
+  --text-4xl--letter-spacing: -2.2%;
+  --text-4xl--font-weight: 500;
+
+  /* Display */
+  --text-5xl: 3.75rem;
+  --text-5xl--line-height: 4.75rem;
+  --text-5xl--letter-spacing: -2.2%;
+  --text-5xl--font-weight: 700;
 }

@@ -1,7 +1,6 @@
-@import './Typography/index.css';
+@import 'tailwindcss';
 
 @theme {
-  --font-sans: var(--font-default), sans-serif;
   --breakpoint-xl: 120rem;
   --breakpoint-lg: 90rem;
   --breakpoint-md: 48rem;

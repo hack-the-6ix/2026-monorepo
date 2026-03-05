@@ -8,7 +8,10 @@ export default defineMain({
     }
     return config;
   },
+  features: {
+    backgrounds: false,
+  },
   stories: ['../src/**/*.stories.@(ts|tsx)'],
   framework: '@storybook/react-vite',
-  addons: [],
+  addons: ['@storybook/addon-themes'],
 });
