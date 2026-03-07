@@ -6,6 +6,7 @@ const meta = preview.meta({ component: Button });
 export const Primary = meta.story({
   args: {
     children: 'owo wats dis?',
+    destructive: false,
   },
 });
 

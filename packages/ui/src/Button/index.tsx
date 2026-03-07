@@ -1,24 +1,26 @@
-import { ElementType } from 'react';
+import { ComponentPropsWithRef, ElementType } from 'react';
 import cn from 'classnames';
-import { PolymorphicProps } from '..';
+import { PolymorphicProps, Typography } from '..';
+import './index.css';
 
-export type ButtonProps<T extends ElementType = 'button'> = PolymorphicProps<
+export type ButtonProps<T extends ElementType> = PolymorphicProps<
   {
-    buttonColor?: ButtonColor;
+    destructive?: boolean;
   },
   T
 >;
-export function Button<T extends ElementType>({
-  buttonColor = 'owo',
+export function Button<T extends ElementType = 'button'>({
+  destructive,
   as,
   ...props
 }: ButtonProps<T>) {
-  const Component = as ?? 'button';
-  const styles = theme[buttonColor];
   return (
-    <Component
-      {...props}
-      className={cn('p-2 rounded-sm', styles, props.className)}
+    <Typography<T>
+      {...(props as ComponentPropsWithRef<T>)}
+      className={cn('button', destructive && 'button--destructive', props.className)}
+      textSize="paragraph-sm"
+      textWeight="semi-bold"
+      as={as ?? 'button'}
     />
   );
 }

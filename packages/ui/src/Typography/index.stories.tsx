@@ -3,7 +3,7 @@ import { textSizes, textWeights, Typography } from '.';
 
 const meta = preview.meta({ component: Typography });
 
-export const Primary = meta.story({
+export const Default = meta.story({
   argTypes: {
     textSize: {
       control: 'select',

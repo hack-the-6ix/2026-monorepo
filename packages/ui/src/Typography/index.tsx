@@ -6,13 +6,13 @@ import type { PolymorphicProps } from '../index';
 import './index.css';
 
 export const textSizes = {
-  display: 'text-5xl md:text-4xl',
-  'heading-lg': 'text-4xl md:text-3xl',
-  'heading-sm': 'text-3xl md:text-2xl',
-  'subtitle-lg': 'text-2xl md:text-xl',
-  'subtitle-sm': 'text-xl md:text-lg',
-  'paragraph-lg': 'text-lg md:text-base',
-  'paragraph-sm': 'text-base md:text-sm',
+  display: 'md:text-5xl text-4xl',
+  'heading-lg': 'md:text-4xl text-3xl',
+  'heading-sm': 'md:text-3xl ext-2xl',
+  'subtitle-lg': 'md:text-2xl text-xl',
+  'subtitle-sm': 'md:text-xl text-lg',
+  'paragraph-lg': 'md:text-lg text-base',
+  'paragraph-sm': 'md:text-base text-sm',
   label: 'text-sm md:text-xs',
 } as const;
 export type TextSize = keyof typeof textSizes;
@@ -26,7 +26,7 @@ export const textWeights = {
 } as const;
 export type TextWeight = keyof typeof textWeights;
 
-export type TypographyProps<T extends ElementType = 'span'> = PolymorphicProps<
+export type TypographyProps<T extends ElementType> = PolymorphicProps<
   {
     textSize?: TextSize;
     textWeight?: TextWeight;
@@ -34,19 +34,19 @@ export type TypographyProps<T extends ElementType = 'span'> = PolymorphicProps<
   T
 >;
 
-export function Typography<T extends ElementType>({
+export function Typography<T extends ElementType = 'span'>({
   textSize = 'paragraph-sm',
   textWeight,
   className,
   as,
   ...props
 }: TypographyProps<T>) {
-  const Component = as ?? 'span';
+  const Component = as || 'span';
 
   return (
     <Component
       className={cn(
-        'font-sans',
+        'typography',
         textWeight && textWeights[textWeight],
         textSizes[textSize],
         className,

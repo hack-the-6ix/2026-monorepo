@@ -1,28 +1,23 @@
-engineStrict: true
 packages:
   - apps/*
   - packages/*
   - configs/*
+
 catalog:
-  # Opennext related stuff
-  "@opennextjs/cloudflare": 1.17.1
+  '@opennextjs/cloudflare': 1.17.1
+  '@tailwindcss/postcss': ^4.2.1
+  '@types/node': ^24
+  '@types/react': ^19.2.14
+  '@types/react-dom': ^19.2.3
+  classnames: ^2.5.1
+  eslint: ^9.39.4
+  next: ^16
+  postcss: ^8
+  prettier: ^3.8
+  react: ^19.2.4
+  react-dom: ^19.2.4
+  tailwindcss: ^4.2.1
+  typescript: ^5.9.3
   wrangler: 4.70.0
 
-  # React stuff
-  "@types/react": ^19
-  "@types/react-dom": ^19
-  react: ^19
-  react-dom: ^19
-  next: ^16
-
-  # Tailwind stuff
-  "@tailwindcss/postcss": ^4
-  tailwindcss: ^4
-  classnames: ^2.5.1
-  postcss: ^8
-
-  # Tooling stuff
-  "@types/node": ^24
-  typescript: ^5.9
-  prettier: ^3.8
-  eslint: ^9
+engineStrict: true

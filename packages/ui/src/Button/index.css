@@ -1,0 +1,13 @@
+@reference 'tailwindcss';
+@reference '../index.css';
+
+@layer components {
+  .button {
+    --button-color: var(--color-primary);
+    @apply transition-colors py-3 px-6 rounded-full bg-(--button-color) text-white;
+  }
+
+  .button--destructive {
+    --button-color: var(--color-error);
+  }
+}

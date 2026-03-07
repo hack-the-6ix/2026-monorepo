@@ -1,4 +1,5 @@
-@import 'tailwindcss';
+@reference 'tailwindcss';
+@reference '../index.css';
 
 /* https://www.figma.com/design/55M6WT18vBpyzeZRF9EiqF/-OFFICIAL--HT6-Design-System?node-id=1-1699&m=dev */
 /* sizes slide down 1 for mobile */
@@ -59,4 +60,10 @@
   --text-5xl--line-height: 4.75rem;
   --text-5xl--letter-spacing: -2.2%;
   --text-5xl--font-weight: 700;
+}
+
+@layer components {
+  .typography {
+    @apply font-sans text-neutral-900;
+  }
 }
