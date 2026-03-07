@@ -6,21 +6,21 @@ import type { PolymorphicProps } from '../index';
 import './index.css';
 
 export const textSizes = {
-  display: 'md:text-5xl text-4xl',
-  'heading-lg': 'md:text-4xl text-3xl',
-  'heading-sm': 'md:text-3xl ext-2xl',
-  'subtitle-lg': 'md:text-2xl text-xl',
-  'subtitle-sm': 'md:text-xl text-lg',
-  'paragraph-lg': 'md:text-lg text-base',
-  'paragraph-sm': 'md:text-base text-sm',
-  label: 'text-sm md:text-xs',
+  display: 'typography-5xl',
+  'heading-lg': 'typography-4xl',
+  'heading-sm': 'typography-3xl',
+  'subtitle-lg': 'typography-2xl',
+  'subtitle-sm': 'typography-xl',
+  'paragraph-lg': 'typography-lg',
+  'paragraph-sm': 'typography-sm',
+  label: 'typography-xs',
 } as const;
 export type TextSize = keyof typeof textSizes;
 
 export const textWeights = {
   regular: 'font-normal',
   medium: 'font-medium',
-  'semi-bold': 'font-semi',
+  'semi-bold': 'font-semibold',
   bold: 'font-bold',
   'extra-bold': 'font-extrabold',
 } as const;
@@ -45,13 +45,13 @@ export function Typography<T extends ElementType = 'span'>({
 
   return (
     <Component
+      {...props}
       className={cn(
         'typography',
         textWeight && textWeights[textWeight],
         textSizes[textSize],
         className,
       )}
-      {...props}
     />
   );
 }
