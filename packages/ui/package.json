@@ -24,6 +24,7 @@
     "@eslint/compat": "^2.0.3",
     "@hackthe6ix/eslint-config": "workspace:^",
     "@hackthe6ix/typescript-config": "workspace:^",
+    "@storybook/addon-docs": "^10.2.16",
     "@storybook/addon-themes": "^10.2.16",
     "@storybook/react-vite": "^10.2.16",
     "@tailwindcss/postcss": "catalog:",

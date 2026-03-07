@@ -1,0 +1,22 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs/blocks';
+import './index.css';
+ 
+<Meta title="Atoms/Colors" />
+
+<ColorPalette>
+{['neutral', 'primary', 'secondary', 'success', 'warning', 'error'].map((color) => {
+  const styles = getComputedStyle(document.documentElement);
+  const colors = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+    .reduce(
+      (acc, shade) => ({ ...acc, [shade]: styles.getPropertyValue(`--color-${color}-${shade}`) }),
+      {},
+    );
+  return <ColorItem
+    title={<span style={{ textTransform: 'capitalize' }}>{color}</span>}
+    subtitle={<code style={{ fontSize: '0.625rem' }}>
+      var(--color-$&#123;color&#125;-$&#123;shade&#125;)
+    </code>}
+    colors={colors}
+  />;
+})}
+</ColorPalette>

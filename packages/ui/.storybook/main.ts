@@ -11,7 +11,7 @@ export default defineMain({
   features: {
     backgrounds: false,
   },
-  stories: ['../src/**/*.stories.@(ts|tsx)'],
+  stories: ['../src/**/*.stories.@(ts|tsx)', '../stories/**/*.mdx'],
   framework: '@storybook/react-vite',
-  addons: ['@storybook/addon-themes'],
+  addons: ['@storybook/addon-themes', '@storybook/addon-docs'],
 });

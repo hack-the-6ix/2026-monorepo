@@ -1,3 +1,4 @@
+import addonDocs from '@storybook/addon-docs';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import { definePreview } from '@storybook/react-vite';
 
@@ -59,5 +60,5 @@ export default definePreview({
       defaultTheme: 'light',
     }),
   ],
-  addons: [],
+  addons: [addonDocs()],
 });
