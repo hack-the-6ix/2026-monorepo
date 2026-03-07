@@ -12,7 +12,7 @@ export const Default = meta.story({
     textWeight: {
       control: 'select',
       options: Object.keys(textWeights),
-    }
+    },
   },
   args: {
     textSize: 'paragraph-sm',

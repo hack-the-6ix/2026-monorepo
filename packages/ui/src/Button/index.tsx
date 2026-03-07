@@ -1,6 +1,8 @@
 import { ComponentPropsWithRef, ElementType } from 'react';
 import cn from 'classnames';
+
 import { PolymorphicProps, Typography } from '..';
+
 import './index.css';
 
 export type ButtonProps<T extends ElementType> = PolymorphicProps<
@@ -17,7 +19,11 @@ export function Button<T extends ElementType = 'button'>({
   return (
     <Typography<T>
       {...(props as ComponentPropsWithRef<T>)}
-      className={cn('button', destructive && 'button--destructive', props.className)}
+      className={cn(
+        'button',
+        destructive && 'button--destructive',
+        props.className,
+      )}
       textSize="paragraph-sm"
       textWeight="semi-bold"
       as={as ?? 'button'}
