@@ -84,4 +84,12 @@
   --color-error-900: #82181A;
   --color-error-950: #460809;
 
+  /* shadows - https://www.figma.com/design/55M6WT18vBpyzeZRF9EiqF/-OFFICIAL--HT6-Design-System?node-id=1-2665&m=dev */
+  --shadow-*: initial;
+  --shadow-none: none;
+  --shadow-xs: 0 --spacing(1) --spacing(2) 0 --alpha(var(--color-black) / 10%);
+  --shadow-sm: 0 --spacing(1.5) --spacing(3) 0 --alpha(var(--color-black) / 10%);
+  --shadow-md: 0 --spacing(2) --spacing(4) 0 --alpha(var(--color-black) / 10%);
+  --shadow-lg: 0 --spacing(2.5) --spacing(5) 0 --alpha(var(--color-black) / 10%);
+  --shadow-xl: 0 --spacing(3) --spacing(6) 0 --alpha(var(--color-black) / 10%);
 }
