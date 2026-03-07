@@ -10,15 +10,14 @@ import {
   shroom1,
   shroom2,
 } from '@hackthe6ix/assets';
+
 import bgImage from '../assets/bg.png';
 import butterflies from '../assets/butterflies.svg';
 import caveRight from '../assets/cave-right.svg';
-
+import cliffLeft from '../assets/cliff-left.svg';
 // Left cliff shapes
 import cliffLeftExtrawide from '../assets/cliff-left-extrawide.svg';
 import cliffLeftWide from '../assets/cliff-left-wide.svg';
-import cliffLeft from '../assets/cliff-left.svg';
-
 // Right cliff shapes
 import cliffRight1 from '../assets/cliff-right-1.svg';
 import cliffRight2 from '../assets/cliff-right-2.svg';
@@ -26,7 +25,6 @@ import cliffRight3 from '../assets/cliff-right-3.svg';
 import cloudLeft from '../assets/cloud-left.svg';
 import cloudRight from '../assets/cloud-right.svg';
 import cnTower from '../assets/cn-tower.svg';
-
 // Top Leaves
 import leafbase from '../assets/leaf-base.svg';
 import lightLeft1 from '../assets/light-left-1.svg';

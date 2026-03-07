@@ -1,9 +1,12 @@
 import preview from '#/preview';
-import { textSizes, textWeights, Typography } from '.';
+import { textSizes, textWeights, Typography as component } from '.';
 
-const meta = preview.meta({ component: Typography });
+const meta = preview.meta({
+  title: 'Atoms/Typography',
+  component,
+});
 
-export const Default = meta.story({
+export const Typography = meta.story({
   argTypes: {
     textSize: {
       control: 'select',

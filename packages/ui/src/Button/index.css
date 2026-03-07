@@ -7,22 +7,31 @@
     --button-color-focus: var(--color-primary-600);
     --button-color-pressed: var(--color-primary-700);
     --button-color-ring: --alpha(var(--button-color) / 30%);
-    @apply transition-all py-3 px-6 rounded-full cursor-pointer border-2 border-transparent outline-0;
+    @apply transition-all rounded-full cursor-pointer border-2 border-transparent outline-0;
     @apply focus-visible:ring-4 focus-visible:ring-(--button-color-ring);
+    @apply inline-flex gap-2 items-center justify-center;
   }
 
-  .primary {
+  .button--default {
+    @apply py-2.5 px-5.5;
+  }
+
+  .button--icon {
+    @apply p-2.5 aspect-square;
+  }
+
+  .button--primary {
     @apply border-(--button-color) focus:border-(--button-color-focus) hover:border-(--button-color-focus) active:border-(--button-color-pressed);
     @apply bg-(--button-color) focus:bg-(--button-color-focus) hover:bg-(--button-color-focus) active:bg-(--button-color-pressed);
     @apply text-white;
   }
 
-  .secondary {
+  .button--secondary {
     @apply border-(--button-color) focus:border-(--button-color-focus) hover:border-(--button-color-focus) active:border-(--button-color-pressed);
     @apply text-(--button-color) focus:text-(--button-color-focus) hover:text-(--button-color-focus) active:text-(--button-color-pressed);
   }
 
-  .tertiary {
+  .button--tertiary {
     @apply text-(--button-color) focus:text-(--button-color-focus) hover:text-(--button-color-focus) active:text-(--button-color-pressed);
   }
 
@@ -33,11 +42,15 @@
   }
 
   .button:disabled,
-  .disabled {
+  .button--disabled {
     --button-color: var(--color-neutral-300);
     --button-color-focus: var(--color-neutral-300);
     --button-color-pressed: var(--color-neutral-300);
     --button-color-ring: transparent;
     @apply cursor-not-allowed;
+  }
+
+  .button__icon {
+    @apply size-3;
   }
 }

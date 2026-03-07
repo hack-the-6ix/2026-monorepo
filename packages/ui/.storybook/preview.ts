@@ -5,11 +5,13 @@ import './index.css';
 
 export default definePreview({
   parameters: {
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
+    options: {
+      storySort: {
+        order: ['Atoms', 'Modules'],
       },
+    },
+    controls: {
+      disableSaveFromUI: true,
     },
     viewport: {
       options: {
