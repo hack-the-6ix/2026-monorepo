@@ -14,7 +14,7 @@ type ButtonStoryArgs = Merge<
 
 const meta = preview
   .type<{ args: ButtonStoryArgs }>()
-  .meta({ title: 'Modules/Button', component });
+  .meta({ title: 'Modules/Buttons/Button', component });
 
 export const Button = meta.story({
   argTypes: {

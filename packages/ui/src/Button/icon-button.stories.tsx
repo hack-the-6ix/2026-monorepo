@@ -13,7 +13,7 @@ type IconButtonStoryArgs = Merge<
 
 const meta = preview
   .type<{ args: IconButtonStoryArgs }>()
-  .meta({ title: 'Modules/Icon Button', component });
+  .meta({ title: 'Modules/Buttons/Icon Button', component });
 
 export const IconButton = meta.story({
   argTypes: {

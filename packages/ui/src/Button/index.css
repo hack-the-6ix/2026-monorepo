@@ -41,6 +41,13 @@
     --button-color-pressed: var(--color-error-700);
   }
 
+  .button--link {
+    --button-color: var(--color-warning-500);
+    --button-color-focus: var(--color-warning-600);
+    --button-color-pressed: var(--color-warning-700);
+    @apply underline underline-offset-2 py-1 px-2;
+  }
+
   .button:disabled,
   .button--disabled {
     --button-color: var(--color-neutral-300);

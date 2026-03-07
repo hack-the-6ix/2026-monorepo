@@ -79,3 +79,28 @@ export function IconButton<T extends ElementType = 'button'>({
     </Typography>
   );
 }
+
+export type HyperLinkProps<T extends ElementType> = PolymorphicProps<
+  Omit<SharedButtonProps<{ href: string }>, 'destructive'>,
+  T
+>;
+export function HyperLink<T extends ElementType = 'a'>({
+  kind = 'tertiary',
+  as,
+  ...props
+}: HyperLinkProps<T>) {
+  return (
+    <Typography<T>
+      {...(props as ComponentPropsWithRef<T>)}
+      className={cn(
+        props.disabled && 'button--disabled',
+        buttonKindMap[kind],
+        'button button--link',
+        props.className,
+      )}
+      textSize="paragraph-sm"
+      textWeight="semi-bold"
+      as={as ?? 'a'}
+    />
+  );
+}
