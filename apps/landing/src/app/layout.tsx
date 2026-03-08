@@ -16,10 +16,6 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Hack the 6ix 2026',
   description: 'Hack the 6ix 2026 - July 17-19, 2026 in Toronto. In-Person.',
-  icons: {
-    icon: assets.logo.src,
-    apple: assets.logo.src,
-  },
 };
 
 export default function RootLayout({
@@ -29,6 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
+      <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
       <body
         className={`${inter.className} ${inter.variable} antialiased h-full`}
         suppressHydrationWarning
