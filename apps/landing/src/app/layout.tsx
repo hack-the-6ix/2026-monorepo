@@ -25,9 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href={assets.logo.src} type="image/svg+xml"></link>
-      </head>
+      <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
       <body
         className={`${inter.className} ${inter.variable} antialiased h-full`}
         suppressHydrationWarning
