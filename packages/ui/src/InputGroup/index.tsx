@@ -16,11 +16,10 @@ const statusToModifier: Record<InputGroupStatus, string> = {
 export type InputGroupProps<T extends ElementType> = PolymorphicProps<
   {
     label: ReactNode;
-    description?: ReactNode;
     hideLabel?: boolean;
     required?: boolean;
     disabled?: boolean;
-    status?: {
+    info?: {
       type: InputGroupStatus;
       message?: ReactNode;
     };
@@ -30,11 +29,10 @@ export type InputGroupProps<T extends ElementType> = PolymorphicProps<
 >;
 export function InputGroup<T extends ElementType = 'div'>({
   label,
-  description,
+  info,
   hideLabel,
   required,
   disabled,
-  status,
   name,
   ...props
 }: InputGroupProps<T>) {
@@ -45,14 +43,14 @@ export function InputGroup<T extends ElementType = 'div'>({
       {...props}
       className={cn(
         'input-group',
-        status?.type && statusToModifier[status.type],
+        info?.type && statusToModifier[info.type],
         disabled && 'input-group--disabled',
         props.className,
       )}
     >
       <Typography
         className="input-group__text"
-        textColor="text-indigo-700"
+        textColor={disabled ? 'text-neutral-400' : 'text-indigo-700'}
         textSize="paragraph-sm"
         textWeight="semi-bold"
         hidden={hideLabel}
@@ -60,30 +58,21 @@ export function InputGroup<T extends ElementType = 'div'>({
         as="label"
       >
         {label}
-        {required && <span className="text-error-500">*</span>}
+        {required && (
+          <span className={cn(!disabled && 'text-error-500')}>*</span>
+        )}
       </Typography>
       {props.children}
-      {description && (
-        <Typography
-          id={`${id}--${name}--description`}
-          className="input-group__text"
-          textColor="text-indigo-700"
-          textSize="label"
-          textWeight="semi-bold"
-          as="p"
-        >
-          {description}
-        </Typography>
-      )}
-      {status?.message && (
+      {info?.message && (
         <Typography
           id={`${id}--${name}--status`}
+          className="input-group__text"
           textColor="text-(--input-group-status)"
           textWeight="semi-bold"
           textSize="label"
           as="p"
         >
-          {status.message}
+          {info.message}
         </Typography>
       )}
     </div>

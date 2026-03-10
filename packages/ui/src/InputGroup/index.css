@@ -6,6 +6,10 @@
     @apply flex flex-col items-start gap-1;
   }
 
+  .input-group__text {
+    @apply transition-colors;
+  }
+
   .input-group--error {
     --input-group-status: var(--color-error-500);
   }
@@ -18,7 +22,7 @@
     --input-group-status: var(--color-success-500);
   }
 
-  .input-group--disabled>.input-group__text {
-    @apply text-neutral-400;
+  .input-group--disabled {
+    --input-group-status: var(--color-neutral-400);
   }
 }

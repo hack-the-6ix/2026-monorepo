@@ -10,8 +10,8 @@ import {
 type InputGroupStoryArgs = Merge<
   InputGroupProps<'div'>,
   {
-    status: InputGroupStatus;
-    statusText: string;
+    infoType: InputGroupStatus;
+    infoText: string;
   }
 >;
 const meta = preview
@@ -20,21 +20,17 @@ const meta = preview
 
 export const InputGroup = meta.story({
   argTypes: {
-    status: {
+    infoType: {
       control: 'select',
       options: inputGroupStatuses,
     },
-    statusText: {
-      control: 'text',
-      if: { arg: 'status' },
-    },
   },
-  render: ({ status, statusText, ...args }) => {
+  render: ({ infoType, infoText, ...args }) => {
     const Component = component;
     return (
       <Component
         {...args}
-        status={status ? { type: status, message: statusText } : undefined}
+        info={infoText ? { type: infoType, message: infoText } : undefined}
       >
         <div
           style={{
@@ -51,11 +47,11 @@ export const InputGroup = meta.story({
     );
   },
   args: {
-    description:
-      'Wowwem ipsum dowow sit amwet, conswectwetuw adipiscing wewit.',
+    infoText: 'Wowwem ipsum dowow sit amwet, conswectwetuw adipiscing wewit.',
     label: 'owo wats dis?',
     hideLabel: false,
     required: false,
+    disabled: false,
     name: 'owo',
   },
 });
