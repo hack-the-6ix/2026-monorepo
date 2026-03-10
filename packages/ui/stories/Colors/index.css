@@ -1,4 +1,4 @@
 @import '../../src/index.css';
 
-@source inline("bg-{neutral,primary,secondary,success,warning,error}-{50,{100..900..100},950}");
+@source inline("bg-{neutral,primary,secondary,indigo,success,warning,error}-{50,{100..900..100},950}");
 @source inline("bg-{white,black}");

@@ -30,11 +30,13 @@ export type TypographyProps<T extends ElementType> = PolymorphicProps<
   {
     textSize?: TextSize;
     textWeight?: TextWeight;
+    textColor?: `text-${string}` | null;
   },
   T
 >;
 
 export function Typography<T extends ElementType = 'span'>({
+  textColor = 'text-neutral-900',
   textSize = 'paragraph-sm',
   textWeight,
   className,
@@ -50,6 +52,7 @@ export function Typography<T extends ElementType = 'span'>({
         'typography',
         textWeight && textWeights[textWeight],
         textSizes[textSize],
+        textColor,
         className,
       )}
     />

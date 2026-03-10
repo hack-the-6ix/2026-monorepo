@@ -62,9 +62,9 @@
   --text-5xl--font-weight: 700;
 }
 
-@layer components {
+@layer components.typography {
   .typography {
-    @apply font-sans text-neutral-900;
+    @apply font-sans;
   }
 
   .typography-xs {

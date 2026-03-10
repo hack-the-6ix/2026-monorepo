@@ -18,6 +18,7 @@ export const Typography = meta.story({
     },
   },
   args: {
+    textColor: 'text-neutral-900',
     textSize: 'paragraph-sm',
     children: 'owo wats dis?',
   },

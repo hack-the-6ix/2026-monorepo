@@ -1,7 +1,7 @@
 @reference 'tailwindcss';
 @reference '../index.css';
 
-@layer components {
+@layer components.button {
   .button {
     --button-color: var(--color-primary-500);
     --button-color-focus: var(--color-primary-600);
