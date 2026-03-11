@@ -1,4 +1,6 @@
 import preview from '#/preview';
+import '#/index.css';
+
 import { textSizes, textWeights, Typography as component } from '.';
 
 const meta = preview.meta({

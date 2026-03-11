@@ -1,5 +1,7 @@
 import preview from '#/preview';
-import { Merge } from '..';
+import '#/index.css';
+
+import { Merge } from '../..';
 import {
   InputGroup as component,
   InputGroupProps,

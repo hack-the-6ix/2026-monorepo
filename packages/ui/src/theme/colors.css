@@ -1,0 +1,91 @@
+/* colors - https://www.figma.com/design/55M6WT18vBpyzeZRF9EiqF/-OFFICIAL--HT6-Design-System?node-id=1-496&m=dev */
+
+@theme {
+  --color-*: initial;
+  --color-white: #fff;
+  --color-black: #000;
+
+  --color-neutral-50: #F9FAFB;
+  --color-neutral-100: #F3F4F6;
+  --color-neutral-200: #E5E7EB;
+  --color-neutral-300: #D1D5DC;
+  --color-neutral-400: #99A1AF;
+  --color-neutral-500: #6A7282;
+  --color-neutral-600: #4A5565;
+  --color-neutral-700: #364153;
+  --color-neutral-800: #1E2939;
+  --color-neutral-900: #101828;
+  --color-neutral-950: #030712;
+
+  --color-indigo-50: #F5F5FA;
+  --color-indigo-100: #EBEBF3;
+  --color-indigo-200: #D2D4E5;
+  --color-indigo-300: #AAADCF;
+  --color-indigo-400: #7C81B4;
+  --color-indigo-500: #5B619C;
+  --color-indigo-600: #474B82;
+  --color-indigo-700: #3B3D69;
+  --color-indigo-800: #333559;
+  --color-indigo-900: #2E2F4C;
+  --color-indigo-950: #08080D;
+
+  --color-primary-50: #F2FBF8;
+  --color-primary-100: #D3F4EA;
+  --color-primary-200: #A6E9D6;
+  --color-primary-300: #72D6BE;
+  --color-primary-400: #44BDA3;
+  --color-primary-500: #2DA990;
+  --color-primary-600: #208170;
+  --color-primary-700: #1D685B;
+  --color-primary-800: #1C534B;
+  --color-primary-900: #1B463F;
+  --color-primary-950: #0A2925;
+
+  --color-secondary-50: #EEF2FF;
+  --color-secondary-100: #E0E6FF;
+  --color-secondary-200: #C7D0FE;
+  --color-secondary-300: #A5B2FC;
+  --color-secondary-400: #8189F8;
+  --color-secondary-500: #6463F1;
+  --color-secondary-600: #5446E5;
+  --color-secondary-700: #4738CA;
+  --color-secondary-800: #3E33AE;
+  --color-secondary-900: #332E81;
+  --color-secondary-950: #1F1B4B;
+
+  --color-success-50: #F0FDF4;
+  --color-success-100: #DCFCE7;
+  --color-success-200: #B9F8CF;
+  --color-success-300: #7BF1A8;
+  --color-success-400: #05DF72;
+  --color-success-500: #00C950;
+  --color-success-600: #00A63E;
+  --color-success-700: #008236;
+  --color-success-800: #016630;
+  --color-success-900: #0D542B;
+  --color-success-950: #032E15;
+
+  --color-warning-50: #FFFBEB;
+  --color-warning-100: #FEF3C6;
+  --color-warning-200: #FEE685;
+  --color-warning-300: #FEE685;
+  --color-warning-400: #FFB900;
+  --color-warning-500: #FE9A00;
+  --color-warning-600: #E17100;
+  --color-warning-700: #BB4D00;
+  --color-warning-800: #973C00;
+  --color-warning-900: #7B3306;
+  --color-warning-950: #461901;
+
+  --color-error-50: #FEF2F2;
+  --color-error-100: #FFE2E2;
+  --color-error-200: #FFC9C9;
+  --color-error-300: #FFA2A2;
+  --color-error-400: #FF6467;
+  --color-error-500: #FB2C36;
+  --color-error-600: #E7000B;
+  --color-error-700: #C10007;
+  --color-error-800: #9F0712;
+  --color-error-900: #82181A;
+  --color-error-950: #460809;
+}

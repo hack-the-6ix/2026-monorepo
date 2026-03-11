@@ -1,7 +1,8 @@
 import { ElementType, ReactNode, useId } from 'react';
 import cn from 'classnames';
 
-import { PolymorphicProps, Typography } from '..';
+import { PolymorphicProps } from '../..';
+import { Typography } from '../Typography';
 
 import './index.css';
 

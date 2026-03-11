@@ -1,8 +1,7 @@
 import addonDocs from '@storybook/addon-docs';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import { definePreview } from '@storybook/react-vite';
-
-import './index.css';
+import '@fontsource-variable/inter';
 
 export default definePreview({
   parameters: {

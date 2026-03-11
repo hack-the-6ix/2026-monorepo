@@ -1,7 +1,9 @@
 import { BananaIcon } from 'lucide-react';
 
 import preview from '#/preview';
-import { Merge } from '..';
+import '#/index.css';
+
+import { Merge } from '../..';
 import { Button as component, buttonKinds, ButtonProps } from '.';
 
 type ButtonStoryArgs = Merge<

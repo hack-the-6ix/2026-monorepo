@@ -1,5 +1,8 @@
 import preview from '#/preview';
+import '#/index.css';
+
 import { buttonKinds, HyperLink as component } from '.';
+
 
 const meta = preview.meta({ title: 'Modules/Buttons/Hyperlink', component });
 

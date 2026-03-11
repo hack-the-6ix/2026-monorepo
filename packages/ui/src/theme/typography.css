@@ -1,10 +1,6 @@
-@import "tailwindcss/theme.css" layer(theme);
-@reference '../index.css';
-
 /* https://www.figma.com/design/55M6WT18vBpyzeZRF9EiqF/-OFFICIAL--HT6-Design-System?node-id=1-1699&m=dev */
-/* sizes slide down 1 for mobile */
+
 @theme {
-  --font-sans: var(--font-default), sans-serif;
   --text-*: initial;
 
   /* For mobile label */
@@ -60,46 +56,4 @@
   --text-5xl--line-height: 4.75rem;
   --text-5xl--letter-spacing: -2.2%;
   --text-5xl--font-weight: 700;
-}
-
-@layer components.typography {
-  .typography {
-    @apply font-sans;
-  }
-
-  .typography-xs {
-    @apply text-xs;
-  }
-
-  .typography-sm {
-    @apply md:text-sm text-xs;
-  }
-
-  .typography-base {
-    @apply md:text-base text-sm;
-  }
-
-  .typography-lg {
-    @apply md:text-lg text-base;
-  }
-
-  .typography-xl {
-    @apply md:text-xl text-lg;
-  }
-
-  .typography-2xl {
-    @apply md:text-2xl text-xl;
-  }
-
-  .typography-3xl {
-    @apply md:text-3xl text-2xl;
-  }
-
-  .typography-4xl {
-    @apply md:text-4xl text-3xl;
-  }
-
-  .typography-5xl {
-    @apply md:text-5xl text-4xl;
-  }
 }

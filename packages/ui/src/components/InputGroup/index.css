@@ -1,5 +1,4 @@
-@reference 'tailwindcss';
-@reference '../index.css';
+@reference '../../index.css';
 
 @layer components.input-group {
   .input-group {
@@ -25,4 +24,9 @@
   .input-group--disabled {
     --input-group-status: var(--color-neutral-400);
   }
+}
+
+/* some nice helper styles for styling based on above */
+@layer components.input-like {
+
 }

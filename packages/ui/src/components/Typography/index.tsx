@@ -1,7 +1,7 @@
 import { ElementType } from 'react';
 import cn from 'classnames';
 
-import type { PolymorphicProps } from '../index';
+import type { PolymorphicProps } from '../..';
 
 import './index.css';
 
@@ -36,9 +36,9 @@ export type TypographyProps<T extends ElementType> = PolymorphicProps<
 >;
 
 export function Typography<T extends ElementType = 'span'>({
-  textColor = 'text-neutral-900',
   textSize = 'paragraph-sm',
   textWeight,
+  textColor,
   className,
   as,
   ...props

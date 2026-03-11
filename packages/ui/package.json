@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.3",
+    "@fontsource-variable/inter": "^5.2.8",
     "@hackthe6ix/eslint-config": "workspace:^",
     "@hackthe6ix/typescript-config": "workspace:^",
     "@storybook/addon-docs": "^10.2.16",

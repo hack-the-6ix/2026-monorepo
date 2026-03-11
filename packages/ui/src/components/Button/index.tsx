@@ -1,7 +1,8 @@
 import { ComponentPropsWithRef, ElementType, ReactNode } from 'react';
 import cn from 'classnames';
 
-import { PolymorphicProps, Typography } from '..';
+import { PolymorphicProps } from '../..';
+import { Typography } from '../Typography';
 
 import './index.css';
 
@@ -25,6 +26,8 @@ export type ButtonProps<T extends ElementType> = PolymorphicProps<
 export function Button<T extends ElementType = 'button'>({
   destructive,
   kind = 'primary',
+  iconLeft,
+  iconRight,
   as,
   ...props
 }: ButtonProps<T>) {
@@ -42,10 +45,10 @@ export function Button<T extends ElementType = 'button'>({
       textWeight="semi-bold"
       as={as ?? 'button'}
     >
-      {props.iconLeft && <span className="button__icon">{props.iconLeft}</span>}
+      {iconLeft && <span className="button__icon">{iconLeft}</span>}
       <span>{props.icon ?? props.children}</span>
-      {props.iconRight && (
-        <span className="button__icon">{props.iconRight}</span>
+      {iconRight && (
+        <span className="button__icon">{iconRight}</span>
       )}
     </Typography>
   );
@@ -58,6 +61,7 @@ export type IconButtonProps<T extends ElementType> = PolymorphicProps<
 export function IconButton<T extends ElementType = 'button'>({
   destructive,
   kind = 'primary',
+  icon,
   as,
   ...props
 }: IconButtonProps<T>) {
@@ -75,7 +79,7 @@ export function IconButton<T extends ElementType = 'button'>({
       textWeight="semi-bold"
       as={as ?? 'button'}
     >
-      <span className="button__icon">{props.icon}</span>
+      <span className="button__icon">{icon}</span>
     </Typography>
   );
 }

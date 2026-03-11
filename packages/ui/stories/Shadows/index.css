@@ -1,4 +1,0 @@
-@reference '../../src/index.css';
-
-@source inline("shadow-{none,xs,sm,md,lg,xl}");
-@source inline("shadow-black");

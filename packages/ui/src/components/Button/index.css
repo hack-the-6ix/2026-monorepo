@@ -1,5 +1,4 @@
-@reference 'tailwindcss';
-@reference '../index.css';
+@reference '../../index.css';
 
 @layer components.button {
   .button {
