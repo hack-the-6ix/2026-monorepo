@@ -23,7 +23,7 @@ export default function Section({
   return (
     <section
       id={id}
-      style={{ background }}
+      style={{ background: background }}
       className={`w-full min-h-screen flex flex-col px-8 md:px-16 ${className}`}
       {...props}
     >
