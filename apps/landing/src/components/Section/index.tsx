@@ -2,28 +2,21 @@ import { HTMLAttributes, ReactNode } from 'react';
 
 interface SectionProps extends HTMLAttributes<HTMLElement> {
   id: string;
-  baseColor: string; // The main color of THIS section
-  nextColor?: string; // The start color of the NEXT section
+  backgroundColor: string;
   children: ReactNode;
 }
 
 export default function Section({
   id,
-  baseColor,
-  nextColor,
+  backgroundColor,
   children,
   className = '',
   ...props
 }: SectionProps) {
-  const background =
-    nextColor ?
-      `linear-gradient(to bottom, ${baseColor}, ${nextColor})`
-    : baseColor;
-
   return (
     <section
       id={id}
-      style={{ background: background }}
+      style={{ background: backgroundColor }}
       className={`w-full min-h-screen flex flex-col px-8 md:px-16 ${className}`}
       {...props}
     >
