@@ -6,4 +6,7 @@ export type PolymorphicProps<Props, T extends ElementType> = Merge<
   Merge<Props, { as?: T }>
 >;
 
-export * from './Typography';
+export * from './components/Button';
+export * from './components/Input';
+export * from './components/InputGroup';
+export * from './components/Typography';

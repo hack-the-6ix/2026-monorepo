@@ -1,6 +1,4 @@
 import preview from '#/preview';
-import '#/index.css';
-
 import { Merge } from '../..';
 import {
   InputGroup as component,

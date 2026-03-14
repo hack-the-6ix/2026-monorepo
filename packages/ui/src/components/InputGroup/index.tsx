@@ -1,4 +1,4 @@
-import { ElementType, ReactNode, useId } from 'react';
+import { ElementType, ReactNode } from 'react';
 import cn from 'classnames';
 
 import { PolymorphicProps } from '../..';
@@ -21,10 +21,11 @@ export type InputGroupProps<T extends ElementType> = PolymorphicProps<
     required?: boolean;
     disabled?: boolean;
     info?: {
-      type: InputGroupStatus;
+      type?: InputGroupStatus;
       message?: ReactNode;
     };
     name: string;
+    id: string;
   },
   T
 >;
@@ -35,10 +36,9 @@ export function InputGroup<T extends ElementType = 'div'>({
   required,
   disabled,
   name,
+  id,
   ...props
 }: InputGroupProps<T>) {
-  const id = useId();
-
   return (
     <div
       {...props}
@@ -48,6 +48,7 @@ export function InputGroup<T extends ElementType = 'div'>({
         disabled && 'input-group--disabled',
         props.className,
       )}
+      id={id}
     >
       <Typography
         className="input-group__text"
@@ -55,7 +56,7 @@ export function InputGroup<T extends ElementType = 'div'>({
         textSize="paragraph-sm"
         textWeight="semi-bold"
         hidden={hideLabel}
-        htmlFor={name}
+        htmlFor={`${id}--input`}
         as="label"
       >
         {label}
@@ -67,8 +68,7 @@ export function InputGroup<T extends ElementType = 'div'>({
       {info?.message && (
         <Typography
           id={`${id}--${name}--status`}
-          className="input-group__text"
-          textColor="text-(--input-group-status)"
+          className="input-group__text input-group__text--status"
           textWeight="semi-bold"
           textSize="label"
           as="p"

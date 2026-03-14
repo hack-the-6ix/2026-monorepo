@@ -1,7 +1,6 @@
 import { DynamicIcon, IconName } from 'lucide-react/dynamic';
-import preview from '#/preview';
-import '#/index.css';
 
+import preview from '#/preview';
 import { Merge } from '../..';
 import { buttonKinds, IconButton as component, IconButtonProps } from '.';
 
@@ -32,7 +31,9 @@ export const IconButton = meta.story({
     return (
       <Component
         {...args}
-        icon={<DynamicIcon className="size-full" name={args.icon as IconName} />}
+        icon={
+          <DynamicIcon className="size-full" name={args.icon as IconName} />
+        }
       />
     );
   },

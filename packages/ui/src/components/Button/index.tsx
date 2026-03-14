@@ -47,9 +47,7 @@ export function Button<T extends ElementType = 'button'>({
     >
       {iconLeft && <span className="button__icon">{iconLeft}</span>}
       <span>{props.icon ?? props.children}</span>
-      {iconRight && (
-        <span className="button__icon">{iconRight}</span>
-      )}
+      {iconRight && <span className="button__icon">{iconRight}</span>}
     </Typography>
   );
 }
