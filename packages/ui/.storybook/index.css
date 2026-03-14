@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "../src/index.css";
+
+@source "../stories/**/*.{mdx,css}";
+
+html {
+  @apply transition-colors bg-neutral-50 dark:bg-neutral-800;
+}
+
+@theme {
+  --font-sans: "Inter Variable", sans-serif;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

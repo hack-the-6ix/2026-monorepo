@@ -1,0 +1,43 @@
+@reference '../../index.css';
+
+@layer components.typography {
+  .typography {
+    @apply font-sans;
+  }
+
+  .typography-xs {
+    @apply text-xs;
+  }
+
+  .typography-sm {
+    @apply md:text-sm text-xs;
+  }
+
+  .typography-base {
+    @apply md:text-base text-sm;
+  }
+
+  .typography-lg {
+    @apply md:text-lg text-base;
+  }
+
+  .typography-xl {
+    @apply md:text-xl text-lg;
+  }
+
+  .typography-2xl {
+    @apply md:text-2xl text-xl;
+  }
+
+  .typography-3xl {
+    @apply md:text-3xl text-2xl;
+  }
+
+  .typography-4xl {
+    @apply md:text-4xl text-3xl;
+  }
+
+  .typography-5xl {
+    @apply md:text-5xl text-4xl;
+  }
+}

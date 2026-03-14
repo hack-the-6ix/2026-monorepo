@@ -1,0 +1,8 @@
+/* breakpoints - https://www.figma.com/design/55M6WT18vBpyzeZRF9EiqF/-OFFICIAL--HT6-Design-System?node-id=1-2012&m=dev */
+
+@theme {
+  --breakpoint-xl: 120rem;
+  --breakpoint-lg: 90rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-sm: 20rem;
+}
