@@ -11,7 +11,7 @@ const NavLinks = [
   { name: 'Contact Us ^', href: '' },
 ];
 
-// TODO: fix the nav to be accurate to the figma
+// TODO: fix the nav to be accurate to the figma and use ui library
 export default function Nav() {
   const [visible, setVisible] = useState(true);
   const [lastScroll, setLastScroll] = useState(0);
@@ -53,7 +53,7 @@ export default function Nav() {
             <Link
               key={`navlink-${index}`}
               href={link.href}
-              className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+              className="text-sm font-medium text-neutral-300 hover:text-white transition-colors"
             >
               {link.name}
             </Link>

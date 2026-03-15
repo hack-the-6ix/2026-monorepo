@@ -1,3 +1,5 @@
+import { Typography } from '@hackthe6ix/ui';
+
 import Section from '../../components/Section';
 
 export default function Sponsors() {
@@ -7,7 +9,9 @@ export default function Sponsors() {
       backgroundColor="linear-gradient(to bottom, #12102F, #423994, #355190, #0D7F75)"
     >
       <div>
-        <h1 className="text-white font-bold">SPONSORS</h1>
+        <Typography textSize="heading-sm" textColor="text-neutral-50">
+          SPONSORS
+        </Typography>
       </div>
     </Section>
   );

@@ -1,3 +1,5 @@
+import { Typography } from '@hackthe6ix/ui';
+
 import Section from '../../components/Section';
 
 export default function Projects() {
@@ -7,7 +9,9 @@ export default function Projects() {
       backgroundColor="linear-gradient(to bottom, #0D7F75, #0A7E74, #2A8B78, #D68D05)"
     >
       <div>
-        <h1 className="text-white font-bold">PAST PROJECTS</h1>
+        <Typography textSize="heading-sm" textColor="text-neutral-50">
+          PAST PROJECTS
+        </Typography>
       </div>
     </Section>
   );

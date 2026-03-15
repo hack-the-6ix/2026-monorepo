@@ -1,3 +1,5 @@
+import { Typography } from '@hackthe6ix/ui';
+
 import Section from '../../components/Section';
 
 export default function Team() {
@@ -7,7 +9,9 @@ export default function Team() {
       backgroundColor="linear-gradient(to bottom, #BA6600, #BD375C)"
     >
       <div>
-        <h1 className="text-white font-bold">MEET THE TEAM</h1>
+        <Typography textSize="heading-sm" textColor="text-neutral-50">
+          MEET THE TEAM
+        </Typography>
       </div>
     </Section>
   );

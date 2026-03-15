@@ -1,3 +1,5 @@
+import { Typography } from '@hackthe6ix/ui';
+
 import Section from '../../components/Section';
 
 export default function AboutStats() {
@@ -7,7 +9,9 @@ export default function AboutStats() {
       backgroundColor="linear-gradient(to bottom, #12102F, #12102F)"
     >
       <div>
-        <h1 className="text-white font-bold">ABOUT AND STATS</h1>
+        <Typography textSize="heading-sm" textColor="text-neutral-50">
+          ABOUT AND STATS
+        </Typography>
       </div>
     </Section>
   );
