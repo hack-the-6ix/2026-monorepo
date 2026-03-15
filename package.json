@@ -5,9 +5,11 @@
   "scripts": {
     "dev:landing": "pnpm --filter landing dev",
     "dev:apply": "pnpm --filter apply dev",
+    "dev:ui": "pnpm --filter ui dev",
     "build": "pnpm --parallel --filter \"./apps/*\" build",
     "build:landing": "pnpm --filter landing build",
     "build:apply": "pnpm --filter apply build",
+    "build:ui": "pnpm --filter ui build",
     "type-check": "pnpm -r type-check",
     "lint": "pnpm -r lint"
   },
@@ -15,8 +17,8 @@
     "prettier": "catalog:"
   },
   "engines": {
-    "node": ">=18",
-    "pnpm": ">=8"
+    "node": ">=24",
+    "pnpm": ">=10"
   },
-  "packageManager": "pnpm@9.5.0"
+  "packageManager": "pnpm@10.30.3"
 }

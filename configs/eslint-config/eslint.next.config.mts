@@ -13,6 +13,7 @@ const eslintConfig = defineConfig([
     '.next/**',
     '.open-next/**',
     '.wrangler/**',
+    'tsconfig.tsbuildinfo',
     'next-env.d.ts',
   ]),
 ]);

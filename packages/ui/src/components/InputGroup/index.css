@@ -1,0 +1,44 @@
+@reference 'tailwindcss';
+@reference '../../theme.css';
+
+@layer components.input-group {
+  .input-group {
+    @apply flex flex-col items-start gap-1;
+  }
+
+  .input-group__text {
+    @apply transition-colors;
+  }
+
+  .input-group__text--status {
+    --input-group-status-text: var(--input-group-status, var(--color-indigo-700));
+    @apply text-(--input-group-status-text);
+  }
+
+  .input-group--error {
+    --input-group-status-active: var(--color-error-700);
+    --input-group-status-focus: var(--color-error-600);
+    --input-group-status: var(--color-error-500);
+  }
+
+  .input-group--warning {
+    --input-group-status-active: var(--color-warning-700);
+    --input-group-status-focus: var(--color-warning-600);
+    --input-group-status: var(--color-warning-500);
+  }
+
+  .input-group--success {
+    --input-group-status-active: var(--color-success-700);
+    --input-group-status-focus: var(--color-success-600);
+    --input-group-status: var(--color-success-500);
+  }
+
+  .input-group--disabled {
+    --input-group-status-active: var(--color-neutral-400);
+    --input-group-status-focus: var(--color-neutral-400);
+    --input-group-status: var(--color-neutral-400);
+  }
+}
+
+/* some nice helper styles for styling based on above */
+@layer components.input-like {}

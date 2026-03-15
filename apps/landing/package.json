@@ -14,11 +14,12 @@
     "cf:typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
   },
   "dependencies": {
+    "@hackthe6ix/assets": "workspace:*",
     "@hackthe6ix/eslint-config": "workspace:*",
     "@hackthe6ix/typescript-config": "workspace:*",
-    "@hackthe6ix/assets": "workspace:*",
     "@hackthe6ix/ui": "workspace:*",
     "@opennextjs/cloudflare": "catalog:",
+    "classnames": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"

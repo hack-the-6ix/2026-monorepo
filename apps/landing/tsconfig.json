@@ -1,7 +1,8 @@
 {
   "extends": "@hackthe6ix/typescript-config/next",
   "compilerOptions": {
-    "types": ["./cloudflare-env.d.ts", "node"]
+    "types": ["./cloudflare-env.d.ts", "node"],
+    "declaration": true,
   },
   "include": [
     "next-env.d.ts",

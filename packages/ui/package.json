@@ -4,24 +4,37 @@
   "type": "module",
   "private": true,
   "exports": {
-    ".": "./src/index.ts",
-    "./theme.css": "./src/index.css"
+    "./*": "./src/*",
+    ".": "./src/index.ts"
   },
   "scripts": {
     "lint": "eslint --cache --fix .",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build"
   },
   "dependencies": {
     "classnames": "catalog:",
+    "lucide-react": "^0.577.0",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:"
   },
   "devDependencies": {
-    "@hackthe6ix/eslint-config": "workspace:",
-    "@hackthe6ix/typescript-config": "workspace:",
+    "@eslint/compat": "^2.0.3",
+    "@fontsource-variable/inter": "^5.2.8",
+    "@hackthe6ix/eslint-config": "workspace:^",
+    "@hackthe6ix/typescript-config": "workspace:^",
+    "@storybook/addon-docs": "^10.2.16",
+    "@storybook/addon-themes": "^10.2.16",
+    "@storybook/react-vite": "^10.2.16",
+    "@tailwindcss/postcss": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "eslint": "catalog:",
-    "typescript": "catalog:"
+    "eslint-plugin-storybook": "^10.2.16",
+    "storybook": "^10.2.16",
+    "typescript": "catalog:",
+    "vite-tsconfig-paths": "^6.1.1"
   }
 }
