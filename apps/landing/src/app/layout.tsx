@@ -3,6 +3,9 @@ import cn from 'classnames';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
+import Footer from './footer/page';
+import Nav from './nav/page';
+
 import './globals.css';
 
 const inter = Inter({
@@ -21,7 +24,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body className={cn(`${inter.variable} antialiased`)}>{children}</body>
+      <body className={cn(`${inter.variable} antialiased`)}>
+        <Nav />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
