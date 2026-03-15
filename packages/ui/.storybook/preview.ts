@@ -9,6 +9,9 @@ import './index.css';
 export default definePreview({
   parameters: {
     options: {
+      docs: {
+        codePanel: true,
+      },
       storySort: {
         order: ['Atoms', 'Modules'],
       },
@@ -63,4 +66,5 @@ export default definePreview({
     }),
   ],
   addons: [addonDocs()],
+  tags: ['autodocs'],
 });

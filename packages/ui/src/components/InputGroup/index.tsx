@@ -4,8 +4,6 @@ import cn from 'classnames';
 import { PolymorphicProps } from '../..';
 import { Typography } from '../Typography';
 
-import './index.css';
-
 export const inputGroupStatuses = ['error', 'warning', 'success'] as const;
 export type InputGroupStatus = (typeof inputGroupStatuses)[number];
 const statusToModifier: Record<InputGroupStatus, string> = {
@@ -13,6 +11,8 @@ const statusToModifier: Record<InputGroupStatus, string> = {
   warning: 'input-group--warning',
   success: 'input-group--success',
 };
+
+import './index.css';
 
 export type InputGroupProps<T extends ElementType> = PolymorphicProps<
   {
