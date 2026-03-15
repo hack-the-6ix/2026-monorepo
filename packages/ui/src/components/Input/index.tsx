@@ -1,4 +1,11 @@
-import { ComponentPropsWithRef, useImperativeHandle, useRef } from 'react';
+'use client';
+
+import {
+  ComponentPropsWithRef,
+  ReactNode,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import cn from 'classnames';
 
 import { InputGroup, InputGroupProps } from '../InputGroup';

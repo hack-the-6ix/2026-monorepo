@@ -4,8 +4,8 @@
   "type": "module",
   "private": true,
   "exports": {
-    ".": "./src/index.ts",
-    "./theme.css": "./src/index.css"
+    "./*": "./src/*",
+    ".": "./src/index.ts"
   },
   "scripts": {
     "lint": "eslint --cache --fix .",
