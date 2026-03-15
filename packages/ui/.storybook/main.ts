@@ -9,6 +9,9 @@ export default defineMain({
   features: {
     backgrounds: false,
   },
+  docs: {
+    defaultName: 'Docs',
+  },
   stories: ['../src/**/*.stories.@(ts|tsx)', '../stories/**/*.mdx'],
   framework: '@storybook/react-vite',
   addons: ['@storybook/addon-themes', '@storybook/addon-docs'],
