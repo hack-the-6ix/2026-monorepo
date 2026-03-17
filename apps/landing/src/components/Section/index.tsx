@@ -18,7 +18,7 @@ export default function Section({
     <section
       id={id}
       style={{ background: backgroundColor }}
-      className={`w-full min-h-screen flex flex-col px-8 md:px-16 ${className}`}
+      className={`w-full min-h-screen flex flex-col ${className}`}
       {...props}
     >
       {children}
