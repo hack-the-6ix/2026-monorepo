@@ -4,6 +4,7 @@ interface SectionProps extends HTMLAttributes<HTMLElement> {
   id: string;
   backgroundColor: string;
   children: ReactNode;
+  className?: string;
 }
 
 export default function Section({
@@ -20,7 +21,7 @@ export default function Section({
       className={`w-full min-h-screen flex flex-col px-8 md:px-16 ${className}`}
       {...props}
     >
-      <div className="max-w-[1700px] w-full mx-auto py-24">{children}</div>
+      {children}
     </section>
   );
 }
