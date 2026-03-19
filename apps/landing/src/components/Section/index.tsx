@@ -1,9 +1,8 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import { ComponentPropsWithoutRef } from 'react';
 
-interface SectionProps extends HTMLAttributes<HTMLElement> {
+interface SectionProps extends Omit<ComponentPropsWithoutRef<'section'>, 'id'> {
   id: string;
   backgroundColor: string;
-  children: ReactNode;
 }
 
 export default function Section({
@@ -17,10 +16,10 @@ export default function Section({
     <section
       id={id}
       style={{ background: backgroundColor }}
-      className={`w-full min-h-screen flex flex-col px-8 md:px-16 ${className}`}
+      className={`w-full min-h-screen flex flex-col py-24 ${className}`}
       {...props}
     >
-      <div className="max-w-[1700px] w-full mx-auto py-24">{children}</div>
+      {children}
     </section>
   );
 }
