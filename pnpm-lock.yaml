@@ -26,7 +26,7 @@ catalogs:
       version: 2.5.1
     eslint:
       specifier: ^9.39.4
-      version: 9.39.3
+      version: 9.39.4
     next:
       specifier: ^16
       version: 16.1.6
@@ -65,6 +65,9 @@ importers:
       '@hackthe6ix/typescript-config':
         specifier: workspace:*
         version: link:../../configs/typescript-config
+      '@hackthe6ix/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@opennextjs/cloudflare':
         specifier: 'catalog:'
         version: 1.17.1(next@16.1.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(wrangler@4.70.0)
@@ -108,9 +111,6 @@ importers:
 
   apps/landing:
     dependencies:
-      '@hackthe6ix/assets':
-        specifier: workspace:*
-        version: link:../../packages/assets
       '@hackthe6ix/eslint-config':
         specifier: workspace:*
         version: link:../../configs/eslint-config
@@ -219,8 +219,6 @@ importers:
       eslint:
         specifier: 'catalog:'
         version: 9.39.3(jiti@2.6.1)
-
-  packages/assets: {}
 
   packages/ui:
     dependencies:

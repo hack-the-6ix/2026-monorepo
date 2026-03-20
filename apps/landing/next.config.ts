@@ -1,8 +1,6 @@
 import type { NextConfig } from 'next';
 
-const nextConfig: NextConfig = {
-  transpilePackages: ['@hackthe6ix/assets'],
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
 
