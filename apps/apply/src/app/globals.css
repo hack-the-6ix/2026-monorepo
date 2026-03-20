@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import '../../../../packages/ui/src/index.css';
+@import '@hackthe6ix/ui/theme.css';
 
 :root {
 	--background: #ffffff;
