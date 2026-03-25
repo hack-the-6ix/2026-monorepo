@@ -20,6 +20,8 @@ jobs:
         with:
           node-version: '24'
           cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
       - name: Typescript type check
         run: pnpm type-check
       - name: Lint check
