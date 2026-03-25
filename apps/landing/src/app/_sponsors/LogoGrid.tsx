@@ -1,72 +1,71 @@
 'use client';
 
+import LogoPlaceholder from '@assets/Free-PlaceHolder-Logo.jpg';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import LogoPlaceholder from '../../assets/Free-PlaceHolder-Logo.jpg';
+const platinumSponsors = [
+  {
+    src: LogoPlaceholder,
+    alt: 'logo',
+    href: 'https://orteil.dashnet.org/cookieclicker/',
+  },
+];
+
+const goldSponsors = [
+  {
+    src: LogoPlaceholder,
+    alt: 'logo',
+    href: 'https://orteil.dashnet.org/cookieclicker/',
+  },
+  {
+    src: LogoPlaceholder,
+    alt: 'logo',
+    href: 'https://orteil.dashnet.org/cookieclicker/',
+  },
+];
+
+const silverSponsors = [
+  {
+    src: LogoPlaceholder,
+    alt: 'logo',
+    href: 'https://orteil.dashnet.org/cookieclicker/',
+  },
+  {
+    src: LogoPlaceholder,
+    alt: 'logo',
+    href: 'https://orteil.dashnet.org/cookieclicker/',
+  },
+  {
+    src: LogoPlaceholder,
+    alt: 'logo',
+    href: 'https://orteil.dashnet.org/cookieclicker/',
+  },
+];
+const bronzeSponsors = [
+  {
+    src: LogoPlaceholder,
+    alt: 'logo',
+    href: 'https://orteil.dashnet.org/cookieclicker/',
+  },
+  {
+    src: LogoPlaceholder,
+    alt: 'logo',
+    href: 'https://orteil.dashnet.org/cookieclicker/',
+  },
+  {
+    src: LogoPlaceholder,
+    alt: 'logo',
+    href: 'https://orteil.dashnet.org/cookieclicker/',
+  },
+  {
+    src: LogoPlaceholder,
+    alt: 'logo',
+    href: 'https://orteil.dashnet.org/cookieclicker/',
+  },
+];
 
 export default function LogoGrid() {
-  const platinumSponsors = [
-    {
-      src: LogoPlaceholder,
-      alt: 'logo',
-      href: 'https://orteil.dashnet.org/cookieclicker/',
-    },
-  ];
-
-  const goldSponsors = [
-    {
-      src: LogoPlaceholder,
-      alt: 'logo',
-      href: 'https://orteil.dashnet.org/cookieclicker/',
-    },
-    {
-      src: LogoPlaceholder,
-      alt: 'logo',
-      href: 'https://orteil.dashnet.org/cookieclicker/',
-    },
-  ];
-
-  const silverSponsors = [
-    {
-      src: LogoPlaceholder,
-      alt: 'logo',
-      href: 'https://orteil.dashnet.org/cookieclicker/',
-    },
-    {
-      src: LogoPlaceholder,
-      alt: 'logo',
-      href: 'https://orteil.dashnet.org/cookieclicker/',
-    },
-    {
-      src: LogoPlaceholder,
-      alt: 'logo',
-      href: 'https://orteil.dashnet.org/cookieclicker/',
-    },
-  ];
-  const bronzeSponsors = [
-    {
-      src: LogoPlaceholder,
-      alt: 'logo',
-      href: 'https://orteil.dashnet.org/cookieclicker/',
-    },
-    {
-      src: LogoPlaceholder,
-      alt: 'logo',
-      href: 'https://orteil.dashnet.org/cookieclicker/',
-    },
-    {
-      src: LogoPlaceholder,
-      alt: 'logo',
-      href: 'https://orteil.dashnet.org/cookieclicker/',
-    },
-    {
-      src: LogoPlaceholder,
-      alt: 'logo',
-      href: 'https://orteil.dashnet.org/cookieclicker/',
-    },
-  ];
-
   return (
     <div className="pt-8 flex flex-col gap-4 md:gap-8 w-full md:max-w-[50%] items-center">
       <div className="grid grid-cols-1">

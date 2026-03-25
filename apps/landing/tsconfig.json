@@ -3,6 +3,9 @@
   "compilerOptions": {
     "types": ["./cloudflare-env.d.ts", "node"],
     "declaration": true,
+    "paths": {
+      "@assets/*": ["./src/assets/*"]
+    }
   },
   "include": [
     "next-env.d.ts",

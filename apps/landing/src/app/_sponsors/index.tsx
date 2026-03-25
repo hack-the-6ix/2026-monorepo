@@ -1,15 +1,15 @@
-'use client';
+import Candle from '@assets/sponsor_candle.png';
+import Grass from '@assets/sponsor_grass.png';
+import Hills from '@assets/sponsor_hill.png';
 import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
-import Candle from '../../assets/sponsor_candle.png';
-import Grass from '../../assets/sponsor_grass.png';
-import Hills from '../../assets/sponsor_hill.png';
 import Section from '../../components/Section';
+import { featureFlags } from '../../feature-flags';
 import LogoGrid from './LogoGrid';
 
 export default function Sponsors() {
-  const showSponsor = false;
+  const showSponsor = featureFlags.showSponsor;
   return (
     <Section
       id="sponsors"
@@ -49,11 +49,8 @@ export default function Sponsors() {
         </div>
         <Button
           className="w-full md:max-w-45"
-          onClick={(e) => {
-            window.location.href =
-              'mailto:sponsor@hackthe6ix.com?subject=Interest in Sponsoring Hack the 6ix';
-            e.preventDefault();
-          }}
+          as="a"
+          href="mailto:sponsor@hackthe6ix.com?subject=Interest in Sponsoring Hack the 6ix"
         >
           Become a Sponsor
         </Button>
@@ -65,6 +62,7 @@ export default function Sponsors() {
             alt="Purple Hills"
             width={700}
             height={700}
+            draggable={false}
             className="w-150 h-auto md:w-300"
           />
           <Image
@@ -72,6 +70,7 @@ export default function Sponsors() {
             alt="Big Grass"
             width={800}
             height={800}
+            draggable={false}
             className="w-140 h-auto -translate-x-12 md:w-300 md:translate-0 2xl:translate-x-20"
           />
         </div>
@@ -92,6 +91,7 @@ export default function Sponsors() {
               alt="cute candle"
               width={100}
               height={100}
+              draggable={false}
               className="w-18 h-auto z-20 md:w-28 2xl:w-35"
             />
             <div className="z-10 absolute bg-[rgba(246, 189, 85, 0.34)] top-0.5 md:top-1.5 -translate-x-1.5 rounded-full w-2 md:w-3 h-3 md:h-5 2xl:h-6 animate-glow" />
