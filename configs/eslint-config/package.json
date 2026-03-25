@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@hackthe6ix/typescript-config": "workspace:^",
+    "@types/node": "^22.19.15",
     "eslint": "catalog:"
   }
 }
