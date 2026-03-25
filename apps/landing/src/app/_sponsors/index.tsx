@@ -63,15 +63,15 @@ export default function Sponsors() {
           <Image
             src={Hills}
             alt="Purple Hills"
-            width={1300}
-            height={1300}
+            width={700}
+            height={700}
             className="w-150 h-auto md:w-300"
           />
           <Image
             src={Grass}
             alt="Big Grass"
-            width={1200}
-            height={1200}
+            width={800}
+            height={800}
             className="w-140 h-auto -translate-x-12 md:w-300 md:translate-0 2xl:translate-x-20"
           />
         </div>
