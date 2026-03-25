@@ -1,0 +1,61 @@
+.footerArt {
+  position: relative;
+  width: 100%;
+  height: 340px;
+}
+
+.artLayer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.artLarge {
+  bottom: 0;
+  width: 86%;
+}
+
+.artMedium {
+  bottom: 18px;
+  width: 62%;
+}
+
+.artSmall {
+  bottom: 44px;
+  width: 36%;
+}
+
+.decoration1 {
+  position: absolute;
+  right: 8%;
+  bottom: 28px;
+  width: 128px;
+}
+
+.decoration2 {
+  position: absolute;
+  left: 6%;
+  bottom: 18px;
+  width: 150px;
+}
+
+.decorationSmall {
+  position: absolute;
+  left: 32%;
+  bottom: 88px;
+  width: 64px;
+}
+
+.teacup {
+  position: absolute;
+  right: 18%;
+  bottom: 72px;
+  width: 92px;
+}
+
+.email {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 132px;
+}

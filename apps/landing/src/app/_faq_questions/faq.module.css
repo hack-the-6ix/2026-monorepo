@@ -1,0 +1,39 @@
+.faqWrapper {
+  position: relative;
+  overflow: visible;
+}
+
+.bgImage {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 120%;
+  max-width: 1800px;
+  height: auto;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+/* pull content up so it sits inside the triangle artwork */
+.contentOverlap {
+  margin-top: -140px;
+  padding-top: 56px; /* preserve original top spacing visually */
+}
+
+@media (max-width: 768px) {
+  .contentOverlap {
+    margin-top: -80px;
+  }
+}
+
+@media (max-width: 420px) {
+  .contentOverlap {
+    margin-top: -40px;
+  }
+}
