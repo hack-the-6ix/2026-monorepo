@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import styles from './figmaFAQ.module.css';
+import styles from './FAQSection.module.css';
 import { Typography } from '@hackthe6ix/ui';
 
 const IMG_CHEVRON =
@@ -65,7 +65,7 @@ function Disclosure({
   );
 }
 
-export default function FigmaFAQ() {
+export default function FAQSection() {
   return (
     <div className="flex flex-col items-start gap-12 w-[1048px]">
       <div className={styles.row}>
