@@ -1,11 +1,13 @@
 {
   "extends": "@hackthe6ix/typescript-config/next",
   "compilerOptions": {
+    "baseUrl": ".",
     "types": ["./cloudflare-env.d.ts", "node"],
     "declaration": true,
     "paths": {
       "@assets/*": ["./src/assets/*"]
-    }
+    },
+    "noEmit": true
   },
   "include": [
     "next-env.d.ts",
