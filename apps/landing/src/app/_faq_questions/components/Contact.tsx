@@ -34,24 +34,6 @@ const Contact = () => {
           </Typography>
         </div>
       </div>
-
-      {/* <div>
-        <img src="/assets/faq/Teacup.svg"></img>
-        <div className="relative w-full max-w-[456px]">
-          <Image
-            src="/assets/faq/Group.svg"
-            alt="contact us"
-            width={205}
-            height={456}
-            className="w-full h-auto"
-          />
-          <div className="mb-10 absolute inset-0 flex items-center justify-center pointer-events-none">
-            <Typography textSize="subtitle-sm" textColor="text-[#F4A42B]">
-              hello@hackthe6ix.com
-            </Typography>
-          </div>{' '}
-        </div>
-      </div> */}
     </>
   );
 };

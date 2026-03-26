@@ -14,12 +14,12 @@ export default function FAQ() {
       backgroundColor="linear-gradient(to bottom, #D68D05, #BA6600)"
     >
       <div className="relative x">
-        {/* <Image
+        <Image
           src="/assets/faq/faq-bg-triangle-1.png"
           alt=""
           width={3103}
           height={856}
-        /> */}
+        />
         <div className="flex flex-col items-center gap-9">
           <Typography textSize="heading-lg" textColor="text-neutral-50">
             FAQ
