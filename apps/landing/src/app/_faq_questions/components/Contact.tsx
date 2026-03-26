@@ -4,8 +4,8 @@ import Image from 'next/image';
 const Contact = () => {
   return (
     <>
-      <div className="flex flex-col items-center gap-6 mt-10 w-[617px]">
-        <Typography textSize="heading-sm" textColor="text-neutral-50">
+      <div className="relative flex flex-col items-center gap-6 w-[617px] overflow-visible">
+        <Typography textSize="heading-lg" textColor="text-neutral-50">
           Still Have Questions?
         </Typography>
         <Typography
@@ -19,7 +19,23 @@ const Contact = () => {
           You can reach out to us at
         </Typography>
       </div>
-      <div>
+      <div className="relative overflow-visible">
+        <Image
+          src="/assets/faq/svgviewer-output-2.svg"
+          alt=""
+          width={1000}
+          height={885}
+          className="h-auto -translate-x-64 -translate-y-98"
+        />
+
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center -translate-y-50">
+          <Typography textSize="subtitle-sm" textColor="text-[#F4A42B]">
+            hello@hackthe6ix.com
+          </Typography>
+        </div>
+      </div>
+
+      {/* <div>
         <img src="/assets/faq/Teacup.svg"></img>
         <div className="relative w-full max-w-[456px]">
           <Image
@@ -35,7 +51,7 @@ const Contact = () => {
             </Typography>
           </div>{' '}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
