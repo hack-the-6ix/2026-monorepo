@@ -2,7 +2,7 @@
   "extends": "./tsconfig.react.json",
   "compilerOptions": {
     "allowImportingTsExtensions": true,
-    "emitDeclarationOnly": true,
+    "emitDeclarationOnly": false,
     "paths": {
       "@/*": ["./src/*"]
     }
