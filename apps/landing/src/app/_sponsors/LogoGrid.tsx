@@ -1,6 +1,6 @@
 'use client';
 
-import LogoPlaceholder from '@assets/Free-PlaceHolder-Logo.jpg';
+import LogoPlaceholder from '@/assets/Free-PlaceHolder-Logo.jpg';
 import Image from 'next/image';
 import Link from 'next/link';
 

@@ -1,6 +1,6 @@
-import Candle from '@assets/sponsor_candle.png';
-import Grass from '@assets/sponsor_grass.png';
-import Hills from '@assets/sponsor_hill.png';
+import Candle from '@/assets/sponsor_candle.png';
+import Grass from '@/assets/sponsor_grass.png';
+import Hills from '@/assets/sponsor_hill.png';
 import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
