@@ -33,7 +33,7 @@ export default function CategoryPills({
             aria-selected={isSelected}
             onClick={() => handleClick(opt)}
             className={`
-              px-6 py-3 rounded-[32px] flex items-center justify-center
+              px-10 py-3 min-w-[170px] rounded-[32px] flex items-center justify-center
               text-white font-semibold text-sm
               transition-all duration-200
               ${
