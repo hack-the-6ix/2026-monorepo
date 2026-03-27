@@ -1,6 +1,6 @@
-import heroButterflies1 from '../../assets/hero_butterflies-1.svg';
-import heroButterflies2 from '../../assets/hero_butterflies-2.svg';
-import heroButterflies3 from '../../assets/hero_butterflies-3.svg';
+import heroButterflies1 from '../../assets/hero_butterflies-1.png';
+import heroButterflies2 from '../../assets/hero_butterflies-2.png';
+import heroButterflies3 from '../../assets/hero_butterflies-3.png';
 import heroCave from '../../assets/hero_cave.svg';
 import heroCliffLeft from '../../assets/hero_cliff-left.svg';
 import heroCliffLeftFade from '../../assets/hero_cliff-left-fade.svg';
@@ -10,8 +10,8 @@ import heroCliffRightTop from '../../assets/hero_cliff-right-top.svg';
 import heroCloudLeft from '../../assets/hero_cloud-left.svg';
 import heroCloudRight from '../../assets/hero_cloud-right.svg';
 import heroCnTower from '../../assets/hero_cn-tower.svg';
-import heroGrass from '../../assets/hero_grass.svg';
-import heroGrassShadow from '../../assets/hero_grass-shadow.svg';
+import heroGrass from '../../assets/hero_grass.png';
+import heroGrassShadow from '../../assets/hero_grass-shadow.png';
 import heroLeaf from '../../assets/hero_leaf.svg';
 import heroLightLeft1 from '../../assets/hero_light-left-1.svg';
 import heroLightLeft2 from '../../assets/hero_light-left-2.svg';
@@ -20,6 +20,7 @@ import heroMistLeft from '../../assets/hero_mist-left.svg';
 import heroMistRight from '../../assets/hero_mist-right.svg';
 import heroMushroom1 from '../../assets/hero_mushroom-1.png';
 import heroMushroom2 from '../../assets/hero_mushroom-2.png';
+import heroRadishHide from '../../assets/hero_radish-hide.png';
 import heroRadish2 from '../../assets/hero_radish-jump.png';
 import heroRadish1 from '../../assets/hero_radish-stand.png';
 import heroSpotlight from '../../assets/hero_spotlight.svg';
@@ -51,6 +52,7 @@ export const assets = {
   heroMistRight,
   heroMushroom1,
   heroMushroom2,
+  heroRadishHide,
   heroSpotlight,
   heroTree1,
   heroTree2,

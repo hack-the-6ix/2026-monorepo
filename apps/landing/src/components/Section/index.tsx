@@ -3,6 +3,7 @@ import { ComponentPropsWithoutRef } from 'react';
 interface SectionProps extends Omit<ComponentPropsWithoutRef<'section'>, 'id'> {
   id: string;
   backgroundColor: string;
+  noPadding?: boolean;
 }
 
 export default function Section({
@@ -10,6 +11,7 @@ export default function Section({
   backgroundColor,
   children,
   className = '',
+  noPadding = false,
   ...props
 }: SectionProps) {
   return (

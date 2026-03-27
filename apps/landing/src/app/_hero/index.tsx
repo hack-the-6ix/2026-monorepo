@@ -1,73 +1,38 @@
-import React from 'react';
-import { Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
 import Section from '../../components/Section';
-import { assets, butterfliesFrames, radishFrames } from './assets';
-import { EVENT_INFO, FORM_CONTENT, HERO_CONTENT, META } from './constants';
+import { assets } from './assets';
 
-// export function ButterfliesAnimated() {
-//   const [frame, setFrame] = React.useState(0);
-
-//   React.useEffect(() => {
-//     const id = setInterval(() => {
-//       setFrame(f => (f + 1) % butterfliesFrames.length);
-//     }, 500);
-//     return () => clearInterval(id);
-//   }, []);
-
-//   return (
-//     <div
-//       className="absolute right-[280px] top-[317.89px] w-[214px] h-[533px] animate-subtle-bounce"
-//       aria-hidden="true"
-//     >
-//       <div className="relative w-full h-full animate-pulse">
-//         {butterfliesFrames.map((src, i) => (
-//           <Image
-//             key={i}
-//             src={src}
-//             alt=""
-//             width={214}
-//             height={533}
-//             className="asset-image absolute inset-0 transition-opacity duration-200"
-//             style={{ opacity: i === frame ? 1 : 0 }}
-//           />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
-// TODO: when all radish frames come in, create on-click animation
-export function RadishAnimated() {
-  return;
-}
+const ARTBOARD_W = 4035;
+const ARTBOARD_H = 3662;
 
 export default function Hero() {
   return (
-    <Section id="hero" backgroundColor="#12102F">
-      {/* ============================================================
-          LAYER 1: Main Elements (z-0)
-          Background graphics, clouds, spotlight, CN Tower, mists, 
-          cliffs, trees, cave, grasses, mushrooms
-          ============================================================ */}
-
-      {/* Cloud Left - left-anchored */}
+    <Section
+      id="hero"
+      backgroundColor="#12102F"
+      noPadding
+      className="relative overflow-hidden items-start"
+    >
       <div
-        className="absolute"
+        className="relative ml-[-916px] mt-[-405px]"
         style={{
-          left: -270.66,
-          top: -370.01,
-          width: 2093,
-          height: 2095.1,
+          width: ARTBOARD_W,
+          minHeight: ARTBOARD_H,
         }}
       >
+        {/* ============================================================
+            LAYER 1 (z-0): Background / Atmosphere
+            Clouds, spotlight, CN Tower, mists
+            ============================================================ */}
+
+        {/* Cloud Left */}
         <div
           className="absolute"
           style={{
-            left: 0,
-            top: 464.89,
-            width: 2093.76,
+            left: 465.14,
+            top: 464.9,
+            width: 2093.77,
             height: 883.17,
           }}
         >
@@ -75,293 +40,288 @@ export default function Hero() {
             src={assets.heroCloudLeft}
             alt=""
             fill
-            sizes="100vw"
-            className="object-left"
+            sizes="2094px"
+            className="object-contain object-left"
           />
         </div>
-      </div>
 
-      {/* Spotlight and Cloud Right - right-anchored */}
-      <div
-        className="absolute"
-        style={{
-          right: 41,
-          top: -319.11,
-          width: 1904.81,
-          height: 1292.72,
-        }}
-      >
+        {/* Cloud Right */}
         <div
           className="absolute"
           style={{
-            left: 737.15,
-            top: 439,
-            width: 1520,
-            height: 874,
+            left: 1153.66,
+            top: 489.9,
+            width: 1833.39,
+            height: 854.01,
           }}
         >
           <Image
             src={assets.heroCloudRight}
             alt=""
-            width={1520}
-            height={874}
-            className="asset-image"
+            fill
+            sizes="1834px"
+            className="object-contain"
           />
         </div>
+
+        {/* Spotlight */}
         <div
           className="absolute"
           style={{
-            right: 156.3,
-            top: -597.85,
-            width: 2901.7,
-            height: 1882.76,
+            left: 416.42,
+            top: 80.81,
+            width: 1805.34,
+            height: 1293.39,
           }}
         >
           <Image
             src={assets.heroSpotlight}
             alt=""
-            width={2902}
-            height={1883}
-            className="asset-image"
+            fill
+            sizes="1805px"
+            className="object-contain"
           />
         </div>
-      </div>
 
-      {/* CN Tower - left-anchored */}
-      <div
-        className="absolute"
-        style={{
-          left: 600,
-          top: 450,
-          width: 201.45,
-          height: 241.76,
-        }}
-      >
-        <Image
-          src={assets.heroCnTower}
-          alt=""
-          fill
-          sizes="202px"
-          className="object-left"
-        />
-      </div>
+        {/* CN Tower */}
+        <div
+          className="absolute"
+          style={{
+            left: 1706.66,
+            top: 1023.9,
+            width: 221.63,
+            height: 258.29,
+          }}
+        >
+          <Image
+            src={assets.heroCnTower}
+            alt=""
+            fill
+            sizes="222px"
+            className="object-contain"
+          />
+        </div>
 
-      {/* Mist Left - left-anchored */}
-      <div
-        className="absolute"
-        style={{
-          left: -573.32,
-          top: 660.77,
-          width: 2428.12,
-          height: 456,
-        }}
-      >
-        <Image
-          src={assets.heroMistLeft}
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-left"
-        />
-      </div>
+        {/* Mist Right */}
+        <div
+          className="absolute"
+          style={{
+            left: 589,
+            top: 1058.22,
+            width: 2562.08,
+            height: 428.58,
+          }}
+        >
+          <Image
+            src={assets.heroMistRight}
+            alt=""
+            fill
+            sizes="2563px"
+            className="object-contain"
+          />
+        </div>
 
-      {/* Mist Right - left-anchored */}
-      <div
-        className="absolute"
-        style={{
-          left: -573.32,
-          top: 660.77,
-          width: 2428.12,
-          height: 456,
-        }}
-      >
-        <Image
-          src={assets.heroMistRight}
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-right"
-        />
-      </div>
+        {/* Mist Left */}
+        <div
+          className="absolute"
+          style={{
+            left: 279.42,
+            top: 1023.79,
+            width: 2497.7,
+            height: 456.02,
+          }}
+        >
+          <Image
+            src={assets.heroMistLeft}
+            alt=""
+            fill
+            sizes="2498px"
+            className="object-contain"
+          />
+        </div>
 
-      {/* Trees - right-anchored */}
-      <div className="absolute right-[106px] top-[533.89px] w-[344px] h-[406px]">
-        <div className="absolute left-0 top-[184px] w-[180px] h-[222px]">
+        {/* ============================================================
+            LAYER 1 (z-0): Terrain
+            Cliffs, cave, trees, mushrooms, grass
+            ============================================================ */}
+
+        {/* Tree 1 - Short Tree on Left */}
+        <div
+          className="absolute"
+          style={{
+            left: 1912.66,
+            top: 1087.9,
+            width: 180,
+            height: 222,
+          }}
+        >
           <Image
             src={assets.heroTree1}
             alt=""
             width={180}
             height={222}
-            className="asset-image"
+            className="block max-w-none size-full"
           />
         </div>
-        <div className="absolute left-[115px] top-0 w-[229px] h-[398px]">
+
+        {/* Tree 2 - Tall Tree on Right*/}
+        <div
+          className="absolute"
+          style={{
+            left: 2027.66,
+            top: 903.9,
+            width: 229,
+            height: 398,
+          }}
+        >
           <Image
             src={assets.heroTree2}
             alt=""
             width={229}
             height={398}
-            className="asset-image"
+            className="block max-w-none size-full"
           />
         </div>
-      </div>
 
-      {/* Cave - right-anchored */}
-      <div className="absolute right-[-4px] top-[682.39px] w-[534px] h-[326px]">
-        <Image
-          src={assets.heroCave}
-          alt=""
-          width={534}
-          height={326}
-          className="asset-image"
-        />
-      </div>
-
-      {/* Butterflies - right-anchored (static for now) */}
-      {/* <ButterfliesAnimated /> */}
-
-      {/* Lower Right Cliffs Group - right-anchored */}
-      <div className="absolute right-[-5px] top-[854.89px] w-[882.5px] h-[715.5px]">
-        {/* Cliff Right Bottom */}
-        <div className="absolute left-0 top-[154px] w-[882px] h-[561.5px]">
-          <Image
-            src={assets.heroCliffRightBottom}
-            alt=""
-            width={882}
-            height={562}
-            className="asset-image"
-          />
-        </div>
-        {/* Cliff Right Top */}
-        <div className="absolute left-[448px] top-[48px] w-[434.5px] h-[256.5px]">
-          <Image
-            src={assets.heroCliffRightTop}
-            alt=""
-            width={435}
-            height={257}
-            className="asset-image"
-          />
-        </div>
-        {/* Cliff Right Fade */}
-        <div className="absolute left-[-10px] top-[106px] w-[542px] h-[121.5px]">
-          <Image
-            src={assets.heroCliffRightFade}
-            alt=""
-            width={542}
-            height={118}
-            className="asset-image"
-          />
-        </div>
-        {/* Mushroom 1 */}
-        <div className="absolute left-[776px] top-0 w-[64px] h-[77px]">
-          <Image
-            src={assets.heroMushroom1}
-            alt=""
-            width={64}
-            height={77}
-            className="asset-image"
-          />
-        </div>
-        {/* Grass on right cliff */}
-        <div className="absolute left-[704.42px] top-[-240.35px] w-[143px] h-[107px]">
-          <Image
-            src={assets.heroGrass}
-            alt=""
-            width={143}
-            height={107}
-            className="asset-image"
-          />
-        </div>
-      </div>
-
-      {/* Lower Left Cliffs Group - left-anchored */}
-      <div
-        className="absolute"
-        style={{
-          left: -420,
-          top: 660,
-          width: 1200,
-          height: 800,
-        }}
-      >
-        {/* Main cliff left */}
+        {/* Cave */}
         <div
           className="absolute"
           style={{
-            left: 0,
-            top: 100,
-            width: 1200,
-            height: 700,
+            left: 1832.66,
+            top: 1052.4,
+            width: 802.34,
+            height: 326.5,
           }}
         >
           <Image
-            src={assets.heroCliffLeft}
+            src={assets.heroCave}
             alt=""
             fill
-            sizes="100vw"
-            className="object-cover object-right"
+            sizes="803px"
+            className="object-contain"
           />
         </div>
+
+        {/* Cliff Right Fade (pink cliff) */}
+        <div
+          className="absolute"
+          style={{
+            left: 1773.85,
+            top: 1275.81,
+            width: 2261.3,
+            height: 2009.63,
+          }}
+        >
+          <Image
+            src={assets.heroCliffRightFade}
+            alt=""
+            fill
+            sizes="2262px"
+            className="object-contain"
+          />
+        </div>
+
+        {/* Cliff Right Bottom */}
+        <div
+          className="absolute"
+          style={{
+            left: 1480.66,
+            top: 1378.9,
+            width: 1670.34,
+            height: 1615.6,
+          }}
+        >
+          <Image
+            src={assets.heroCliffRightBottom}
+            alt=""
+            fill
+            sizes="1671px"
+            className="object-contain"
+          />
+        </div>
+
         {/* Cliff Left Fade */}
         <div
           className="absolute"
           style={{
-            left: 800,
-            top: 50,
-            width: 400,
-            height: 200,
+            left: -441,
+            top: 1089.9,
+            width: 2095,
+            height: 1818,
           }}
         >
           <Image
             src={assets.heroCliffLeftFade}
             alt=""
             fill
-            sizes="400px"
+            sizes="2095px"
             className="object-contain"
           />
         </div>
-        {/* Grass Shadow */}
+
+        {/* Cliff Left */}
         <div
           className="absolute"
           style={{
-            left: 439.05,
-            top: 0,
-            width: 140.98,
-            height: 105.06,
+            left: 0,
+            top: 1090,
+            width: 2146,
+            height: 2564,
           }}
         >
           <Image
-            src={assets.heroGrassShadow}
+            src={assets.heroCliffLeft}
             alt=""
-            width={141}
-            height={105}
-            className="asset-image"
+            fill
+            sizes="2146px"
+            className="object-contain object-right"
           />
         </div>
-        {/* Grass */}
+
+        {/* Cliff Right Top */}
         <div
           className="absolute"
           style={{
-            left: 468,
-            top: 0.32,
-            width: 171,
-            height: 127.43,
+            left: 1928.66,
+            top: 1270.9,
+            width: 1116.34,
+            height: 344.1,
           }}
         >
           <Image
-            src={assets.heroGrass}
+            src={assets.heroCliffRightTop}
             alt=""
-            width={171}
-            height={127}
-            className="asset-image"
+            fill
+            sizes="1117px"
+            className="object-contain"
           />
         </div>
+
+        {/* Mushroom 1 */}
+        <div
+          className="absolute"
+          style={{
+            left: 2256.66,
+            top: 1232.9,
+            width: 64.28,
+            height: 76.53,
+          }}
+        >
+          <Image
+            src={assets.heroMushroom1}
+            alt=""
+            width={64}
+            height={77}
+            className="block max-w-none size-full"
+          />
+        </div>
+
         {/* Mushroom 2 */}
         <div
           className="absolute"
           style={{
-            right: 100,
-            top: 50,
+            left: 1932.66,
+            top: 1237,
             width: 52.49,
             height: 101.87,
           }}
@@ -371,60 +331,179 @@ export default function Hero() {
             alt=""
             width={52}
             height={102}
-            className="asset-image"
+            className="block max-w-none size-full"
           />
         </div>
-      </div>
 
-      {/* ============================================================
-          LAYER 2: Overlay SVGs (z-10)
-          Leaves and lighting effects
-          ============================================================ */}
+        {/* Left Grass Shadow */}
+        <div
+          className="absolute"
+          style={{
+            left: 938.7,
+            top: 1066.58,
+            width: 140.98,
+            height: 105.06,
+          }}
+        >
+          <Image
+            src={assets.heroGrassShadow}
+            alt=""
+            width={141}
+            height={105}
+            className="block max-w-none size-full"
+          />
+        </div>
 
-      {/* Light Effects - with 0.6 opacity */}
-      <div
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{ opacity: 0.6 }}
-      >
+        {/* Left Grass*/}
+        <div
+          className="absolute"
+          style={{
+            left: 967.66,
+            top: 1066.9,
+            width: 171,
+            height: 127.42,
+          }}
+        >
+          <Image
+            src={assets.heroGrass}
+            alt=""
+            width={171}
+            height={127}
+            className="block max-w-none size-full"
+          />
+        </div>
+
+        {/* Right Grass */}
+        <div
+          className="absolute"
+          style={{
+            left: 2185.08,
+            top: 984.56,
+            width: 143.16,
+            height: 106.68,
+          }}
+        >
+          <Image
+            src={assets.heroGrass}
+            alt=""
+            width={143}
+            height={107}
+            className="block max-w-none size-full"
+          />
+        </div>
+
+        {/* Static Radish - Animations later */}
+        <div
+          className="absolute"
+          style={{
+            left: 2080.66,
+            top: 1286.9,
+            width: 122,
+            height: 195.06,
+          }}
+        >
+          <Image
+            src={assets.heroRadishHide}
+            alt=""
+            width={122}
+            height={195}
+            className="block max-w-none size-full"
+          />
+        </div>
+
+        {/* Static Butterflies - Animations later */}
+        <div
+          className="absolute"
+          style={{
+            left: 1868.65,
+            top: 687.9,
+            width: 213.92,
+            height: 533.08,
+          }}
+        >
+          <Image
+            src={assets.heroButterflies1}
+            alt=""
+            width={213}
+            height={533}
+            className="block max-w-none size-full"
+          />
+        </div>
+
+        {/* ============================================================
+            LAYER 2 (z-10): Overlay - Lights (0.6 opacity)
+            ============================================================ */}
+
         {/* Light Left 1 */}
-        <div className="absolute left-[-150px] top-0 w-[756px] h-[381px]">
+        <div
+          className="absolute z-10 pointer-events-none"
+          style={{
+            left: 735.4,
+            top: 35.1,
+            width: 855.33,
+            height: 844.55,
+            opacity: 0.6,
+          }}
+        >
           <Image
             src={assets.heroLightLeft1}
             alt=""
-            width={756}
-            height={381}
-            className="asset-image"
+            fill
+            sizes="856px"
+            className="object-contain"
           />
         </div>
+
         {/* Light Left 2 */}
         <div
-          className="absolute left-[-150px] w-[874px] h-[640px]"
-          style={{ top: 100.74 }}
+          className="absolute z-10 pointer-events-none"
+          style={{
+            left: 905,
+            top: -42.3,
+            width: 774,
+            height: 1732.39,
+            opacity: 0.6,
+          }}
         >
           <Image
             src={assets.heroLightLeft2}
             alt=""
-            width={774}
-            height={640}
-            className="asset-image"
+            fill
+            sizes="774px"
+            className="object-contain"
           />
         </div>
+
         {/* Light Right */}
-        <div className="absolute right-[-112.16px] top-0 w-[742px] h-[501px]">
+        <div
+          className="absolute z-10 pointer-events-none"
+          style={{
+            left: 1700,
+            top: 228.9,
+            width: 759.68,
+            height: 669.15,
+            opacity: 0.6,
+          }}
+        >
           <Image
             src={assets.heroLightRight}
             alt=""
-            width={742}
-            height={501}
-            className="asset-image"
+            fill
+            sizes="760px"
+            className="object-contain"
           />
         </div>
-      </div>
 
-      {/* Leaves - right-anchored */}
-      <div className="absolute right-[-42px] top-[-95.11px] w-[537.21px] h-[412.1px] z-10">
         {/* Leaf 1 */}
-        <div className="absolute left-[20px] top-[20px] w-[139px] h-[231px]">
+        <div
+          className="absolute z-10 pointer-events-none"
+          style={{
+            left: 1867.66,
+            top: 330.01,
+            width: 139,
+            height: 231,
+          }}
+        >
           <Image
             src={assets.heroLeaf}
             alt=""
@@ -433,8 +512,17 @@ export default function Hero() {
             className="asset-image rotate-[205.37deg]"
           />
         </div>
+
         {/* Leaf 2 */}
-        <div className="absolute left-[120px] top-[75px] w-[139px] h-[231px]">
+        <div
+          className="absolute z-10 pointer-events-none"
+          style={{
+            left: 1979.66,
+            top: 382.01,
+            width: 139,
+            height: 231,
+          }}
+        >
           <Image
             src={assets.heroLeaf}
             alt=""
@@ -443,8 +531,17 @@ export default function Hero() {
             className="asset-image rotate-[162.76deg]"
           />
         </div>
+
         {/* Leaf 3 */}
-        <div className="absolute left-[370px] top-[152px] w-[139px] h-[231px]">
+        <div
+          className="absolute z-10 pointer-events-none"
+          style={{
+            left: 2207.66,
+            top: 426.9,
+            width: 139,
+            height: 231,
+          }}
+        >
           <Image
             src={assets.heroLeaf}
             alt=""
@@ -454,112 +551,6 @@ export default function Hero() {
           />
         </div>
       </div>
-
-      {/* ============================================================
-          LAYER 3: Static Content (z-20)
-          Logo, hero text, sign-up form
-          ============================================================ */}
-      <div className="absolute inset-0 z-20 pointer-events-none">
-        <div className="absolute left-[59.34px] top-[36.89px] w-[977px] h-[631px] pointer-events-auto">
-          {/* Logo */}
-          <div className="absolute left-0 top-0 w-[30px] h-[75.64px]">
-            <Image
-              src={assets.logo}
-              alt="Hack the 6ix Logo"
-              width={30}
-              height={76}
-              className="block w-full h-full"
-              priority
-            />
-          </div>
-
-          {/* Hero Content */}
-          <div className="absolute left-[66px] top-[319px] w-[911px] flex flex-col gap-8">
-            <div className="flex flex-col gap-6 items-start justify-center w-full">
-              {/* Event Info */}
-              <div className="flex flex-row gap-2 items-start w-full">
-                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-                  {EVENT_INFO.date}
-                </p>
-                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-                  ⋅
-                </p>
-                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-                  {EVENT_INFO.location}
-                </p>
-                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-                  ⋅
-                </p>
-                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-                  {EVENT_INFO.format}
-                </p>
-              </div>
-
-              {/* Title */}
-              <h1 className="font-bold text-[60px] leading-[76px] tracking-[-1.32px] text-[var(--color-text-primary-white)] m-0 text-glow">
-                {HERO_CONTENT.title}
-              </h1>
-
-              {/* Subtitle */}
-              <p className="font-medium text-[32px] leading-[40px] tracking-[-0.704px] m-0 text-glow">
-                <span className="text-[var(--color-text-primary-white)]">
-                  {HERO_CONTENT.subtitlePrefix}
-                </span>
-                <span className="text-[var(--color-highlight-gold)] font-bold">
-                  {HERO_CONTENT.subtitleHighlight}
-                </span>
-              </p>
-            </div>
-
-            {/* Sign-up Form */}
-            <div className="flex flex-col gap-4 w-full">
-              <p className="font-medium text-[20px] leading-[24px] tracking-[-0.34px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
-                {FORM_CONTENT.description}
-              </p>
-              <div>
-                <form className="flex flex-row gap-4 items-center">
-                  <div className="flex flex-col gap-1 w-[406px]">
-                    <label htmlFor="email" className="sr-only">
-                      Email address
-                    </label>
-                    <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        autoComplete="email"
-                        placeholder={FORM_CONTENT.placeholder}
-                        className="flex-1 font-medium text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
-                      />
-                    </div>
-                  </div>
-                  <button
-                    type="submit"
-                    className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow"
-                    aria-label="Sign up for updates"
-                  >
-                    <span className="font-semibold text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] text-center">
-                      {FORM_CONTENT.buttonText}
-                    </span>
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* KEEP LAYERS:
-       * Positioning Strategy:
-       * - Left-anchored: Logo, hero content
-       * - Right-anchored: Leaves
-       * - ALL OTHER ASSETS ARE NOT ANCHORED, AND SHOULD BE POSITIONED ABSOLUTELY WITHIN THE HERO SECTION
-       *
-       * Structure:
-       * - Layer 1 (z-0): Main elements (gradient, spotlight, CN Tower, clouds/mists, cliffs, grasses, butterflies, radish)
-       * - Layer 2 (z-10): Overlay SVGs (leaves and lighting only)
-       * // TODO: can we figure out a better-looking system for the lighting?
-       * - Layer 3 (z-20): Static content (logo, hero text, sign-up button)
-       */}
     </Section>
   );
 }
