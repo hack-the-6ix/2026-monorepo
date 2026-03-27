@@ -2,3 +2,98 @@
 @import '@hackthe6ix/ui/theme.css';
 
 @source '../../../../packages/ui/src';
+
+@theme {
+  --animate-glow: glowing 4s ease-in-out infinite alternate;
+  --animate-slide-down: slide-down 1s ease-out forwards;
+  --animate-slide-up: slide-up 1s ease-in forwards;
+  --animate-dangle: dangle 3s ease-in-out;
+  --animate-swing: swing 3s ease-in-out;
+}
+
+@keyframes glowing {
+  from {
+    box-shadow:
+      0 0 20px #ffd166,
+      0 0 30px #ffb703,
+      0 0 40px #fb8500,
+      0 0 80px #fb8500;
+  }
+  to {
+    box-shadow:
+      0 0 40px #fff3b0,
+      0 0 70px #ffd166,
+      0 0 90px #ff8500,
+      0 0 110px #fb8500;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}
+
+@keyframes dangle {
+  0% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(15deg);
+  }
+  35% {
+    transform: rotate(-12deg);
+  }
+  55% {
+    transform: rotate(8deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+  90% {
+    transform: rotate(1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(5deg);
+  }
+  35% {
+    transform: rotate(-4deg);
+  }
+  55% {
+    transform: rotate(3deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+  90% {
+    transform: rotate(1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
