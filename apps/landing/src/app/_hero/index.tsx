@@ -1,24 +1,84 @@
+'use client';
+import React, { useState } from 'react';
 import Image from 'next/image';
 
 import Section from '../../components/Section';
+import { EVENT_INFO, FORM_CONTENT, HERO_CONTENT } from '../_hero/constants';
 import { assets } from './assets';
 
 const ARTBOARD_W = 4035;
 const ARTBOARD_H = 3662;
 
 export default function Hero() {
+  const [email, setEmail] = useState<string>('');
+  const [submitStatus, setSubmitStatus] = useState<{
+    message: string;
+    isError: boolean;
+  } | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!email.trim()) {
+      setSubmitStatus({
+        message: 'Please provide an email',
+        isError: true,
+      });
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setSubmitStatus({
+        message: 'Please provide a valid email',
+        isError: true,
+      });
+      return;
+    }
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch(
+        'https://landingapi.hackthe6ix.com/api/subscribe',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        },
+      );
+
+      const data = await response.text();
+
+      if (response.ok) {
+        setSubmitStatus({
+          message: data,
+          isError: false,
+        });
+        setEmail('');
+      } else {
+        setSubmitStatus({
+          message: data || 'Failed to subscribe. Please try again.',
+          isError: true,
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus({
+        message: 'An error occurred. Please try again later.',
+        isError: true,
+      });
+    }
+  };
+
   return (
-    <Section
-      id="hero"
-      backgroundColor="#12102F"
-      noPadding
-      className="relative overflow-hidden items-start"
-    >
+    <Section id="hero" backgroundColor="#12102F" noPadding className="relative">
       <div
-        className="relative ml-[-916px] mt-[-405px]"
+        className="absolute"
         style={{
           width: ARTBOARD_W,
           minHeight: ARTBOARD_H,
+          left: 'calc(50% - 1636px)',
+          top: -405,
         }}
       >
         {/* ============================================================
@@ -536,7 +596,7 @@ export default function Hero() {
         <div
           className="absolute z-10 pointer-events-none"
           style={{
-            left: 2207.66,
+            left: 2227.66,
             top: 426.9,
             width: 139,
             height: 231,
@@ -549,6 +609,105 @@ export default function Hero() {
             height={231}
             className="asset-image rotate-[196deg]"
           />
+        </div>
+      </div>
+      {/* ============================================================
+          LAYER 4: Content Elements (z-index: 30)
+          Only rendered inside main container on large screens (non-portrait).
+          Small screens use a separate fixed overlay for vertical centering.
+          ============================================================ */}
+      {/* Render fixed-position hero UI for both landscape and in-between aspect ratios */}
+      <div className="layer-content">
+        <div className="absolute left-[59.34px] top-[36.89px] w-[977px] h-[631px] pointer-events-auto">
+          <div className="absolute left-0 top-0 w-[30px] h-[75.64px]">
+            <Image
+              src={assets.logo}
+              alt="Hack the 6ix Logo"
+              width={30}
+              height={76}
+              className="block w-full h-full"
+              priority
+            />
+          </div>
+          <div className="absolute left-[66px] top-[319px] w-[911px] flex flex-col gap-8">
+            <div className="flex flex-col gap-6 items-start justify-center w-full">
+              <div className="flex flex-row gap-2 items-start w-full">
+                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                  {EVENT_INFO.date}
+                </p>
+                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                  ⋅
+                </p>
+                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                  {EVENT_INFO.location}
+                </p>
+                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                  ⋅
+                </p>
+                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                  {EVENT_INFO.format}
+                </p>
+              </div>
+              <h1 className="font-bold text-[60px] leading-[76px] tracking-[-1.32px] text-[var(--color-text-primary-white)] m-0 text-glow">
+                {HERO_CONTENT.title}
+              </h1>
+              <p className="font-medium text-[32px] leading-[40px] tracking-[-0.704px] m-0 text-glow">
+                <span className="text-[var(--color-text-primary-white)]">
+                  {HERO_CONTENT.subtitlePrefix}
+                </span>
+                <span className="text-[var(--color-highlight-gold)] font-bold">
+                  {HERO_CONTENT.subtitleHighlight}
+                </span>
+              </p>
+            </div>
+            <div className="flex flex-col gap-4 w-full">
+              <p className="font-medium text-[20px] leading-[24px] tracking-[-0.34px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                {FORM_CONTENT.description}
+              </p>
+              <div>
+                <form
+                  onSubmit={handleSubmit}
+                  className="flex flex-row gap-4 items-center"
+                  suppressHydrationWarning
+                >
+                  <div className="flex flex-col gap-1 w-[406px]">
+                    <label htmlFor="email" className="sr-only">
+                      Email address
+                    </label>
+                    <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        autoComplete="email"
+                        placeholder={FORM_CONTENT.placeholder}
+                        suppressHydrationWarning
+                        className="flex-1 font-medium text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow"
+                    aria-label="Sign up for updates"
+                  >
+                    <span className="font-semibold text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] text-center">
+                      {FORM_CONTENT.buttonText}
+                    </span>
+                  </button>
+                </form>
+                {submitStatus && (
+                  <p
+                    className={`text-sm mt-3 ${submitStatus.isError ? 'text-red-600' : 'text-green-600'}`}
+                  >
+                    {submitStatus.message}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </Section>
