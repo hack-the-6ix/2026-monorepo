@@ -204,40 +204,21 @@ export default function Hero() {
           />
         </div>
 
-        {/* Tree 1 - Short Tree on Left */}
+        {/* Trees */}
         <div
           className="absolute"
           style={{
             left: 1912.66,
-            top: 1087.9,
-            width: 180,
-            height: 222,
-          }}
-        >
-          <Image
-            src={assets.heroTree1}
-            alt=""
-            width={180}
-            height={222}
-            className="block max-w-none size-full"
-          />
-        </div>
-
-        {/* Tree 2 - Tall Tree on Right*/}
-        <div
-          className="absolute"
-          style={{
-            left: 2027.66,
             top: 903.9,
-            width: 229,
-            height: 398,
+            width: 344,
+            height: 406,
           }}
         >
           <Image
-            src={assets.heroTree2}
+            src={assets.heroTrees}
             alt=""
-            width={229}
-            height={398}
+            width={344}
+            height={406}
             className="block max-w-none size-full"
           />
         </div>
@@ -553,62 +534,25 @@ export default function Hero() {
           />
         </div>
 
-        {/* Leaf 1 */}
+        {/* Leaves */}
         <div
           className="absolute z-10 pointer-events-none"
           style={{
             left: 1867.66,
-            top: 330.01,
-            width: 139,
-            height: 231,
+            top: 288.9,
+            width: 537.2,
+            height: 412.1,
           }}
         >
           <Image
-            src={assets.heroLeaf}
+            src={assets.heroLeaves}
             alt=""
-            width={139}
-            height={231}
-            className="asset-image rotate-[205.37deg]"
+            width={537}
+            height={412}
+            className="object-contain"
           />
         </div>
-
-        {/* Leaf 2 */}
-        <div
-          className="absolute z-10 pointer-events-none"
-          style={{
-            left: 1979.66,
-            top: 382.01,
-            width: 139,
-            height: 231,
-          }}
-        >
-          <Image
-            src={assets.heroLeaf}
-            alt=""
-            width={139}
-            height={231}
-            className="asset-image rotate-[162.76deg]"
-          />
-        </div>
-
-        {/* Leaf 3 */}
-        <div
-          className="absolute z-10 pointer-events-none"
-          style={{
-            left: 2227.66,
-            top: 426.9,
-            width: 139,
-            height: 231,
-          }}
-        >
-          <Image
-            src={assets.heroLeaf}
-            alt=""
-            width={139}
-            height={231}
-            className="asset-image rotate-[196deg]"
-          />
-        </div>
+        
       </div>
       {/* ============================================================
           LAYER 3: Content Elements (no z index?)

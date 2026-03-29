@@ -13,6 +13,7 @@ import heroCnTower from '../../assets/hero_cn-tower.svg';
 import heroGrass from '../../assets/hero_grass.png';
 import heroGrassShadow from '../../assets/hero_grass-shadow.png';
 import heroLeaf from '../../assets/hero_leaf.svg';
+import heroLeaves from '../../assets/hero_leaves.png';
 import heroLightLeft1 from '../../assets/hero_light-left-1.svg';
 import heroLightLeft2 from '../../assets/hero_light-left-2.svg';
 import heroLightRight from '../../assets/hero_light-right.svg';
@@ -24,8 +25,7 @@ import heroRadishHide from '../../assets/hero_radish-hide.png';
 import heroRadish2 from '../../assets/hero_radish-jump.png';
 import heroRadish1 from '../../assets/hero_radish-stand.png';
 import heroSpotlight from '../../assets/hero_spotlight.svg';
-import heroTree1 from '../../assets/hero_tree-1.svg';
-import heroTree2 from '../../assets/hero_tree-2.svg';
+import heroTrees from '../../assets/hero_trees.svg';
 import logo from '../../assets/Logo.svg';
 
 export const assets = {
@@ -45,6 +45,7 @@ export const assets = {
   heroGrass,
   heroGrassShadow,
   heroLeaf,
+  heroLeaves,
   heroLightLeft1,
   heroLightLeft2,
   heroLightRight,
@@ -54,8 +55,7 @@ export const assets = {
   heroMushroom2,
   heroRadishHide,
   heroSpotlight,
-  heroTree1,
-  heroTree2,
+  heroTrees,
 };
 
 export const butterfliesFrames = [
