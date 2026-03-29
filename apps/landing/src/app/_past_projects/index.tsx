@@ -1,14 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Section from '../../components/Section';
-import full from '../../assets/projects/full.svg';
-import heading from '../../assets/projects/mobile_projects_heading.svg';
-import carousel1 from '../../assets/projects/carousel1.svg';
-import carousel2 from '../../assets/projects/carousel2.svg';
-import carousel3 from '../../assets/projects/carousel3.svg';
+import Full from '../../assets/projects/full.svg';
+import Heading from '../../assets/projects/mobile_projects_heading.svg';
+import Carousel1 from '../../assets/projects/carousel1.svg';
+import Carousel2 from '../../assets/projects/carousel2.svg';
+import Carousel3 from '../../assets/projects/carousel3.svg';
 
-const slides = [carousel1, carousel2, carousel3];
+const slides = [Carousel1, Carousel2, Carousel3];
 
 export default function Projects() {
   const [current, setCurrent] = useState(0);
@@ -22,10 +23,11 @@ export default function Projects() {
       className="!p-0 !min-h-0 overflow-hidden"
     >
       {/* DESKTOP: full.svg centered */}
-      <div className="hidden md:block" style={{ position: 'relative', width: '100%' }}>
-        <img
-          src={full.src}
+      <div className="hidden md:block relative w-full">
+        <Image
+          src={Full}
           alt="Past projects"
+          draggable={false}
           style={{
             width: '700%',
             height: 'auto',
@@ -42,17 +44,19 @@ export default function Projects() {
       <div className="md:hidden flex flex-col pt-12 px-4 pb-12">
 
         {/* Heading SVG */}
-        <img
-          src={heading.src}
+        <Image
+          src={Heading}
           alt="Explore previous projects"
-          className="mx-auto w-full max-w-xs block"
+          draggable={false}
+          className="mx-auto w-full max-w-xs h-auto"
         />
 
         {/* Carousel */}
         <div className="relative rounded-xl overflow-hidden -mt-20">
-          <img
-            src={slides[current].src}
+          <Image
+            src={slides[current]}
             alt={`Project ${current + 1}`}
+            draggable={false}
             className="w-full h-auto block"
           />
           <button
