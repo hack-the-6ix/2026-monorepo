@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { Button, Input, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
 import Section from '../../components/Section';
@@ -10,12 +11,14 @@ const ARTBOARD_W = 4035;
 const ARTBOARD_H = 3662;
 
 export default function Hero() {
+  // EMAIL FORM SUBMIT
   const [email, setEmail] = useState<string>('');
   const [submitStatus, setSubmitStatus] = useState<{
     message: string;
     isError: boolean;
   } | null>(null);
 
+  // No UI styling for errors from submission handler yet since submission code may change
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -70,6 +73,7 @@ export default function Hero() {
     }
   };
 
+  // PAGE:
   return (
     <Section id="hero" backgroundColor="#12102F" noPadding className="relative">
       <div
@@ -82,8 +86,8 @@ export default function Hero() {
         }}
       >
         {/* ============================================================
-            LAYER 1 (z-0): Background / Atmosphere
-            Clouds, spotlight, CN Tower, mists
+            LAYER 1 (z-0): Background / Atmosphere / Terrain
+            Clouds, spotlight, CN Tower, mists, cliffs, cave, trees, mushrooms, grass
             ============================================================ */}
 
         {/* Cloud Left */}
@@ -199,11 +203,6 @@ export default function Hero() {
             className="object-contain"
           />
         </div>
-
-        {/* ============================================================
-            LAYER 1 (z-0): Terrain
-            Cliffs, cave, trees, mushrooms, grass
-            ============================================================ */}
 
         {/* Tree 1 - Short Tree on Left */}
         <div
@@ -612,91 +611,130 @@ export default function Hero() {
         </div>
       </div>
       {/* ============================================================
-          LAYER 4: Content Elements (z-index: 30)
-          Only rendered inside main container on large screens (non-portrait).
-          Small screens use a separate fixed overlay for vertical centering.
+          LAYER 3: Content Elements (no z index?)
           ============================================================ */}
       {/* Render fixed-position hero UI for both landscape and in-between aspect ratios */}
       <div className="layer-content">
         <div className="absolute left-[59.34px] top-[36.89px] w-[977px] h-[631px] pointer-events-auto">
-          <div className="absolute left-0 top-0 w-[30px] h-[75.64px]">
-            <Image
-              src={assets.logo}
-              alt="Hack the 6ix Logo"
-              width={30}
-              height={76}
-              className="block w-full h-full"
-              priority
-            />
-          </div>
           <div className="absolute left-[66px] top-[319px] w-[911px] flex flex-col gap-8">
             <div className="flex flex-col gap-6 items-start justify-center w-full">
               <div className="flex flex-row gap-2 items-start w-full">
-                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                <Typography
+                  as="p"
+                  textSize="subtitle-sm"
+                  textWeight="medium"
+                  className="text-[var(--color-neutral-50)] m-0 text-glow-subtle"
+                >
                   {EVENT_INFO.date}
-                </p>
-                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                </Typography>
+                <Typography
+                  as="p"
+                  textSize="subtitle-sm"
+                  textWeight="medium"
+                  className="text-[var(--color-neutral-50)] m-0 text-glow-subtle"
+                >
                   ⋅
-                </p>
-                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                </Typography>
+                <Typography
+                  as="p"
+                  textSize="subtitle-sm"
+                  textWeight="medium"
+                  className="text-[var(--color-neutral-50)] m-0 text-glow-subtle"
+                >
                   {EVENT_INFO.location}
-                </p>
-                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                </Typography>
+                <Typography
+                  as="p"
+                  textSize="subtitle-sm"
+                  textWeight="medium"
+                  className="text-[var(--color-neutral-50)] m-0 text-glow-subtle"
+                >
                   ⋅
-                </p>
-                <p className="font-medium text-[26px] leading-[32px] tracking-[-0.52px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+                </Typography>
+                <Typography
+                  as="p"
+                  textSize="subtitle-sm"
+                  textWeight="medium"
+                  className="text-[var(--color-neutral-50)] m-0 text-glow-subtle"
+                >
                   {EVENT_INFO.format}
-                </p>
+                </Typography>
               </div>
-              <h1 className="font-bold text-[60px] leading-[76px] tracking-[-1.32px] text-[var(--color-text-primary-white)] m-0 text-glow">
+              <Typography
+                as="h1"
+                textSize="display"
+                textWeight="bold"
+                className="text-[var(--color-neutral-50)] m-0 text-glow"
+              >
                 {HERO_CONTENT.title}
-              </h1>
-              <p className="font-medium text-[32px] leading-[40px] tracking-[-0.704px] m-0 text-glow">
-                <span className="text-[var(--color-text-primary-white)]">
+              </Typography>
+              <Typography
+                as="p"
+                textSize="subtitle-lg"
+                textWeight="medium"
+                className="m-0 text-glow"
+              >
+                <Typography
+                  as="span"
+                  textSize="subtitle-lg"
+                  textWeight="medium"
+                  className="text-[var(--color-neutral-50)]"
+                >
                   {HERO_CONTENT.subtitlePrefix}
-                </span>
-                <span className="text-[var(--color-highlight-gold)] font-bold">
+                </Typography>
+                <Typography
+                  as="span"
+                  textSize="subtitle-lg"
+                  textWeight="bold"
+                  className="text-[var(--color-yellow-300)]"
+                >
                   {HERO_CONTENT.subtitleHighlight}
-                </span>
-              </p>
+                </Typography>
+              </Typography>
             </div>
             <div className="flex flex-col gap-4 w-full">
-              <p className="font-medium text-[20px] leading-[24px] tracking-[-0.34px] text-[var(--color-text-primary-white)] m-0 text-glow-subtle">
+              <Typography
+                as="p"
+                textSize="paragraph-lg"
+                textWeight="medium"
+                className="text-[var(--color-neutral-50)] m-0 text-glow-subtle"
+              >
                 {FORM_CONTENT.description}
-              </p>
+              </Typography>
               <div>
                 <form
                   onSubmit={handleSubmit}
-                  className="flex flex-row gap-4 items-center"
-                  suppressHydrationWarning
+                  className="flex flex-row gap-2 items-center"
                 >
-                  <div className="flex flex-col gap-1 w-[406px]">
-                    <label htmlFor="email" className="sr-only">
-                      Email address
-                    </label>
-                    <div className="flex flex-row items-center gap-2 py-3 px-4 bg-[var(--color-input-bg)] border border-[var(--color-border-primary)] rounded-[var(--radius-full)] w-full box-border box-glow">
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        autoComplete="email"
-                        placeholder={FORM_CONTENT.placeholder}
-                        suppressHydrationWarning
-                        className="flex-1 font-medium text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] bg-transparent border-none outline-none placeholder:text-[var(--color-text-placeholder)]"
-                      />
-                    </div>
-                  </div>
-                  <button
+                  <Input
+                    id="hero-email"
+                    name="email"
+                    label="Email address"
+                    hideLabel
+                    className="w-[min(100%,406px)] shrink-0"
+                    inputBoxClassName="box-glow"
+                    controlled={{
+                      value: email,
+                      onValueChange: setEmail,
+                    }}
+                    input={{
+                      type: 'email',
+                      autoComplete: 'email',
+                      placeholder: FORM_CONTENT.placeholder,
+                      'aria-label': 'Email address',
+                      suppressHydrationWarning: false,
+                      className:
+                        'font-medium text-[var(--color-neutral-50)] placeholder:text-[var(--color-text-placeholder)] flex-1 min-w-0 bg-transparent',
+                    }}
+                  />
+                  <Button
                     type="submit"
-                    className="flex flex-row justify-center items-center gap-2 py-3 px-6 bg-[var(--color-primary)] border border-[var(--color-border-primary)] rounded-[var(--radius-lg)] cursor-pointer transition-opacity hover:opacity-90 box-glow"
+                    kind="primary"
                     aria-label="Sign up for updates"
+                    className="box-glow"
                   >
-                    <span className="font-semibold text-[16px] leading-[20px] tracking-[-0.176px] text-[var(--color-text-primary-white)] text-center">
-                      {FORM_CONTENT.buttonText}
-                    </span>
-                  </button>
+                    {FORM_CONTENT.buttonText}
+                  </Button>
                 </form>
                 {submitStatus && (
                   <p
