@@ -5,7 +5,7 @@ replaced later probably
 
 export const EVENT_INFO = {
   date: 'July 17-19, 2026',
-  location: 'Bahen Centre',
+  location: 'Toronto',
   format: 'In\u2011Person',
 } as const;
 
