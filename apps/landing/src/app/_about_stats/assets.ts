@@ -14,7 +14,7 @@ import aboutGem4 from '../../assets/aboutstats_gem-4.png';
 import aboutGem5 from '../../assets/aboutstats_gem-5.png';
 import aboutLamp from '../../assets/aboutstats_lamp.png';
 import aboutLantern from '../../assets/aboutstats_lantern.png';
-import aboutRocks from '../../assets/aboutstats_rocks.svg';
+import aboutRocks from '../../assets/aboutstats_rock.svg';
 import aboutStars1 from '../../assets/aboutstats_stars-1.png';
 import aboutStars2 from '../../assets/aboutstats_stars-2.png';
 
