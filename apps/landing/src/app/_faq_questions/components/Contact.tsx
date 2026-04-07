@@ -4,7 +4,7 @@ import Image from 'next/image';
 const Contact = () => {
   return (
     <div className="relative w-full flex flex-col items-center">
-      <div className="relative flex flex-col items-center z-10 w-full max-w-154.25 px-4">
+      <div className="relative flex flex-col items-center z-10 w-full max-w-145 px-4">
         <Typography
           textSize="heading-lg"
           textColor="text-neutral-50"

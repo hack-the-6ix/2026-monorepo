@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { Typography } from '@hackthe6ix/ui';
+import Image from 'next/image';
+
 import Section from '../../components/Section';
 import CategoryPills from './components/CategoryPills';
-import Image from 'next/image';
 import Contact from './components/Contact';
 import FAQSection from './components/FAQSection';
 
@@ -15,7 +16,7 @@ export default function FAQ() {
     <Section
       id="faq"
       backgroundColor="linear-gradient(to bottom, #D68D05, #BA6600)"
-      className="!py-0 relative z-10"
+      className="py-0! relative z-10"
     >
       <div className="relative w-full overflow-visible">
         <Image
@@ -23,7 +24,6 @@ export default function FAQ() {
           alt=""
           width={3103}
           height={856}
-          priority
           className="absolute -top-[48vw] left-0 w-full h-auto z-0"
         />
         <div className="relative z-10 flex flex-col items-center gap-6 -mt-[15vw] pb-24">

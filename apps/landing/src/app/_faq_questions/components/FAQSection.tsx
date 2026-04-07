@@ -2,9 +2,7 @@
 
 import React, { useState } from 'react';
 import { Typography } from '@hackthe6ix/ui';
-
-const IMG_CHEVRON =
-  'https://www.figma.com/api/mcp/asset/b200500b-b9a2-43f7-9f22-2cafa52bca68';
+import { FaChevronUp } from 'react-icons/fa';
 
 function Disclosure({
   title,
@@ -27,19 +25,17 @@ function Disclosure({
           <Typography
             textSize="heading-sm"
             textColor="text-neutral-50"
-            className="font-semibold md:text-[20px] md:leading-[24px] text-[18px] leading-[22px] group-hover:text-primary-300 transition-colors"
+            className="font-semibold md:text-[20px] md:leading-[24px] text-[18px] leading-[22px]"
           >
             {title}
           </Typography>
         </div>
-        <div className="w-6 h-6 flex-none" aria-hidden>
-          <img
-            src={IMG_CHEVRON}
-            alt=""
+        <div className="w-4 h-4 flex-none" aria-hidden>
+          <FaChevronUp
+            className="w-full h-full transition-transform duration-200 ease-in-out"
             style={{
-              width: 24,
-              height: 24,
-              transform: open ? 'rotate(180deg)' : undefined,
+              transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+              color: 'white',
               transition: 'transform 0.2s ease-in-out',
             }}
           />
@@ -47,14 +43,10 @@ function Disclosure({
       </div>
 
       <div
-        className="w-full transition-all duration-300 ease-in-out overflow-hidden"
-        style={{
-          maxHeight: open ? '1000px' : '0px',
-          opacity: open ? 1 : 0,
-        }}
+        className={`grid w-full transition-all duration-300 ease-in-out ${open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
         aria-hidden={!open}
       >
-        <div className="pb-4">
+        <div className="overflow-hidden pb-4">
           <Typography
             textSize="paragraph-sm"
             textColor="text-neutral-50"
@@ -114,7 +106,7 @@ const QUESTIONS = {
         'Any high-school students, post-secondary students or recent graduates (<1 years of graduating) are eligible to participate in Hack the 6ix.',
     },
     {
-      title: 'What if I don\'t have a team or idea?',
+      title: "What if I don't have a team or idea?",
       content:
         "Don't sweat it - we will be coordinating team formation and idea generation events leading up to, as well as during the event.",
     },
