@@ -12,12 +12,13 @@ export default function Section({
   children,
   className = '',
   noPadding = false,
+  style,
   ...props
 }: SectionProps) {
   return (
     <section
       id={id}
-      style={{ background: backgroundColor }}
+      style={{ background: backgroundColor, ...style }}
       className={`w-full min-h-screen flex flex-col py-12 ${className}`}
       {...props}
     >

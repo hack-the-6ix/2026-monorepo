@@ -18,7 +18,6 @@ export default function Hero() {
     isError: boolean;
   } | null>(null);
 
-  // No UI styling for errors from submission handler yet since submission code may change
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -75,7 +74,7 @@ export default function Hero() {
 
   // PAGE:
   return (
-    <Section id="hero" backgroundColor="#12102F" noPadding className="relative">
+    <Section id="hero" backgroundColor="#12102F" className="relative z-[1]">
       <div
         style={
           {
@@ -273,7 +272,7 @@ export default function Hero() {
           <div
             className="absolute"
             style={{
-              left: 1480.66,
+              left: 1480.66, // left - 5790, but should be -5349?
               top: 1378.9,
               width: 1670.34,
               height: 1615.6,
@@ -541,7 +540,6 @@ export default function Hero() {
               className="object-contain"
             />
           </div>
-
         </div>
       </div>
       {/* ============================================================
