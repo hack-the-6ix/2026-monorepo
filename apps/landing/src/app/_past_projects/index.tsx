@@ -115,7 +115,6 @@ export default function Projects() {
                 href={projectLinks[1]}
                 target="_blank"
                 rel="noopener noreferrer"
-                // Move all layout classes to the anchor
                 className="absolute left-0 w-[55%] h-auto top-[50%] -translate-y-[40%] -translate-x-22 z-50 cursor-pointer hover:scale-102 transition-transform lg:-translate-x-50"
               >
                 <Image
@@ -123,7 +122,6 @@ export default function Projects() {
                   alt="IntelliDrive"
                   width={800}
                   className="w-full h-auto object-contain"
-                  // REMOVED pointer-events-none so it can be clicked!
                 />
               </a>
             </div>
@@ -140,7 +138,7 @@ export default function Projects() {
                   src={Skewer3}
                   alt="hermes"
                   width={500}
-                  height={350} // Ensure height is included for aspect ratio
+                  height={350}
                   className="w-full h-auto object-contain"
                 />
               </a>
@@ -222,7 +220,7 @@ export default function Projects() {
                 src={slides[current]}
                 alt={`Project ${current + 1}`}
                 width={500}
-                height={300} // Ensure height is here for Next.js aspect ratio
+                height={300}
                 draggable={false}
                 className="w-full h-auto object-contain"
               />
