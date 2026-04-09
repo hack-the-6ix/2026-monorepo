@@ -120,7 +120,7 @@ export default function Sponsors() {
                 textSize="paragraph-lg"
                 textColor="text-white"
                 textWeight="medium"
-                className="text-center pb-30 md:pb-60 md:text-base"
+                className="text-center pb-30 md:text-base"
               >
                 Sponsors coming soon :)
               </Typography>

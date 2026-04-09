@@ -28,7 +28,7 @@ export default function Projects() {
   return (
     <Section
       id="projects"
-      backgroundColor="linear-gradient(to bottom, #0D7F75, #0A7E74, #0A7E74, #0A7E74, #2A8B78, #D68D05)"
+      backgroundColor="linear-gradient(to bottom, #0D7F75, #0A7E74, #0A7E74, #0A7E74, #D68D05)"
       className="items-center"
     >
       {/* DESKTOP */}
@@ -49,7 +49,7 @@ export default function Projects() {
             transform: 'translate(-48%, -5%)',
           }}
         />
-        <div className="relative w-full h-full z-30 items-center gap-35 flex flex-col translate-y-75">
+        <div className="relative w-full h-full z-30 items-center gap-35 flex flex-col translate-y-75 pb-110">
           {/* DESCRIPTION */}
           <div
             style={{
