@@ -38,22 +38,17 @@ export default function CategoryPills({
       ref={dropdownRef}
       className="relative w-full max-w-[288px] md:max-w-none"
     >
-      <div
-        className="hidden md:inline-flex bg-primary-500 rounded-full gap-3 p-0"
-        role="tablist"
-        aria-label="FAQ categories"
-      >
+      <div className="hidden md:inline-flex bg-primary-500 rounded-full gap-3 p-0">
         {OPTIONS.map((opt) => {
           const isSelected = selected === opt;
 
           return (
             <Button
               key={opt}
-              role="tab"
-              aria-selected={isSelected}
+              aria-pressed={isSelected}
               onClick={() => onSelect(opt)}
               className={`
-                px-10 py-3 min-w-42.5 rounded-4xl flex items-center justify-center
+                px-10 py-3 min-w-[10.625rem] rounded-full flex items-center justify-center
                 text-white font-semibold text-sm
                 border transition-colors duration-200
                 ${isSelected ?
@@ -107,9 +102,9 @@ export default function CategoryPills({
                 onClick={() => handleSelect(option)}
                 className={`
                   w-full px-6 py-3 text-left flex items-center justify-start text-white transition-colors duration-200 cursor-pointer
-                  ${selected === option ?
-                    'bg-primary-600'
-                    : 'bg-primary-500 hover:bg-primary-600 focus:bg-primary-600'
+                  ${selected === option ? 'bg-primary-600' : (
+                    'bg-primary-500 hover:bg-primary-600 focus:bg-primary-600'
+                  )
                   }
                 `}
                 role="option"

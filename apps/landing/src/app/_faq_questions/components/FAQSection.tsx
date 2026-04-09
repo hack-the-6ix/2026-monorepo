@@ -14,12 +14,11 @@ function Disclosure({
   const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col gap-2 w-full">
-      <div
-        className="flex items-center gap-2 cursor-pointer outline-none group"
-        role="button"
-        tabIndex={0}
+      <button
+        type="button"
+        className="flex items-center gap-2 cursor-pointer outline-none group w-full text-left focus-visible:ring-2 focus-visible:ring-white/20 rounded-md transition-shadow"
         onClick={() => setOpen((v) => !v)}
-        onKeyDown={(e) => e.key === 'Enter' && setOpen((v) => !v)}
+        aria-expanded={open}
       >
         <div className="flex-1">
           <Typography
@@ -40,7 +39,7 @@ function Disclosure({
             }}
           />
         </div>
-      </div>
+      </button>
 
       <div
         className={`grid w-full transition-all duration-300 ease-in-out ${open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
@@ -137,7 +136,7 @@ export default function FAQSection({ category }: { category: string }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 md:gap-y-12 gap-x-12 md:gap-x-16 w-full max-w-[1048px] px-6 md:px-0">
       {currentQuestions.map((q, index) => (
-        <Disclosure key={index} title={q.title}>
+        <Disclosure key={q.title} title={q.title}>
           {q.content}
         </Disclosure>
       ))}
