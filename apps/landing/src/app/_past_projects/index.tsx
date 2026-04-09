@@ -90,7 +90,7 @@ export default function Projects() {
             </Typography>
           </div>
           {/* PROJECTS */}
-          <div className="flex flex-col gap-40">
+          <div className="flex flex-col gap-40 lg:gap-50">
             {/* FIRST PROJECT */}
             <div className="relative flex flex-row items-center min-h-37.5 pl-50">
               <ProjectDesc index={0} />
@@ -98,7 +98,7 @@ export default function Projects() {
                 href={projectLinks[0]}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute right-0 w-[45%] h-auto top-[50%] -translate-y-[25%] translate-x-10 z-50 cursor-pointer hover:scale-102 transition-transform"
+                className="absolute right-0 w-[45%] h-auto top-[50%] -translate-y-[25%] translate-x-10 z-50 cursor-pointer hover:scale-102 transition-transform lg:translate-x-50"
               >
                 <Image
                   src={Skewer1}
@@ -116,7 +116,7 @@ export default function Projects() {
                 target="_blank"
                 rel="noopener noreferrer"
                 // Move all layout classes to the anchor
-                className="absolute left-0 w-[55%] h-auto top-[50%] -translate-y-[40%] -translate-x-22 z-50 cursor-pointer hover:scale-102 transition-transform"
+                className="absolute left-0 w-[55%] h-auto top-[50%] -translate-y-[40%] -translate-x-22 z-50 cursor-pointer hover:scale-102 transition-transform lg:-translate-x-50"
               >
                 <Image
                   src={Skewer2}
@@ -134,7 +134,7 @@ export default function Projects() {
                 href={projectLinks[2]}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute right-20 w-[32%] h-auto top-[50%] -translate-y-[45%] z-50 cursor-pointer hover:scale-102 transition-transform"
+                className="absolute right-20 w-[32%] h-auto top-[50%] -translate-y-[45%] z-50 cursor-pointer hover:scale-102 transition-transform lg:-translate-y-[40%]"
               >
                 <Image
                   src={Skewer3}
