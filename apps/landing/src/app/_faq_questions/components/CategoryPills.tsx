@@ -34,10 +34,7 @@ export default function CategoryPills({
   }, []);
 
   return (
-    <div
-      ref={dropdownRef}
-      className="relative w-full max-w-[288px] md:max-w-none"
-    >
+    <div ref={dropdownRef} className="relative w-full md:max-w-none">
       <div className="hidden md:inline-flex bg-primary-500 rounded-full gap-3 p-0">
         {OPTIONS.map((opt) => {
           const isSelected = selected === opt;
@@ -66,11 +63,11 @@ export default function CategoryPills({
         })}
       </div>
 
-      <div className="md:hidden w-full relative">
+      <div className="md:hidden relative w-[90vw] mx-auto">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className={`
-            w-full flex items-center justify-between px-6 py-3.5 rounded-[18px] bg-primary-600 text-white font-semibold text-sm transition-all duration-200
+            w-full flex items-center justify-between px-6 py-3.5 rounded-[24px] bg-primary-600 text-white font-semibold text-sm transition-all duration-200
             ${isOpen ? 'rounded-b-none' : ''}
           `}
           aria-expanded={isOpen}

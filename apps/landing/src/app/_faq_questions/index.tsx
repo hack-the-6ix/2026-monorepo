@@ -24,7 +24,7 @@ export default function FAQ() {
           alt=""
           width={3103}
           height={856}
-          className="absolute -top-[48vw] left-0 w-full h-auto z-0"
+          className="absolute -top-[48vw] left-0 w-full h-auto z-0 mask-[linear-gradient(to_bottom,black_85%,transparent_100%)]"
         />
         <div className="relative z-10 flex flex-col items-center gap-6 -mt-[15vw] pb-24">
           <Typography textSize="heading-lg" textColor="text-neutral-50">
@@ -36,7 +36,7 @@ export default function FAQ() {
               onSelect={setSelectedCategory}
             />
           </div>
-          <div className="mt-6 min-h-[600px] md:min-h-[400px]">
+          <div className="mt-6 min-h-[200px] md:min-h-[400px]">
             <FAQSection category={selectedCategory} />
           </div>
           <div className="-mt-8">
