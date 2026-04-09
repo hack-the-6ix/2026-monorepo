@@ -30,7 +30,7 @@ const STATS_HEADER_FRAME = {
   height: 52,
 } as const;
 
-const ARTBOARD_TOP = 1345.4;
+const ARTBOARD_TOP = 0;
 
 /**
  * Gem stat copy: matches design tokens in `packages/ui/src/theme/typography.css`
@@ -65,26 +65,26 @@ export default function AboutStats() {
     <Section
       id="about"
       backgroundColor="linear-gradient(to bottom, #12102F, #12102F)"
-      style={{
-        marginTop:
-          'calc((clamp(0.222, calc(100vw / 1440px), 1) - 1) * 9211.6px)',
-      } as React.CSSProperties}
+      noPadding
+      className="!min-h-0"
     >
       <div
         style={
           {
             '--about-scale': 'clamp(0.222, calc(100vw / 1440px), 1)',
+            height: 'calc(2936.6px * var(--about-scale))',
+            transformOrigin: 'center 0px',
           } as React.CSSProperties
         }
-        className="max-lg:scale-[var(--about-scale)] max-lg:[transform-origin:center_675px]"
+        className="max-lg:scale-[var(--about-scale)]"
       >
       <div
-        className="absolute"
+        className="relative"
         style={{
           width: ARTBOARD_W,
           minHeight: ARTBOARD_H,
-          left: 'calc(50% - 1636px)',
-          top: 1330.4, // originally 1345.4
+          marginLeft: 'calc(50% - 1636px)',
+          marginTop: 0,
         }}
       >
         {/* ============================================================

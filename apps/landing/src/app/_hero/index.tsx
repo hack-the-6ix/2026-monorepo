@@ -74,22 +74,23 @@ export default function Hero() {
 
   // PAGE:
   return (
-    <Section id="hero" backgroundColor="#12102F" className="relative z-[1]">
+    <Section id="hero" backgroundColor="#12102F" noPadding className="relative z-[1] !min-h-0">
       <div
         style={
           {
             '--hero-scale': 'clamp(0.222, calc(100vw / 1440px), 1)',
+            height: 'calc(675px + 670.4px * var(--hero-scale))',
           } as React.CSSProperties
         }
         className="max-lg:scale-[var(--hero-scale)] max-lg:[transform-origin:center_675px]"
       >
         <div
-          className="absolute"
+          className="relative"
           style={{
             width: ARTBOARD_W,
             minHeight: ARTBOARD_H,
-            left: 'calc(50% - 1636px)',
-            top: -405,
+            marginLeft: 'calc(50% - 1636px)',
+            marginTop: -405,
           }}
         >
           {/* ============================================================
