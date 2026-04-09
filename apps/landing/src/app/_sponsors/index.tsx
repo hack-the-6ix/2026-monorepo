@@ -14,7 +14,7 @@ export default function Sponsors() {
     <Section
       id="sponsors"
       backgroundColor="linear-gradient(to bottom, #12102F, #12102F, #423994, #355190, #0D7F75)"
-      className="items-center overflow-hidden"
+      className="items-center"
     >
       <div className="flex flex-col max-w-[80%] gap-y-7 items-center z-30 md:max-w-[55%] md:gap-y-9">
         <Typography
@@ -79,10 +79,8 @@ export default function Sponsors() {
             className="-mt-35 w-[1000vw] -translate-x-8 h-120 bg-radial-[at_25%_25%] from-[#584fdb] to-[#3F3E93] md:w-[280vw] md:-mt-85 lg:w-[180vw] md:translate-x-0 md:from-[#423CB5] md:to-[#3F3E93]"
             style={{
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              WebkitMaskImage:
-                'linear-gradient(to bottom, #3F3E93 80%, transparent 100%)',
-              maskImage:
-                'linear-gradient(to bottom, #3F3E93 80%, transparent 100%)',
+              WebkitMaskImage: `linear-gradient(to bottom, #3F3E93 ${showSponsor ? '80%' : '70%'}, transparent 100%)`,
+              maskImage: `linear-gradient(to bottom, #3F3E93 ${showSponsor ? '80%' : '70%'}, transparent 100%)`,
             }}
           />
           <div className="absolute flex -top-45 -translate-x-30 justify-center md:-top-90 md:left-1/3 md:translate-x-45 2xl:-top-95 2xl:translate-x-30">
@@ -122,7 +120,7 @@ export default function Sponsors() {
                 textSize="paragraph-lg"
                 textColor="text-white"
                 textWeight="medium"
-                className="text-center pb-60 md:text-base"
+                className="text-center pb-30 md:text-base"
               >
                 Sponsors coming soon :)
               </Typography>
