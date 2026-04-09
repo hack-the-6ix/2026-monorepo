@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Typography } from '@hackthe6ix/ui';
 import { FaChevronUp } from 'react-icons/fa';
+import { Typography } from '@hackthe6ix/ui';
 
 function Disclosure({
   title,
@@ -135,7 +135,7 @@ export default function FAQSection({ category }: { category: string }) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 md:gap-y-12 gap-x-12 md:gap-x-16 w-full max-w-[1048px] px-6 md:px-0">
-      {currentQuestions.map((q, index) => (
+      {currentQuestions.map((q) => (
         <Disclosure key={q.title} title={q.title}>
           {q.content}
         </Disclosure>
