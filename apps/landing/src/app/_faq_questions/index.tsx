@@ -36,7 +36,7 @@ export default function FAQ() {
               onSelect={setSelectedCategory}
             />
           </div>
-          <div className="mt-6">
+          <div className="mt-6 min-h-[600px] md:min-h-[400px]">
             <FAQSection category={selectedCategory} />
           </div>
           <div className="-mt-8">
