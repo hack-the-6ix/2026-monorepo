@@ -93,18 +93,11 @@ export default function Nav() {
             className={`fixed inset-x-0 top-0 z-150 md:hidden flex justify-center transition-opacity duration-300 ease-in-out ${isClosing ? 'animate-slide-up' : 'animate-slide-down'}`}
           >
             {/* Menu */}
-            <div className="relative w-full bg-[linear-gradient(180deg,#B42525_0%,#E95252_35.19%,#FFA3A3_99.81%)] rounded-b-3xl py-5 pb-8 flex flex-col gap-4 z-100">
+            <div className="relative w-full bg-[linear-gradient(180deg,#B42525_0%,#E95252_35.19%,#FFA3A3_99.81%)] rounded-b-3xl py-3 pb-8 flex flex-col gap-4 z-100">
               {/* Header */}
-              <div className="flex justify-between px-5">
-                <Link
-                  href="#hero"
-                  onClick={closeBurger}
-                  className="text-xl font-bold tracking-tighter"
-                >
-                  <Image src={logo.src} alt="ht6 icon" width={20} height={20} />
-                </Link>
+              <div className="flex justify-end px-2">
                 <button onClick={closeBurger} className="text-white">
-                  <IoIosClose size={40} />
+                  <IoIosClose size={50} />
                 </button>
               </div>
 
