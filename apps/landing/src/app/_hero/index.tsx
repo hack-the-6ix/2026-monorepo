@@ -74,7 +74,12 @@ export default function Hero() {
 
   // PAGE:
   return (
-    <Section id="hero" backgroundColor="#12102F" noPadding className="relative z-[1] !min-h-0">
+    <Section
+      id="hero"
+      backgroundColor="#12102F"
+      noPadding
+      className="relative z-[1] !min-h-0"
+    >
       <div
         style={
           {
