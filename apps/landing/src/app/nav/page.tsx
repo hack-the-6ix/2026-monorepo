@@ -55,7 +55,7 @@ export default function Nav() {
   return (
     <>
       <div
-        className={`px-5 md:px-16 z-20 fixed top-0 w-full h-25 transition-transform duration-300 justify-between gap-12 flex flex-row align-center ${
+        className={`px-5 md:px-16 z-200 fixed top-0 w-full h-25 transition-transform duration-300 justify-between gap-12 flex flex-row align-center ${
           visible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
@@ -65,13 +65,13 @@ export default function Nav() {
               <Image src={logo.src} alt="ht6 icon" width={20} height={20} />
             </Link>
             <div className="hidden md:flex gap-10">
-              <NavLinks/>
+              <NavLinks />
             </div>
           </div>
         </nav>
 
         <div className="hidden md:flex h-20 gap-9 items-center">
-          <SocialLinks/>
+          <SocialLinks />
         </div>
         {/* Mobile hamburger */}
         <div className="flex md:hidden h-20 items-center">
@@ -85,12 +85,12 @@ export default function Nav() {
       {burgerVisible && (
         <>
           <div
-            className={`fixed inset-0 z-120 bg-black/20  transition-opacity duration-500 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+            className={`fixed inset-0 z-220 bg-black/20  transition-opacity duration-500 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
             aria-hidden="true"
             onClick={closeBurger}
           />
           <div
-            className={`fixed inset-x-0 top-0 z-150 md:hidden flex justify-center transition-opacity duration-300 ease-in-out ${isClosing ? 'animate-slide-up' : 'animate-slide-down'}`}
+            className={`fixed inset-x-0 top-0 z-250 md:hidden flex justify-center ${isClosing ? 'animate-slide-up' : 'animate-slide-down'}`}
           >
             {/* Menu */}
             <div className="relative w-full bg-[linear-gradient(180deg,#B42525_0%,#E95252_35.19%,#FFA3A3_99.81%)] rounded-b-3xl py-3 pb-8 flex flex-col gap-4 z-100">
@@ -102,13 +102,13 @@ export default function Nav() {
               </div>
 
               <div className="flex flex-col gap-4 text-lg font-medium items-center">
-                <NavLinks/>
+                <NavLinks />
               </div>
               <div className="flex gap-10 pt-5 pb-2 justify-center">
-                 <SocialLinks/>
+                <SocialLinks />
               </div>
             </div>
-            
+
             {/* Turnip boi */}
             <div className="absolute items-center pointer-events-none z-20 translate-y-80 animate-swing origin-top will-change-transform">
               <div className="absolute flex flex-col items-center translate-y-17">
