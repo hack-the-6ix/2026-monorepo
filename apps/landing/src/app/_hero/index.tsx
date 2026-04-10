@@ -78,7 +78,7 @@ export default function Hero() {
       id="hero"
       backgroundColor="#12102F"
       noPadding
-      className="relative z-[1] !min-h-0"
+      className="relative z-[1] !min-h-0 !py-0"
     >
       <div
         style={

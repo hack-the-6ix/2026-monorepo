@@ -88,7 +88,7 @@ export default function AboutStats() {
       id="about"
       backgroundColor="linear-gradient(to bottom, #12102F, #12102F)"
       noPadding
-      className="!min-h-0"
+      className="!min-h-0 !py-0"
     >
       {/* ══════════════════════════════════════════════════════════════
           DESKTOP SECTION (≥768px) 
@@ -148,7 +148,7 @@ export default function AboutStats() {
             <div
               className="absolute"
               style={{
-                left: 2052.34, // 2868 - 1636/2 + 2.34
+                left: 2052.34,
                 top: 1267.5,
                 width: 1083.5,
                 height: 690.6,
@@ -167,7 +167,7 @@ export default function AboutStats() {
             <div
               className="absolute"
               style={{
-                left: 1832.07, // 0 - 1636/2
+                left: 1832.07,
                 top: 2116.37,
                 width: 317.18,
                 height: 395.96,
@@ -186,7 +186,7 @@ export default function AboutStats() {
             <div
               className="absolute"
               style={{
-                left: -815.66, // 0 - 1636/2 + 2.34
+                left: -815.66,
                 top: 1586.6,
                 width: 3952,
                 height: 1340,
@@ -495,7 +495,7 @@ export default function AboutStats() {
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
                 left: 1142.22,
-                top: 1803, // gem + 142/4
+                top: 1803,
                 width: 198.25,
                 height: 309.6,
               }}
@@ -506,7 +506,7 @@ export default function AboutStats() {
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
                 left: 1518.67,
-                top: 1732.46, // gem + 142/4
+                top: 1732.46,
                 width: 191.5,
                 height: 300,
               }}
@@ -517,7 +517,7 @@ export default function AboutStats() {
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
                 left: 1769.33,
-                top: 1873.78, // gem + 142/4
+                top: 1873.78,
                 width: 210.17,
                 height: 309.23,
               }}
@@ -528,7 +528,7 @@ export default function AboutStats() {
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
                 left: 1335.01,
-                top: 1967.74, // gem + 142/4
+                top: 1967.74,
                 width: 188.65,
                 height: 313.58,
               }}
@@ -539,7 +539,7 @@ export default function AboutStats() {
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
                 left: 1567.51,
-                top: 2027.01, // gem + 142/4
+                top: 2027.01,
                 width: 192.8,
                 height: 319.17,
               }}
@@ -578,8 +578,8 @@ export default function AboutStats() {
         <div
           className="pointer-events-auto absolute z-[15] w-[850.3px]"
           style={{
-            left: 'calc(50% - 586.67px * var(--about-scale))', // to move N px left or right, add/subtract N to 686.67
-            top: 'calc(550.4px * var(--about-scale))', // to move N px up or down, add/subtract N to 600.4
+            left: 'calc(50% - 586.67px * var(--about-scale))',
+            top: 'calc(550.4px * var(--about-scale))',
             transformOrigin: 'top left',
             transform: 'scale(var(--about-scale))',
           }}
