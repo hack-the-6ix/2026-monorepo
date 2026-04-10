@@ -30,6 +30,7 @@ export type TooltipButtonProps<T extends ElementType> = PolymorphicProps<
     description: ReactNode;
     icon?: ReactNode;
     bgColor?: string;
+    textColor?: string;
     children?: never;
   }>,
   T
@@ -123,6 +124,7 @@ export function TooltipButton<T extends ElementType = 'button'>({
   as,
   description,
   bgColor,
+  textColor,
   icon = <Info />,
   ...props
 }: TooltipButtonProps<T>) {
@@ -140,20 +142,15 @@ export function TooltipButton<T extends ElementType = 'button'>({
       style={
         {
           '--tooltip-bg': bgColor,
+          '--tooltip-text-color': textColor,
         } as React.CSSProperties
       }
     >
-      <span className="button__icon">{icon}</span>
+      <span className="tooltip__icon">{icon}</span>
 
-      <span className="tooltiptext">
-        <Typography
-          as="span"
-          textSize="label"
-          className="text-indigo-800 block"
-        >
-          {description}
-        </Typography>
-      </span>
+      <Typography as="span" textSize="label" className="tooltiptext">
+        {description}
+      </Typography>
     </Typography>
   );
 }

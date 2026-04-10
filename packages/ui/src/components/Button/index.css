@@ -64,18 +64,25 @@
   .button--tooltip {
     --button-color: var(--color-neutral-400);
     --button-color-focus: var(--color-primary-500);
-    --button-color-pressed: var(--color-primary-600);
-    
+
+    --tooltip-bg: var(--color-neutral-50);
+    --tooltip-text-color: var(--color-indigo-800);
+
     @apply relative p-1 aspect-square rounded-md inline-flex items-center justify-center;
-    @apply text-(--button-color) hover:text-(--button-color-focus) active:text-(--button-color-pressed);
+    @apply text-(--button-color) hover:text-(--button-color-focus) active:text-(--button-color-focus);
+    @apply cursor-pointer;
+  }
+
+  .tooltip__icon {
+    @apply size-1;
   }
 
   .tooltiptext {
-    --tooltip-bg: var(--color-neutral-50);
-
-    @apply hidden absolute top-full mt-2 left-0 -translate-x-8;
-    @apply w-[350px] p-5 z-100 rounded-3xl shadow-lg;
+    @apply hidden absolute top-full mt-4 left-0 -translate-x-7;
+    @apply w-[320px] p-5 z-100 rounded-3xl shadow-lg;
     @apply text-left font-medium leading-relaxed;
+    
+    color: var(--tooltip-text-color);
     background-color: var(--tooltip-bg);
   }
 
