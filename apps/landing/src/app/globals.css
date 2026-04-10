@@ -3,6 +3,28 @@
 
 @source '../../../../packages/ui/src';
 
+@layer utilities {
+  .text-glow {
+    text-shadow:
+      0 0 10px rgba(253, 218, 152, 0.4),
+      0 0 20px rgba(253, 218, 152, 0.2),
+      0 0 40px rgba(253, 218, 152, 0.1);
+  }
+
+  .text-glow-subtle {
+    text-shadow:
+      0 0 8px rgba(253, 218, 152, 0.4),
+      0 0 16px rgba(253, 218, 152, 0.2);
+  }
+
+  .box-glow {
+    box-shadow:
+      0 0 10px rgba(253, 218, 152, 0.2),
+      0 0 20px rgba(253, 218, 152, 0.1),
+      0 0 40px rgba(253, 218, 152, 0.05);
+  }
+}
+
 @theme {
   --animate-glow: glowing 4s ease-in-out infinite alternate;
   --animate-slide-down: slide-down 1s ease-out forwards;
