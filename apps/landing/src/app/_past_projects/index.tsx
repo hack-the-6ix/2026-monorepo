@@ -28,7 +28,7 @@ export default function Projects() {
   return (
     <Section
       id="projects"
-      backgroundColor="linear-gradient(to bottom, #0D7F75, #0A7E74, #0A7E74, #0A7E74, #D68D05)"
+      backgroundColor="linear-gradient(to bottom, #0D7F75, #0A7E74, #0A7E74, #0A7E74)"
       className="items-center"
     >
       {/* DESKTOP */}
@@ -49,7 +49,7 @@ export default function Projects() {
             transform: 'translate(-48%, -5%)',
           }}
         />
-        <div className="relative w-full h-full z-30 items-center gap-35 flex flex-col translate-y-75 pb-110">
+        <div className="relative w-full h-full z-30 items-center gap-35 flex flex-col translate-y-75 pb-100">
           {/* DESCRIPTION */}
           <div
             style={{
@@ -126,20 +126,20 @@ export default function Projects() {
               </a>
             </div>
             {/* THIRD PROJECT */}
-            <div className="relative flex flex-row items-center min-h-37.5 pl-50 pb-100">
+            <div className="relative flex flex-row items-center min-h-37.5 pl-50 pb-110 lg:pb-190">
               <ProjectDesc index={2} />
               <a
                 href={projectLinks[2]}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute right-20 w-[32%] h-auto top-[50%] -translate-y-[45%] z-50 cursor-pointer hover:scale-102 transition-transform lg:-translate-y-[40%]"
+                className="absolute right-20 w-[32%] h-auto top-[50%] -translate-y-[45%] z-100 cursor-pointer hover:scale-102 transition-transform lg:-translate-y-[55%]"
               >
                 <Image
                   src={Skewer3}
                   alt="hermes"
                   width={500}
                   height={350}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain z-80"
                 />
               </a>
             </div>
