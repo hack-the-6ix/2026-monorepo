@@ -87,7 +87,6 @@ export default function AboutStats() {
     <Section
       id="about"
       backgroundColor="linear-gradient(to bottom, #12102F, #12102F)"
-      noPadding
       className="!min-h-0 !py-0"
     >
       {/* ══════════════════════════════════════════════════════════════
