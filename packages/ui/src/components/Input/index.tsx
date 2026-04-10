@@ -36,7 +36,7 @@ export function Input({
   return (
     <InputGroup {...props} ref={ref}>
       <Typography
-        className="input__box"
+        className="input__box dark:text-white dark:font-normal"
         textColor="text-indigo-700"
         textSize="paragraph-sm"
         textWeight="medium"

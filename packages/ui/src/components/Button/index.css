@@ -60,4 +60,33 @@
   .button__icon {
     @apply size-3;
   }
+
+  .button--tooltip {
+    --button-color: var(--color-neutral-400);
+    --button-color-focus: var(--color-primary-500);
+    --button-color-pressed: var(--color-primary-600);
+    
+    @apply relative p-1 aspect-square rounded-md inline-flex items-center justify-center;
+    @apply text-(--button-color) hover:text-(--button-color-focus) active:text-(--button-color-pressed);
+  }
+
+  .tooltiptext {
+    --tooltip-bg: var(--color-neutral-50);
+
+    @apply hidden absolute top-full mt-2 left-0 -translate-x-8;
+    @apply w-[350px] p-5 z-100 rounded-3xl shadow-lg;
+    @apply text-left font-medium leading-relaxed;
+    background-color: var(--tooltip-bg);
+  }
+
+  .tooltiptext::after {
+    content:"";
+    @apply absolute bottom-full left-1/9 h-8;
+    @apply border-8 border-b-10 border-transparent;
+    border-bottom-color: var(--tooltip-bg);
+  }
+
+  .button--tooltip:hover .tooltiptext {
+    @apply block; 
+  }
 }

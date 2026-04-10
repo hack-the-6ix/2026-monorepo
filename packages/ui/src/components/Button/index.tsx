@@ -1,5 +1,6 @@
 import { ComponentPropsWithRef, ElementType, ReactNode } from 'react';
 import cn from 'classnames';
+import { Info } from 'lucide-react';
 
 import { PolymorphicProps } from '../..';
 import { Typography } from '../Typography';
@@ -23,6 +24,17 @@ export type ButtonProps<T extends ElementType> = PolymorphicProps<
   SharedButtonProps<{ iconLeft?: ReactNode; iconRight?: ReactNode }>,
   T
 >;
+
+export type TooltipButtonProps<T extends ElementType> = PolymorphicProps<
+  SharedButtonProps<{
+    description: ReactNode;
+    icon?: ReactNode;
+    bgColor?: string;
+    children?: never;
+  }>,
+  T
+>;
+
 export function Button<T extends ElementType = 'button'>({
   destructive,
   kind = 'primary',
@@ -104,5 +116,44 @@ export function HyperLink<T extends ElementType = 'a'>({
       textWeight="semi-bold"
       as={as ?? 'a'}
     />
+  );
+}
+
+export function TooltipButton<T extends ElementType = 'button'>({
+  as,
+  description,
+  bgColor,
+  icon = <Info />,
+  ...props
+}: TooltipButtonProps<T>) {
+  return (
+    <Typography<T>
+      {...(props as ComponentPropsWithRef<T>)}
+      className={cn(
+        props.disabled && 'button--disabled',
+        'button button--tooltip',
+        props.className,
+      )}
+      textSize="paragraph-xs"
+      as={as ?? 'button'}
+      type="button"
+      style={
+        {
+          '--tooltip-bg': bgColor,
+        } as React.CSSProperties
+      }
+    >
+      <span className="button__icon">{icon}</span>
+
+      <span className="tooltiptext">
+        <Typography
+          as="span"
+          textSize="label"
+          className="text-indigo-800 block"
+        >
+          {description}
+        </Typography>
+      </span>
+    </Typography>
   );
 }
