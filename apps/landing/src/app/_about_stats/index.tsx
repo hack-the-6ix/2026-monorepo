@@ -20,13 +20,15 @@ const ARTBOARD_H = 2936.6;
 
 // Mobile artboard — natural size fits a 320px viewport (320/402 scale of Figma 402px frame)
 const MOBILE_ARTBOARD_W = 1277.73;
-const MOBILE_ARTBOARD_H = 1474.22;
+const MOBILE_ARTBOARD_H = 1174.22;
 
-/** Figma → artboard local (origin from schools frame + Gem 1). */
+const MOBILE_TOP_H = 175;
+const MOBILE_SPLIT_Y = 453.08;
+const MOBILE_BOTTOM_H = MOBILE_ARTBOARD_H - MOBILE_SPLIT_Y;
+
 const FIGMA_OX = 5814.438;
 const FIGMA_OY = 2165.399;
 
-/** Frame 540 — “Last year, we had…” (sister to artboard; coords in artboard space). */
 const STATS_HEADER_FRAME = {
   left: 7501.57421875 - FIGMA_OX,
   top: 3907.9130859375 - FIGMA_OY,
@@ -34,13 +36,6 @@ const STATS_HEADER_FRAME = {
   height: 52,
 } as const;
 
-const ARTBOARD_TOP = 0;
-
-/**
- * Gem stat copy: matches design tokens in `packages/ui/src/theme/typography.css`
- * — `--text-3xl` (Heading/Small) + semi-bold 600, `--text-2xl` (Subtitle/Large) + medium 500.
- * Typography component: `heading-sm` + `subtitle-lg`.
- */
 function GemStat({ num, stat }: { num: string; stat: string }) {
   return (
     <div className="flex w-[169.171px] flex-col items-center text-center">
@@ -95,7 +90,10 @@ export default function AboutStats() {
       noPadding
       className="!min-h-0"
     >
-      {/* Common wrapper: owns --about-scale so all sister divs can use var(--about-scale) */}
+      {/* ══════════════════════════════════════════════════════════════
+          DESKTOP SECTION (≥768px) 
+          single artboard with absolute-positioned assets and content
+          ══════════════════════════════════════════════════════════════ */}
       <div
         className="relative hidden md:block"
         style={
@@ -631,28 +629,29 @@ export default function AboutStats() {
           </div>
         </div>
       </div>
-      {/* end desktop common wrapper */}
 
       {/* ══════════════════════════════════════════════════════════════
-          MOBILE SECTION (<768px) — completely self-contained.
-          Owns its own --about-scale (sibling of desktop wrapper, so
-          the two variables never interfere). Positions are copies of
-          desktop for now — adjust to match mobile Figma layout.
+          MOBILE SECTION (<768px) — 3-part flex column:
+          [top artboard] / [typography] / [bottom artboard]
+          bottom artboard tracks text bottom, so gap doesn't grow
           ══════════════════════════════════════════════════════════════ */}
       <div
-        className="relative md:hidden"
+        className="relative md:hidden flex flex-col"
         style={
           {
-            // '--about-scale': 'max(0.875, calc(100vw / 320px))',
             '--about-scale': 'clamp(0.875, calc(100vw / 320px), 2)',
           } as React.CSSProperties
         }
       >
-        {/* Mobile scaling wrapper — scale always active (div is hidden at ≥768px anyway) */}
+        {/* ── TOP ARTBOARD ─────────────────────────────────────────────
+            Assets: column1, frame1, frame2, candle, stars1
+            Height = MOBILE_TOP_H × scale. column1 (h=318.75) visually
+            overflows below this boundary into the text area
+            ─────────────────────────────────────────────────────────── */}
         <div
           style={
             {
-              height: `calc(${MOBILE_ARTBOARD_H}px * var(--about-scale))`,
+              height: `calc(${MOBILE_TOP_H}px * var(--about-scale))`,
               transformOrigin: 'center 0px',
             } as React.CSSProperties
           }
@@ -662,20 +661,15 @@ export default function AboutStats() {
             className="relative"
             style={{
               width: MOBILE_ARTBOARD_W,
-              minHeight: MOBILE_ARTBOARD_H,
+              height: MOBILE_TOP_H,
               marginLeft: 'calc(50% - 793.86px)',
-              marginTop: 0,
             }}
           >
-            {/* ============================================================
-                LAYER 1 (z-0): Background / Atmosphere
-                ============================================================ */}
-
-            {/* Right Column 1 - DONE */}
+            {/* MOBILE: Right Column 1 */}
             <div
               className="absolute"
               style={{
-                left: 925.10,
+                left: 925.1,
                 top: 0,
                 width: 228.75,
                 height: 318.75,
@@ -690,73 +684,12 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Right Column 2 - DONE*/}
-            <div
-              className="absolute"
-              style={{
-                left: 839.21,
-                top: 703.05,
-                width: 438.31,
-                height: 356.24,
-              }}
-            >
-              <Image
-                src={assets.aboutColumn2}
-                alt=""
-                fill
-                sizes="551px"
-                className="object-contain object-left"
-              />
-            </div>
-
-            {/* Lantern */}
-            <div
-              className="absolute"
-              style={{
-                left: 835.93,
-                top: 1076.36,
-                width: 101.00,
-                height: 126.07,
-              }}
-            >
-              <Image
-                src={assets.aboutLantern}
-                alt=""
-                fill
-                sizes="127px"
-                className="object-contain object-left"
-              />
-            </div>
-
-            {/* Rocky Edge - DONE */}
-            <div
-              className="absolute"
-              style={{
-                left: -100.07,
-                top: 872.04,
-                width: 1433.15,
-                height: 438.60,
-              }}
-            >
-              <Image
-                src={assets.aboutRocks}
-                alt=""
-                fill
-                sizes="1800px"
-                className="object-contain object-left"
-              />
-            </div>
-
-            {/* ============================================================
-                LAYER 2 (z-10): Items that MIGHT be animated
-                ============================================================ */}
-
-            {/* Picture Frame 1 - DONE */}
+            {/* MOBILE: Picture Frame 1 */}
             <div
               className="absolute"
               style={{
                 left: 664.13,
-                top: 0.10,
+                top: 0.1,
                 width: 118.75,
                 height: 110.06,
               }}
@@ -770,12 +703,12 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Picture Frame 2 - DONE */}
+            {/* MOBILE: Picture Frame 2 */}
             <div
               className="absolute"
               style={{
                 left: 797.85,
-                top: 58.20,
+                top: 58.2,
                 width: 93.38,
                 height: 86.03,
               }}
@@ -789,106 +722,11 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Picture Frame 3 - DONE */}
+            {/* MOBILE: Candle */}
             <div
               className="absolute"
               style={{
-                left: 644.97,
-                top: 526.99,
-                width: 140.07,
-                height: 130.91,
-              }}
-            >
-              <Image
-                src={assets.aboutFrame3}
-                alt=""
-                fill
-                sizes="176px"
-                className="object-contain object-left"
-              />
-            </div>
-
-            {/* Picture Frame 4 - DONE */}
-            <div
-              className="absolute"
-              style={{
-                left: 806.15,
-                top: 604.52,
-                width: 86.8,
-                height: 116.69,
-              }}
-            >
-              <Image
-                src={assets.aboutFrame4}
-                alt=""
-                fill
-                sizes="87px"
-                className="object-contain object-left"
-              />
-            </div>
-
-            {/* Picture Frame 5 - DONE */}
-            <div
-              className="absolute"
-              style={{
-                left: 822.47,
-                top: 453.08,
-                width: 149.03,
-                height: 139.44,
-              }}
-            >
-              <Image
-                src={assets.aboutFrame5}
-                alt=""
-                fill
-                sizes="149px"
-                className="object-contain object-left"
-              />
-            </div>
-
-            {/* Checkerboard - DONE */}
-            <div
-              className="absolute"
-              style={{
-                left: 660.55,
-                top: 687.82,
-                width: 113.39,
-                height: 108.40,
-              }}
-            >
-              <Image
-                src={assets.aboutCheckerboard}
-                alt=""
-                fill
-                sizes="142px"
-                className="object-contain object-left"
-              />
-            </div>
-
-            {/* Lamp - DONE */}
-            <div
-              className="absolute"
-              style={{
-                left: 689.55,
-                top: 641.88,
-                width: 69.66,
-                height: 109.20,
-              }}
-            >
-              <Image
-                src={assets.aboutLamp}
-                alt=""
-                fill
-                sizes="88px"
-                className="object-contain object-left"
-              />
-            </div>
-
-            {/* Candle - DONE */}
-            <div
-              className="absolute"
-              style={{
-                left: 905.10,
+                left: 905.1,
                 top: 79.12,
                 width: 55.13,
                 height: 63.76,
@@ -903,7 +741,7 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Top Stars - DONE */}
+            {/* MOBILE: Top Stars */}
             <div
               className="absolute"
               style={{
@@ -921,13 +759,267 @@ export default function AboutStats() {
                 className="object-contain object-left"
               />
             </div>
+          </div>
+        </div>
 
-            {/* Bottom Star - DONE */}
+        {/* ── TYPOGRAPHY (in normal flow) ───────────────────────────────
+            No absolute positioning — sits between the two artboards.
+            The bottom artboard starts right after this element ends.
+            ─────────────────────────────────────────────────────────── */}
+        <div className="pointer-events-auto relative z-[15] flex flex-col items-center gap-8 text-center w-full">
+          <div
+            style={{
+              maxWidth: 'min(calc(260px * var(--about-scale)), 400px)',
+              width: '100%',
+            }}
+          >
+            {/* ABOUT_HEADER: "Join us for an unforgettable weekend" */}
+            <Typography
+              as="h2"
+              textSize="heading-sm"
+              textWeight="bold"
+              className="m-0 w-full text-[var(--color-neutral-50)]"
+            >
+              <span className="text-[var(--color-neutral-50)]">
+                {ABOUT_HEADER.headerPrefix}
+              </span>{' '}
+              <span className="text-[var(--color-yellow-300)]">
+                {ABOUT_HEADER.headerHighlight}
+              </span>{' '}
+              <span className="text-[var(--color-neutral-50)]">
+                {ABOUT_HEADER.headerSuffix}
+              </span>
+            </Typography>
+            {/* ABOUT_CONTENT */}
+            <div className="mt-8">
+              <Typography
+                as="p"
+                textSize="paragraph-sm"
+                textWeight="medium"
+                className="m-0 text-[var(--color-neutral-50)]"
+              >
+                {ABOUT_CONTENT.paragraph1}{' '}
+                <span className="font-bold">
+                  {ABOUT_CONTENT.paragraph1bold}
+                </span>
+              </Typography>
+              <Typography
+                as="p"
+                textSize="paragraph-sm"
+                textWeight="medium"
+                className="mt-6 m-0 text-[var(--color-neutral-50)]"
+              >
+                {ABOUT_CONTENT.paragraph2}{' '}
+                <span className="font-bold">
+                  {ABOUT_CONTENT.paragraph2bold}
+                </span>
+              </Typography>
+            </div>
+          </div>
+        </div>
+
+        {/* ── BOTTOM ARTBOARD ──────────────────────────────────────────
+            Assets: column2, lantern, rocks, frame3-5, checkerboard,
+                    lamp, stars2, gems 1-5, GemStat overlays.
+            All top values = original_top − MOBILE_SPLIT_Y (453.08)
+            ─────────────────────────────────────────────────────────── */}
+        <div
+          style={
+            {
+              height: `calc(${MOBILE_BOTTOM_H}px * var(--about-scale))`,
+              transformOrigin: 'center 0px',
+            } as React.CSSProperties
+          }
+          className="scale-[var(--about-scale)]"
+        >
+          <div
+            className="relative"
+            style={{
+              width: MOBILE_ARTBOARD_W,
+              minHeight: MOBILE_BOTTOM_H,
+              marginLeft: 'calc(50% - 793.86px)',
+            }}
+          >
+            {/* STATS_HEADER — inside artboard, centered at artboard-x 793.86 */}
+            {/* Counter-scale keeps font at natural size while position stays artboard-relative */}
+            <div
+              className="pointer-events-none absolute z-[15] text-center"
+              style={{
+                top: 340.92,
+                left: 620.86,
+                width: 346,
+                transform: 'scale(calc(1 / var(--about-scale)))',
+                transformOrigin: 'top center',
+              }}
+            >
+              <Typography
+                as="p"
+                textSize="subtitle-lg"
+                textWeight="bold"
+                className="m-0 w-full text-[var(--color-neutral-50)]"
+              >
+                {STATS_HEADER.header}
+              </Typography>
+            </div>
+
+            {/* MOBILE: Right Column 2 */}
+            <div
+              className="absolute"
+              style={{
+                left: 839.21,
+                top: 249.97,
+                width: 438.31,
+                height: 356.24,
+              }}
+            >
+              <Image
+                src={assets.aboutColumn2}
+                alt=""
+                fill
+                sizes="551px"
+                className="object-contain object-left"
+              />
+            </div>
+
+            {/* MOBILE: Lantern */}
+            <div
+              className="absolute"
+              style={{
+                left: 835.93,
+                top: 623.28,
+                width: 101.0,
+                height: 126.07,
+              }}
+            >
+              <Image
+                src={assets.aboutLantern}
+                alt=""
+                fill
+                sizes="127px"
+                className="object-contain object-left"
+              />
+            </div>
+
+            {/* MOBILE: Rocky Edge */}
+            <div
+              className="absolute"
+              style={{
+                left: -100.07,
+                top: 418.96,
+                width: 1433.15,
+                height: 438.6,
+              }}
+            >
+              <Image
+                src={assets.aboutRocks}
+                alt=""
+                fill
+                sizes="1800px"
+                className="object-contain object-left"
+              />
+            </div>
+
+            {/* MOBILE: Picture Frame 3 */}
+            <div
+              className="absolute"
+              style={{
+                left: 644.97,
+                top: 73.91,
+                width: 140.07,
+                height: 130.91,
+              }}
+            >
+              <Image
+                src={assets.aboutFrame3}
+                alt=""
+                fill
+                sizes="176px"
+                className="object-contain object-left"
+              />
+            </div>
+
+            {/* MOBILE: Picture Frame 4 */}
+            <div
+              className="absolute"
+              style={{
+                left: 806.15,
+                top: 151.44,
+                width: 86.8,
+                height: 116.69,
+              }}
+            >
+              <Image
+                src={assets.aboutFrame4}
+                alt=""
+                fill
+                sizes="87px"
+                className="object-contain object-left"
+              />
+            </div>
+
+            {/* MOBILE: Picture Frame 5 */}
+            <div
+              className="absolute"
+              style={{
+                left: 822.47,
+                top: 0,
+                width: 149.03,
+                height: 139.44,
+              }}
+            >
+              <Image
+                src={assets.aboutFrame5}
+                alt=""
+                fill
+                sizes="149px"
+                className="object-contain object-left"
+              />
+            </div>
+
+            {/* MOBILE: Checkerboard */}
+            <div
+              className="absolute"
+              style={{
+                left: 660.55,
+                top: 234.74,
+                width: 113.39,
+                height: 108.4,
+              }}
+            >
+              <Image
+                src={assets.aboutCheckerboard}
+                alt=""
+                fill
+                sizes="142px"
+                className="object-contain object-left"
+              />
+            </div>
+
+            {/* MOBILE: Lamp */}
+            <div
+              className="absolute"
+              style={{
+                left: 689.55,
+                top: 188.8,
+                width: 69.66,
+                height: 109.2,
+              }}
+            >
+              <Image
+                src={assets.aboutLamp}
+                alt=""
+                fill
+                sizes="88px"
+                className="object-contain object-left"
+              />
+            </div>
+
+            {/* MOBILE: Bottom Star */}
             <div
               className="absolute"
               style={{
                 left: 785.41,
-                top: 580.39,
+                top: 127.31,
                 width: 34.72,
                 height: 34.36,
               }}
@@ -941,14 +1033,14 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Gem 1 */}
+            {/* MOBILE: Gem 1 */}
             <div
               className="absolute"
               style={{
-                left: 653.07,
-                top: 892.64,
+                left: 650.07,
+                top: 432.56,
                 width: 110.37,
-                height: 107.23,
+                height: 117.23,
               }}
             >
               <Image
@@ -960,14 +1052,14 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Gem 2 */}
+            {/* MOBILE: Gem 2 */}
             <div
               className="absolute"
               style={{
-                left: 748.30,
-                top: 862.39,
+                left: 748.3,
+                top: 409.31,
                 width: 100.01,
-                height: 105.43,
+                height: 110.43,
               }}
             >
               <Image
@@ -979,14 +1071,14 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Gem 3 */}
+            {/* MOBILE: Gem 3 */}
             <div
               className="absolute"
               style={{
-                left: 831.69,
-                top: 828.16,
+                left: 827.69,
+                top: 360.08,
                 width: 109.41,
-                height: 104.77,
+                height: 124.77,
               }}
             >
               <Image
@@ -998,14 +1090,14 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Gem 4 */}
+            {/* MOBILE: Gem 4 */}
             <div
               className="absolute"
               style={{
-                left: 705.75,
-                top: 958.71,
+                left: 700.75,
+                top: 500.63,
                 width: 114.94,
-                height: 115.79,
+                height: 125.79,
               }}
             >
               <Image
@@ -1017,14 +1109,14 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Gem 5 */}
+            {/* MOBILE: Gem 5 */}
             <div
               className="absolute"
               style={{
-                left: 816.26,
-                top: 936.38,
+                left: 814.26,
+                top: 480.3,
                 width: 117.79,
-                height: 109.13,
+                height: 119.13,
               }}
             >
               <Image
@@ -1036,36 +1128,44 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Stats typography over gems */}
+            {/* MOBILE: Gem 1 Stats Typography */}
             <div
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
                 left: 655.46,
-                top: 926.53,
+                top: 478.45,
                 width: 67.66,
                 height: 43.78,
               }}
             >
-              <GemStatMobile num={STATS_SCHOOLS.num} stat={STATS_SCHOOLS.stat} />
+              <GemStatMobile
+                num={STATS_SCHOOLS.num}
+                stat={STATS_SCHOOLS.stat}
+              />
             </div>
 
+            {/* MOBILE: Gem 2 Stats Typography */}
             <div
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
                 left: 750.69,
-                top: 902.00,
+                top: 448.92,
                 width: 67.66,
                 height: 43.78,
               }}
             >
-              <GemStatMobile num={STATS_PROJECTS.num} stat={STATS_PROJECTS.stat} />
+              <GemStatMobile
+                num={STATS_PROJECTS.num}
+                stat={STATS_PROJECTS.stat}
+              />
             </div>
 
+            {/* MOBILE: Gem 3 Stats Typography */}
             <div
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
                 left: 837.27,
-                top: 868.42,
+                top: 415.34,
                 width: 67.66,
                 height: 43.78,
               }}
@@ -1073,107 +1173,40 @@ export default function AboutStats() {
               <GemStatMobile num={STATS_PRIZES.num} stat={STATS_PRIZES.stat} />
             </div>
 
+            {/* MOBILE: Gem 4 Stats Typography */}
             <div
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
                 left: 712.12,
-                top: 1007.03,
+                top: 553.95,
                 width: 67.66,
                 height: 43.78,
               }}
             >
-              <GemStatMobile num={STATS_HACKERS.num} stat={STATS_HACKERS.stat} />
+              <GemStatMobile
+                num={STATS_HACKERS.num}
+                stat={STATS_HACKERS.stat}
+              />
             </div>
 
+            {/* MOBILE: Gem 5 Stats Typography */}
             <div
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
                 left: 818.65,
-                top: 978.23,
+                top: 525.15,
                 width: 67.66,
                 height: 43.78,
               }}
             >
-              <GemStatMobile num={STATS_MENTORS.num} stat={STATS_MENTORS.stat} />
+              <GemStatMobile
+                num={STATS_MENTORS.num}
+                stat={STATS_MENTORS.stat}
+              />
             </div>
           </div>
         </div>
-
-        {/* Mobile STATS_HEADER — centered on screen, top scales with artboard */}
-        <div
-          className="pointer-events-none absolute z-[15] text-center"
-          style={{
-            top: 'calc(788px * var(--about-scale))',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            maxWidth: 346,
-            width: '100%',
-          }}
-        >
-          <Typography
-            as="p"
-            textSize="subtitle-lg"
-            textWeight="bold"
-            className="m-0 w-full text-[var(--color-neutral-50)]"
-          >
-            {STATS_HEADER.header}
-          </Typography>
-        </div>
-
-        {/* Mobile ABOUT text — centered on screen, top scales with artboard */}
-        <div
-          className="pointer-events-auto absolute z-[15] flex flex-col gap-8 text-center"
-          style={{
-            top: 'calc(175px * var(--about-scale))',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            maxWidth: 280,
-            width: '100%',
-          }}
-        >
-          <Typography
-            as="h2"
-            textSize="heading-sm"
-            textWeight="bold"
-            className="m-0 w-full text-[var(--color-neutral-50)]"
-          >
-            <span className="text-[var(--color-neutral-50)]">
-              {ABOUT_HEADER.headerPrefix}
-            </span>{' '}
-            <span className="text-[var(--color-yellow-300)]">
-              {ABOUT_HEADER.headerHighlight}
-            </span>{' '}
-            <span className="text-[var(--color-neutral-50)]">
-              {ABOUT_HEADER.headerSuffix}
-            </span>
-          </Typography>
-          <div>
-            <Typography
-              as="p"
-              textSize="paragraph-sm"
-              textWeight="medium"
-              className="m-0 text-[var(--color-neutral-50)]"
-            >
-              {ABOUT_CONTENT.paragraph1}{' '}
-              <span className="font-bold">
-                {ABOUT_CONTENT.paragraph1bold}
-              </span>
-            </Typography>
-            <Typography
-              as="p"
-              textSize="paragraph-sm"
-              textWeight="medium"
-              className="mt-6 m-0 text-[var(--color-neutral-50)]"
-            >
-              {ABOUT_CONTENT.paragraph2}{' '}
-              <span className="font-bold">
-                {ABOUT_CONTENT.paragraph2bold}
-              </span>
-            </Typography>
-          </div>
-        </div>
       </div>
-      {/* end mobile section */}
     </Section>
   );
 }
