@@ -134,7 +134,7 @@ export default function FAQSection({ category }: { category: string }) {
     QUESTIONS[category as keyof typeof QUESTIONS] || QUESTIONS.General;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 md:gap-y-12 gap-x-12 md:gap-x-16 w-full max-w-[1048px] px-6 md:px-0">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 md:gap-y-12 gap-x-12 md:gap-x-16 w-full max-w-[1048px] px-6">
       {currentQuestions.map((q) => (
         <Disclosure key={q.title} title={q.title}>
           {q.content}

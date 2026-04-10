@@ -19,7 +19,7 @@ export default function FAQ() {
     <Section
       id="faq"
       backgroundColor="linear-gradient(to bottom, #D68D05, #D68D05, #BA6600)"
-      className="py-0! relative z-10"
+      className="py-0! relative z-50"
     >
       <div className="relative w-full overflow-visible">
         <Image
@@ -39,7 +39,7 @@ export default function FAQ() {
               onSelect={setSelectedCategory}
             />
           </div>
-          <div className="mt-6 min-h-[200px] md:min-h-[400px]">
+          <div className="mt-6 min-h-[250px] md:min-h-[400px]">
             <FAQSection category={selectedCategory} />
           </div>
           <div className="-mt-8">
