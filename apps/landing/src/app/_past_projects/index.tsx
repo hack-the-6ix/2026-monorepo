@@ -132,14 +132,14 @@ export default function Projects() {
                 href={projectLinks[2]}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute right-20 w-[32%] h-auto top-[50%] -translate-y-[45%] z-50 cursor-pointer hover:scale-102 transition-transform lg:-translate-y-[55%]"
+                className="absolute right-20 w-[32%] h-auto top-[50%] -translate-y-[45%] z-100 cursor-pointer hover:scale-102 transition-transform lg:-translate-y-[55%]"
               >
                 <Image
                   src={Skewer3}
                   alt="hermes"
                   width={500}
                   height={350}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain z-80"
                 />
               </a>
             </div>

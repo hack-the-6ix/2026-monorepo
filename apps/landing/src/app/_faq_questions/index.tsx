@@ -19,7 +19,7 @@ export default function FAQ() {
     <Section
       id="faq"
       backgroundColor="linear-gradient(to bottom, #D68D05, #D68D05, #BA6600)"
-      className="py-0! relative z-50"
+      className="py-0! relative"
     >
       <div className="relative w-full overflow-visible">
         <Image
@@ -29,7 +29,7 @@ export default function FAQ() {
           height={987}
           className="absolute -top-[45vw] left-0 w-[180vw] max-w-none h-auto z-10 -translate-x-[30%] md:-translate-x-[25%] mask-[linear-gradient(to_bottom,black_78%,transparent_100%)]"
         />
-        <div className="relative z-10 flex flex-col items-center gap-6 pb-24">
+        <div className="relative z-50 flex flex-col items-center gap-6 pb-24">
           <Typography textSize="heading-lg" textColor="text-neutral-50">
             FAQ
           </Typography>
