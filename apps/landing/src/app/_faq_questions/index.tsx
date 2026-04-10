@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
+import Triangle1 from '@/assets/faq/faq-bg-triangle-1.svg';
+import Slant2 from '@/assets/faq/faq-bg-triangle-4.png';
+import Slant1 from '@/assets/faq/svgviewer-output.svg';
 import Section from '../../components/Section';
 import CategoryPills from './components/CategoryPills';
 import Contact from './components/Contact';
@@ -15,18 +18,18 @@ export default function FAQ() {
   return (
     <Section
       id="faq"
-      backgroundColor="linear-gradient(to bottom, #D68D05, #BA6600)"
+      backgroundColor="linear-gradient(to bottom, #D68D05, #D68D05, #BA6600)"
       className="py-0! relative z-10"
     >
       <div className="relative w-full overflow-visible">
         <Image
-          src="/assets/faq/faq-bg-triangle-1.png"
-          alt=""
-          width={3103}
-          height={856}
-          className="absolute -top-[48vw] left-0 w-full h-auto z-0 mask-[linear-gradient(to_bottom,black_85%,transparent_100%)]"
+          src={Triangle1}
+          alt="pathway"
+          width={3181}
+          height={987}
+          className="absolute -top-[45vw] left-0 w-[180vw] max-w-none h-auto z-10 -translate-x-[30%] md:-translate-x-[25%] mask-[linear-gradient(to_bottom,black_78%,transparent_100%)]"
         />
-        <div className="relative z-10 flex flex-col items-center gap-6 -mt-[15vw] pb-24">
+        <div className="relative z-10 flex flex-col items-center gap-6 pb-24">
           <Typography textSize="heading-lg" textColor="text-neutral-50">
             FAQ
           </Typography>
@@ -40,20 +43,10 @@ export default function FAQ() {
             <FAQSection category={selectedCategory} />
           </div>
           <div className="-mt-8">
-            <Image
-              src="/assets/faq/svgviewer-output.svg"
-              alt=""
-              width={2000}
-              height={344}
-            />
+            <Image src={Slant1} alt="" width={2000} height={344} />
           </div>
           <Contact />
-          <Image
-            src="/assets/faq/faq-bg-triangle-4.png"
-            alt=""
-            width={4695}
-            height={344}
-          />
+          <Image src={Slant2} alt="" width={4695} height={344} />
         </div>
       </div>
     </Section>

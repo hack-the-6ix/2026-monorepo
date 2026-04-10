@@ -1,6 +1,9 @@
 import { Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
+import MobileEclair from '@/assets/faq/Group46.svg';
+import Eclair from '@/assets/faq/svgviewer-output-2.svg';
+
 const Contact = () => {
   return (
     <div className="relative w-full flex flex-col items-center">
@@ -23,12 +26,12 @@ const Contact = () => {
           You can reach out to us at
         </Typography>
 
-        <div className="hidden md:block relative w-[1000px] h-[600px] -mt-16">
+        <div className="hidden md:block relative w-[1000px] h-[450px] -mt-16">
           <div className="absolute inset-x-0 top-0 flex justify-center">
             <div className="relative w-[1000px] h-[885px] -translate-x-[220px] -translate-y-[400px]">
               <Image
-                src="/assets/faq/svgviewer-output-2.svg"
-                alt=""
+                src={Eclair}
+                alt="eclair and teacup"
                 fill
                 className="object-contain"
                 priority
@@ -52,12 +55,7 @@ const Contact = () => {
         </div>
 
         <div className="md:hidden relative w-full max-w-[340px] aspect-[1000/885] mt-4">
-          <Image
-            src="/assets/faq/Group46.svg"
-            alt=""
-            fill
-            className="object-contain"
-          />
+          <Image src={MobileEclair} alt="" fill className="object-contain" />
           <div className="absolute inset-0 flex items-center justify-center -translate-y-5">
             <a
               href="mailto:hello@hackthe6ix.com"
