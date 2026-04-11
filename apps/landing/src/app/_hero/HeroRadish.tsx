@@ -13,7 +13,7 @@ export default function HeroRadish() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const threshold = window.innerHeight * 0.5;
+      const threshold = window.innerHeight * 0.75;
       setIsScrolledPast(window.scrollY > threshold);
     };
 
@@ -24,7 +24,7 @@ export default function HeroRadish() {
   const handleRadishClick = () => {
     if (radishState !== 'hidden') return;
     setRadishState('jumping');
-    setTimeout(() => setRadishState('standing'), 1000);
+    setTimeout(() => setRadishState('standing'), 500);
     console.log(radishState);
   };
 
@@ -52,7 +52,7 @@ export default function HeroRadish() {
         alt="radish hide"
         width={122}
         height={195}
-        className={`absolute inset-0 block max-w-none size-full transition-opacity animate-image-glow ${radishState === 'hidden' ? 'visible' : 'hidden'}`}
+        className={`absolute inset-0 block max-w-none size-full transition-opacity animate-image-glow hover:scale-105 ${radishState === 'hidden' ? 'visible' : 'hidden'}`}
         priority
       />
 

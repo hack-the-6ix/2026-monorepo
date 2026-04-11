@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Section from '../../components/Section';
 import { EVENT_INFO, FORM_CONTENT, HERO_CONTENT } from '../_hero/constants';
 import { assets } from './assets';
+import Banner from './Banner';
 import { Butterflies } from './Butterflies';
 import HeroRadish from './HeroRadish';
 
@@ -603,14 +604,7 @@ export default function Hero() {
                 >
                   {HERO_CONTENT.subtitlePrefix}
                 </Typography>
-                <Typography
-                  as="span"
-                  textSize="subtitle-lg"
-                  textWeight="bold"
-                  className="text-[var(--color-yellow-300)]"
-                >
-                  {HERO_CONTENT.subtitleHighlight}
-                </Typography>
+                <Banner words={HERO_CONTENT.subtitleHighlight} />
               </Typography>
             </div>
             <div className="flex flex-col gap-4 w-full">
