@@ -93,7 +93,8 @@ export default function Sponsors() {
               className="w-18 h-auto z-20 md:w-32 2xl:w-38"
             />
             <div className="z-10 absolute bg-[rgba(246, 189, 85, 0.34)] top-0.5 md:top-1.5 -translate-x-1.5 rounded-full w-2 md:w-3 h-3 md:h-5 2xl:h-6 animate-glow" />
-            <div className="z-10 absolute bg-[rgba(246, 189, 85, 0.34)] top-0.5 md:top-1.5 -translate-x-1.5 rounded-full w-2 md:w-3 h-3 md:h-5 2xl:h-6 animate-glow" />{' '}
+            <div className="z-10 absolute bg-[rgba(246, 189, 85, 0.34)] top-0.5 md:top-1.5 -translate-x-1.5 rounded-full w-2 md:w-3 h-3 md:h-5 2xl:h-6 animate-glow" />
+            <div className="z-10 absolute bg-[rgba(246, 189, 85, 0.34)] top-0.5 md:top-1.5 -translate-x-1.5 rounded-full w-2 md:w-3 h-3 md:h-5 2xl:h-6 animate-glow" />
           </div>
           <div className="-mt-95 flex flex-col items-center gap-y-4 w-full px-4 z-10 max-w-90 md:max-w-[60%] lg:max-w-[75%] md:-mt-75">
             <Typography

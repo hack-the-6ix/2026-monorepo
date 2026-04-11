@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { assets } from './assets';
@@ -9,6 +9,17 @@ type RadishState = 'hidden' | 'jumping' | 'standing';
 
 export default function HeroRadish() {
   const [radishState, setRadishState] = useState<RadishState>('hidden');
+  const [isScrolledPast, setIsScrolledPast] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const threshold = window.innerHeight * 0.5;
+      setIsScrolledPast(window.scrollY > threshold);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleRadishClick = () => {
     if (radishState !== 'hidden') return;
@@ -18,7 +29,8 @@ export default function HeroRadish() {
   };
 
   const containerClasses = `
-    absolute z-[100] origin-bottom transition-all duration-300 left-[2080.66px] top-[1286.9px] will-change-transform
+    absolute z-[100] origin-bottom transition-all duration-300 left-[2080.66px] top-[1286.9px] will-change-transform parallax-layer
+    ${isScrolledPast ? 'min-[1050px]:opacity-0 min-[1050px]:pointer-events-none' : 'opacity-100'}
     ${
       radishState === 'hidden' ?
         'w-[122px] h-[195.06px] translate-y-0 cursor-pointer'
@@ -27,17 +39,22 @@ export default function HeroRadish() {
     `;
 
   return (
-    <div className={containerClasses} onClick={handleRadishClick}>
-      <div className={radishState === 'hidden' ? 'visible' : 'hidden'}>
-        <Image
-          src={assets.heroRadishHide}
-          alt="radish hide"
-          width={122}
-          height={195}
-          className="absolute inset-0 block max-w-none size-full transition-opacity animate-image-glow"
-          priority
-        />
-      </div>
+    <div
+      className={containerClasses}
+      onClick={handleRadishClick}
+      style={{
+        animationName: 'parallax-right',
+        animationDuration: '1s',
+      }}
+    >
+      <Image
+        src={assets.heroRadishHide}
+        alt="radish hide"
+        width={122}
+        height={195}
+        className={`absolute inset-0 block max-w-none size-full transition-opacity animate-image-glow ${radishState === 'hidden' ? 'visible' : 'hidden'}`}
+        priority
+      />
 
       <Image
         src={assets.heroRadishGif}

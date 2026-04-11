@@ -79,7 +79,7 @@ export default function Hero() {
     <Section
       id="hero"
       backgroundColor="#12102F"
-      className="relative z-30 !min-h-0 !py-0"
+      className="z-20 !min-h-0 !py-0"
     >
       <div
         style={
@@ -88,7 +88,7 @@ export default function Hero() {
             height: 'calc(675px + 670.4px * var(--hero-scale))',
           } as React.CSSProperties
         }
-        className="max-lg:scale-[var(--hero-scale)] max-lg:[transform-origin:center_675px]"
+        className="max-lg:scale-[var(--hero-scale)] max-lg:[transform-origin:center_675px] z-40"
       >
         <div
           className="relative"
@@ -531,7 +531,7 @@ export default function Hero() {
           LAYER 3: Content Elements (no z index?)
           ============================================================ */}
       {/* Render fixed-position hero UI for both landscape and in-between aspect ratios */}
-      <div className="layer-content">
+      <div className="layer-content z-50">
         <div className="absolute left-[59.34px] top-0 w-[977px] h-[631px] pointer-events-auto [@media(max-width:1095.68px)]:left-1/2 [@media(max-width:1095.68px)]:-translate-x-1/2 [@media(max-width:1095.68px)]:w-[calc(100vw-118.68px)] [@media(orientation:portrait)]:top-0 [@media(orientation:portrait)]:h-screen [@media(orientation:portrait)]:flex [@media(orientation:portrait)]:items-center">
           <div className="absolute left-[66px] top-[319px] w-[911px] flex flex-col gap-8 [@media(max-width:1095.68px)]:w-[calc(100%-66px)] [@media(max-width:713.68px)]:w-full [@media(max-width:713.68px)]:max-w-[406px] [@media(max-width:713.68px)]:left-1/2 [@media(max-width:713.68px)]:-translate-x-1/2 [@media(orientation:portrait)]:relative [@media(orientation:portrait)]:top-auto [@media(orientation:portrait)]:w-full">
             <div className="flex flex-col gap-6 items-start justify-center w-full">
@@ -670,25 +670,27 @@ export default function Hero() {
         </div>
       </div>
       {/* Leaves — anchored to top-right corner, scales with artboard below 1440px */}
-      <div
-        className="absolute z-10 pointer-events-none max-lg:scale-[var(--hero-scale)] max-lg:[transform-origin:right_116.1px]"
-        style={
-          {
-            '--hero-scale': 'clamp(0.222, calc(100vw / 1440px), 1)',
-            top: -116.1,
-            right: 'calc(var(--hero-scale) * -48.86px)',
-            width: 537.2,
-            height: 412.1,
-          } as React.CSSProperties
-        }
-      >
-        <Image
-          src={assets.heroLeaves}
-          alt=""
-          width={537}
-          height={412}
-          className="object-contain"
-        />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute z-60 pointer-events-none max-lg:scale-[var(--hero-scale)] max-lg:[transform-origin:right_116.1px]"
+          style={
+            {
+              '--hero-scale': 'clamp(0.222, calc(100vw / 1440px), 1)',
+              top: -116.1,
+              right: 'calc(var(--hero-scale) * -48.86px)',
+              width: 537.2,
+              height: 412.1,
+            } as React.CSSProperties
+          }
+        >
+          <Image
+            src={assets.heroLeaves}
+            alt=""
+            width={537}
+            height={412}
+            className="object-contain"
+          />
+        </div>
       </div>
     </Section>
   );

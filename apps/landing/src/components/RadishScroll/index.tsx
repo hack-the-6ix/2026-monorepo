@@ -16,31 +16,33 @@ export default function RadishScroll() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const activeScroll = Math.max(0, scrollY - windowHeight);
+  const activeScroll = Math.max(0, scrollY - windowHeight * 0.5);
   const zigZag = Math.sin(activeScroll / 500 + Math.PI / 2) * 35 - 48;
-  const tilt = (activeScroll * 0.2) % 360;
+  const tilt = (activeScroll * 0.3) % 360;
 
   return (
     <div
-      className="fixed pointer-events-none transition-opacity duration-500 ease-out"
+      className="fixed pointer-events-none transition-opacity duration-500 ease-out will-change-transform"
       style={{
         zIndex: 20,
         bottom: '20vh',
+        visibility: scrollY > windowHeight * 0.5 ? 'visible' : 'hidden',
         left: '110%',
         width: '140px',
         height: '240px',
         transform: `translate3d(calc(-110% + ${zigZag}vw), 0, 0)`,
       }}
     >
-      <div className="w-full h-full animate-subtle-bounce">
+      <div className="w-full h-full animate-subtle-bounce will-change-transform">
         <div
-          className="w-full h-full"
+          className="w-full h-full origin-center"
           style={{ transform: `rotate(${tilt}deg)` }}
         >
           <Image
             src={assets.heroRadishStand}
             alt="Falling Radish"
-            fill
+            width={200}
+            height={300}
             className="object-contain"
           />
         </div>

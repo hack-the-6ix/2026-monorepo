@@ -9,7 +9,7 @@ import Team from './_team';
 export default function Home() {
   return (
     <main className="max-w-screen overflow-x-hidden">
-      <div className="hidden md:block">
+      <div className="hidden min-[1050px]:block">
         <RadishScroll />
       </div>
 
