@@ -7,13 +7,21 @@ import { assets } from '../../app/_hero/assets';
 
 export default function RadishScroll() {
   const [scrollY, setScrollY] = useState(0);
-  const [windowHeight, setWindowHeight] = useState(0);
+  const [windowHeight, setWindowHeight] = useState(() =>
+    typeof window !== 'undefined' ? window.innerHeight : 0,
+  );
 
   useEffect(() => {
-    setWindowHeight(window.innerHeight);
+    const handleResize = () => setWindowHeight(window.innerHeight);
     const handleScroll = () => setScrollY(window.scrollY);
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const activeScroll = Math.max(0, scrollY - windowHeight * 0.5);
