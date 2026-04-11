@@ -24,8 +24,8 @@ import heroMistRight from '../../assets/hero_mist-right.svg';
 import heroMushroom1 from '../../assets/hero_mushroom-1.png';
 import heroMushroom2 from '../../assets/hero_mushroom-2.png';
 import heroRadishHide from '../../assets/hero_radish-hide.png';
-import heroRadish2 from '../../assets/hero_radish-jump.png';
-import heroRadish1 from '../../assets/hero_radish-stand.png';
+import heroRadishGif from '../../assets/hero_radish-jump.gif';
+import heroRadishStand from '../../assets/hero_radish-stand.svg';
 import heroSpotlight from '../../assets/hero_spotlight.svg';
 import heroTrees from '../../assets/hero_trees.svg';
 import logo from '../../assets/Logo.svg';
@@ -60,6 +60,8 @@ export const assets = {
   heroRadishHide,
   heroSpotlight,
   heroTrees,
+  heroRadishGif,
+  heroRadishStand,
 };
 
 export const butterfliesFrames = [
@@ -69,6 +71,3 @@ export const butterfliesFrames = [
   heroButterflies4,
   heroButterflies5,
 ];
-
-// will update these animation frames another time
-export const radishFrames = [heroRadish1, heroRadish2];

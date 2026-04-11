@@ -7,6 +7,7 @@ import Section from '../../components/Section';
 import { EVENT_INFO, FORM_CONTENT, HERO_CONTENT } from '../_hero/constants';
 import { assets } from './assets';
 import { Butterflies } from './Butterflies';
+import HeroRadish from './HeroRadish';
 
 const ARTBOARD_W = 4035;
 const ARTBOARD_H = 3662;
@@ -78,7 +79,7 @@ export default function Hero() {
     <Section
       id="hero"
       backgroundColor="#12102F"
-      className="relative z-[1] !min-h-0 !py-0"
+      className="relative z-30 !min-h-0 !py-0"
     >
       <div
         style={
@@ -446,23 +447,7 @@ export default function Hero() {
           </div>
 
           {/* Static Radish - Animations later */}
-          <div
-            className="absolute"
-            style={{
-              left: 2080.66,
-              top: 1286.9,
-              width: 122,
-              height: 195.06,
-            }}
-          >
-            <Image
-              src={assets.heroRadishHide}
-              alt=""
-              width={122}
-              height={195}
-              className="block max-w-none size-full"
-            />
-          </div>
+          <HeroRadish />
 
           {/* Butterflies - frame cycling + bounce + pulse */}
           <div

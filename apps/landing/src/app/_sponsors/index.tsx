@@ -14,7 +14,7 @@ export default function Sponsors() {
     <Section
       id="sponsors"
       backgroundColor="linear-gradient(to bottom, #12102F, #12102F, #423994, #355190, #0D7F75)"
-      className="items-center"
+      className="items-center pt-0! -mt-50"
     >
       <div className="flex flex-col max-w-[80%] gap-y-7 items-center z-30 md:max-w-[55%] md:gap-y-9">
         <Typography
@@ -90,7 +90,7 @@ export default function Sponsors() {
               width={100}
               height={100}
               draggable={false}
-              className="w-18 h-auto z-20 md:w-28 2xl:w-35"
+              className="w-18 h-auto z-20 md:w-32 2xl:w-38"
             />
             <div className="z-10 absolute bg-[rgba(246, 189, 85, 0.34)] top-0.5 md:top-1.5 -translate-x-1.5 rounded-full w-2 md:w-3 h-3 md:h-5 2xl:h-6 animate-glow" />
             <div className="z-10 absolute bg-[rgba(246, 189, 85, 0.34)] top-0.5 md:top-1.5 -translate-x-1.5 rounded-full w-2 md:w-3 h-3 md:h-5 2xl:h-6 animate-glow" />{' '}

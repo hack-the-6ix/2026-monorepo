@@ -87,7 +87,7 @@ export default function AboutStats() {
     <Section
       id="about"
       backgroundColor="linear-gradient(to bottom, #12102F, #12102F)"
-      className="!min-h-0 !py-0"
+      className="!min-h-0 !py- overflow-auto"
     >
       {/* ══════════════════════════════════════════════════════════════
           DESKTOP SECTION (≥768px) 

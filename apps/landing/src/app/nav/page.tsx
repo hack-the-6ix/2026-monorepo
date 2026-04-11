@@ -36,7 +36,7 @@ export default function Nav() {
 
   return (
     <nav
-      className={`px-16 z-20 fixed top-0 w-full h-32 transition-transform duration-300 ${
+      className={`px-16 z-200 fixed top-0 w-full h-32 transition-transform duration-300 ${
         visible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
