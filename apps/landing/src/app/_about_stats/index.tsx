@@ -158,12 +158,14 @@ export default function AboutStats() {
             <div
               className="absolute"
               style={{
-                left: 1832.07,
+                left: 1939.44,
                 top: 2116.37,
-                width: 317.18,
-                height: 395.96,
+                width: 109.11,
+                height: 322.96,
               }}
             >
+              <div className="absolute left-1/2 top-[70%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.54)]" />
+              <div className="absolute left-1/2 top-[70%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.54)]" />
               <Image
                 src={assets.aboutLantern}
                 alt=""
@@ -322,10 +324,10 @@ export default function AboutStats() {
             <div
               className="absolute"
               style={{
-                left: 1140.27,
-                top: 1202.66,
-                width: 323.13,
-                height: 484.71,
+                left: 1240.27,
+                top: 1370.66,
+                width: 159.57,
+                height: 251.55,
               }}
             >
               <Image
@@ -336,6 +338,8 @@ export default function AboutStats() {
                 className="object-contain object-left"
                 loading="lazy"
               />
+              <div className="absolute left-[45%] top-[20%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
+              <div className="absolute left-[45%] top-[20%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
             </div>
 
             {/* Candle */}
@@ -356,6 +360,8 @@ export default function AboutStats() {
                 className="object-contain object-left"
                 loading="lazy"
               />
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
             </div>
 
             {/* Top Stars */}
@@ -751,6 +757,8 @@ export default function AboutStats() {
                 className="object-contain object-left"
                 loading="lazy"
               />
+              <div className="absolute left-1/2 top-0 -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
+              <div className="absolute left-1/2 top-0 -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
             </div>
 
             {/* MOBILE: Top Stars */}
@@ -880,19 +888,21 @@ export default function AboutStats() {
               className="absolute"
               style={{
                 left: 835.93,
-                top: 623.28,
-                width: 101.0,
-                height: 126.07,
+                top: 630.76,
+                width: 43.65,
+                height: 109.18,
               }}
             >
               <Image
                 src={assets.aboutLantern}
                 alt=""
                 fill
-                sizes="127px"
+                sizes="44px"
                 className="object-contain object-left"
                 loading="lazy"
               />
+              <div className="absolute left-1/2 top-[20%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
+              <div className="absolute left-1/2 top-[20%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
             </div>
 
             {/* MOBILE: Right Column 2 */}
@@ -999,20 +1009,22 @@ export default function AboutStats() {
             <div
               className="absolute"
               style={{
-                left: 689.55,
-                top: 188.8,
-                width: 69.66,
-                height: 109.2,
+                left: 704.59,
+                top: 219.52,
+                width: 59.73,
+                height: 62.5,
               }}
             >
               <Image
                 src={assets.aboutLamp}
                 alt=""
                 fill
-                sizes="88px"
+                sizes="60px"
                 className="object-contain object-left"
                 loading="lazy"
               />
+              <div className="absolute left-1/2 top-[15%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
+              <div className="absolute left-1/2 top-[15%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
             </div>
 
             {/* MOBILE: Bottom Star */}

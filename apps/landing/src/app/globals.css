@@ -23,10 +23,15 @@
       0 0 20px rgba(253, 218, 152, 0.1),
       0 0 40px rgba(253, 218, 152, 0.05);
   }
+
+  .animate-glow-intense {
+    animation: var(--animate-glow-intense);
+  }
 }
 
 @theme {
   --animate-glow: glowing 4s ease-in-out infinite alternate;
+  --animate-glow-intense: glowing-intense 2s ease-in-out infinite alternate;
   --animate-image-glow: image-glow 5s ease-in-out infinite;
 
   --animate-subtle-bounce: subtle-bounce 3s ease-in-out infinite;
@@ -63,6 +68,23 @@
   50% {
     filter: drop-shadow(0 0 10px rgba(246, 189, 85, 0.8));
     opacity: 1;
+  }
+}
+
+@keyframes glowing-intense {
+  from {
+    box-shadow:
+      0 0 60px #ff4500,
+      0 0 70px #ff6a00,
+      0 0 100px #ffb703,
+      0 0 140px #fb8500,
+  }
+  to {
+    box-shadow:
+      0 0 60px #fffde7,
+      0 0 80px #ffd166,
+      0 0 100px #ffb703,
+      0 0 140px #fb8500;
   }
 }
 
