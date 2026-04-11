@@ -1,9 +1,9 @@
-import Candle from '@/assets/sponsor_candle.png';
-import Grass from '@/assets/sponsor_grass.png';
-import Hills from '@/assets/sponsor_hill.png';
 import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
+import Candle from '@/assets/sponsor_candle.png';
+import Grass from '@/assets/sponsor_grass.png';
+import Hills from '@/assets/sponsor_hill.png';
 import Section from '../../components/Section';
 import { featureFlags } from '../../feature-flags';
 import LogoGrid from './LogoGrid';

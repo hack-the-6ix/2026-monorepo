@@ -21,7 +21,8 @@
     "classnames": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "react-fast-marquee": "^1.6.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

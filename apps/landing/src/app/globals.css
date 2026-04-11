@@ -8,6 +8,11 @@
   --animate-slide-down: slide-down 1s ease-out forwards;
   --animate-slide-up: slide-up 1s ease-in forwards;
   --animate-dangle: dangle 3s ease-in-out;
+
+  --color-bunny-belt: #7D172A;
+
+  /* TODO: Standardize this stuff for the whole app */
+  --color-background-footer: #BD375C;
 }
 
 @keyframes glowing {
