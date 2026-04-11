@@ -1,6 +1,8 @@
-import heroButterflies1 from '../../assets/hero_butterflies-1.png';
-import heroButterflies2 from '../../assets/hero_butterflies-2.png';
-import heroButterflies3 from '../../assets/hero_butterflies-3.png';
+import heroButterflies1 from '../../assets/hero_butterflies-f1.png';
+import heroButterflies2 from '../../assets/hero_butterflies-f2.png';
+import heroButterflies3 from '../../assets/hero_butterflies-f3.png';
+import heroButterflies4 from '../../assets/hero_butterflies-f4.png';
+import heroButterflies5 from '../../assets/hero_butterflies-f5.png';
 import heroCave from '../../assets/hero_cave.svg';
 import heroCliffLeft from '../../assets/hero_cliff-left.svg';
 import heroCliffLeftFade from '../../assets/hero_cliff-left-fade.svg';
@@ -33,6 +35,8 @@ export const assets = {
   heroButterflies1,
   heroButterflies2,
   heroButterflies3,
+  heroButterflies4,
+  heroButterflies5,
   heroCave,
   heroCliffLeft,
   heroCliffLeftFade,
@@ -62,6 +66,8 @@ export const butterfliesFrames = [
   heroButterflies1,
   heroButterflies2,
   heroButterflies3,
+  heroButterflies4,
+  heroButterflies5,
 ];
 
 // will update these animation frames another time

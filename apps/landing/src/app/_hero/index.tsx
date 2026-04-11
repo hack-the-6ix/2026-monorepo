@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Section from '../../components/Section';
 import { EVENT_INFO, FORM_CONTENT, HERO_CONTENT } from '../_hero/constants';
 import { assets } from './assets';
+import { Butterflies } from './Butterflies';
 
 const ARTBOARD_W = 4035;
 const ARTBOARD_H = 3662;
@@ -463,9 +464,9 @@ export default function Hero() {
             />
           </div>
 
-          {/* Static Butterflies - Animations later */}
+          {/* Butterflies - frame cycling + bounce + pulse */}
           <div
-            className="absolute"
+            className="absolute animate-subtle-bounce animate-pulse"
             style={{
               left: 1868.65,
               top: 687.9,
@@ -473,13 +474,7 @@ export default function Hero() {
               height: 533.08,
             }}
           >
-            <Image
-              src={assets.heroButterflies1}
-              alt=""
-              width={213}
-              height={533}
-              className="block max-w-none size-full"
-            />
+            <Butterflies />
           </div>
 
           {/* ============================================================
