@@ -22,22 +22,29 @@ export default function RadishScroll() {
 
   return (
     <div
-      className={`fixed pointer-events-none transition-opacity duration-500 ease-out`}
+      className="fixed pointer-events-none transition-opacity duration-500 ease-out"
       style={{
         zIndex: 20,
         bottom: '20vh',
         left: '110%',
         width: '140px',
         height: '240px',
-        transform: `translate3d(calc(-110% + ${zigZag}vw), 0, 0) rotate(${tilt}deg)`,
+        transform: `translate3d(calc(-110% + ${zigZag}vw), 0, 0)`,
       }}
     >
-      <Image
-        src={assets.heroRadishStand}
-        alt="Falling Radish"
-        fill
-        className="object-contain"
-      />
+      <div className="w-full h-full animate-subtle-bounce">
+        <div
+          className="w-full h-full"
+          style={{ transform: `rotate(${tilt}deg)` }}
+        >
+          <Image
+            src={assets.heroRadishStand}
+            alt="Falling Radish"
+            fill
+            className="object-contain"
+          />
+        </div>
+      </div>
     </div>
   );
 }
