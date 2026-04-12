@@ -590,22 +590,17 @@ export default function Hero() {
               >
                 {HERO_CONTENT.title}
               </Typography>
-              <Typography
-                as="p"
-                textSize="subtitle-lg"
-                textWeight="medium"
-                className="m-0 text-glow"
-              >
+              <div className="m-0">
                 <Typography
                   as="span"
                   textSize="subtitle-lg"
                   textWeight="medium"
-                  className="text-[var(--color-neutral-50)]"
+                  className="text-[var(--color-neutral-50)] text-glow"
                 >
                   {HERO_CONTENT.subtitlePrefix}
                 </Typography>
                 <Banner words={HERO_CONTENT.subtitleHighlight} />
-              </Typography>
+              </div>
             </div>
             <div className="flex flex-col gap-4 w-full">
               <Typography

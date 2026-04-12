@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { Typography } from '@hackthe6ix/ui';
 
 export interface BannerProps {
@@ -8,34 +8,68 @@ export interface BannerProps {
 }
 
 export default function Banner({ words }: BannerProps) {
-  const [index, setIndex] = useState(0);
+  const wordsRef = useRef<(HTMLLIElement | null)[]>([]);
+  const containerRef = useRef<HTMLUListElement>(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % words.length);
-    }, 3500);
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    const items = wordsRef.current.filter(Boolean) as HTMLLIElement[];
+    let timeout: number;
 
-    return () => clearInterval(interval);
-  }, [words.length]);
+    if (!container || items.length === 0) return;
+
+    container.style.opacity = '1';
+
+    const action = (idx: number) => {
+      const ref = items[idx];
+      if (!ref) return;
+
+      container.style.height = `${ref.offsetHeight}px`;
+      container.scrollTo({
+        top: ref.offsetTop - container.offsetTop,
+        behavior: idx === 0 ? 'instant' : 'smooth',
+      });
+      const nextIdx = (idx + 1) % items.length;
+
+      timeout = window.setTimeout(() => action(nextIdx), idx === 0 ? 0 : 2200);
+    };
+    action(0);
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [words]);
 
   return (
-    <div className="inline-grid grid-cols-1 grid-rows-1 align-top">
+    <Typography
+      ref={containerRef}
+      style={{ opacity: 0, transition: 'opacity 0.3s' }}
+      className="overflow-y-hidden list-none inline-block align-top p-5 -mt-2 -ml-5 opacity-0 transition-opacity"
+      textColor="text-warning-400"
+      textSize="subtitle-lg"
+      textWeight="bold"
+      as="ul"
+    >
       {words.map((word, i) => (
-        <Typography
-          key={word}
-          as="span"
-          textColor="text-warning-400"
-          textSize="subtitle-lg"
-          textWeight="bold"
-          className={`
-            col-start-1 row-start-1
-            transition-all duration-1500 ease-in-out
-            ${i === index ? 'opacity-100 blur-0' : 'opacity-0 blur-xs pointer-events-none'}
-          `}
+        <li
+          ref={(el) => {
+            wordsRef.current[i] = el;
+          }}
+          key={i}
+          className="text-glow py-2"
         >
           {word}
-        </Typography>
+        </li>
       ))}
-    </div>
+      <li
+        ref={(el) => {
+          wordsRef.current[words.length] = el;
+        }}
+        aria-hidden
+        className="text-glow py-2"
+      >
+        {words[0]}
+      </li>
+    </Typography>
   );
 }
