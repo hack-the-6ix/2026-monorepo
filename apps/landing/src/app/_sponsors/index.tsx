@@ -14,9 +14,9 @@ export default function Sponsors() {
     <Section
       id="sponsors"
       backgroundColor="linear-gradient(to bottom, #12102F, #12102F, #423994, #355190, #0D7F75)"
-      className="items-center pt-0! -mt-50"
+      className="items-center pt-0!  md:-mt-50"
     >
-      <div className="flex flex-col max-w-[80%] gap-y-7 items-center z-30 md:max-w-[55%] md:gap-y-9">
+      <div className="flex flex-col max-w-[80%] gap-y-7 items-center z-50 md:max-w-[55%] md:gap-y-9">
         <Typography
           textSize="heading-sm"
           textColor="text-white"
