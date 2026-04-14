@@ -90,542 +90,559 @@ export default function AboutStats() {
       className="!min-h-0 !py-0"
     >
       {/* ══════════════════════════════════════════════════════════════
-          DESKTOP SECTION (≥768px) 
+          DESKTOP SECTION (≥768px)
           single artboard with absolute-positioned assets and content
           ══════════════════════════════════════════════════════════════ */}
-      <div className="z-35">
+      <div
+        className="relative hidden md:block"
+        style={
+          {
+            '--about-scale': 'clamp(0.222, calc(100vw / 1440px), 1)',
+          } as React.CSSProperties
+        }
+      >
         <div
-          className="relative hidden md:block"
           style={
             {
-              '--about-scale': 'clamp(0.222, calc(100vw / 1440px), 1)',
+              height: 'calc(2936.6px * var(--about-scale))',
+              transformOrigin: 'center 0px',
             } as React.CSSProperties
           }
+          className="max-lg:scale-[var(--about-scale)]"
         >
           <div
-            style={
-              {
-                height: 'calc(2936.6px * var(--about-scale))',
-                transformOrigin: 'center 0px',
-              } as React.CSSProperties
-            }
-            className="max-lg:scale-[var(--about-scale)]"
+            className="relative"
+            style={{
+              width: ARTBOARD_W,
+              minHeight: ARTBOARD_H,
+              marginLeft: 'calc(50% - 1636px)',
+              marginTop: 0,
+            }}
           >
-            <div
-              className="relative"
-              style={{
-                width: ARTBOARD_W,
-                minHeight: ARTBOARD_H,
-                marginLeft: 'calc(50% - 1636px)',
-                marginTop: 0,
-              }}
-            >
-              {/* ============================================================
+            {/* ============================================================
             LAYER 1 (z-0): Background / Atmosphere
             Cave Columns, Rocks, Stars, Lantern (no moving animations!)
             ============================================================ */}
 
-              {/* Right Column 1 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 2100, // should be 2925.66 but shifted by 1636/2, +2.34
-                  top: -230,
-                  width: 1066.34,
-                  height: 1490.1,
-                }}
-              >
-                <Image
-                  src={assets.aboutColumn1}
-                  alt=""
-                  fill
-                  sizes="1066px"
-                  className="object-contain"
-                />
-              </div>
+            {/* Right Column 1 */}
+            <div
+              className="absolute"
+              style={{
+                left: 2100, // should be 2925.66 but shifted by 1636/2, +2.34
+                top: -230,
+                width: 1066.34,
+                height: 1490.1,
+              }}
+            >
+              <Image
+                src={assets.aboutColumn1}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.740), 1066px"
+                className="object-contain"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Right Column 2 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 2052.34,
-                  top: 1267.5,
-                  width: 1083.5,
-                  height: 690.6,
-                }}
-              >
-                <Image
-                  src={assets.aboutColumn2}
-                  alt=""
-                  fill
-                  sizes="1084px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Right Column 2 */}
+            <div
+              className="absolute"
+              style={{
+                left: 2052.34,
+                top: 1267.5,
+                width: 1083.5,
+                height: 690.6,
+              }}
+            >
+              <Image
+                src={assets.aboutColumn2}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.753), 1084px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Lantern */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1832.07,
-                  top: 2116.37,
-                  width: 317.18,
-                  height: 395.96,
-                }}
-              >
-                <Image
-                  src={assets.aboutLantern}
-                  alt=""
-                  fill
-                  sizes="317.18px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Lantern */}
+            <div
+              className="absolute"
+              style={{
+                left: 1832.07,
+                top: 2116.37,
+                width: 317.18,
+                height: 395.96,
+              }}
+            >
+              <Image
+                src={assets.aboutLantern}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.220), 317px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Rocky Edge */}
-              <div
-                className="absolute"
-                style={{
-                  left: -815.66,
-                  top: 1586.6,
-                  width: 3952,
-                  height: 1340,
-                }}
-              >
-                <Image
-                  src={assets.aboutRocks}
-                  alt=""
-                  fill
-                  sizes="3952px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Rocky Edge */}
+            <div
+              className="absolute"
+              style={{
+                left: -815.66,
+                top: 1586.6,
+                width: 3952,
+                height: 1340,
+              }}
+            >
+              <Image
+                src={assets.aboutRocks}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 2.744), 3952px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* ============================================================
+            {/* ============================================================
             LAYER 2 (z-10): Items that MIGHT be animated
             Picture frames, gems, lantern, lamp, candle, checkerboard
             ============================================================ */}
-              {/* Picture Frame 1 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 995.27,
-                  top: -2.5,
-                  width: 419.82,
-                  height: 400.41,
-                }}
-              >
-                <Image
-                  src={assets.aboutFrame1}
-                  alt=""
-                  fill
-                  sizes="420px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Picture Frame 1 */}
+            <div
+              className="absolute"
+              style={{
+                left: 995.27,
+                top: -2.5,
+                width: 419.82,
+                height: 400.41,
+              }}
+            >
+              <Image
+                src={assets.aboutFrame1}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.292), 420px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Picture Frame 2 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1456.07,
-                  top: 200.22,
-                  width: 335.24,
-                  height: 309.84,
-                }}
-              >
-                <Image
-                  src={assets.aboutFrame2}
-                  alt=""
-                  fill
-                  sizes="420px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Picture Frame 2 */}
+            <div
+              className="absolute"
+              style={{
+                left: 1456.07,
+                top: 200.22,
+                width: 335.24,
+                height: 309.84,
+              }}
+            >
+              <Image
+                src={assets.aboutFrame2}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.233), 335px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Picture Frame 3 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1010.21,
-                  top: 955.5,
-                  width: 359.11,
-                  height: 336.7,
-                }}
-              >
-                <Image
-                  src={assets.aboutFrame3}
-                  alt=""
-                  fill
-                  sizes="359px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Picture Frame 3 */}
+            <div
+              className="absolute"
+              style={{
+                left: 1010.21,
+                top: 955.5,
+                width: 359.11,
+                height: 336.7,
+              }}
+            >
+              <Image
+                src={assets.aboutFrame3}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.249), 359px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Picture Frame 4 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1514.67,
-                  top: 1195.5,
-                  width: 247.24,
-                  height: 332.38,
-                }}
-              >
-                <Image
-                  src={assets.aboutFrame4}
-                  alt=""
-                  fill
-                  sizes="247px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Picture Frame 4 */}
+            <div
+              className="absolute"
+              style={{
+                left: 1514.67,
+                top: 1195.5,
+                width: 247.24,
+                height: 332.38,
+              }}
+            >
+              <Image
+                src={assets.aboutFrame4}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.172), 247px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Picture Frame 5 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1618.66,
-                  top: 815.5,
-                  width: 424.73,
-                  height: 398.48,
-                }}
-              >
-                <Image
-                  src={assets.aboutFrame5}
-                  alt=""
-                  fill
-                  sizes="425px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Picture Frame 5 */}
+            <div
+              className="absolute"
+              style={{
+                left: 1618.66,
+                top: 815.5,
+                width: 424.73,
+                height: 398.48,
+              }}
+            >
+              <Image
+                src={assets.aboutFrame5}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.295), 425px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Checkerboard */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1085.21,
-                  top: 1448.95,
-                  width: 415.28,
-                  height: 397.05,
-                }}
-              >
-                <Image
-                  src={assets.aboutCheckerboard}
-                  alt=""
-                  fill
-                  sizes="415px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Checkerboard */}
+            <div
+              className="absolute"
+              style={{
+                left: 1085.21,
+                top: 1448.95,
+                width: 415.28,
+                height: 397.05,
+              }}
+            >
+              <Image
+                src={assets.aboutCheckerboard}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.288), 415px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Lamp */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1140.27,
-                  top: 1202.66,
-                  width: 323.13,
-                  height: 484.71,
-                }}
-              >
-                <Image
-                  src={assets.aboutLamp}
-                  alt=""
-                  fill
-                  sizes="357px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Lamp */}
+            <div
+              className="absolute"
+              style={{
+                left: 1140.27,
+                top: 1202.66,
+                width: 323.13,
+                height: 484.71,
+              }}
+            >
+              <Image
+                src={assets.aboutLamp}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.224), 323px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Candle */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1925.22,
-                  top: 346.84,
-                  width: 188.77,
-                  height: 227.94,
-                }}
-              >
-                <Image
-                  src={assets.aboutCandle}
-                  alt=""
-                  fill
-                  sizes="189px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Candle */}
+            <div
+              className="absolute"
+              style={{
+                left: 1925.22,
+                top: 346.84,
+                width: 188.77,
+                height: 227.94,
+              }}
+            >
+              <Image
+                src={assets.aboutCandle}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.131), 189px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Top Stars */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1836.66,
-                  top: 68.5,
-                  width: 292.91,
-                  height: 616.94,
-                }}
-              >
-                <Image
-                  src={assets.aboutStars1}
-                  alt=""
-                  fill
-                  sizes="293px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Top Stars */}
+            <div
+              className="absolute"
+              style={{
+                left: 1836.66,
+                top: 68.5,
+                width: 292.91,
+                height: 616.94,
+              }}
+            >
+              <Image
+                src={assets.aboutStars1}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.203), 293px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Bottom Star */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1381,
-                  top: 1069.58,
-                  width: 89.02,
-                  height: 88.09,
-                }}
-              >
-                <Image
-                  src={assets.aboutStars2}
-                  alt=""
-                  fill
-                  sizes="89px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Bottom Star */}
+            <div
+              className="absolute"
+              style={{
+                left: 1381,
+                top: 1069.58,
+                width: 89.02,
+                height: 88.09,
+              }}
+            >
+              <Image
+                src={assets.aboutStars2}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.062), 89px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Gem 1 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1142.22,
-                  top: 1767.5,
-                  width: 198.25,
-                  height: 309.6,
-                }}
-              >
-                <Image
-                  src={assets.aboutGem1}
-                  alt=""
-                  fill
-                  sizes="198px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Gem 1 */}
+            <div
+              className="absolute"
+              style={{
+                left: 1142.22,
+                top: 1767.5,
+                width: 198.25,
+                height: 309.6,
+              }}
+            >
+              <Image
+                src={assets.aboutGem1}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.138), 198px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Gem 2 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1518.67,
-                  top: 1697.46,
-                  width: 191.5,
-                  height: 300,
-                }}
-              >
-                <Image
-                  src={assets.aboutGem2}
-                  alt=""
-                  fill
-                  sizes="192px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Gem 2 */}
+            <div
+              className="absolute"
+              style={{
+                left: 1518.67,
+                top: 1697.46,
+                width: 191.5,
+                height: 300,
+              }}
+            >
+              <Image
+                src={assets.aboutGem2}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.133), 192px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Gem 3 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1769.33,
-                  top: 1838.28,
-                  width: 210.17,
-                  height: 309.23,
-                }}
-              >
-                <Image
-                  src={assets.aboutGem3}
-                  alt=""
-                  fill
-                  sizes="210px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Gem 3 */}
+            <div
+              className="absolute"
+              style={{
+                left: 1769.33,
+                top: 1838.28,
+                width: 210.17,
+                height: 309.23,
+              }}
+            >
+              <Image
+                src={assets.aboutGem3}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.146), 210px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Gem 4 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1335.01,
-                  top: 1932.24,
-                  width: 188.65,
-                  height: 313.58,
-                }}
-              >
-                <Image
-                  src={assets.aboutGem4}
-                  alt=""
-                  fill
-                  sizes="189px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Gem 4 */}
+            <div
+              className="absolute"
+              style={{
+                left: 1335.01,
+                top: 1932.24,
+                width: 188.65,
+                height: 313.58,
+              }}
+            >
+              <Image
+                src={assets.aboutGem4}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.131), 189px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Gem 5 */}
-              <div
-                className="absolute"
-                style={{
-                  left: 1567.51,
-                  top: 1991.51,
-                  width: 192.8,
-                  height: 319.17,
-                }}
-              >
-                <Image
-                  src={assets.aboutGem5}
-                  alt=""
-                  fill
-                  sizes="193px"
-                  className="object-contain object-left"
-                />
-              </div>
+            {/* Gem 5 */}
+            <div
+              className="absolute"
+              style={{
+                left: 1567.51,
+                top: 1991.51,
+                width: 192.8,
+                height: 319.17,
+              }}
+            >
+              <Image
+                src={assets.aboutGem5}
+                alt=""
+                fill
+                sizes="(max-width: 1440px) calc(100vw * 0.134), 193px"
+                className="object-contain object-left"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Stats typography over gems — Heading/Small/Semi Bold + Subtitle/Large/Medium (see GemStat) */}
-              <div
-                className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
-                style={{
-                  left: 1142.22,
-                  top: 1803,
-                  width: 198.25,
-                  height: 309.6,
-                }}
-              >
-                <GemStat num={STATS_SCHOOLS.num} stat={STATS_SCHOOLS.stat} />
-              </div>
-              <div
-                className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
-                style={{
-                  left: 1518.67,
-                  top: 1732.46,
-                  width: 191.5,
-                  height: 300,
-                }}
-              >
-                <GemStat num={STATS_PROJECTS.num} stat={STATS_PROJECTS.stat} />
-              </div>
-              <div
-                className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
-                style={{
-                  left: 1769.33,
-                  top: 1873.78,
-                  width: 210.17,
-                  height: 309.23,
-                }}
-              >
-                <GemStat num={STATS_PRIZES.num} stat={STATS_PRIZES.stat} />
-              </div>
-              <div
-                className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
-                style={{
-                  left: 1335.01,
-                  top: 1967.74,
-                  width: 188.65,
-                  height: 313.58,
-                }}
-              >
-                <GemStat num={STATS_HACKERS.num} stat={STATS_HACKERS.stat} />
-              </div>
-              <div
-                className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
-                style={{
-                  left: 1567.51,
-                  top: 2027.01,
-                  width: 192.8,
-                  height: 319.17,
-                }}
-              >
-                <GemStat num={STATS_MENTORS.num} stat={STATS_MENTORS.stat} />
-              </div>
+            {/* Stats typography over gems — Heading/Small/Semi Bold + Subtitle/Large/Medium (see GemStat) */}
+            <div
+              className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
+              style={{
+                left: 1142.22,
+                top: 1803,
+                width: 198.25,
+                height: 309.6,
+              }}
+            >
+              <GemStat num={STATS_SCHOOLS.num} stat={STATS_SCHOOLS.stat} />
+            </div>
+            <div
+              className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
+              style={{
+                left: 1518.67,
+                top: 1732.46,
+                width: 191.5,
+                height: 300,
+              }}
+            >
+              <GemStat num={STATS_PROJECTS.num} stat={STATS_PROJECTS.stat} />
+            </div>
+            <div
+              className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
+              style={{
+                left: 1769.33,
+                top: 1873.78,
+                width: 210.17,
+                height: 309.23,
+              }}
+            >
+              <GemStat num={STATS_PRIZES.num} stat={STATS_PRIZES.stat} />
+            </div>
+            <div
+              className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
+              style={{
+                left: 1335.01,
+                top: 1967.74,
+                width: 188.65,
+                height: 313.58,
+              }}
+            >
+              <GemStat num={STATS_HACKERS.num} stat={STATS_HACKERS.stat} />
+            </div>
+            <div
+              className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
+              style={{
+                left: 1567.51,
+                top: 2027.01,
+                width: 192.8,
+                height: 319.17,
+              }}
+            >
+              <GemStat num={STATS_MENTORS.num} stat={STATS_MENTORS.stat} />
             </div>
           </div>
+        </div>
 
-          {/* Stats section title (artboard-relative, same scale formula as Layer 3) */}
-          <div
-            className="pointer-events-none absolute z-[15] w-[402.88] text-center"
-            style={{
-              left: `calc(50% + (${STATS_HEADER_FRAME.left}px - 1636px) * var(--about-scale))`,
-              top: `calc(${STATS_HEADER_FRAME.top}px * var(--about-scale))`,
-              transformOrigin: 'top left',
-              transform: 'scale(var(--about-scale))',
-            }}
+        {/* Stats section title (artboard-relative, same scale formula as Layer 3) */}
+        <div
+          className="pointer-events-none absolute z-[15] w-[402.88] text-center"
+          style={{
+            left: `calc(50% + (${STATS_HEADER_FRAME.left}px - 1636px) * var(--about-scale))`,
+            top: `calc(${STATS_HEADER_FRAME.top}px * var(--about-scale))`,
+            transformOrigin: 'top left',
+            transform: 'scale(var(--about-scale))',
+          }}
+        >
+          <Typography
+            as="p"
+            textSize="heading-sm"
+            textWeight="bold"
+            className="m-0 w-full text-[var(--color-neutral-50)]"
           >
-            <Typography
-              as="p"
-              textSize="heading-sm"
-              textWeight="bold"
-              className="m-0 w-full text-[var(--color-neutral-50)]"
-            >
-              {STATS_HEADER.header}
-            </Typography>
-          </div>
+            {STATS_HEADER.header}
+          </Typography>
+        </div>
 
-          {/* ============================================================
+        {/* ============================================================
           LAYER 3: Content Elements — artboard-relative position
           left = 50% + (949.33 − 1636)px × scale  =  50% − 686.67px × scale
           top  = 600.4px × scale
           (949.33 = frame1.left − 45.94;  600.4 = frame1.bottom + 202.49)
           ============================================================ */}
-          <div
-            className="pointer-events-auto absolute z-[15] w-[850.3px]"
-            style={{
-              left: 'calc(50% - 586.67px * var(--about-scale))',
-              top: 'calc(550.4px * var(--about-scale))',
-              transformOrigin: 'top left',
-              transform: 'scale(var(--about-scale))',
-            }}
-          >
-            <div className="flex w-full flex-col items-start gap-6">
+        <div
+          className="pointer-events-auto absolute z-[15] w-[850.3px]"
+          style={{
+            left: 'calc(50% - 586.67px * var(--about-scale))',
+            top: 'calc(550.4px * var(--about-scale))',
+            transformOrigin: 'top left',
+            transform: 'scale(var(--about-scale))',
+          }}
+        >
+          <div className="flex w-full flex-col items-start gap-6">
+            <Typography
+              as="h2"
+              textSize="heading-lg"
+              textWeight="bold"
+              className="m-0 max-w-full text-[var(--color-neutral-50)]"
+            >
+              <span className="text-[var(--color-neutral-50)]">
+                {ABOUT_HEADER.headerPrefix}
+              </span>{' '}
+              <span className="text-[var(--color-yellow-300)]">
+                {ABOUT_HEADER.headerHighlight}
+              </span>{' '}
+              <span className="text-[var(--color-neutral-50)]">
+                {ABOUT_HEADER.headerSuffix}
+              </span>
+            </Typography>
+            <div className="pl-[28px] max-w-[596px]">
+              {/* 28px indent + 568px content = 596px total, right offset ~254px */}
               <Typography
-                as="h2"
-                textSize="heading-lg"
-                textWeight="bold"
-                className="m-0 max-w-full text-[var(--color-neutral-50)]"
+                as="p"
+                textSize="paragraph-lg"
+                textWeight="medium"
+                className="m-0 text-[var(--color-neutral-50)]"
               >
-                <span className="text-[var(--color-neutral-50)]">
-                  {ABOUT_HEADER.headerPrefix}
-                </span>{' '}
-                <span className="text-[var(--color-yellow-300)]">
-                  {ABOUT_HEADER.headerHighlight}
-                </span>{' '}
-                <span className="text-[var(--color-neutral-50)]">
-                  {ABOUT_HEADER.headerSuffix}
+                {ABOUT_CONTENT.paragraph1}{' '}
+                <span className="font-bold">
+                  {ABOUT_CONTENT.paragraph1bold}
                 </span>
               </Typography>
-              <div className="pl-[28px] max-w-[596px]">
-                {/* 28px indent + 568px content = 596px total, right offset ~254px */}
-                <Typography
-                  as="p"
-                  textSize="paragraph-lg"
-                  textWeight="medium"
-                  className="m-0 text-[var(--color-neutral-50)]"
-                >
-                  {ABOUT_CONTENT.paragraph1}{' '}
-                  <span className="font-bold">
-                    {ABOUT_CONTENT.paragraph1bold}
-                  </span>
-                </Typography>
-                <Typography
-                  as="p"
-                  textSize="paragraph-lg"
-                  textWeight="medium"
-                  className="mt-6 m-0 text-[var(--color-neutral-50)]"
-                >
-                  {ABOUT_CONTENT.paragraph2}{' '}
-                  <span className="font-bold">
-                    {ABOUT_CONTENT.paragraph2bold}
-                  </span>
-                </Typography>
-              </div>
+              <Typography
+                as="p"
+                textSize="paragraph-lg"
+                textWeight="medium"
+                className="mt-6 m-0 text-[var(--color-neutral-50)]"
+              >
+                {ABOUT_CONTENT.paragraph2}{' '}
+                <span className="font-bold">
+                  {ABOUT_CONTENT.paragraph2bold}
+                </span>
+              </Typography>
             </div>
           </div>
         </div>
@@ -682,6 +699,7 @@ export default function AboutStats() {
                 fill
                 sizes="287px"
                 className="object-contain"
+                loading="lazy"
               />
             </div>
 
@@ -701,6 +719,7 @@ export default function AboutStats() {
                 fill
                 sizes="149px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -720,6 +739,7 @@ export default function AboutStats() {
                 fill
                 sizes="117px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -739,6 +759,7 @@ export default function AboutStats() {
                 fill
                 sizes="69px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -758,6 +779,7 @@ export default function AboutStats() {
                 fill
                 sizes="103px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
           </div>
@@ -863,25 +885,6 @@ export default function AboutStats() {
               </Typography>
             </div>
 
-            {/* MOBILE: Right Column 2 */}
-            <div
-              className="absolute"
-              style={{
-                left: 839.21,
-                top: 249.97,
-                width: 438.31,
-                height: 356.24,
-              }}
-            >
-              <Image
-                src={assets.aboutColumn2}
-                alt=""
-                fill
-                sizes="551px"
-                className="object-contain object-left"
-              />
-            </div>
-
             {/* MOBILE: Lantern */}
             <div
               className="absolute"
@@ -898,25 +901,27 @@ export default function AboutStats() {
                 fill
                 sizes="127px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
-            {/* MOBILE: Rocky Edge */}
+            {/* MOBILE: Right Column 2 */}
             <div
               className="absolute"
               style={{
-                left: -100.07,
-                top: 418.96,
-                width: 1433.15,
-                height: 438.6,
+                left: 525,
+                top: 184.97,
+                width: 460,
+                height: 823.16,
               }}
             >
               <Image
-                src={assets.aboutRocks}
+                src={assets.aboutRocksMobile}
                 alt=""
                 fill
-                sizes="1800px"
+                sizes="460px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -936,6 +941,7 @@ export default function AboutStats() {
                 fill
                 sizes="176px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -955,6 +961,7 @@ export default function AboutStats() {
                 fill
                 sizes="87px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -974,6 +981,7 @@ export default function AboutStats() {
                 fill
                 sizes="149px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -993,6 +1001,7 @@ export default function AboutStats() {
                 fill
                 sizes="142px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1012,6 +1021,7 @@ export default function AboutStats() {
                 fill
                 sizes="88px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1031,6 +1041,7 @@ export default function AboutStats() {
                 fill
                 sizes="44px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1050,6 +1061,7 @@ export default function AboutStats() {
                 fill
                 sizes="139px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1069,6 +1081,7 @@ export default function AboutStats() {
                 fill
                 sizes="126px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1088,6 +1101,7 @@ export default function AboutStats() {
                 fill
                 sizes="137px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1107,6 +1121,7 @@ export default function AboutStats() {
                 fill
                 sizes="144px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1126,6 +1141,7 @@ export default function AboutStats() {
                 fill
                 sizes="148px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 

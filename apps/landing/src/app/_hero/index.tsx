@@ -119,7 +119,8 @@ export default function Hero() {
               src={assets.heroCloudLeft}
               alt=""
               fill
-              sizes="2094px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 1.454), 2094px"
               className="object-contain object-left"
             />
           </div>
@@ -138,7 +139,8 @@ export default function Hero() {
               src={assets.heroCloudRight}
               alt=""
               fill
-              sizes="1834px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 1.274), 1834px"
               className="object-contain"
             />
           </div>
@@ -157,7 +159,8 @@ export default function Hero() {
               src={assets.heroSpotlight}
               alt=""
               fill
-              sizes="1805px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 1.253), 1805px"
               className="object-contain"
             />
           </div>
@@ -176,7 +179,8 @@ export default function Hero() {
               src={assets.heroCnTower}
               alt=""
               fill
-              sizes="222px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 0.154), 222px"
               className="object-contain"
             />
           </div>
@@ -195,7 +199,8 @@ export default function Hero() {
               src={assets.heroMistRight}
               alt=""
               fill
-              sizes="2563px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 1.780), 2563px"
               className="object-contain"
             />
           </div>
@@ -214,7 +219,8 @@ export default function Hero() {
               src={assets.heroMistLeft}
               alt=""
               fill
-              sizes="2498px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 1.734), 2498px"
               className="object-contain"
             />
           </div>
@@ -234,6 +240,7 @@ export default function Hero() {
               alt=""
               width={344}
               height={406}
+              loading="lazy"
               className="block max-w-none size-full"
             />
           </div>
@@ -252,26 +259,8 @@ export default function Hero() {
               src={assets.heroCave}
               alt=""
               fill
-              sizes="803px"
-              className="object-contain"
-            />
-          </div>
-
-          {/* Cliff Right Fade (pink cliff) */}
-          <div
-            className="absolute"
-            style={{
-              left: 1773.85,
-              top: 1275.81,
-              width: 2261.3,
-              height: 2009.63,
-            }}
-          >
-            <Image
-              src={assets.heroCliffRightFade}
-              alt=""
-              fill
-              sizes="2262px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 0.557), 803px"
               className="object-contain"
             />
           </div>
@@ -290,26 +279,8 @@ export default function Hero() {
               src={assets.heroCliffRightBottom}
               alt=""
               fill
-              sizes="1671px"
-              className="object-contain"
-            />
-          </div>
-
-          {/* Cliff Left Fade */}
-          <div
-            className="absolute"
-            style={{
-              left: -441,
-              top: 1089.9,
-              width: 2095,
-              height: 1818,
-            }}
-          >
-            <Image
-              src={assets.heroCliffLeftFade}
-              alt=""
-              fill
-              sizes="2095px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 1.160), 1671px"
               className="object-contain"
             />
           </div>
@@ -328,7 +299,8 @@ export default function Hero() {
               src={assets.heroCliffLeft}
               alt=""
               fill
-              sizes="2146px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 1.490), 2146px"
               className="object-contain object-right"
             />
           </div>
@@ -347,7 +319,8 @@ export default function Hero() {
               src={assets.heroCliffRightTop}
               alt=""
               fill
-              sizes="1117px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 0.776), 1117px"
               className="object-contain"
             />
           </div>
@@ -367,6 +340,7 @@ export default function Hero() {
               alt=""
               width={64}
               height={77}
+              loading="lazy"
               className="block max-w-none size-full"
             />
           </div>
@@ -386,6 +360,7 @@ export default function Hero() {
               alt=""
               width={52}
               height={102}
+              loading="lazy"
               className="block max-w-none size-full"
             />
           </div>
@@ -405,6 +380,7 @@ export default function Hero() {
               alt=""
               width={141}
               height={105}
+              loading="lazy"
               className="block max-w-none size-full"
             />
           </div>
@@ -424,6 +400,7 @@ export default function Hero() {
               alt=""
               width={171}
               height={127}
+              loading="lazy"
               className="block max-w-none size-full"
             />
           </div>
@@ -443,14 +420,15 @@ export default function Hero() {
               alt=""
               width={143}
               height={107}
+              loading="lazy"
               className="block max-w-none size-full"
             />
           </div>
 
-          {/* Static Radish - Animations later */}
-          <HeroRadish />
+          {/* Radish Animations */}
+          <HeroRadish/>
 
-          {/* Butterflies - frame cycling + bounce + pulse */}
+          {/* Butterflies Animation - frame cycling + bounce + pulse*/}
           <div
             className="absolute animate-subtle-bounce animate-pulse"
             style={{
@@ -482,7 +460,8 @@ export default function Hero() {
               src={assets.heroLightLeft1}
               alt=""
               fill
-              sizes="856px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 0.594), 856px"
               className="object-contain"
             />
           </div>
@@ -502,7 +481,8 @@ export default function Hero() {
               src={assets.heroLightLeft2}
               alt=""
               fill
-              sizes="774px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 0.538), 774px"
               className="object-contain"
             />
           </div>
@@ -522,7 +502,8 @@ export default function Hero() {
               src={assets.heroLightRight}
               alt=""
               fill
-              sizes="760px"
+              loading="lazy"
+              sizes="(max-width: 1440px) calc(100vw * 0.528), 760px"
               className="object-contain"
             />
           </div>
@@ -677,6 +658,7 @@ export default function Hero() {
             alt=""
             width={537}
             height={412}
+            loading="lazy"
             className="object-contain"
           />
         </div>
