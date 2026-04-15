@@ -80,8 +80,34 @@ export default function Hero() {
     <Section
       id="hero"
       backgroundColor="#12102F"
-      className="z-20 !min-h-0 !py-0"
+      className="z-20 !min-h-0 !py-0 relative"
     >
+      {/* Mobile clouds — behind mobile artboard PNG (z:auto, paints before z-[1]) */}
+      <div className="block md:hidden absolute left-0 w-full" style={{ bottom: 'calc(-160px * 100vw / 320px)' }}>
+        <Image
+          src={assets.heroMobileClouds}
+          alt=""
+          width={402}
+          height={1140}
+          priority
+          className="w-full h-auto"
+          sizes="100vw"
+        />
+      </div>
+
+      {/* Mobile background — replaces individual artboard layers below 768px */}
+      <div className="block md:hidden absolute left-0 w-full z-[1]" style={{ bottom: 'calc(-40px * 100vw / 320px)' }}>
+        <Image
+          src={assets.heroMobileArtboard}
+          alt=""
+          width={402}
+          height={1322}
+          priority
+          className="w-full h-auto"
+          sizes="100vw"
+        />
+      </div>
+
       <div
         style={
           {
@@ -107,7 +133,7 @@ export default function Hero() {
 
           {/* Cloud Left */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 465.14,
               top: 464.9,
@@ -127,7 +153,7 @@ export default function Hero() {
 
           {/* Cloud Right */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 1153.66,
               top: 489.9,
@@ -147,7 +173,7 @@ export default function Hero() {
 
           {/* Spotlight */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 416.42,
               top: 80.81,
@@ -167,7 +193,7 @@ export default function Hero() {
 
           {/* CN Tower */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 1706.66,
               top: 1023.9,
@@ -187,47 +213,27 @@ export default function Hero() {
 
           {/* Mist Right */}
           <div
-            className="absolute"
-            style={{
-              left: 589,
-              top: 1058.22,
-              width: 2562.08,
-              height: 428.58,
-            }}
-          >
-            <Image
-              src={assets.heroMistRight}
-              alt=""
-              fill
-              loading="lazy"
-              sizes="(max-width: 1440px) calc(100vw * 1.780), 2563px"
-              className="object-contain"
-            />
-          </div>
-
-          {/* Mist Left */}
-          <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 279.42,
-              top: 1023.79,
-              width: 2497.7,
-              height: 456.02,
+              top: 1020.79,
+              width: 2872.66,
+              height: 466.02,
             }}
           >
             <Image
-              src={assets.heroMistLeft}
+              src={assets.heroMist}
               alt=""
               fill
               loading="lazy"
-              sizes="(max-width: 1440px) calc(100vw * 1.734), 2498px"
+              sizes="(max-width: 1440px) calc(100vw * 1.780), 2872px"
               className="object-contain"
             />
           </div>
 
           {/* Trees */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 1912.66,
               top: 903.9,
@@ -247,7 +253,7 @@ export default function Hero() {
 
           {/* Cave */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 1832.66,
               top: 1052.4,
@@ -267,7 +273,7 @@ export default function Hero() {
 
           {/* Cliff Right Bottom */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 1480.66, // left - 5790, but should be -5349?
               top: 1378.9,
@@ -287,7 +293,7 @@ export default function Hero() {
 
           {/* Cliff Left */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 0,
               top: 1090,
@@ -307,7 +313,7 @@ export default function Hero() {
 
           {/* Cliff Right Top */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 1928.66,
               top: 1270.9,
@@ -327,7 +333,7 @@ export default function Hero() {
 
           {/* Mushroom 1 */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 2256.66,
               top: 1232.9,
@@ -347,7 +353,7 @@ export default function Hero() {
 
           {/* Mushroom 2 */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 1932.66,
               top: 1237,
@@ -367,7 +373,7 @@ export default function Hero() {
 
           {/* Left Grass Shadow */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 938.7,
               top: 1066.58,
@@ -387,7 +393,7 @@ export default function Hero() {
 
           {/* Left Grass*/}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 967.66,
               top: 1066.9,
@@ -407,7 +413,7 @@ export default function Hero() {
 
           {/* Right Grass */}
           <div
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: 2185.08,
               top: 984.56,
@@ -425,7 +431,7 @@ export default function Hero() {
             />
           </div>
 
-          {/* Radish Animations */}
+          {/* Radish Animation */}
           <HeroRadish/>
 
           {/* Butterflies Animation - frame cycling + bounce + pulse*/}
@@ -442,77 +448,35 @@ export default function Hero() {
           </div>
 
           {/* ============================================================
-            LAYER 2 (z-10): Overlay - Lights (0.6 opacity)
+            LAYER 2 (z-10): Overlay - Lights (0.8 opacity)
             ============================================================ */}
-
-          {/* Light Left 1 */}
+          {/* LIGHT */}
           <div
-            className="absolute z-10 pointer-events-none"
+            className="absolute hidden md:block z-10 pointer-events-none"
             style={{
               left: 735.4,
               top: 35.1,
-              width: 855.33,
-              height: 844.55,
-              opacity: 0.6,
+              width: 1718.28,
+              height: 2095.1,
+              opacity: 0.8,
             }}
           >
             <Image
-              src={assets.heroLightLeft1}
+              src={assets.heroLights}
               alt=""
               fill
               loading="lazy"
-              sizes="(max-width: 1440px) calc(100vw * 0.594), 856px"
-              className="object-contain"
-            />
-          </div>
-
-          {/* Light Left 2 */}
-          <div
-            className="absolute z-10 pointer-events-none"
-            style={{
-              left: 905,
-              top: -42.3,
-              width: 774,
-              height: 1732.39,
-              opacity: 0.6,
-            }}
-          >
-            <Image
-              src={assets.heroLightLeft2}
-              alt=""
-              fill
-              loading="lazy"
-              sizes="(max-width: 1440px) calc(100vw * 0.538), 774px"
-              className="object-contain"
-            />
-          </div>
-
-          {/* Light Right */}
-          <div
-            className="absolute z-10 pointer-events-none"
-            style={{
-              left: 1700,
-              top: 228.9,
-              width: 759.68,
-              height: 669.15,
-              opacity: 0.6,
-            }}
-          >
-            <Image
-              src={assets.heroLightRight}
-              alt=""
-              fill
-              loading="lazy"
-              sizes="(max-width: 1440px) calc(100vw * 0.528), 760px"
+              sizes="(max-width: 1440px) calc(100vw * 0.594), 1718px"
               className="object-contain"
             />
           </div>
         </div>
       </div>
+
       {/* ============================================================
-          LAYER 3: Content Elements (no z index?)
+          LAYER 3: Content Elements
+          Responsive hero UI for all aspect ratios
           ============================================================ */}
-      {/* Render fixed-position hero UI for both landscape and in-between aspect ratios */}
       <div className="layer-content z-50">
         <div className="absolute left-[59.34px] top-0 w-[977px] h-[631px] pointer-events-auto [@media(max-width:1095.68px)]:left-1/2 [@media(max-width:1095.68px)]:-translate-x-1/2 [@media(max-width:1095.68px)]:w-[calc(100vw-118.68px)] [@media(orientation:portrait)]:top-0 [@media(orientation:portrait)]:h-screen [@media(orientation:portrait)]:flex [@media(orientation:portrait)]:items-center">
           <div className="absolute left-[66px] top-[319px] w-[911px] flex flex-col gap-8 [@media(max-width:1095.68px)]:w-[calc(100%-66px)] [@media(max-width:713.68px)]:w-full [@media(max-width:713.68px)]:max-w-[406px] [@media(max-width:713.68px)]:left-1/2 [@media(max-width:713.68px)]:-translate-x-1/2 [@media(orientation:portrait)]:relative [@media(orientation:portrait)]:top-auto [@media(orientation:portrait)]:w-full">
@@ -603,7 +567,7 @@ export default function Hero() {
                     label="Email address"
                     hideLabel
                     className="w-[min(100%,406px)] shrink-0"
-                    inputBoxClassName="box-glow"
+                    inputBoxClassName="box-glow self-stretch"
                     controlled={{
                       value: email,
                       onValueChange: setEmail,
@@ -622,7 +586,7 @@ export default function Hero() {
                     type="submit"
                     kind="primary"
                     aria-label="Sign up for updates"
-                    className="box-glow [@media(max-width:713.68px)]:w-[min(100%,406px)]"
+                    className="box-glow shrink-0 [@media(max-width:713.68px)]:w-[min(100%,406px)]"
                   >
                     {FORM_CONTENT.buttonText}
                   </Button>
@@ -639,6 +603,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
       {/* Leaves — anchored to top-right corner, scales with artboard below 1440px */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div

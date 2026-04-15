@@ -1,33 +1,29 @@
-import heroButterflies1 from '../../assets/hero_butterflies-f1.png';
-import heroButterflies2 from '../../assets/hero_butterflies-f2.png';
-import heroButterflies3 from '../../assets/hero_butterflies-f3.png';
-import heroButterflies4 from '../../assets/hero_butterflies-f4.png';
-import heroButterflies5 from '../../assets/hero_butterflies-f5.png';
-import heroCave from '../../assets/hero_cave.svg';
-import heroCliffLeft from '../../assets/hero_cliff-left.svg';
-import heroCliffLeftFade from '../../assets/hero_cliff-left-fade.svg';
-import heroCliffRightBottom from '../../assets/hero_cliff-right-bottom.svg';
-import heroCliffRightFade from '../../assets/hero_cliff-right-fade.svg';
-import heroCliffRightTop from '../../assets/hero_cliff-right-top.svg';
-import heroCloudLeft from '../../assets/hero_cloud-left.svg';
-import heroCloudRight from '../../assets/hero_cloud-right.svg';
-import heroCnTower from '../../assets/hero_cn-tower.svg';
-import heroGrass from '../../assets/hero_grass.png';
-import heroGrassShadow from '../../assets/hero_grass-shadow.png';
-import heroLeaf from '../../assets/hero_leaf.svg';
-import heroLeaves from '../../assets/hero_leaves.png';
-import heroLightLeft1 from '../../assets/hero_light-left-1.svg';
-import heroLightLeft2 from '../../assets/hero_light-left-2.svg';
-import heroLightRight from '../../assets/hero_light-right.svg';
-import heroMistLeft from '../../assets/hero_mist-left.svg';
-import heroMistRight from '../../assets/hero_mist-right.svg';
-import heroMushroom1 from '../../assets/hero_mushroom-1.png';
-import heroMushroom2 from '../../assets/hero_mushroom-2.png';
-import heroRadishHide from '../../assets/hero_radish-hide.png';
-import heroRadishGif from '../../assets/hero_radish-jump.gif';
-import heroRadishStand from '../../assets/hero_radish-stand.svg';
-import heroSpotlight from '../../assets/hero_spotlight.svg';
-import heroTrees from '../../assets/hero_trees.svg';
+import heroButterflies1 from '../../assets/hero/hero_butterflies-f1.png';
+import heroButterflies2 from '../../assets/hero/hero_butterflies-f2.png';
+import heroButterflies3 from '../../assets/hero/hero_butterflies-f3.png';
+import heroButterflies4 from '../../assets/hero/hero_butterflies-f4.png';
+import heroButterflies5 from '../../assets/hero/hero_butterflies-f5.png';
+import heroCave from '../../assets/hero/hero_cave.svg';
+import heroCliffLeft from '../../assets/hero/hero_cliff-left.svg';
+import heroCliffRightBottom from '../../assets/hero/hero_cliff-right-bottom.svg';
+import heroCliffRightTop from '../../assets/hero/hero_cliff-right-top.svg';
+import heroCloudLeft from '../../assets/hero/hero_cloud-left.svg';
+import heroCloudRight from '../../assets/hero/hero_cloud-right.svg';
+import heroCnTower from '../../assets/hero/hero_cn-tower.svg';
+import heroGrass from '../../assets/hero/hero_grass.png';
+import heroGrassShadow from '../../assets/hero/hero_grass-shadow.png';
+import heroLeaves from '../../assets/hero/hero_leaves.png';
+import heroLights from '../../assets/hero/hero_lights.svg';
+import heroMist from '../../assets/hero/hero_mist.svg';
+import heroMobileArtboard from '../../assets/hero/hero_mobileartboard.png';
+import heroMobileClouds from '../../assets/hero/hero_mobileclouds.png';
+import heroMushroom1 from '../../assets/hero/hero_mushroom-1.png';
+import heroMushroom2 from '../../assets/hero/hero_mushroom-2.png';
+import heroRadishHide from '../../assets/hero/hero_radish-hide.png';
+import heroRadishGif from '../../assets/hero/hero_radish-jump.gif';
+import heroRadishStand from '../../assets/hero/hero_radish-stand.svg';
+import heroSpotlight from '../../assets/hero/hero_spotlight.svg';
+import heroTrees from '../../assets/hero/hero_trees.svg';
 import logo from '../../assets/Logo.svg';
 
 export const assets = {
@@ -39,22 +35,18 @@ export const assets = {
   heroButterflies5,
   heroCave,
   heroCliffLeft,
-  heroCliffLeftFade,
   heroCliffRightTop,
   heroCliffRightBottom,
-  heroCliffRightFade,
   heroCloudLeft,
   heroCloudRight,
   heroCnTower,
   heroGrass,
   heroGrassShadow,
-  heroLeaf,
   heroLeaves,
-  heroLightLeft1,
-  heroLightLeft2,
-  heroLightRight,
-  heroMistLeft,
-  heroMistRight,
+  heroLights,
+  heroMist,
+  heroMobileArtboard,
+  heroMobileClouds,
   heroMushroom1,
   heroMushroom2,
   heroRadishHide,
