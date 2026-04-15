@@ -104,7 +104,7 @@ export default function AboutStats() {
         <div
           style={
             {
-              height: 'calc(2936.6px * var(--about-scale))',
+              height: 'clamp(651.725px, 203.931vw, 2936.6px)',
               transformOrigin: 'center 0px',
             } as React.CSSProperties
           }
@@ -571,8 +571,8 @@ export default function AboutStats() {
         <div
           className="pointer-events-none absolute z-[15] w-[402.88] text-center"
           style={{
-            left: `calc(50% + (${STATS_HEADER_FRAME.left}px - 1636px) * var(--about-scale))`,
-            top: `calc(${STATS_HEADER_FRAME.top}px * var(--about-scale))`,
+            left: 'calc(50% + clamp(11.352px, 3.551vw, 51.136px))',
+            top: 'clamp(386.838px, 120.980vw, 1742.514px)',
             transformOrigin: 'top left',
             transform: 'scale(var(--about-scale))',
           }}
@@ -596,8 +596,8 @@ export default function AboutStats() {
         <div
           className="pointer-events-auto absolute z-[15] w-[850.3px]"
           style={{
-            left: 'calc(50% - 586.67px * var(--about-scale))',
-            top: 'calc(550.4px * var(--about-scale))',
+            left: 'calc(50% - clamp(130.241px, 40.741vw, 586.670px))',
+            top: 'clamp(122.189px, 38.222vw, 550.400px)',
             transformOrigin: 'top left',
             transform: 'scale(var(--about-scale))',
           }}
@@ -669,7 +669,7 @@ export default function AboutStats() {
         <div
           style={
             {
-              height: `calc(${MOBILE_TOP_H}px * var(--about-scale))`,
+              height: 'clamp(153.125px, 54.688vw, 350px)',
               transformOrigin: 'center 0px',
             } as React.CSSProperties
           }
@@ -792,7 +792,7 @@ export default function AboutStats() {
         <div className="pointer-events-auto relative z-[15] flex flex-col items-center gap-8 text-center w-full">
           <div
             style={{
-              maxWidth: 'min(calc(260px * var(--about-scale)), 400px)',
+              maxWidth: 'clamp(227.500px, 81.25vw, 400px)',
               width: '100%',
             }}
           >
@@ -849,7 +849,7 @@ export default function AboutStats() {
         <div
           style={
             {
-              height: `calc(${MOBILE_BOTTOM_H}px * var(--about-scale))`,
+              height: 'clamp(630.998px, 225.356vw, 1442.280px)',
               transformOrigin: 'center 0px',
             } as React.CSSProperties
           }

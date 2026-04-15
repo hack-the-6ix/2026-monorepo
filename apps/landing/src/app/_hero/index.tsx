@@ -83,7 +83,7 @@ export default function Hero() {
       className="z-20 !min-h-0 !py-0 relative"
     >
       {/* Mobile clouds — behind mobile artboard PNG (z:auto, paints before z-[1]) */}
-      <div className="block md:hidden absolute left-0 w-full" style={{ bottom: 'calc(-160px * 100vw / 320px)' }}>
+      <div className="block md:hidden absolute left-0 w-full" style={{ bottom: '-50vw' }}>
         <Image
           src={assets.heroMobileClouds}
           alt=""
@@ -96,7 +96,7 @@ export default function Hero() {
       </div>
 
       {/* Mobile background — replaces individual artboard layers below 768px */}
-      <div className="block md:hidden absolute left-0 w-full z-[1]" style={{ bottom: 'calc(-40px * 100vw / 320px)' }}>
+      <div className="block md:hidden absolute left-0 w-full z-[1]" style={{ bottom: '-12.5vw' }}>
         <Image
           src={assets.heroMobileArtboard}
           alt=""
@@ -112,7 +112,7 @@ export default function Hero() {
         style={
           {
             '--hero-scale': 'clamp(0.222, calc(100vw / 1440px), 1)',
-            height: 'calc(675px + 670.4px * var(--hero-scale))',
+            height: 'calc(675px + clamp(148.83px, 46.556vw, 670.4px))',
           } as React.CSSProperties
         }
         className="max-lg:scale-[var(--hero-scale)] max-lg:[transform-origin:center_675px] z-40"
@@ -612,7 +612,7 @@ export default function Hero() {
             {
               '--hero-scale': 'clamp(0.222, calc(100vw / 1440px), 1)',
               top: -116.1,
-              right: 'calc(var(--hero-scale) * -48.86px)',
+              right: 'clamp(-48.86px, -3.393vw, -10.85px)',
               width: 537.2,
               height: 412.1,
             } as React.CSSProperties
