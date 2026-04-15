@@ -83,7 +83,10 @@ export default function Hero() {
       className="z-20 !min-h-0 !py-0 relative"
     >
       {/* Mobile clouds — behind mobile artboard PNG (z:auto, paints before z-[1]) */}
-      <div className="block md:hidden absolute left-0 w-full" style={{ bottom: '-50vw' }}>
+      <div
+        className="block md:hidden absolute left-0 w-full"
+        style={{ bottom: '-50vw' }}
+      >
         <Image
           src={assets.heroMobileClouds}
           alt=""
@@ -96,7 +99,10 @@ export default function Hero() {
       </div>
 
       {/* Mobile background — replaces individual artboard layers below 768px */}
-      <div className="block md:hidden absolute left-0 w-full z-[1]" style={{ bottom: '-12.5vw' }}>
+      <div
+        className="block md:hidden absolute left-0 w-full z-[1]"
+        style={{ bottom: '-12.5vw' }}
+      >
         <Image
           src={assets.heroMobileArtboard}
           alt=""
@@ -432,7 +438,7 @@ export default function Hero() {
           </div>
 
           {/* Radish Animation */}
-          <HeroRadish/>
+          <HeroRadish />
 
           {/* Butterflies Animation - frame cycling + bounce + pulse*/}
           <div
@@ -607,23 +613,22 @@ export default function Hero() {
       {/* Leaves — anchored to top-right corner, scales with artboard below 1440px */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
-          className="absolute z-60 pointer-events-none max-lg:scale-[var(--hero-scale)] max-lg:[transform-origin:right_116.1px]"
+          className="absolute z-60 pointer-events-none"
           style={
             {
-              '--hero-scale': 'clamp(0.222, calc(100vw / 1440px), 1)',
-              top: -116.1,
+              top: 'clamp(-116.1px, -8.063vw, -25.774px)',
               right: 'clamp(-48.86px, -3.393vw, -10.85px)',
-              width: 537.2,
-              height: 412.1,
+              width: 'clamp(119.259px, 37.306vw, 537.2px)',
+              height: 'clamp(91.486px, 28.618vw, 412.1px)',
             } as React.CSSProperties
           }
         >
           <Image
             src={assets.heroLeaves}
             alt=""
-            width={537}
-            height={412}
+            fill
             loading="lazy"
+            sizes="(max-width: 1440px) 37.306vw, 537px"
             className="object-contain"
           />
         </div>

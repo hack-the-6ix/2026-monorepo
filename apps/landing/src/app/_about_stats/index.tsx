@@ -26,16 +26,6 @@ const MOBILE_TOP_H = 175;
 const MOBILE_SPLIT_Y = 453.08;
 const MOBILE_BOTTOM_H = MOBILE_ARTBOARD_H - MOBILE_SPLIT_Y;
 
-const FIGMA_OX = 5814.438;
-const FIGMA_OY = 2165.399;
-
-const STATS_HEADER_FRAME = {
-  left: 7501.57421875 - FIGMA_OX,
-  top: 3907.9130859375 - FIGMA_OY,
-  width: 402.883056640625,
-  height: 52,
-} as const;
-
 function GemStat({ num, stat }: { num: string; stat: string }) {
   return (
     <div className="flex w-[169.171px] flex-col items-center text-center">
