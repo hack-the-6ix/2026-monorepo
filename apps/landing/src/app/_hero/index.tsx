@@ -7,7 +7,6 @@ import Section from '../../components/Section';
 import { EVENT_INFO, FORM_CONTENT, HERO_CONTENT } from '../_hero/constants';
 import { assets } from './assets';
 import Banner from './Banner';
-import { Butterflies } from './Butterflies';
 import HeroRadish from './HeroRadish';
 
 const ARTBOARD_W = 4035;
@@ -80,12 +79,12 @@ export default function Hero() {
     <Section
       id="hero"
       backgroundColor="#12102F"
-      className="z-20 !min-h-0 !py-0 relative"
+      className="!min-h-0 !py-0 relative"
     >
       {/* Mobile clouds — behind mobile artboard PNG (z:auto, paints before z-[1]) */}
       <div
-        className="block md:hidden absolute left-0 w-full"
-        style={{ bottom: '-50vw' }}
+        className="block md:hidden absolute left-0 w-full z-20 "
+        style={{ bottom: '-50vw', contain: 'paint' }}
       >
         <Image
           src={assets.heroMobileClouds}
@@ -100,7 +99,7 @@ export default function Hero() {
 
       {/* Mobile background — replaces individual artboard layers below 768px */}
       <div
-        className="block md:hidden absolute left-0 w-full z-[1]"
+        className="block md:hidden absolute left-0 w-full z-20 "
         style={{ bottom: '-12.5vw' }}
       >
         <Image
@@ -124,7 +123,7 @@ export default function Hero() {
         className="max-lg:scale-[var(--hero-scale)] max-lg:[transform-origin:center_675px] z-40"
       >
         <div
-          className="relative"
+          className="relative animate-fade-in"
           style={{
             width: ARTBOARD_W,
             minHeight: ARTBOARD_H,
@@ -271,7 +270,7 @@ export default function Hero() {
               src={assets.heroCave}
               alt=""
               fill
-              loading="lazy"
+              priority
               sizes="(max-width: 1440px) calc(100vw * 0.557), 803px"
               className="object-contain"
             />
@@ -291,7 +290,7 @@ export default function Hero() {
               src={assets.heroCliffRightBottom}
               alt=""
               fill
-              loading="lazy"
+              priority
               sizes="(max-width: 1440px) calc(100vw * 1.160), 1671px"
               className="object-contain"
             />
@@ -311,7 +310,7 @@ export default function Hero() {
               src={assets.heroCliffLeft}
               alt=""
               fill
-              loading="lazy"
+              priority
               sizes="(max-width: 1440px) calc(100vw * 1.490), 2146px"
               className="object-contain object-right"
             />
@@ -331,7 +330,7 @@ export default function Hero() {
               src={assets.heroCliffRightTop}
               alt=""
               fill
-              loading="lazy"
+              priority
               sizes="(max-width: 1440px) calc(100vw * 0.776), 1117px"
               className="object-contain"
             />
@@ -441,16 +440,35 @@ export default function Hero() {
           <HeroRadish />
 
           {/* Butterflies Animation - frame cycling + bounce + pulse*/}
-          <div
-            className="absolute animate-subtle-bounce animate-pulse"
-            style={{
-              left: 1868.65,
-              top: 687.9,
-              width: 213.92,
-              height: 533.08,
-            }}
-          >
-            <Butterflies />
+          <div className="absolute left-455 top-180">
+            <Image
+              src={assets.heroButterfly1}
+              alt=""
+              width={35}
+              height={35}
+              className="absolute left-16 top-0 inset-0 block max-w-none animate-subtle-bounce"
+            />
+            <Image
+              src={assets.heroButterfly1}
+              alt=""
+              width={35}
+              height={35}
+              className="absolute left-0 top-50 inset-0 block max-w-none animate-subtle-bounce3"
+            />
+            <Image
+              src={assets.heroButterfly2}
+              alt=""
+              width={35}
+              height={35}
+              className="absolute left-43 top-30 inset-0 block max-w-none animate-subtle-bounce2"
+            />
+            <Image
+              src={assets.heroButterfly2}
+              alt=""
+              width={35}
+              height={35}
+              className="absolute left-50 top-120 inset-0 block max-w-none animate-subtle-bounce4"
+            />
           </div>
 
           {/* ============================================================

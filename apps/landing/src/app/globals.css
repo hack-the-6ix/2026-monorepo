@@ -30,17 +30,33 @@
   --animate-image-glow: image-glow 5s ease-in-out infinite;
 
   --animate-subtle-bounce: subtle-bounce 3s ease-in-out infinite;
+  --animate-subtle-bounce2: subtle-bounce 5s ease-in-out infinite;
+  --animate-subtle-bounce3: subtle-bounce2 4s ease-in-out infinite;
+  --animate-subtle-bounce4: subtle-bounce2 3s ease-in-out infinite;
   --animate-wiggle: wiggle 2s ease-in-out infinite;
 
   --animate-dangle: dangle 3s ease-in-out;
   --animate-swing: swing 3s ease-in-out;
 
-  --animate-menu-reveal: menu-reveal 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  --animate-menu-reveal: menu-reveal 0.9s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   --animate-menu-hide: menu-hide 0.6s ease-in forwards;
+
+  --animate-fade-in: fade-in 2s ease-in-out forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes image-glow {
-  0%, 100% {
+  0%,
+  100% {
     filter: drop-shadow(0 0 5px rgba(246, 189, 85, 0.5));
     opacity: 0.9;
   }
@@ -99,6 +115,16 @@
   }
 }
 
+@keyframes subtle-bounce2 {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
 @keyframes dangle {
   0% {
     transform: rotate(0deg);
@@ -124,14 +150,15 @@
 }
 
 @keyframes wiggle {
-    0%,
-    100% {
-      transform: rotate(-1deg);
-    }
-    50% {
-      transform: rotate(1deg);
-    }
+  0%,
+  100% {
+    transform: rotate(-1deg);
   }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
 @keyframes swing {
   0% {
     transform: rotate(0deg);

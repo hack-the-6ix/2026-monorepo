@@ -129,7 +129,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.740), 1066px"
-                className="object-contain"
+                className="object-contain animate-fade-in"
                 loading="lazy"
               />
             </div>

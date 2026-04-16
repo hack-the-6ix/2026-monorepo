@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
+import { useEffectEvent, useLayoutEffect, useRef, useState } from 'react';
 import { Typography } from '@hackthe6ix/ui';
 
 export interface BannerProps {
@@ -10,6 +10,11 @@ export interface BannerProps {
 export default function Banner({ words }: BannerProps) {
   const wordsRef = useRef<(HTMLLIElement | null)[]>([]);
   const containerRef = useRef<HTMLUListElement>(null);
+  const [isReady, setIsReady] = useState(false);
+
+  const updateReady = useEffectEvent((ready: boolean) => {
+    setIsReady(ready);
+  });
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -27,24 +32,29 @@ export default function Banner({ words }: BannerProps) {
       container.style.height = `${ref.offsetHeight}px`;
       container.scrollTo({
         top: ref.offsetTop - container.offsetTop,
-        behavior: idx === 0 ? 'instant' : 'smooth',
+        behavior: idx === 0 ? 'auto' : 'smooth',
       });
-      const nextIdx = (idx + 1) % items.length;
 
-      timeout = window.setTimeout(() => action(nextIdx), idx === 0 ? 0 : 2200);
+      timeout = window.setTimeout(
+        () => action((idx + 1) % items.length),
+        idx ? 2300 : 0,
+      );
     };
-    action(0);
+
+    updateReady(true);
+    console.log(isReady);
+    action(items.length - 1);
 
     return () => {
       window.clearTimeout(timeout);
     };
-  }, [words]);
+  }, []);
 
   return (
     <Typography
       ref={containerRef}
       style={{ opacity: 0, transition: 'opacity 0.3s' }}
-      className="overflow-y-hidden list-none inline-block align-top p-5 -mt-2 -ml-5 opacity-0 transition-opacity"
+      className="overflow-y-hidden list-none inline-block align-top"
       textColor="text-warning-400"
       textSize="subtitle-lg"
       textWeight="bold"
@@ -56,7 +66,7 @@ export default function Banner({ words }: BannerProps) {
             wordsRef.current[i] = el;
           }}
           key={i}
-          className="text-glow py-2"
+          className={isReady ? 'visible text-glow-subtle ' : 'hidden'}
         >
           {word}
         </li>
@@ -66,7 +76,7 @@ export default function Banner({ words }: BannerProps) {
           wordsRef.current[words.length] = el;
         }}
         aria-hidden
-        className="text-glow py-2"
+        className="text-glow-subtle"
       >
         {words[0]}
       </li>

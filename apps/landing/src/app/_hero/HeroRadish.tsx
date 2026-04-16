@@ -24,28 +24,19 @@ export default function HeroRadish() {
   const handleRadishClick = () => {
     if (radishState !== 'hidden') return;
     setRadishState('jumping');
-    setTimeout(() => setRadishState('standing'), 500);
-    console.log(radishState);
+    setTimeout(() => setRadishState('standing'), 200);
   };
-
-  const containerClasses = `
-    absolute z-[100] origin-bottom transition-all duration-300 left-[2080.66px] top-[1286.9px] will-change-transform parallax-layer
-    ${isScrolledPast ? 'min-[1050px]:opacity-0 min-[1050px]:pointer-events-none' : 'opacity-100'}
-    ${
-      radishState === 'hidden' ?
-        'w-[122px] h-[195.06px] translate-y-0 cursor-pointer'
-      : `w-[140px] h-[240px] ${radishState === 'standing' ? '-translate-y-[150px]' : '-translate-y-[166px]'}`
-    }
-    `;
 
   return (
     <div
-      className={containerClasses}
+      className={`
+        absolute z-100 left-[2080.66px] top-[1286.9px] will-change-transform
+        w-125 h-125 origin-bottom-left
+        transition-all duration-500 cubic-bezier(0.34, 1.56, 0.64, 1)
+        ${isScrolledPast ? 'opacity-0 pointer-events-none' : 'opacity-100'}
+        ${radishState === 'hidden' ? 'cursor-pointer -translate-y-82.5 scale-25' : '-translate-x-20 -translate-y-130 scale-100'}
+      `}
       onClick={handleRadishClick}
-      style={{
-        animationName: 'parallax-right',
-        animationDuration: '1s',
-      }}
     >
       <Image
         src={assets.heroRadishHide}
@@ -59,18 +50,11 @@ export default function HeroRadish() {
       <Image
         src={assets.heroRadishGif}
         alt=""
-        fill
-        className={`absolute inset-0 object-contain scale-200 transition-opacity duration-200
-          ${radishState === 'jumping' ? 'visible' : 'hidden'}`}
+        width={300}
+        height={1000}
+        className={`absolute inset-0 object-contain transition-opacity duration-100
+          ${radishState !== 'hidden' ? 'visible' : 'hidden'} ${radishState === 'standing' ? 'animate-wiggle origin-bottom' : ''}`}
         unoptimized
-      />
-
-      <Image
-        src={assets.heroRadishStand}
-        alt="radish stand"
-        width={200}
-        height={300}
-        className={`absolute inset-0 block max-w-none size-full z-10 animate-wiggle origin-bottom ${radishState === 'standing' ? 'visible' : 'hidden'}`}
       />
     </div>
   );

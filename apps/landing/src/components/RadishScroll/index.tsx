@@ -30,18 +30,18 @@ export default function RadishScroll() {
 
   return (
     <div
-      className="fixed pointer-events-none transition-opacity duration-500 ease-out will-change-transform"
+      className="animate-fade-in fixed pointer-events-none transition-opacity duration-500 ease-out will-change-transform"
       style={{
         zIndex: 20,
         bottom: '20vh',
-        visibility: scrollY > windowHeight * 0.5 ? 'visible' : 'hidden',
+        visibility: scrollY > windowHeight * 0.6 ? 'visible' : 'hidden',
         left: '110%',
         width: '140px',
         height: '240px',
         transform: `translate3d(calc(-110% + ${zigZag}vw), 0, 0)`,
       }}
     >
-      <div className="w-full h-full animate-subtle-bounce will-change-transform">
+      <div className="w-full h-full will-change-transform">
         <div
           className="w-full h-full origin-center"
           style={{ transform: `rotate(${tilt}deg)` }}

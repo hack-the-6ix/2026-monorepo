@@ -1,8 +1,5 @@
-import heroButterflies1 from '../../assets/hero/hero_butterflies-f1.png';
-import heroButterflies2 from '../../assets/hero/hero_butterflies-f2.png';
-import heroButterflies3 from '../../assets/hero/hero_butterflies-f3.png';
-import heroButterflies4 from '../../assets/hero/hero_butterflies-f4.png';
-import heroButterflies5 from '../../assets/hero/hero_butterflies-f5.png';
+import heroButterfly1 from '../../assets/hero/butterfly1.png';
+import heroButterfly2 from '../../assets/hero/butterfly2.png';
 import heroCave from '../../assets/hero/hero_cave.svg';
 import heroCliffLeft from '../../assets/hero/hero_cliff-left.svg';
 import heroCliffRightBottom from '../../assets/hero/hero_cliff-right-bottom.svg';
@@ -28,11 +25,8 @@ import logo from '../../assets/Logo.svg';
 
 export const assets = {
   logo,
-  heroButterflies1,
-  heroButterflies2,
-  heroButterflies3,
-  heroButterflies4,
-  heroButterflies5,
+  heroButterfly1,
+  heroButterfly2,
   heroCave,
   heroCliffLeft,
   heroCliffRightTop,
@@ -55,11 +49,3 @@ export const assets = {
   heroRadishGif,
   heroRadishStand,
 };
-
-export const butterfliesFrames = [
-  heroButterflies1,
-  heroButterflies2,
-  heroButterflies3,
-  heroButterflies4,
-  heroButterflies5,
-];
