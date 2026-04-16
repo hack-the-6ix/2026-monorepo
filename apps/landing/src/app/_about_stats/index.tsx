@@ -26,16 +26,6 @@ const MOBILE_TOP_H = 175;
 const MOBILE_SPLIT_Y = 453.08;
 const MOBILE_BOTTOM_H = MOBILE_ARTBOARD_H - MOBILE_SPLIT_Y;
 
-const FIGMA_OX = 5814.438;
-const FIGMA_OY = 2165.399;
-
-const STATS_HEADER_FRAME = {
-  left: 7501.57421875 - FIGMA_OX,
-  top: 3907.9130859375 - FIGMA_OY,
-  width: 402.883056640625,
-  height: 52,
-} as const;
-
 function GemStat({ num, stat }: { num: string; stat: string }) {
   return (
     <div className="flex w-[169.171px] flex-col items-center text-center">
@@ -90,7 +80,7 @@ export default function AboutStats() {
       className="!min-h-0 !py-0"
     >
       {/* ══════════════════════════════════════════════════════════════
-          DESKTOP SECTION (≥768px) 
+          DESKTOP SECTION (≥768px)
           single artboard with absolute-positioned assets and content
           ══════════════════════════════════════════════════════════════ */}
       <div
@@ -104,7 +94,7 @@ export default function AboutStats() {
         <div
           style={
             {
-              height: 'calc(2936.6px * var(--about-scale))',
+              height: 'clamp(651.725px, 203.931vw, 2936.6px)',
               transformOrigin: 'center 0px',
             } as React.CSSProperties
           }
@@ -129,7 +119,7 @@ export default function AboutStats() {
               className="absolute"
               style={{
                 left: 2100, // should be 2925.66 but shifted by 1636/2, +2.34
-                top: -60,
+                top: -230,
                 width: 1066.34,
                 height: 1490.1,
               }}
@@ -138,8 +128,9 @@ export default function AboutStats() {
                 src={assets.aboutColumn1}
                 alt=""
                 fill
-                sizes="1066px"
-                className="object-contain"
+                sizes="(max-width: 1440px) calc(100vw * 0.740), 1066px"
+                className="object-contain animate-fade-in"
+                loading="lazy"
               />
             </div>
 
@@ -157,8 +148,9 @@ export default function AboutStats() {
                 src={assets.aboutColumn2}
                 alt=""
                 fill
-                sizes="1084px"
+                sizes="(max-width: 1440px) calc(100vw * 0.753), 1084px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -176,8 +168,9 @@ export default function AboutStats() {
                 src={assets.aboutLantern}
                 alt=""
                 fill
-                sizes="317.18px"
+                sizes="(max-width: 1440px) calc(100vw * 0.220), 317px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -195,8 +188,9 @@ export default function AboutStats() {
                 src={assets.aboutRocks}
                 alt=""
                 fill
-                sizes="3952px"
+                sizes="(max-width: 1440px) calc(100vw * 2.744), 3952px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -218,8 +212,9 @@ export default function AboutStats() {
                 src={assets.aboutFrame1}
                 alt=""
                 fill
-                sizes="420px"
+                sizes="(max-width: 1440px) calc(100vw * 0.292), 420px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -237,8 +232,9 @@ export default function AboutStats() {
                 src={assets.aboutFrame2}
                 alt=""
                 fill
-                sizes="420px"
+                sizes="(max-width: 1440px) calc(100vw * 0.233), 335px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -256,8 +252,9 @@ export default function AboutStats() {
                 src={assets.aboutFrame3}
                 alt=""
                 fill
-                sizes="359px"
+                sizes="(max-width: 1440px) calc(100vw * 0.249), 359px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -275,8 +272,9 @@ export default function AboutStats() {
                 src={assets.aboutFrame4}
                 alt=""
                 fill
-                sizes="247px"
+                sizes="(max-width: 1440px) calc(100vw * 0.172), 247px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -294,8 +292,9 @@ export default function AboutStats() {
                 src={assets.aboutFrame5}
                 alt=""
                 fill
-                sizes="425px"
+                sizes="(max-width: 1440px) calc(100vw * 0.295), 425px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -313,8 +312,9 @@ export default function AboutStats() {
                 src={assets.aboutCheckerboard}
                 alt=""
                 fill
-                sizes="415px"
+                sizes="(max-width: 1440px) calc(100vw * 0.288), 415px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -332,8 +332,9 @@ export default function AboutStats() {
                 src={assets.aboutLamp}
                 alt=""
                 fill
-                sizes="357px"
+                sizes="(max-width: 1440px) calc(100vw * 0.224), 323px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -351,8 +352,9 @@ export default function AboutStats() {
                 src={assets.aboutCandle}
                 alt=""
                 fill
-                sizes="189px"
+                sizes="(max-width: 1440px) calc(100vw * 0.131), 189px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -370,8 +372,9 @@ export default function AboutStats() {
                 src={assets.aboutStars1}
                 alt=""
                 fill
-                sizes="293px"
+                sizes="(max-width: 1440px) calc(100vw * 0.203), 293px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -389,8 +392,9 @@ export default function AboutStats() {
                 src={assets.aboutStars2}
                 alt=""
                 fill
-                sizes="89px"
+                sizes="(max-width: 1440px) calc(100vw * 0.062), 89px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -408,8 +412,9 @@ export default function AboutStats() {
                 src={assets.aboutGem1}
                 alt=""
                 fill
-                sizes="198px"
+                sizes="(max-width: 1440px) calc(100vw * 0.138), 198px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -427,8 +432,9 @@ export default function AboutStats() {
                 src={assets.aboutGem2}
                 alt=""
                 fill
-                sizes="192px"
+                sizes="(max-width: 1440px) calc(100vw * 0.133), 192px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -446,8 +452,9 @@ export default function AboutStats() {
                 src={assets.aboutGem3}
                 alt=""
                 fill
-                sizes="210px"
+                sizes="(max-width: 1440px) calc(100vw * 0.146), 210px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -465,8 +472,9 @@ export default function AboutStats() {
                 src={assets.aboutGem4}
                 alt=""
                 fill
-                sizes="189px"
+                sizes="(max-width: 1440px) calc(100vw * 0.131), 189px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -484,8 +492,9 @@ export default function AboutStats() {
                 src={assets.aboutGem5}
                 alt=""
                 fill
-                sizes="193px"
+                sizes="(max-width: 1440px) calc(100vw * 0.134), 193px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -552,8 +561,8 @@ export default function AboutStats() {
         <div
           className="pointer-events-none absolute z-[15] w-[402.88] text-center"
           style={{
-            left: `calc(50% + (${STATS_HEADER_FRAME.left}px - 1636px) * var(--about-scale))`,
-            top: `calc(${STATS_HEADER_FRAME.top}px * var(--about-scale))`,
+            left: 'calc(50% + clamp(11.352px, 3.551vw, 51.136px))',
+            top: 'clamp(386.838px, 120.980vw, 1742.514px)',
             transformOrigin: 'top left',
             transform: 'scale(var(--about-scale))',
           }}
@@ -577,8 +586,8 @@ export default function AboutStats() {
         <div
           className="pointer-events-auto absolute z-[15] w-[850.3px]"
           style={{
-            left: 'calc(50% - 586.67px * var(--about-scale))',
-            top: 'calc(550.4px * var(--about-scale))',
+            left: 'calc(50% - clamp(130.241px, 40.741vw, 586.670px))',
+            top: 'clamp(122.189px, 38.222vw, 550.400px)',
             transformOrigin: 'top left',
             transform: 'scale(var(--about-scale))',
           }}
@@ -650,7 +659,7 @@ export default function AboutStats() {
         <div
           style={
             {
-              height: `calc(${MOBILE_TOP_H}px * var(--about-scale))`,
+              height: 'clamp(153.125px, 54.688vw, 350px)',
               transformOrigin: 'center 0px',
             } as React.CSSProperties
           }
@@ -680,6 +689,7 @@ export default function AboutStats() {
                 fill
                 sizes="287px"
                 className="object-contain"
+                loading="lazy"
               />
             </div>
 
@@ -699,6 +709,7 @@ export default function AboutStats() {
                 fill
                 sizes="149px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -718,6 +729,7 @@ export default function AboutStats() {
                 fill
                 sizes="117px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -737,6 +749,7 @@ export default function AboutStats() {
                 fill
                 sizes="69px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -756,6 +769,7 @@ export default function AboutStats() {
                 fill
                 sizes="103px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
           </div>
@@ -768,7 +782,7 @@ export default function AboutStats() {
         <div className="pointer-events-auto relative z-[15] flex flex-col items-center gap-8 text-center w-full">
           <div
             style={{
-              maxWidth: 'min(calc(260px * var(--about-scale)), 400px)',
+              maxWidth: 'clamp(227.500px, 81.25vw, 400px)',
               width: '100%',
             }}
           >
@@ -825,7 +839,7 @@ export default function AboutStats() {
         <div
           style={
             {
-              height: `calc(${MOBILE_BOTTOM_H}px * var(--about-scale))`,
+              height: 'clamp(630.998px, 225.356vw, 1442.280px)',
               transformOrigin: 'center 0px',
             } as React.CSSProperties
           }
@@ -861,25 +875,6 @@ export default function AboutStats() {
               </Typography>
             </div>
 
-            {/* MOBILE: Right Column 2 */}
-            <div
-              className="absolute"
-              style={{
-                left: 839.21,
-                top: 249.97,
-                width: 438.31,
-                height: 356.24,
-              }}
-            >
-              <Image
-                src={assets.aboutColumn2}
-                alt=""
-                fill
-                sizes="551px"
-                className="object-contain object-left"
-              />
-            </div>
-
             {/* MOBILE: Lantern */}
             <div
               className="absolute"
@@ -896,25 +891,27 @@ export default function AboutStats() {
                 fill
                 sizes="127px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
-            {/* MOBILE: Rocky Edge */}
+            {/* MOBILE: Right Column 2 */}
             <div
               className="absolute"
               style={{
-                left: -100.07,
-                top: 418.96,
-                width: 1433.15,
-                height: 438.6,
+                left: 525,
+                top: 184.97,
+                width: 460,
+                height: 823.16,
               }}
             >
               <Image
-                src={assets.aboutRocks}
+                src={assets.aboutRocksMobile}
                 alt=""
                 fill
-                sizes="1800px"
+                sizes="460px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -934,6 +931,7 @@ export default function AboutStats() {
                 fill
                 sizes="176px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -953,6 +951,7 @@ export default function AboutStats() {
                 fill
                 sizes="87px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -972,6 +971,7 @@ export default function AboutStats() {
                 fill
                 sizes="149px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -991,6 +991,7 @@ export default function AboutStats() {
                 fill
                 sizes="142px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1010,6 +1011,7 @@ export default function AboutStats() {
                 fill
                 sizes="88px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1029,6 +1031,7 @@ export default function AboutStats() {
                 fill
                 sizes="44px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1048,6 +1051,7 @@ export default function AboutStats() {
                 fill
                 sizes="139px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1067,6 +1071,7 @@ export default function AboutStats() {
                 fill
                 sizes="126px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1086,6 +1091,7 @@ export default function AboutStats() {
                 fill
                 sizes="137px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1105,6 +1111,7 @@ export default function AboutStats() {
                 fill
                 sizes="144px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 
@@ -1124,6 +1131,7 @@ export default function AboutStats() {
                 fill
                 sizes="148px"
                 className="object-contain object-left"
+                loading="lazy"
               />
             </div>
 

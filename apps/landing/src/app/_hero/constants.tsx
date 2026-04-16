@@ -12,7 +12,7 @@ export const EVENT_INFO = {
 export const HERO_CONTENT = {
   title: 'Hack the 6ix',
   subtitlePrefix: 'Tumble down the rabbit hole and ',
-  subtitleHighlight: 'create',
+  subtitleHighlight: ['create', 'collaborate', 'innovate', 'network'],
 } as const;
 
 export const FORM_CONTENT = {
