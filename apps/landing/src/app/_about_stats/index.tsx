@@ -111,7 +111,7 @@ export default function AboutStats() {
           >
             {/* ============================================================
             LAYER 1 (z-0): Background / Atmosphere
-            Cave Columns, Rocks, Stars, Lantern (no moving animations!)
+            Cave Columns, Rocks, Stars, Lantern
             ============================================================ */}
 
             {/* Right Column 1 */}
@@ -119,7 +119,7 @@ export default function AboutStats() {
               className="absolute"
               style={{
                 left: 2100, // should be 2925.66 but shifted by 1636/2, +2.34
-                top: -230,
+                top: -60,
                 width: 1066.34,
                 height: 1490.1,
               }}
@@ -216,7 +216,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.292), 420px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce"
                 loading="lazy"
               />
             </div>
@@ -236,7 +236,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.233), 335px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -256,7 +256,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.249), 359px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce3"
                 loading="lazy"
               />
             </div>
@@ -276,7 +276,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.172), 247px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce4"
                 loading="lazy"
               />
             </div>
@@ -296,7 +296,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.295), 425px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -316,7 +316,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.288), 415px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -339,7 +339,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.224), 323px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -362,7 +362,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.131), 189px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce3"
                 loading="lazy"
               />
             </div>
@@ -507,7 +507,7 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Stats typography over gems — Heading/Small/Semi Bold + Subtitle/Large/Medium (see GemStat) */}
+            {/* Stats typography over gems */}
             <div
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
@@ -566,7 +566,7 @@ export default function AboutStats() {
           </div>
         </div>
 
-        {/* Stats section title (artboard-relative, same scale formula as Layer 3) */}
+        {/* Stats section title */}
         <div
           className="pointer-events-none absolute z-[15] w-[402.88] text-center"
           style={{
@@ -588,9 +588,6 @@ export default function AboutStats() {
 
         {/* ============================================================
           LAYER 3: Content Elements — artboard-relative position
-          left = 50% + (949.33 − 1636)px × scale  =  50% − 686.67px × scale
-          top  = 600.4px × scale
-          (949.33 = frame1.left − 45.94;  600.4 = frame1.bottom + 202.49)
           ============================================================ */}
         <div
           className="pointer-events-auto absolute z-[15] w-[850.3px]"
@@ -662,8 +659,6 @@ export default function AboutStats() {
       >
         {/* ── TOP ARTBOARD ─────────────────────────────────────────────
             Assets: column1, frame1, frame2, candle, stars1
-            Height = MOBILE_TOP_H × scale. column1 (h=318.75) visually
-            overflows below this boundary into the text area
             ─────────────────────────────────────────────────────────── */}
         <div
           style={
@@ -717,7 +712,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="149px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce"
                 loading="lazy"
               />
             </div>
@@ -737,7 +732,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="117px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -760,7 +755,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="69px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce3"
                 loading="lazy"
               />
             </div>
@@ -788,8 +783,7 @@ export default function AboutStats() {
         </div>
 
         {/* ── TYPOGRAPHY (in normal flow) ───────────────────────────────
-            No absolute positioning — sits between the two artboards.
-            The bottom artboard starts right after this element ends.
+            No absolute positioning — sits between the two artboards
             ─────────────────────────────────────────────────────────── */}
         <div className="pointer-events-auto relative z-[15] flex flex-col items-center gap-8 text-center w-full">
           <div
@@ -846,7 +840,6 @@ export default function AboutStats() {
         {/* ── BOTTOM ARTBOARD ──────────────────────────────────────────
             Assets: column2, lantern, rocks, frame3-5, checkerboard,
                     lamp, stars2, gems 1-5, GemStat overlays.
-            All top values = original_top − MOBILE_SPLIT_Y (453.08)
             ─────────────────────────────────────────────────────────── */}
         <div
           style={
@@ -945,7 +938,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="176px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce3"
                 loading="lazy"
               />
             </div>
@@ -965,7 +958,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="87px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce4"
                 loading="lazy"
               />
             </div>
@@ -985,7 +978,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="149px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -1005,7 +998,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="142px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -1027,11 +1020,9 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="60px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
-              {/* <div className="absolute left-1/2 top-[15%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
-              <div className="absolute left-1/2 top-[15%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" /> */}
             </div>
 
             {/* MOBILE: Bottom Star */}
