@@ -164,8 +164,9 @@ export default function AboutStats() {
                 height: 322.96,
               }}
             >
-              <div className="absolute left-1/2 top-[70%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.54)]" />
-              <div className="absolute left-1/2 top-[70%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.54)]" />
+              <div className="absolute left-1/2 top-[70%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
+              <div className="absolute left-1/2 top-[70%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
+              <div className="absolute left-1/2 top-[70%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
               <Image
                 src={assets.aboutLantern}
                 alt=""
@@ -330,6 +331,9 @@ export default function AboutStats() {
                 height: 251.55,
               }}
             >
+              <div className="absolute left-[45%] top-[20%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
+              <div className="absolute left-[45%] top-[20%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
+              <div className="absolute left-[45%] top-[20%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
               <Image
                 src={assets.aboutLamp}
                 alt=""
@@ -338,8 +342,6 @@ export default function AboutStats() {
                 className="object-contain object-left"
                 loading="lazy"
               />
-              <div className="absolute left-[45%] top-[20%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
-              <div className="absolute left-[45%] top-[20%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
             </div>
 
             {/* Candle */}
@@ -352,6 +354,9 @@ export default function AboutStats() {
                 height: 227.94,
               }}
             >
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-3 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-3 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-3 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
               <Image
                 src={assets.aboutCandle}
                 alt=""
@@ -360,8 +365,6 @@ export default function AboutStats() {
                 className="object-contain object-left"
                 loading="lazy"
               />
-              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
-              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-5 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
             </div>
 
             {/* Top Stars */}
@@ -749,6 +752,9 @@ export default function AboutStats() {
                 height: 63.76,
               }}
             >
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow bg-[rgba(246,189,85,0.5)]" />
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow bg-[rgba(246,189,85,0.5)]" />
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow bg-[rgba(246,189,85,0.5)]" />
               <Image
                 src={assets.aboutCandle}
                 alt=""
@@ -757,8 +763,6 @@ export default function AboutStats() {
                 className="object-contain object-left"
                 loading="lazy"
               />
-              <div className="absolute left-1/2 top-0 -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
-              <div className="absolute left-1/2 top-0 -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
             </div>
 
             {/* MOBILE: Top Stars */}
@@ -888,11 +892,14 @@ export default function AboutStats() {
               className="absolute"
               style={{
                 left: 835.93,
-                top: 630.76,
+                top: 615.76,
                 width: 43.65,
                 height: 109.18,
               }}
             >
+              <div className="absolute left-[45%] top-[70%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.8)]" />
+              <div className="absolute left-[45%] top-[70%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.8)]" />
+              <div className="absolute left-[45%] top-[70%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.8)]" />
               <Image
                 src={assets.aboutLantern}
                 alt=""
@@ -901,8 +908,6 @@ export default function AboutStats() {
                 className="object-contain object-left"
                 loading="lazy"
               />
-              <div className="absolute left-1/2 top-[20%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
-              <div className="absolute left-1/2 top-[20%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
             </div>
 
             {/* MOBILE: Right Column 2 */}
@@ -1015,6 +1020,8 @@ export default function AboutStats() {
                 height: 62.5,
               }}
             >
+              <div className="absolute left-[30%] top-[20%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.8)]" />
+              <div className="absolute left-[30%] top-[20%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.8)]" />
               <Image
                 src={assets.aboutLamp}
                 alt=""
@@ -1023,8 +1030,8 @@ export default function AboutStats() {
                 className="object-contain object-left"
                 loading="lazy"
               />
-              <div className="absolute left-1/2 top-[15%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
-              <div className="absolute left-1/2 top-[15%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
+              {/* <div className="absolute left-1/2 top-[15%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
+              <div className="absolute left-1/2 top-[15%] -translate-x-1/2 w-3 h-3 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" /> */}
             </div>
 
             {/* MOBILE: Bottom Star */}
