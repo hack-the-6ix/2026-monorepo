@@ -42,7 +42,6 @@ export default function Banner({ words }: BannerProps) {
     };
 
     updateReady(true);
-    console.log(isReady);
     action(items.length - 1);
 
     return () => {

@@ -111,7 +111,7 @@ export default function AboutStats() {
           >
             {/* ============================================================
             LAYER 1 (z-0): Background / Atmosphere
-            Cave Columns, Rocks, Stars, Lantern (no moving animations!)
+            Cave Columns, Rocks, Stars, Lantern
             ============================================================ */}
 
             {/* Right Column 1 */}
@@ -119,7 +119,7 @@ export default function AboutStats() {
               className="absolute"
               style={{
                 left: 2100, // should be 2925.66 but shifted by 1636/2, +2.34
-                top: -230,
+                top: -60,
                 width: 1066.34,
                 height: 1490.1,
               }}
@@ -158,12 +158,15 @@ export default function AboutStats() {
             <div
               className="absolute"
               style={{
-                left: 1832.07,
+                left: 1939.44,
                 top: 2116.37,
-                width: 317.18,
-                height: 395.96,
+                width: 109.11,
+                height: 322.96,
               }}
             >
+              <div className="absolute left-1/2 top-[70%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
+              <div className="absolute left-1/2 top-[70%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
+              <div className="absolute left-1/2 top-[70%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
               <Image
                 src={assets.aboutLantern}
                 alt=""
@@ -213,7 +216,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.292), 420px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce"
                 loading="lazy"
               />
             </div>
@@ -233,7 +236,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.233), 335px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -253,7 +256,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.249), 359px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce3"
                 loading="lazy"
               />
             </div>
@@ -273,7 +276,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.172), 247px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce4"
                 loading="lazy"
               />
             </div>
@@ -293,7 +296,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.295), 425px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -313,7 +316,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.288), 415px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -322,18 +325,21 @@ export default function AboutStats() {
             <div
               className="absolute"
               style={{
-                left: 1140.27,
-                top: 1202.66,
-                width: 323.13,
-                height: 484.71,
+                left: 1240.27,
+                top: 1370.66,
+                width: 159.57,
+                height: 251.55,
               }}
             >
+              <div className="absolute left-[45%] top-[20%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
+              <div className="absolute left-[45%] top-[20%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
+              <div className="absolute left-[45%] top-[20%] -translate-x-1/2 w-5 h-7 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.6)]" />
               <Image
                 src={assets.aboutLamp}
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.224), 323px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -348,12 +354,15 @@ export default function AboutStats() {
                 height: 227.94,
               }}
             >
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-3 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-3 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-3 h-5 rounded-full animate-glow bg-[rgba(246,189,85,0.34)]" />
               <Image
                 src={assets.aboutCandle}
                 alt=""
                 fill
                 sizes="(max-width: 1440px) calc(100vw * 0.131), 189px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce3"
                 loading="lazy"
               />
             </div>
@@ -498,7 +507,7 @@ export default function AboutStats() {
               />
             </div>
 
-            {/* Stats typography over gems — Heading/Small/Semi Bold + Subtitle/Large/Medium (see GemStat) */}
+            {/* Stats typography over gems */}
             <div
               className="pointer-events-none absolute z-[15] flex flex-col items-center justify-center px-[31px] text-[var(--color-neutral-50)]"
               style={{
@@ -557,7 +566,7 @@ export default function AboutStats() {
           </div>
         </div>
 
-        {/* Stats section title (artboard-relative, same scale formula as Layer 3) */}
+        {/* Stats section title */}
         <div
           className="pointer-events-none absolute z-[15] w-[402.88] text-center"
           style={{
@@ -579,9 +588,6 @@ export default function AboutStats() {
 
         {/* ============================================================
           LAYER 3: Content Elements — artboard-relative position
-          left = 50% + (949.33 − 1636)px × scale  =  50% − 686.67px × scale
-          top  = 600.4px × scale
-          (949.33 = frame1.left − 45.94;  600.4 = frame1.bottom + 202.49)
           ============================================================ */}
         <div
           className="pointer-events-auto absolute z-[15] w-[850.3px]"
@@ -653,8 +659,6 @@ export default function AboutStats() {
       >
         {/* ── TOP ARTBOARD ─────────────────────────────────────────────
             Assets: column1, frame1, frame2, candle, stars1
-            Height = MOBILE_TOP_H × scale. column1 (h=318.75) visually
-            overflows below this boundary into the text area
             ─────────────────────────────────────────────────────────── */}
         <div
           style={
@@ -708,7 +712,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="149px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce"
                 loading="lazy"
               />
             </div>
@@ -728,7 +732,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="117px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -743,12 +747,15 @@ export default function AboutStats() {
                 height: 63.76,
               }}
             >
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow bg-[rgba(246,189,85,0.5)]" />
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow bg-[rgba(246,189,85,0.5)]" />
+              <div className="absolute left-[60%] top-[15%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow bg-[rgba(246,189,85,0.5)]" />
               <Image
                 src={assets.aboutCandle}
                 alt=""
                 fill
                 sizes="69px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce3"
                 loading="lazy"
               />
             </div>
@@ -776,8 +783,7 @@ export default function AboutStats() {
         </div>
 
         {/* ── TYPOGRAPHY (in normal flow) ───────────────────────────────
-            No absolute positioning — sits between the two artboards.
-            The bottom artboard starts right after this element ends.
+            No absolute positioning — sits between the two artboards
             ─────────────────────────────────────────────────────────── */}
         <div className="pointer-events-auto relative z-[15] flex flex-col items-center gap-8 text-center w-full">
           <div
@@ -834,7 +840,6 @@ export default function AboutStats() {
         {/* ── BOTTOM ARTBOARD ──────────────────────────────────────────
             Assets: column2, lantern, rocks, frame3-5, checkerboard,
                     lamp, stars2, gems 1-5, GemStat overlays.
-            All top values = original_top − MOBILE_SPLIT_Y (453.08)
             ─────────────────────────────────────────────────────────── */}
         <div
           style={
@@ -880,16 +885,19 @@ export default function AboutStats() {
               className="absolute"
               style={{
                 left: 835.93,
-                top: 623.28,
-                width: 101.0,
-                height: 126.07,
+                top: 615.76,
+                width: 43.65,
+                height: 109.18,
               }}
             >
+              <div className="absolute left-[45%] top-[70%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.8)]" />
+              <div className="absolute left-[45%] top-[70%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.8)]" />
+              <div className="absolute left-[45%] top-[70%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.8)]" />
               <Image
                 src={assets.aboutLantern}
                 alt=""
                 fill
-                sizes="127px"
+                sizes="44px"
                 className="object-contain object-left"
                 loading="lazy"
               />
@@ -930,7 +938,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="176px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce3"
                 loading="lazy"
               />
             </div>
@@ -950,7 +958,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="87px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce4"
                 loading="lazy"
               />
             </div>
@@ -970,7 +978,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="149px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -990,7 +998,7 @@ export default function AboutStats() {
                 alt=""
                 fill
                 sizes="142px"
-                className="object-contain object-left"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
@@ -999,18 +1007,20 @@ export default function AboutStats() {
             <div
               className="absolute"
               style={{
-                left: 689.55,
-                top: 188.8,
-                width: 69.66,
-                height: 109.2,
+                left: 704.59,
+                top: 219.52,
+                width: 59.73,
+                height: 62.5,
               }}
             >
+              <div className="absolute left-[30%] top-[20%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.8)]" />
+              <div className="absolute left-[30%] top-[20%] -translate-x-1/2 w-1 h-2 rounded-full animate-glow-intense bg-[rgba(248, 169, 21, 0.8)]" />
               <Image
                 src={assets.aboutLamp}
                 alt=""
                 fill
-                sizes="88px"
-                className="object-contain object-left"
+                sizes="60px"
+                className="object-contain object-left animate-subtle-bounce2"
                 loading="lazy"
               />
             </div>
