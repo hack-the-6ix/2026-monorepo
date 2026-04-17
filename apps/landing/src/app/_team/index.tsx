@@ -7,7 +7,7 @@ export default function Team() {
   return (
     <section className="team flex flex-col -mb-0.5 relative">
       <div className="drop-shadow-[0_1rem_1rem] drop-shadow-black/5 z-1">
-        <div className="bg-team-wall-from h-32 w-full team-top-clip" />
+        <div className="bg-team-wall-from md:h-32 h-12 w-full team-top-clip" />
       </div>
       <div className="w-[calc(100%-var(--spacing-team-wall-bend))] inset-0 left-auto h-full bg-linear-to-r from-black/5 to-transparent to-20% absolute" />
       <Cat />

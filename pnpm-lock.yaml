@@ -26,7 +26,7 @@ catalogs:
       version: 2.5.1
     eslint:
       specifier: ^9.39.4
-      version: 9.39.4
+      version: 9.39.3
     next:
       specifier: ^16
       version: 16.1.6
