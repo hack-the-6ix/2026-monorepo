@@ -15,6 +15,7 @@ import aboutGem5 from '../../assets/aboutstats_gem-5.png';
 import aboutLamp from '../../assets/aboutstats_lamp.png';
 import aboutLantern from '../../assets/aboutstats_lantern.png';
 import aboutRocks from '../../assets/aboutstats_rock.svg';
+import aboutRocksMobile from '../../assets/aboutstats_rockmobile.svg';
 import aboutStars1 from '../../assets/aboutstats_stars-1.png';
 import aboutStars2 from '../../assets/aboutstats_stars-2.png';
 
@@ -36,6 +37,7 @@ export const assets = {
   aboutLamp,
   aboutLantern,
   aboutRocks,
+  aboutRocksMobile,
   aboutStars1,
   aboutStars2,
 };
