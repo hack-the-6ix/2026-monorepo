@@ -14,9 +14,9 @@ export default function Sponsors() {
     <Section
       id="sponsors"
       backgroundColor="linear-gradient(to bottom, #12102F, #12102F, #423994, #355190, #0D7F75)"
-      className="items-center overflow-hidden"
+      className="items-center pt-0!  md:-mt-50"
     >
-      <div className="flex flex-col max-w-[80%] gap-y-7 items-center z-30 md:max-w-[55%] md:gap-y-9">
+      <div className="flex flex-col max-w-[80%] gap-y-7 items-center z-50 md:max-w-[55%] md:gap-y-9">
         <Typography
           textSize="heading-sm"
           textColor="text-white"
@@ -79,10 +79,8 @@ export default function Sponsors() {
             className="-mt-35 w-[1000vw] -translate-x-8 h-120 bg-radial-[at_25%_25%] from-[#584fdb] to-[#3F3E93] md:w-[280vw] md:-mt-85 lg:w-[180vw] md:translate-x-0 md:from-[#423CB5] md:to-[#3F3E93]"
             style={{
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              WebkitMaskImage:
-                'linear-gradient(to bottom, #3F3E93 80%, transparent 100%)',
-              maskImage:
-                'linear-gradient(to bottom, #3F3E93 80%, transparent 100%)',
+              WebkitMaskImage: `linear-gradient(to bottom, #3F3E93 ${showSponsor ? '80%' : '70%'}, transparent 100%)`,
+              maskImage: `linear-gradient(to bottom, #3F3E93 ${showSponsor ? '80%' : '70%'}, transparent 100%)`,
             }}
           />
           <div className="absolute flex -top-45 -translate-x-30 justify-center md:-top-90 md:left-1/3 md:translate-x-45 2xl:-top-95 2xl:translate-x-30">
@@ -92,10 +90,11 @@ export default function Sponsors() {
               width={100}
               height={100}
               draggable={false}
-              className="w-18 h-auto z-20 md:w-28 2xl:w-35"
+              className="w-18 h-auto z-20 md:w-32 2xl:w-38"
             />
             <div className="z-10 absolute bg-[rgba(246, 189, 85, 0.34)] top-0.5 md:top-1.5 -translate-x-1.5 rounded-full w-2 md:w-3 h-3 md:h-5 2xl:h-6 animate-glow" />
-            <div className="z-10 absolute bg-[rgba(246, 189, 85, 0.34)] top-0.5 md:top-1.5 -translate-x-1.5 rounded-full w-2 md:w-3 h-3 md:h-5 2xl:h-6 animate-glow" />{' '}
+            <div className="z-10 absolute bg-[rgba(246, 189, 85, 0.34)] top-0.5 md:top-1.5 -translate-x-1.5 rounded-full w-2 md:w-3 h-3 md:h-5 2xl:h-6 animate-glow" />
+            <div className="z-10 absolute bg-[rgba(246, 189, 85, 0.34)] top-0.5 md:top-1.5 -translate-x-1.5 rounded-full w-2 md:w-3 h-3 md:h-5 2xl:h-6 animate-glow" />
           </div>
           <div className="-mt-95 flex flex-col items-center gap-y-4 w-full px-4 z-10 max-w-90 md:max-w-[60%] lg:max-w-[75%] md:-mt-75">
             <Typography
@@ -122,7 +121,7 @@ export default function Sponsors() {
                 textSize="paragraph-lg"
                 textColor="text-white"
                 textWeight="medium"
-                className="text-center pb-60 md:text-base"
+                className="text-center pb-30 md:text-base"
               >
                 Sponsors coming soon :)
               </Typography>

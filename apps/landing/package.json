@@ -22,7 +22,7 @@
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-fast-marquee": "^1.6.5"
+    "react-icons": "catalog:"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

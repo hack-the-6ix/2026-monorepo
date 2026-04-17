@@ -8,7 +8,7 @@
     --input-outline-active: var(--input-group-status-active, var(--color-primary-700));
     --input-ring: --alpha(var(--input-outline) / 25%);
 
-    @apply transition-all border-2 rounded-full px-4 py-3 outline-0 flex items-center gap-2;
+    @apply transition-all w-full border-2 rounded-full px-4 py-3 outline-0 flex items-center gap-2;
     @apply border-(--input-outline) bg-white/20;
     @apply hover:border-(--input-outline-focus) focus-within:border-(--input-outline-focus);
     @apply focus-within:ring-4 focus-within:ring-(--input-ring);

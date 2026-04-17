@@ -15,6 +15,7 @@ import './index.css';
 
 export interface InputProps extends InputGroupProps<'div'> {
   input?: Omit<ComponentPropsWithRef<'input'>, 'required' | 'disabled'>;
+  inputBoxClassName?: string; // so that glow can be used on rounded-full
   leftAddon?: ReactNode;
   rightAddon?: ReactNode;
   controlled?: {
@@ -25,6 +26,7 @@ export interface InputProps extends InputGroupProps<'div'> {
 
 export function Input({
   input,
+  inputBoxClassName,
   leftAddon,
   rightAddon,
   controlled,
@@ -36,7 +38,7 @@ export function Input({
   return (
     <InputGroup {...props} ref={ref}>
       <Typography
-        className="input__box"
+        className={cn('input__box', inputBoxClassName)}
         textColor="text-indigo-700"
         textSize="paragraph-sm"
         textWeight="medium"
