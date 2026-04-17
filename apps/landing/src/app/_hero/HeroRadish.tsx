@@ -55,6 +55,7 @@ export default function HeroRadish() {
         className={`absolute inset-0 object-contain transition-opacity duration-100
           ${radishState !== 'hidden' ? 'visible' : 'hidden'} ${radishState === 'standing' ? 'animate-wiggle origin-bottom' : ''}`}
         unoptimized
+        priority
       />
     </div>
   );
