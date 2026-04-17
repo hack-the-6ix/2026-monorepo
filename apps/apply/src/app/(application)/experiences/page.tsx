@@ -15,7 +15,7 @@ export default function Experiences() {
 
   return (
     <div className="w-full">
-      <div className="gap-4 flex flex-col w-[60vw]">
+      <div className="gap-4 flex flex-col md:w-[60vw]">
         <Typography
           textSize="heading-sm"
           textColor="text-white"

@@ -12,7 +12,7 @@ export default function CharacterSheet() {
 
   return (
     <div className="w-full">
-      <div className="gap-4 flex flex-col w-[75vw]">
+      <div className="gap-4 flex flex-col md:w-[75vw]">
         <Typography
           textSize="heading-sm"
           textColor="text-white"

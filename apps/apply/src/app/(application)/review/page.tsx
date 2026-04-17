@@ -11,25 +11,23 @@ export default function Review() {
   };
 
   return (
-    <div className="fixed left-1/2 -translate-x-1/2 z-50 w-[70%] max-w-5xl">
-      <div className="gap-4 flex flex-col">
-        <Typography
-          textSize="heading-sm"
-          textColor="text-white"
-          textWeight="bold"
+    <div className="gap-4 flex flex-col w-full md:max-w-5xl">
+      <Typography
+        textSize="heading-sm"
+        textColor="text-white"
+        textWeight="bold"
+      >
+        Review
+      </Typography>
+      <div className="justify-end flex flex-row gap-2">
+        <Button
+          kind="secondary"
+          onClick={handlePrevSection}
+          iconLeft={<ArrowLeft size="inherit" />}
+          className="border-white text-white hover:border-primary-500 hover:text-primary-500"
         >
-          Review
-        </Typography>
-        <div className="justify-end flex flex-row gap-2">
-          <Button
-            kind="secondary"
-            onClick={handlePrevSection}
-            iconLeft={<ArrowLeft size="inherit" />}
-            className="border-white text-white hover:border-primary-500 hover:text-primary-500"
-          >
-            Back
-          </Button>
-        </div>
+          Back
+        </Button>
       </div>
     </div>
   );

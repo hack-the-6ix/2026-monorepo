@@ -40,7 +40,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen max-h-screen overflow-hidden`}
       >
         {/* Desktop Bg */}
         <div className="hidden md:block fixed inset-0 z-0 pointer-events-none bg-[linear-gradient(226deg,#F6BD55_-36.92%,#A53368_4.83%,#3E33AE_84.03%,#100C3F_149.65%)]">

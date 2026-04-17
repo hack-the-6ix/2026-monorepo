@@ -18,6 +18,7 @@
     "@hackthe6ix/typescript-config": "workspace:*",
     "@hackthe6ix/ui": "workspace:*",
     "@opennextjs/cloudflare": "catalog:",
+    "lucide-react": "^0.577.0",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
