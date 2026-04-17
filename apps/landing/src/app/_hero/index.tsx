@@ -153,6 +153,7 @@ export default function Hero() {
               loading="lazy"
               sizes="(max-width: 1440px) calc(100vw * 1.454), 2094px"
               className="object-contain object-left"
+              unoptimized
             />
           </div>
 
@@ -173,6 +174,7 @@ export default function Hero() {
               loading="lazy"
               sizes="(max-width: 1440px) calc(100vw * 1.274), 1834px"
               className="object-contain"
+              unoptimized
             />
           </div>
 
