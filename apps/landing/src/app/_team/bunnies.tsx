@@ -43,7 +43,7 @@ function Bunny({ img, name, role, ...props }: BunnyProps) {
       </div>
       <div className="relative">
         <img
-          className="absolute md:left-19 left-14 md:top-6 top-4.5 rounded-full border-2 bg-bunny-belt border-bunny-belt md:size-16 size-12"
+          className="absolute md:left-19 left-14 md:top-6 top-4.5 rounded-full border-2 bg-team-bunny-belt border-team-bunny-belt md:size-16 size-12"
           src={img}
           alt={`${name} - ${role}`}
         />

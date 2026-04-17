@@ -52,28 +52,30 @@
   --spacing-content: 100rem;
   --spacing-content-padding: 2rem;
 
-  /* Footer stuff */
-  --spacing-footer-wall-bend: max(calc(50% - 24rem), 24rem);
-  --spacing-footer-wall-drop: 6.5rem;
-
-  /* TODO: Standardize this stuff for the whole app */
-  --color-bunny-belt: #7D172A;
-  --color-footer-wall-from: #BA6600;
-  --color-footer-wall-to: #C15225;
-  --color-footer-floor-from: #C15225;
-  --color-footer-floor-to: #A01A4C;
+  /* team stuff */
+  --spacing-team-wall-bend: max(calc(50% - 24rem), 24rem);
+  --spacing-team-wall-drop: 6.5rem;
+  --color-team-bunny-belt: #7D172A;
+  --color-team-wall-from: #BA6600;
+  --color-team-wall-to: #C15225;
+  --color-team-floor-from: #C15225;
+  --color-team-floor-to: #A01A4C;
 }
 
-/* footer mask */
+/* team mask */
 @layer utilities {
-  .footer-clip {
-    clip-path: polygon(var(--spacing-footer-wall-bend) 1rem, 100% var(--spacing-footer-wall-drop), 100% 100%, 0 100%, 0 var(--spacing-footer-wall-drop));
+  .team-bottom-clip {
+    clip-path: polygon(var(--spacing-team-wall-bend) 1rem, 100% var(--spacing-team-wall-drop), 100% 100%, 0 100%, 0 var(--spacing-team-wall-drop));
+  }
+
+  .team-top-clip {
+    clip-path: polygon(0 0, 0% 100%, 100% 0);
   }
 
   @media (width < 48rem) {
-    .footer {
-      --spacing-footer-wall-bend: 10rem;
-      --spacing-footer-wall-drop: 3.25rem;
+    .team {
+      --spacing-team-wall-bend: 10rem;
+      --spacing-team-wall-drop: 3.25rem;
     }
   }
 }

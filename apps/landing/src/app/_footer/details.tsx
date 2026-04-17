@@ -31,8 +31,8 @@ const mediaLinks = [
 
 export function Details() {
   return (
-    <>
-      <div className="flex gap-x-11 gap-y-1 justify-between md:flex-row sm:flex-col px-content-padding py-8">
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-x-11 gap-y-1 justify-between md:flex-row sm:flex-col">
         <Typography
           className="uppercase"
           textWeight="bold"
@@ -69,7 +69,7 @@ export function Details() {
           </Typography>
         </div>
       </div>
-      <div className="flex gap-x-11 gap-y-2 justify-between md:flex-row sm:flex-col px-content-padding pb-8">
+      <div className="flex gap-x-11 gap-y-2 justify-between md:flex-row sm:flex-col">
         <Typography
           textWeight="medium"
           textColor="text-white"
@@ -94,6 +94,6 @@ export function Details() {
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 }

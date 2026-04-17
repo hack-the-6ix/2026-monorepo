@@ -18,36 +18,35 @@ export function Rating() {
   const [rating, setRating] = useState(currRating);
 
   return (
-    <div className="mt-12 mb-4">
-      <div className="flex gap-6 max-w-content w-fit px-content-padding m-auto">
-        <Typography
-          textWeight="medium"
-          textSize="paragraph-lg"
-          textColor="text-white"
-        >
-          How was your experience with our website?
-        </Typography>
-        <div
-          onMouseEnter={() => setRating(0)}
-          onMouseLeave={() => setRating(currRating)}
-          className="flex gap-1 group cursor-pointer"
-        >
-          {stars.map((star, idx) => (
-            <Image
-              onMouseOver={() => setRating(idx)}
-              onClick={() => setCurrRating(idx)}
-              className={cn(
-                'transition-all opacity-50 size-7',
-                'group-active:scale-125',
-                idx <= rating ? 'opacity-100' : 'opacity-50',
-              )}
-              src={star}
-              width={20}
-              alt="star"
-              key={idx}
-            />
-          ))}
-        </div>
+    <div className="flex justify-center flex-wrap gap-y-2 gap-x-6 w-fit px-content-padding m-auto">
+      <Typography
+        className="text-center"
+        textWeight="medium"
+        textSize="paragraph-lg"
+        textColor="text-white"
+      >
+        How was your experience with our website?
+      </Typography>
+      <div
+        onMouseEnter={() => setRating(0)}
+        onMouseLeave={() => setRating(currRating)}
+        className="flex gap-1 group cursor-pointer"
+      >
+        {stars.map((star, idx) => (
+          <Image
+            onMouseOver={() => setRating(idx)}
+            onClick={() => setCurrRating(idx)}
+            className={cn(
+              'transition-all opacity-50 size-7',
+              'group-active:scale-125',
+              idx <= rating ? 'opacity-100' : 'opacity-50',
+            )}
+            src={star}
+            width={20}
+            alt="star"
+            key={idx}
+          />
+        ))}
       </div>
     </div>
   );

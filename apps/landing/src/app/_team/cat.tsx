@@ -6,7 +6,7 @@ import paw from './assets/paw.png';
 
 export default function Cat() {
   return (
-    <div className="bg-linear-to-b from-footer-wall-from to-footer-wall-to relative">
+    <div className="bg-linear-to-b from-team-wall-from to-team-wall-to">
       <div className="flex max-w-content pr-content-padding m-auto relative">
         <Image
           className="md:max-w-150 max-w-75 w-full mt-auto bottom-0 absolute z-1"
@@ -29,7 +29,6 @@ export default function Cat() {
           />
         </div>
       </div>
-      <div className="w-[calc(100%-var(--spacing-footer-wall-bend))] inset-0 left-auto h-full bg-linear-to-r from-black/5 to-transparent to-20% absolute" />
     </div>
   );
 }

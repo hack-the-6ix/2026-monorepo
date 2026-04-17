@@ -1,11 +1,11 @@
 import RadishScroll from '@/components/RadishScroll';
 import AboutStats from './_about_stats';
 import FAQ from './_faq_questions';
+import Footer from './_footer';
 import Hero from './_hero';
 import Projects from './_past_projects';
 import Sponsors from './_sponsors';
 import Team from './_team';
-import Footer from './footer/page';
 import Nav from './nav/page';
 
 export default function Home() {
