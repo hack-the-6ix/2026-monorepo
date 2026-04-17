@@ -3,6 +3,7 @@ import { Typography } from '@hackthe6ix/ui';
 import Bunnies from './bunnies';
 import Cat from './cat';
 import { Details } from './details';
+import { Rating } from './rating';
 
 export default function Footer() {
   return (
@@ -17,6 +18,7 @@ export default function Footer() {
               </Typography>
             </div>
             <Bunnies />
+            <Rating />
             <Details />
           </div>
         </div>
