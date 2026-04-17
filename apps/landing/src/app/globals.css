@@ -9,10 +9,33 @@
   --animate-slide-up: slide-up 1s ease-in forwards;
   --animate-dangle: dangle 3s ease-in-out;
 
-  --color-bunny-belt: #7D172A;
+  --spacing-content: 100rem;
+  --spacing-content-padding: 2rem;
+
+  /* Footer stuff */
+  --spacing-footer-wall-bend: max(calc(50% - 24rem), 24rem);
+  --spacing-footer-wall-drop: 6.5rem;
 
   /* TODO: Standardize this stuff for the whole app */
-  --color-background-footer: #BD375C;
+  --color-bunny-belt: #7D172A;
+  --color-footer-wall-from: #BA6600;
+  --color-footer-wall-to: #C15225;
+  --color-footer-floor-from: #C15225;
+  --color-footer-floor-to: #A01A4C;
+}
+
+/* footer mask */
+@layer utilities {
+  .footer-clip {
+    clip-path: polygon(var(--spacing-footer-wall-bend) 1rem, 100% var(--spacing-footer-wall-drop), 100% 100%, 0 100%, 0 var(--spacing-footer-wall-drop));
+  }
+
+  @media (width < 48rem) {
+    .footer {
+      --spacing-footer-wall-bend: 10rem;
+      --spacing-footer-wall-drop: 3.25rem;
+    }
+  }
 }
 
 @keyframes glowing {

@@ -13,7 +13,7 @@ catalog:
   eslint: ^9.39.4
   next: ^16
   postcss: ^8
-  prettier: ^3.8.1
+  prettier: ^3.8.3
   react: ^19.2.4
   react-dom: ^19.2.4
   tailwindcss: ^4.2.1
