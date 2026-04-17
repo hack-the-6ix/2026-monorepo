@@ -24,11 +24,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body className={cn(`${inter.variable} antialiased`)}>
-        <Nav />
-        {children}
-        <Footer />
-      </body>
+      <body className={cn(`${inter.variable} antialiased`)}>{children}</body>
     </html>
   );
 }
