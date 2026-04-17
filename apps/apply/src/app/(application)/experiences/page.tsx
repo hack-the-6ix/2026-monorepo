@@ -1,7 +1,8 @@
 'use client';
-import { Button, Input, Typography } from '@hackthe6ix/ui';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Input, Typography } from '@hackthe6ix/ui';
 import { useRouter } from 'next/navigation';
+
+import Navigator from '@/components/Navigator';
 
 export default function Experiences() {
   const router = useRouter();
@@ -30,21 +31,13 @@ export default function Experiences() {
           id="username"
           input={{ placeholder: 'Username' }}
         />
-        <div className="justify-end flex flex-row gap-2">
-          <Button
-            kind="secondary"
-            onClick={handlePrevSection}
-            iconLeft={<ArrowLeft size="inherit" />}
-            className="border-white text-white hover:border-primary-500 hover:text-primary-500"
-          >
-            Back
-          </Button>
-          <Button
-            onClick={handleNextSection}
-            iconLeft={<ArrowRight size="inherit" />}
-          >
-            Next
-          </Button>
+        <div className="justify-end flex">
+          <Navigator
+            handlePrevSection={handlePrevSection}
+            handleNextSection={handleNextSection}
+            current={1}
+            total={5}
+          />
         </div>
       </div>
     </div>

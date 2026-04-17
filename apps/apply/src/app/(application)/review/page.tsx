@@ -1,7 +1,8 @@
 'use client';
-import { Button, Typography } from '@hackthe6ix/ui';
-import { ArrowLeft } from 'lucide-react';
+import { Typography } from '@hackthe6ix/ui';
 import { useRouter } from 'next/navigation';
+
+import Navigator from '@/components/Navigator';
 
 export default function Review() {
   const router = useRouter();
@@ -11,7 +12,7 @@ export default function Review() {
   };
 
   return (
-    <div className="gap-4 flex flex-col w-full md:max-w-5xl">
+    <div className="gap-4 flex flex-col w-[90%] md:w-[70%] fixed left-1/2 -translate-x-1/2 max-w-5xl">
       <Typography
         textSize="heading-sm"
         textColor="text-white"
@@ -19,15 +20,8 @@ export default function Review() {
       >
         Review
       </Typography>
-      <div className="justify-end flex flex-row gap-2">
-        <Button
-          kind="secondary"
-          onClick={handlePrevSection}
-          iconLeft={<ArrowLeft size="inherit" />}
-          className="border-white text-white hover:border-primary-500 hover:text-primary-500"
-        >
-          Back
-        </Button>
+      <div className="justify-end flex">
+        <Navigator handlePrevSection={handlePrevSection} />
       </div>
     </div>
   );

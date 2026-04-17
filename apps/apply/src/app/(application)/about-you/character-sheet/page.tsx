@@ -1,7 +1,8 @@
 'use client';
-import { Button, Input, Typography } from '@hackthe6ix/ui';
-import { ArrowRight } from 'lucide-react';
+import { Input, Typography } from '@hackthe6ix/ui';
 import { useRouter } from 'next/navigation';
+
+import Navigator from '@/components/Navigator';
 
 export default function CharacterSheet() {
   const router = useRouter();
@@ -27,13 +28,12 @@ export default function CharacterSheet() {
           id="username"
           input={{ placeholder: 'Username' }}
         />
-        <div className="justify-end flex flex-row gap-2">
-          <Button
-            onClick={handleNextSection}
-            iconLeft={<ArrowRight size="inherit" />}
-          >
-            Next
-          </Button>
+        <div className="flex justify-end">
+          <Navigator
+            handleNextSection={handleNextSection}
+            current={1}
+            total={2}
+          />
         </div>
       </div>
     </div>
