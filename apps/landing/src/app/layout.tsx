@@ -3,9 +3,6 @@ import cn from 'classnames';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import Footer from './footer/page';
-import Nav from './nav/page';
-
 import './globals.css';
 
 const inter = Inter({
