@@ -71,7 +71,7 @@ export default function Bunnies() {
       target,
       [{ transform: 'translateX(-50%)' }],
       {
-        duration: mockData.length * 2000,
+        duration: mockData.length * 3000,
         fill: 'forwards',
         iterations: Infinity,
       },
