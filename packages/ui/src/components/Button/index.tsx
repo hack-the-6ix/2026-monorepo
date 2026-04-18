@@ -25,17 +25,6 @@ export type ButtonProps<T extends ElementType> = PolymorphicProps<
   T
 >;
 
-export type TooltipButtonProps<T extends ElementType> = PolymorphicProps<
-  SharedButtonProps<{
-    description: ReactNode;
-    icon?: ReactNode;
-    bgColor?: string;
-    textColor?: string;
-    children?: never;
-  }>,
-  T
->;
-
 export function Button<T extends ElementType = 'button'>({
   destructive,
   kind = 'primary',
@@ -120,6 +109,16 @@ export function HyperLink<T extends ElementType = 'a'>({
   );
 }
 
+export type TooltipButtonProps<T extends ElementType> = PolymorphicProps<
+  SharedButtonProps<{
+    description: ReactNode;
+    icon?: ReactNode;
+    bgColor?: string;
+    textColor?: string;
+    children?: never;
+  }>,
+  T
+>;
 export function TooltipButton<T extends ElementType = 'button'>({
   as,
   description,
