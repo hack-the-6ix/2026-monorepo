@@ -1,10 +1,11 @@
 'use client';
-import { Typography } from '@hackthe6ix/ui';
+import { Input } from '@hackthe6ix/ui';
 import { useRouter } from 'next/navigation';
 
-import Navigator from '@/components/Navigator';
+import FormStep from '@/components/FormStep';
+import { useApplicationContext } from '@/context/ApplicationContext';
 
-export default function LongAnswers() {
+export default function LongAnswer() {
   const router = useRouter();
 
   const handlePrevSection = () => {
@@ -14,25 +15,34 @@ export default function LongAnswers() {
     router.push('/survey');
   };
 
+  const { formData, updateFormData } = useApplicationContext();
+
+  const updateField = (fieldName: string, value: string) => {
+    updateFormData('longAnswer', {
+      ...formData.longAnswer,
+      [fieldName]: value,
+    });
+  };
+
   return (
-    <div className="w-full">
-      <div className="gap-4 flex flex-col md:w-[60vw]">
-        <Typography
-          textSize="heading-sm"
-          textColor="text-white"
-          textWeight="bold"
-        >
-          Long Answers
-        </Typography>
-        <div className="justify-end flex">
-          <Navigator
-            handlePrevSection={handlePrevSection}
-            handleNextSection={handleNextSection}
-            current={1}
-            total={3}
-          />
-        </div>
-      </div>
-    </div>
+    <FormStep
+      handlePrevSection={handlePrevSection}
+      handleNextSection={handleNextSection}
+      current={1}
+      total={2}
+      label="Long Answer"
+    >
+      <Input
+        label="Test5"
+        hideLabel={true}
+        name="test5"
+        id="test5"
+        controlled={{
+          value: formData.longAnswer.test5 || '',
+          onValueChange: (val) => updateField('test5', val),
+        }}
+        input={{ placeholder: 'placeholder' }}
+      />
+    </FormStep>
   );
 }

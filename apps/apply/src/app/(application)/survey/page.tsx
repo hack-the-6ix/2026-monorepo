@@ -1,8 +1,9 @@
 'use client';
-import { Typography } from '@hackthe6ix/ui';
+import { Input } from '@hackthe6ix/ui';
 import { useRouter } from 'next/navigation';
 
-import Navigator from '@/components/Navigator';
+import FormStep from '@/components/FormStep';
+import { useApplicationContext } from '@/context/ApplicationContext';
 
 export default function Survey() {
   const router = useRouter();
@@ -14,25 +15,34 @@ export default function Survey() {
     router.push('/review');
   };
 
+  const { formData, updateFormData } = useApplicationContext();
+
+  const updateField = (fieldName: string, value: string) => {
+    updateFormData('survey', {
+      ...formData.survey,
+      [fieldName]: value,
+    });
+  };
+
   return (
-    <div className="w-full">
-      <div className="gap-4 flex flex-col md:w-[60vw]">
-        <Typography
-          textSize="heading-sm"
-          textColor="text-white"
-          textWeight="bold"
-        >
-          Survey
-        </Typography>
-        <div className="justify-end flex">
-          <Navigator
-            handlePrevSection={handlePrevSection}
-            handleNextSection={handleNextSection}
-            current={1}
-            total={5}
-          />
-        </div>
-      </div>
-    </div>
+    <FormStep
+      handlePrevSection={handlePrevSection}
+      handleNextSection={handleNextSection}
+      current={1}
+      total={2}
+      label="Survey"
+    >
+      <Input
+        label="Test6"
+        hideLabel={true}
+        name="test6"
+        id="test6"
+        controlled={{
+          value: formData.survey.test6 || '',
+          onValueChange: (val) => updateField('test5', val),
+        }}
+        input={{ placeholder: 'placeholder' }}
+      />
+    </FormStep>
   );
 }

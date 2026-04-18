@@ -1,8 +1,9 @@
 'use client';
-import { Input, Typography } from '@hackthe6ix/ui';
+import { Input } from '@hackthe6ix/ui';
 import { useRouter } from 'next/navigation';
 
-import Navigator from '@/components/Navigator';
+import FormStep from '@/components/FormStep';
+import { useApplicationContext } from '@/context/ApplicationContext';
 
 export default function Experiences() {
   const router = useRouter();
@@ -14,32 +15,35 @@ export default function Experiences() {
     router.push('/long-answer');
   };
 
+  const { formData, updateFormData } = useApplicationContext();
+
+  const updateField = (fieldName: string, value: string) => {
+    updateFormData('experiences', {
+      ...formData.experiences,
+      [fieldName]: value,
+    });
+  };
+
   return (
-    <div className="w-full">
-      <div className="gap-4 flex flex-col md:w-[60vw]">
-        <Typography
-          textSize="heading-sm"
-          textColor="text-white"
-          textWeight="bold"
-        >
-          Your Experiences
-        </Typography>
-        <Input
-          label="Username"
-          hideLabel={true}
-          name="username"
-          id="username"
-          input={{ placeholder: 'Username' }}
-        />
-        <div className="justify-end flex">
-          <Navigator
-            handlePrevSection={handlePrevSection}
-            handleNextSection={handleNextSection}
-            current={1}
-            total={5}
-          />
-        </div>
-      </div>
-    </div>
+    <FormStep
+      handlePrevSection={handlePrevSection}
+      handleNextSection={handleNextSection}
+      current={1}
+      total={2}
+      label="Your Experience"
+      required={true}
+    >
+      <Input
+        label="Test4"
+        hideLabel={true}
+        name="test4"
+        id="test4"
+        controlled={{
+          value: formData.experiences.test4 || '',
+          onValueChange: (val) => updateField('test4', val),
+        }}
+        input={{ placeholder: 'placeholder' }}
+      />
+    </FormStep>
   );
 }

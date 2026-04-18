@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Image from 'next/image';
 
-import Couch from '../assets/couch.svg';
-import DrinkPortrait from '../assets/drink_portrait.svg';
-import Floor from '../assets/floor.png';
-import GlowSlant from '../assets/glow_slant.png';
-import Lamp from '../assets/lamp.svg';
-import MobileTable from '../assets/mobile_table.png';
-import NeedleThread from '../assets/needle_thread.svg';
-import Wall from '../assets/wall.png';
+import Couch from '@/assets/couch.svg';
+import DrinkPortrait from '@/assets/drink_portrait.svg';
+import Floor from '@/assets/floor.png';
+import GlowSlant from '@/assets/glow_slant.png';
+import Lamp from '@/assets/lamp.svg';
+import MobileTable from '@/assets/mobile_table.png';
+import NeedleThread from '@/assets/needle_thread.svg';
+import Wall from '@/assets/wall.png';
 
 import './globals.css';
 
@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // TODO: connect forms, mobile menu, mobile format
+    // TODO: add middleware for backend stuff and auth
     <html lang="en" data-theme="dark">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>

@@ -1,8 +1,9 @@
 'use client';
-import { Input, Typography } from '@hackthe6ix/ui';
+import { Input } from '@hackthe6ix/ui';
 import { useRouter } from 'next/navigation';
 
-import Navigator from '@/components/Navigator';
+import FormStep from '@/components/FormStep';
+import { useApplicationContext } from '@/context/ApplicationContext';
 
 export default function CharacterSheet() {
   const router = useRouter();
@@ -11,31 +12,44 @@ export default function CharacterSheet() {
     router.push('/about-you');
   };
 
+  const { formData, updateFormData } = useApplicationContext();
+
+  const updateField = (fieldName: string, value: string) => {
+    updateFormData('characterSheet', {
+      ...formData.characterSheet,
+      [fieldName]: value,
+    });
+  };
+
   return (
-    <div className="w-full">
-      <div className="gap-4 flex flex-col md:w-[75vw]">
-        <Typography
-          textSize="heading-sm"
-          textColor="text-white"
-          textWeight="bold"
-        >
-          Character Sheet
-        </Typography>
-        <Input
-          label="Username"
-          hideLabel={false}
-          name="username"
-          id="username"
-          input={{ placeholder: 'Username' }}
-        />
-        <div className="flex justify-end">
-          <Navigator
-            handleNextSection={handleNextSection}
-            current={1}
-            total={2}
-          />
-        </div>
-      </div>
-    </div>
+    <FormStep
+      handleNextSection={handleNextSection}
+      current={1}
+      total={2}
+      label="Character Sheet"
+    >
+      <Input
+        label="Test1"
+        hideLabel={false}
+        name="test1"
+        id="test1"
+        controlled={{
+          value: formData.characterSheet.test1 || '',
+          onValueChange: (val) => updateField('test1', val),
+        }}
+        input={{ placeholder: 'placeholder' }}
+      />
+      <Input
+        label="Test2"
+        hideLabel={false}
+        name="test2"
+        id="test2"
+        controlled={{
+          value: formData.characterSheet.test2 || '',
+          onValueChange: (val) => updateField('test2', val),
+        }}
+        input={{ placeholder: 'placeholder' }}
+      />
+    </FormStep>
   );
 }
