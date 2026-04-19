@@ -40,10 +40,10 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen max-h-screen overflow-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen max-h-screen overflow-hidden bg-[linear-gradient(226deg,#F6BD55_-36.92%,#A53368_4.83%,#3E33AE_84.03%,#100C3F_149.65%)]`}
       >
         {/* Desktop Bg */}
-        <div className="hidden md:block fixed inset-0 z-0 pointer-events-none bg-[linear-gradient(226deg,#F6BD55_-36.92%,#A53368_4.83%,#3E33AE_84.03%,#100C3F_149.65%)]">
+        <div className="hidden md:block fixed inset-0 z-0 pointer-events-none animate-fade-in will-change-opacity">
           <Image
             src={Wall}
             alt=""
@@ -59,22 +59,22 @@ export default function RootLayout({
           <Image
             src={DrinkPortrait}
             alt="Drink Portrait"
-            className="absolute top-[5vw] lg:top-[4vw] -right-[3vw] lg:h-[8vw] w-auto h-[10vw]"
+            className="absolute top-[5vw] lg:top-[4vw] -right-[3vw] lg:h-[8vw] w-auto h-[10vw] animate-fade-in [animation-delay:300ms] opacity-0"
           />
           <Image
             src={Couch}
             alt="couch"
-            className="absolute bottom-0 -right-[5vw] w-auto h-[38vw]"
+            className="absolute bottom-0 -right-[5vw] w-auto h-[38vw] animate-fade-in [animation-delay:300ms] opacity-0"
           />
           <Image
             src={Lamp}
             alt="Lamp"
-            className="absolute bottom-[1vw] -left-[5vw] w-auto h-[32vw]"
+            className="absolute bottom-[1vw] -left-[5vw] w-auto h-[32vw] animate-fade-in [animation-delay:300ms] opacity-0"
           />
           <Image
             src={NeedleThread}
             alt="Needle and threads"
-            className="absolute -bottom-[10vw] -right-[3vw] w-auto h-[28vw]"
+            className="absolute -bottom-[10vw] -right-[3vw] w-auto h-[28vw] animate-fade-in [animation-delay:300ms] opacity-0"
           />
           <Image
             src={GlowSlant}
@@ -86,7 +86,7 @@ export default function RootLayout({
         </div>
 
         {/* Mobile Bg */}
-        <div className="block md:hidden fixed inset-0 z-0 pointer-events-none bg-[linear-gradient(210deg,#F6BD55_-36.92%,#9561A6_4.83%,#3E33AE_84.03%,#100C3F_149.65%)]">
+        <div className="block md:hidden fixed inset-0 z-0 pointer-events-none animate-fade-in will-change-opacity">
           <Image
             src={Wall}
             alt=""
@@ -103,7 +103,7 @@ export default function RootLayout({
           <Image
             src={MobileTable}
             alt="Needle Thread"
-            className="absolute right-0 -bottom-[68vw] h-auto w-full"
+            className="absolute right-0 -bottom-[68vw] h-auto w-full animate-fade-in [animation-delay:300ms] opacity-0"
           />
           <div className="absolute inset-0 bg-black/50 mix-blend-overlay"></div>
         </div>
