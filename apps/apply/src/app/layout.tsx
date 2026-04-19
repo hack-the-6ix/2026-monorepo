@@ -2,13 +2,13 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Image from 'next/image';
 
-import Couch from '@/assets/couch.svg';
-import DrinkPortrait from '@/assets/drink_portrait.svg';
+import Couch from '@/assets/couch.png';
+import DrinkPortrait from '@/assets/drink_portrait.png';
 import Floor from '@/assets/floor.png';
 import GlowSlant from '@/assets/glow_slant.png';
-import Lamp from '@/assets/lamp.svg';
+import Lamp from '@/assets/lamp.png';
 import MobileTable from '@/assets/mobile_table.png';
-import NeedleThread from '@/assets/needle_thread.svg';
+import NeedleThread from '@/assets/needle_thread.png';
 import Wall from '@/assets/wall.png';
 
 import './globals.css';
@@ -46,16 +46,14 @@ export default function RootLayout({
         <div className="hidden md:block fixed inset-0 z-0 pointer-events-none bg-[linear-gradient(226deg,#F6BD55_-36.92%,#A53368_4.83%,#3E33AE_84.03%,#100C3F_149.65%)]">
           <Image
             src={Wall}
-            alt="Wall"
+            alt=""
             className="absolute top-0 w-full h-[95%] object-fill"
             priority
-            placeholder="blur"
           />
           <Image
             src={Floor}
-            alt="Floor"
+            alt=""
             className="absolute bottom-0 w-full h-[40%] object-fill"
-            placeholder="blur"
             priority
           />
           <Image
@@ -81,7 +79,7 @@ export default function RootLayout({
           <Image
             src={GlowSlant}
             placeholder="blur"
-            alt="Glow"
+            alt=""
             className="absolute top-0 right-0 -translate-y-[5vw] translate-x-[5vw] w-full h-180 object-fill mask-[linear-gradient(to_bottom_left,black,transparent)]"
           />
           <div className="absolute inset-0 bg-[rgba(20,4,48,0.2)]"></div>
@@ -91,16 +89,14 @@ export default function RootLayout({
         <div className="block md:hidden fixed inset-0 z-0 pointer-events-none bg-[linear-gradient(210deg,#F6BD55_-36.92%,#9561A6_4.83%,#3E33AE_84.03%,#100C3F_149.65%)]">
           <Image
             src={Wall}
-            alt="Wall"
+            alt=""
             className="absolute -left-28 -top-8 h-[90%] w-auto max-w-none"
             priority
-            placeholder="blur"
           />
           <Image
             src={Floor}
-            alt="Floor"
+            alt=""
             className="absolute -right-5 bottom-0 h-[25%] w-auto max-w-none"
-            placeholder="blur"
             priority
           />
           <div className="absolute -left-25 bottom-0 w-[130%] h-[40%] rounded-full -rotate-45 bg-[rgba(255,209,120,0.2)] shadow-[0_0_100px_100px_rgba(255,209,120,0.2)]"></div>
