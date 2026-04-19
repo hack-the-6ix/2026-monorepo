@@ -68,7 +68,7 @@
     --tooltip-bg: var(--color-neutral-50);
     --tooltip-text-color: var(--color-indigo-800);
 
-    @apply relative p-1 aspect-square rounded-md inline-flex items-center justify-center;
+    @apply relative p-1 aspect-square inline-flex items-center justify-center;
     @apply text-(--button-color) hover:text-(--button-color-focus) active:text-(--button-color-focus);
     @apply cursor-pointer;
   }
@@ -79,7 +79,7 @@
 
   .tooltiptext {
     @apply hidden absolute top-full mt-4 left-0 -translate-x-3.5;
-    @apply w-[80vw] md:w-[320px] p-5 z-100 rounded-3xl shadow-lg;
+    @apply w-[80vw] md:w-[320px] p-3.5 z-100 rounded-2xl shadow-lg;
     @apply text-left font-medium leading-relaxed;
     
     color: var(--tooltip-text-color);

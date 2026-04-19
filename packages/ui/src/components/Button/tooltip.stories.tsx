@@ -32,17 +32,11 @@ export const TooltipButton = meta.story({
       options: Object.keys(iconMap),
     },
   },
-  render: ({ description, bgColor, textColor, iconName, ...args }) => {
+  render: ({ iconName, ...args }) => {
     const Component = component;
     return (
       <div className="flex items-center gap-2 px-10 pt-5">
-        <Component
-          {...args}
-          bgColor={bgColor}
-          textColor={textColor}
-          description={description}
-          icon={iconMap[iconName]}
-        />
+        <Component {...args} icon={iconMap[iconName]} />
       </div>
     );
   },

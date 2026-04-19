@@ -1,0 +1,23 @@
+@reference 'tailwindcss';
+@reference '../../theme.css';
+
+@layer components.button {
+  .model {
+    --model-bg: linear-gradient(to bottom, #1c1a34, #3b2643);
+    @apply relative flex flex-col gap-4 items-center justify-center;
+    @apply p-8 max-w-[35vw] w-full rounded-2xl overflow-hidden;
+
+    background: var(--model-bg);
+  }
+  .model > * {
+    @apply relative z-10;
+  }
+
+  .button_position{
+    @apply flex flex-row gap-4 w-full;
+  } 
+
+  .button_position > *{
+    @apply w-full;
+  }  
+}
