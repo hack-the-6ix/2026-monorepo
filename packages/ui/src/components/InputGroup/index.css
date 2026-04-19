@@ -1,5 +1,6 @@
 @reference 'tailwindcss';
 @reference '../../theme.css';
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @layer components.input-group {
   .input-group {
@@ -12,6 +13,7 @@
 
   .input-group__text--status {
     --input-group-status-text: var(--input-group-status, var(--color-indigo-700));
+    @apply dark:[--input-group-status-text:var(--input-group-status,var(--color-neutral-400))];
     @apply text-(--input-group-status-text);
   }
 

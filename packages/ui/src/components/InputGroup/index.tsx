@@ -51,8 +51,10 @@ export function InputGroup<T extends ElementType = 'div'>({
       id={id}
     >
       <Typography
-        className="input-group__text dark:text-white"
-        textColor={disabled ? 'text-neutral-400' : 'text-indigo-700'}
+        className="input-group__text"
+        textColor={
+          disabled ? 'text-neutral-400' : 'text-indigo-700 dark:text-white'
+        }
         textSize="paragraph-sm"
         textWeight="semi-bold"
         hidden={hideLabel}
@@ -68,7 +70,7 @@ export function InputGroup<T extends ElementType = 'div'>({
       {info?.message && (
         <Typography
           id={`${id}--${name}--status`}
-          className="input-group__text input-group__text--status dark:text-neutral-400"
+          className="input-group__text input-group__text--status"
           textWeight="semi-bold"
           textSize="label"
           as="p"
