@@ -48,11 +48,15 @@ export default function RootLayout({
             src={Wall}
             alt="Wall"
             className="absolute top-0 w-full h-[95%] object-fill"
+            priority
+            placeholder="blur"
           />
           <Image
             src={Floor}
             alt="Floor"
             className="absolute bottom-0 w-full h-[40%] object-fill"
+            placeholder="blur"
+            priority
           />
           <Image
             src={DrinkPortrait}
@@ -76,6 +80,7 @@ export default function RootLayout({
           />
           <Image
             src={GlowSlant}
+            placeholder="blur"
             alt="Glow"
             className="absolute top-0 right-0 -translate-y-[5vw] translate-x-[5vw] w-full h-180 object-fill mask-[linear-gradient(to_bottom_left,black,transparent)]"
           />
@@ -88,11 +93,15 @@ export default function RootLayout({
             src={Wall}
             alt="Wall"
             className="absolute -left-28 -top-8 h-[90%] w-auto max-w-none"
+            priority
+            placeholder="blur"
           />
           <Image
             src={Floor}
             alt="Floor"
             className="absolute -right-5 bottom-0 h-[25%] w-auto max-w-none"
+            placeholder="blur"
+            priority
           />
           <div className="absolute -left-25 bottom-0 w-[130%] h-[40%] rounded-full -rotate-45 bg-[rgba(255,209,120,0.2)] shadow-[0_0_100px_100px_rgba(255,209,120,0.2)]"></div>
           <Image
