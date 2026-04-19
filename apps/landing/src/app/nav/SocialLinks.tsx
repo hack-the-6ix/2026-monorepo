@@ -22,7 +22,7 @@ export default function SocialLinks() {
         <FaInstagram size={22} />
       </Link>
       <Link
-        href="https://www.linkedin.com/company/hackthe6ixofficial/"
+        href="https://x.com/hackthe6ix"
         target="_blank"
         rel="sponsored"
         className="text-white hover:text-primary-200"
@@ -30,7 +30,7 @@ export default function SocialLinks() {
         <FaXTwitter size={22} />
       </Link>
       <Link
-        href="https://x.com/hackthe6ix"
+        href="https://www.linkedin.com/company/hackthe6ixofficial/"
         target="_blank"
         rel="sponsored"
         className="text-white hover:text-primary-200"

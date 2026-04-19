@@ -84,7 +84,7 @@ export default function AboutStats() {
           single artboard with absolute-positioned assets and content
           ══════════════════════════════════════════════════════════════ */}
       <div
-        className="relative hidden md:block"
+        className="relative hidden md:block z-20"
         style={
           {
             '--about-scale': 'clamp(0.222, calc(100vw / 1440px), 1)',
