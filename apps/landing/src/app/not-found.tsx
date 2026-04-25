@@ -2,8 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Typography } from '@hackthe6ix/ui';
 
-import radish from '@/assets/nav_radish_body.png';
-import legs from '@/assets/nav_legs.png';
+import radish from '@/assets/hero/hero_radish-stand.svg';
 
 export default function NotFound() {
   return (
@@ -16,13 +15,6 @@ export default function NotFound() {
             width={160}
             height={160}
             className="drop-shadow-xl"
-          />
-          <Image
-            src={legs}
-            alt="radish legs"
-            width={70}
-            height={70}
-            className="-translate-y-5 -translate-x-0.5"
           />
         </div>
 
