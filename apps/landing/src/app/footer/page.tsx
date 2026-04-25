@@ -57,7 +57,7 @@ export default function Footer() {
             textWeight="medium"
             textColor="text-white"
           >
-            @ Copyright 2025 Hack the 6ix | Made with ♡ in Toronto
+            @ Copyright 2026 Hack the 6ix | Made with ♡ in Toronto
           </Typography>
           <div className="flex flex-row gap-5 md:gap-10">
             <SocialLinks />
