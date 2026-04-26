@@ -1,5 +1,4 @@
 import { ComponentPropsWithRef, ElementType, ReactNode } from 'react';
-import cn from 'classnames';
 import { Info } from 'lucide-react';
 
 import { PolymorphicProps } from '../..';
