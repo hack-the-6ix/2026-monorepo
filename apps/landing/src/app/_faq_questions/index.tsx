@@ -5,7 +5,6 @@ import { Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
 import Triangle1 from '@/assets/faq/faq-bg-triangle-1.svg';
-import Slant2 from '@/assets/faq/faq-bg-triangle-4.png';
 import Slant1 from '@/assets/faq/svgviewer-output.svg';
 import Section from '../../components/Section';
 import CategoryPills from './components/CategoryPills';

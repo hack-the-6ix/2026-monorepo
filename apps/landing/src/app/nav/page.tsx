@@ -22,7 +22,7 @@ export default function Nav() {
   // sticky navbar
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY < lastScroll) {
+      if (window.scrollY < lastScroll || window.scrollY <= 0) {
         // scrolling up
         setVisible(true);
       } else {
