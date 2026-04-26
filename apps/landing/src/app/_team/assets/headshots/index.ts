@@ -33,6 +33,7 @@ import Muskaan from './Muskaan.jpg';
 import Placeholder from './owo.png';
 import Parsa from './Parsa.png';
 import Sasha from './Sasha.png';
+import Shaoming from './Shaoming.jpg';
 import Sharisse from './Sharisse.jpg';
 import Sunni from './Sunni.jpg';
 import Vickie from './Vickie.jpg';
@@ -230,7 +231,7 @@ export const members: MemberDetails[] = [
   {
     name: 'Shaoming Wu',
     role: 'BD Exec',
-    img: Placeholder,
+    img: Shaoming,
   },
   {
     name: 'Vickie Chen',
