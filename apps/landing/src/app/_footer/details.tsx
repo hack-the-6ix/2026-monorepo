@@ -76,7 +76,7 @@ export function Details() {
           textSize="paragraph-sm"
           as="p"
         >
-          @ Copyright 2025 Hack the 6ix | Made with ♡ in Toronto
+          @ Copyright 2026 Hack the 6ix | Made with ♡ in Toronto
         </Typography>
         <ul className="flex md:gap-10 sm:gap-6">
           {mediaLinks.map((link, idx) => (

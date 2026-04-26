@@ -6,8 +6,8 @@ import paw from './assets/paw.png';
 
 export default function Cat() {
   return (
-    <div className="bg-linear-to-b from-team-wall-from to-team-wall-to">
-      <div className="flex max-w-content pr-content-padding m-auto relative">
+    <div className="bg-linear-to-b from-team-wall-from to-team-wall-to pt-24">
+      <div className="z-31 flex max-w-content pr-content-padding m-auto relative">
         <Image
           className="md:max-w-150 max-w-75 w-full mt-auto bottom-0 absolute z-1"
           src={lamp}

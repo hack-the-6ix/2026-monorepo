@@ -11,7 +11,7 @@ export default function Team() {
       </div>
       <div className="w-[calc(100%-var(--spacing-team-wall-bend))] inset-0 left-auto h-full bg-linear-to-r from-black/5 to-transparent to-20% absolute" />
       <Cat />
-      <div className="drop-shadow-[0_-0.25rem_0.125rem] drop-shadow-black/5">
+      <div className="z-30 drop-shadow-[0_-0.25rem_0.125rem] drop-shadow-black/5">
         <div className="bg-linear-to-b from-team-floor-from to-team-floor-to flex justify-center md:-mt-62 -mt-31 md:pt-62 pt-31 team-bottom-clip">
           <div className="flex flex-col min-w-1 max-w-content m-auto">
             <div className="px-content-padding">
