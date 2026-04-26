@@ -35,7 +35,13 @@ export function InputArea({
   const [localValue, setLocalValue] = useState(
     input?.defaultValue?.toString() ?? '',
   );
-  const currentValue = controlled ? controlled.value : localValue;
+
+  const currentValue = (
+    controlled?.value ??
+    input?.value ??
+    localValue
+  ).toString();
+
   const wordCount =
     currentValue.trim() === '' ? 0 : currentValue.trim().split(/\s+/).length;
 
@@ -50,19 +56,26 @@ export function InputArea({
       >
         <textarea
           {...input}
-          maxLength={maxLength}
           className={cn('input__area__el', input?.className)}
           onChange={(e) => {
             const val = e.currentTarget.value;
-            if (!controlled) {
-              setLocalValue(val);
+            const newWordCount =
+              val.trim() === '' ? 0 : val.trim().split(/\s+/).length;
+
+            if (newWordCount <= maxLength || val.length < currentValue.length) {
+              if (
+                controlled?.value === undefined &&
+                input?.value === undefined
+              ) {
+                setLocalValue(val);
+              }
+              controlled?.onValueChange?.(val);
+              input?.onChange?.(e);
             }
-            controlled?.onValueChange?.(val);
-            input?.onChange?.(e);
           }}
           aria-describedby={`${props.id}--${props.name}--status`}
           aria-invalid={props.info?.type === 'error'}
-          value={controlled?.value ?? localValue}
+          value={currentValue}
           required={props.required}
           disabled={props.disabled}
           id={`${props.id}--input`}
@@ -73,8 +86,10 @@ export function InputArea({
         <div className="flex justify-end w-full">
           <Typography
             textSize="label"
-            textColor="text-neutral-500"
-            className="dark:text-white font-light"
+            textColor={
+              wordCount >= maxLength ? 'text-error-500' : 'text-neutral-500'
+            }
+            className={`font-light ${wordCount >= maxLength ? 'dark:text-error-500' : 'dark:text-white'}`}
           >
             {wordCount} / {maxLength} words
           </Typography>

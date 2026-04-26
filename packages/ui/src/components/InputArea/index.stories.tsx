@@ -54,7 +54,6 @@ export const InputArea = meta.story({
     name: 'owo-name',
     id: 'owo-id',
     showCounter: true,
-    maxLength: 500,
   },
 });
 

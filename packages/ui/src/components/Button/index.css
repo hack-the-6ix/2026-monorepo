@@ -60,40 +60,4 @@
   .button__icon {
     @apply size-3;
   }
-
-  .button--tooltip {
-    --button-color: var(--color-neutral-400);
-    --button-color-focus: var(--color-primary-500);
-
-    --tooltip-bg: var(--color-neutral-50);
-    --tooltip-text-color: var(--color-indigo-800);
-
-    @apply relative p-1 aspect-square inline-flex items-center justify-center;
-    @apply text-(--button-color) hover:text-(--button-color-focus) active:text-(--button-color-focus);
-    @apply cursor-pointer;
-  }
-
-  .tooltip__icon {
-    @apply size-1;
-  }
-
-  .tooltiptext {
-    @apply hidden absolute top-full mt-4 left-0 -translate-x-3.5;
-    @apply w-[80vw] md:w-[320px] p-3.5 z-100 rounded-2xl shadow-lg;
-    @apply text-left font-medium leading-relaxed;
-    
-    color: var(--tooltip-text-color);
-    background-color: var(--tooltip-bg);
-  }
-
-  .tooltiptext::after {
-    content: "";
-    @apply absolute bottom-full left-[30px] -translate-x-1/2;
-    @apply border-8 border-b-12 border-transparent;
-    border-bottom-color: var(--tooltip-bg);
-  }
-
-  .button--tooltip:hover .tooltiptext {
-    @apply block; 
-  }
 }

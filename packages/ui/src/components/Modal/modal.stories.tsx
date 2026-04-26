@@ -1,21 +1,24 @@
+import { useState } from 'react';
+
 import preview from '#/preview';
 import { Typography } from '../Typography';
-import { Model as component, ModelProps } from '.';
+import { Modal as component, ModalProps } from '.';
 
-const meta = preview.type<{ args: ModelProps<'div'> }>().meta({
-  title: 'Modules/Model',
+const meta = preview.type<{ args: ModalProps<'dialog'> }>().meta({
+  title: 'Modules/Modal',
   component,
   argTypes: {
-    backgroundColor: { control: 'color' },
     destructive: { control: 'boolean' },
+    isOpen: { control: 'boolean' },
   },
 });
 
 export const Default = meta.story({
   render: (args) => {
     const Component = component;
+    const [open, setOpen] = useState(args.isOpen);
     return (
-      <Component {...args} className="bg-slate-800">
+      <Component {...args} isOpen={open} onClose={() => setOpen(false)}>
         <Typography
           textSize="paragraph-sm"
           textColor="text-white"
@@ -36,8 +39,9 @@ export const Default = meta.story({
     label: 'ORV Ch398',
     actionButtonMessage: 'Delete',
     destructive: true,
+    isOpen: true,
     backgroundColor:
-      'linear-gradient(to bottom, rgba(10, 7, 51, 0.85), rgba(23, 21, 51, 0.85))',
+      'bg-[linear-gradient(to_bottom,rgba(10,7,51,0.85),rgba(23,21,51,0.85))]',
   },
 });
 

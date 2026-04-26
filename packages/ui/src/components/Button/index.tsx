@@ -1,6 +1,5 @@
 import { ComponentPropsWithRef, ElementType, ReactNode } from 'react';
 import cn from 'classnames';
-import { Info } from 'lucide-react';
 
 import { PolymorphicProps } from '../..';
 import { Typography } from '../Typography';
@@ -106,50 +105,5 @@ export function HyperLink<T extends ElementType = 'a'>({
       textWeight="semi-bold"
       as={as ?? 'a'}
     />
-  );
-}
-
-export type TooltipButtonProps<T extends ElementType> = PolymorphicProps<
-  SharedButtonProps<{
-    description: ReactNode;
-    icon?: ReactNode;
-    bgColor?: string;
-    textColor?: string;
-    children?: never;
-  }>,
-  T
->;
-export function TooltipButton<T extends ElementType = 'button'>({
-  as,
-  description,
-  bgColor,
-  textColor,
-  icon = <Info />,
-  ...props
-}: TooltipButtonProps<T>) {
-  return (
-    <Typography<T>
-      {...(props as ComponentPropsWithRef<T>)}
-      className={cn(
-        props.disabled && 'button--disabled',
-        'button button--tooltip',
-        props.className,
-      )}
-      textSize="paragraph-xs"
-      as={as ?? 'button'}
-      type="button"
-      style={
-        {
-          '--tooltip-bg': bgColor,
-          '--tooltip-text-color': textColor,
-        } as React.CSSProperties
-      }
-    >
-      <span className="tooltip__icon">{icon}</span>
-
-      <Typography as="span" textSize="label" className="tooltiptext">
-        {description}
-      </Typography>
-    </Typography>
   );
 }

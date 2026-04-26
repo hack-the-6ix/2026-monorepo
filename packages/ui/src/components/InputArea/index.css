@@ -1,6 +1,5 @@
 @reference 'tailwindcss';
 @reference '../../theme.css';
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @layer components.input {
   .input__area {
