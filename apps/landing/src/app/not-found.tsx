@@ -1,6 +1,6 @@
+import { Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Typography } from '@hackthe6ix/ui';
 
 import radish from '@/assets/hero/hero_radish-stand.svg';
 

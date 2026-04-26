@@ -48,6 +48,36 @@
   --animate-menu-hide: menu-hide 0.6s ease-in forwards;
 
   --animate-fade-in: fade-in 2s ease-in-out forwards;
+
+  --spacing-content: 100rem;
+  --spacing-content-padding: 2rem;
+
+  /* team stuff */
+  --spacing-team-wall-bend: max(calc(50% - 24rem), 24rem);
+  --spacing-team-wall-drop: 6.5rem;
+  --color-team-bunny-belt: #7D172A;
+  --color-team-wall-from: #BA6600;
+  --color-team-wall-to: #C15225;
+  --color-team-floor-from: #C15225;
+  --color-team-floor-to: #A01A4C;
+}
+
+/* team mask */
+@layer utilities {
+  .team-bottom-clip {
+    clip-path: polygon(var(--spacing-team-wall-bend) 1rem, 100% var(--spacing-team-wall-drop), 100% 100%, 0 100%, 0 var(--spacing-team-wall-drop));
+  }
+
+  .team-top-clip {
+    clip-path: polygon(0 0, 0% 100%, 100% 0);
+  }
+
+  @media (width < 48rem) {
+    .team {
+      --spacing-team-wall-bend: 10rem;
+      --spacing-team-wall-drop: 3.25rem;
+    }
+  }
 }
 
 @keyframes fade-in {
