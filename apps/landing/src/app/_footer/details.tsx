@@ -1,17 +1,7 @@
-import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaXTwitter,
-} from 'react-icons/fa6';
+import { FaInstagram, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
 import { Typography } from '@hackthe6ix/ui';
 
 const mediaLinks = [
-  {
-    href: 'https://facebook.com/hackthe6ix',
-    icon: FaFacebook,
-    alt: 'Facebook',
-  },
   {
     href: 'https://instagram.com/hackthe6ix',
     icon: FaInstagram,
