@@ -6,20 +6,9 @@ import cn from 'classnames';
 import Image from 'next/image';
 
 import bunny from './assets/bunny.png';
+import { MemberDetails, members } from './assets/headshots';
 
-const mockData = new Array(11).fill(0).map((_, idx) => ({
-  name: `lorem ipsum lorem ipsum lorem ipsum ${idx}`,
-  role: `role - ${idx}`,
-  img: 'https://picsum.photos/200',
-}));
-
-type UserData = {
-  name: string;
-  role: string;
-  img: string;
-};
-
-type BunnyProps = UserData & ComponentPropsWithRef<'div'>;
+type BunnyProps = MemberDetails & ComponentPropsWithRef<'div'>;
 
 function Bunny({ img, name, role, ...props }: BunnyProps) {
   return (
@@ -42,10 +31,12 @@ function Bunny({ img, name, role, ...props }: BunnyProps) {
         </Typography>
       </div>
       <div className="relative">
-        <img
-          className="absolute md:left-19 left-14 md:top-6 top-4.5 rounded-full border-2 bg-team-bunny-belt border-team-bunny-belt md:size-16 size-12"
-          src={img}
+        <Image
+          className="absolute md:left-19 left-14 md:top-6 top-4.5 object-cover rounded-full border-2 bg-team-bunny-belt border-team-bunny-belt md:size-16 size-12"
           alt={`${name} - ${role}`}
+          height={300}
+          width={300}
+          src={img}
         />
         <Image
           className="md:size-48 size-36 object-contain"
@@ -71,7 +62,7 @@ export default function Bunnies() {
       target,
       [{ transform: 'translateX(-50%)' }],
       {
-        duration: mockData.length * 3000,
+        duration: members.length * 3000,
         fill: 'forwards',
         iterations: Infinity,
       },
@@ -92,16 +83,16 @@ export default function Bunnies() {
         className="flex shrink-0"
         ref={ref}
       >
-        {mockData.map((props, idx) => (
+        {members.map((props, idx) => (
           <Bunny className="odd:translate-y-7 -mr-7" key={idx} {...props} />
         ))}
-        {mockData.map((props, idx) => (
+        {members.map((props, idx) => (
           <Bunny className="odd:translate-y-7 -mr-7" key={idx} {...props} />
         ))}
-        {mockData.map((props, idx) => (
+        {members.map((props, idx) => (
           <Bunny className="odd:translate-y-7 -mr-7" key={idx} {...props} />
         ))}
-        {mockData.map((props, idx) => (
+        {members.map((props, idx) => (
           <Bunny className="odd:translate-y-7 -mr-7" key={idx} {...props} />
         ))}
       </div>
