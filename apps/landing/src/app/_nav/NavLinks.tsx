@@ -24,7 +24,7 @@ export default function NavLinks({ closeBurger }: NavLinksProps) {
           key={`navlink-${index}`}
           href={link.href}
           onClick={closeBurger}
-          className="text-lg md:text-sm font-medium text-white hover:text-primary-200 transition-colors flex items-center gap-1.5 animate-text-glow"
+          className="text-lg md:text-sm font-medium text-white hover:text-warning-400 focus:text-warning-400 active:text-warning-400 transition-colors flex items-center gap-1.5 animate-text-glow"
         >
           {link.name}
           {link.name == 'Contact Us' ?
