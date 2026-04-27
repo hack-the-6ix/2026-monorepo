@@ -24,6 +24,7 @@ import JustinR from './Justin Rui - Headshot.jpg';
 import JustinX from './Justin.png';
 import Kaiser from './Kaiser.png';
 import Karen from './Karen.png';
+import Kelvin from './Kelvin.jpg';
 import Kim from './Kim.jpg';
 import Lindsay from './Lindsay.png';
 import Lucas from './Lucas.jpg';
@@ -38,6 +39,7 @@ import Sharisse from './Sharisse.jpg';
 import Sunni from './Sunni.jpg';
 import Vickie from './Vickie.jpg';
 import Vienna from './Vienna.jpg';
+import Winston from './Winston.jpg';
 import Yanzi from './Yanzi.png';
 
 export type MemberDetails = {
@@ -48,6 +50,16 @@ export type MemberDetails = {
 
 // https://docs.google.com/spreadsheets/d/1Nl77IaHWL40b-hHousvzJLafl9INGjVta5KpMpfC8H4
 export const members: MemberDetails[] = [
+  {
+    name: 'Winston Yu',
+    role: 'Co-chair',
+    img: Winston,
+  },
+  {
+    name: 'Kelvin Nguyen',
+    role: 'Co-chair',
+    img: Kelvin,
+  },
   {
     name: 'Andy Suri',
     role: 'Operations Exec',
