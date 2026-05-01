@@ -10,10 +10,10 @@ import { MemberDetails, members } from './assets/headshots';
 
 type BunnyProps = MemberDetails & ComponentPropsWithRef<'div'>;
 
-function Bunny({ img, name, role, ...props }: BunnyProps) {
+function Bunny({ img, name, role, linkedin, ...props }: BunnyProps) {
   return (
     <div {...props} className={cn(props.className, 'relative group')}>
-      <div className="transition-opacity group-hover:opacity-100 opacity-0 flex flex-col items-center relative top-1 md:-right-11 -right-9 md:max-w-32 max-w-24 ">
+      <div className="transition-opacity group-hover:opacity-100 group-active:opacity-100 opacity-0 flex flex-col items-center relative top-1 md:-right-11 -right-9 md:max-w-32 max-w-24 ">
         <Typography
           className="truncate min-w-1"
           textColor="text-white"
@@ -30,7 +30,14 @@ function Bunny({ img, name, role, ...props }: BunnyProps) {
           {role}
         </Typography>
       </div>
-      <div className="relative">
+      <div
+        className="relative"
+        onPointerDown={(e) => {
+          if (e.pointerType === 'mouse') {
+            window.open(linkedin, '_blank');
+          }
+        }}
+      >
         <Image
           className="absolute md:left-19 left-14 md:top-6 top-4.5 object-cover rounded-full border-2 bg-team-bunny-belt border-team-bunny-belt md:size-16 size-12"
           alt={`${name} - ${role}`}
@@ -80,6 +87,11 @@ export default function Bunnies() {
       <div
         onMouseEnter={() => animation.current?.pause()}
         onMouseLeave={() => animation.current?.play()}
+        onPointerDown={(e) => {
+          if (e.pointerType !== 'mouse') {
+            animation.current?.pause();
+          }
+        }}
         className="flex shrink-0"
         ref={ref}
       >
