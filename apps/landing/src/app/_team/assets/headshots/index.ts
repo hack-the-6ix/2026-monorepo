@@ -16,6 +16,7 @@ import Antoinette from './Erin.png';
 import Ferdinand from './Ferdinand.jpg';
 import Gordon from './Gordon.png';
 import Halle from './Halle.png';
+import Jacklyn from './Jacklyn.png';
 import James from './James.jpg';
 import Jason from './Jason.jpg';
 import Jeffrey from './Jeffrey.png';
@@ -29,6 +30,7 @@ import Kim from './Kim.jpg';
 import Lindsay from './Lindsay.png';
 import Lucas from './Lucas.jpg';
 import Mahek from './Mahek.png';
+import Maira from './Maira.png';
 import Michael from './Michael.jpg';
 import Muskaan from './Muskaan.jpg';
 import Placeholder from './owo.png';
@@ -96,6 +98,11 @@ export const members: MemberDetails[] = [
     img: Lucas,
   },
   {
+    name: 'Maira Opel',
+    role: 'BD Exec',
+    img: Maira,
+  },
+  {
     name: 'Jeffrey Zang',
     role: 'BOD',
     img: Jeffrey,
@@ -109,6 +116,11 @@ export const members: MemberDetails[] = [
     name: 'David Hui',
     role: 'Mentor/Advisor/Board',
     img: David,
+  },
+  {
+    name: 'Jacklyn Biggin',
+    role: 'Mentor/Advisor',
+    img: Jacklyn,
   },
   {
     name: 'Sunni Xue',
