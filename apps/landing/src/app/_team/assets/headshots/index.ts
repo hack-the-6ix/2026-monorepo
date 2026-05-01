@@ -99,7 +99,7 @@ export const members: MemberDetails[] = [
   },
   {
     name: 'Maira Opel',
-    role: 'BD Exec',
+    role: 'BD Director',
     img: Maira,
   },
   {
@@ -161,11 +161,6 @@ export const members: MemberDetails[] = [
     name: 'Kim Guo',
     role: 'Design Director',
     img: Kim,
-  },
-  {
-    name: 'Janie Tong',
-    role: 'Web Dev Exec',
-    img: Placeholder,
   },
   {
     name: 'Annika Xu',
