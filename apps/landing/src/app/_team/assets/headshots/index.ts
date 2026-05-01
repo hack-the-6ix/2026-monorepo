@@ -33,7 +33,6 @@ import Mahek from './Mahek.png';
 import Maira from './Maira.png';
 import Michael from './Michael.jpg';
 import Muskaan from './Muskaan.jpg';
-import Placeholder from './owo.png';
 import Parsa from './Parsa.png';
 import Sasha from './Sasha.png';
 import Shaoming from './Shaoming.jpg';
