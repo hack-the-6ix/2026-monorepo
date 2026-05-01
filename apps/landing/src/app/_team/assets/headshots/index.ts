@@ -199,7 +199,7 @@ export const members: MemberDetails[] = [
   },
   {
     name: 'Austin Jian',
-    role: 'Relationships Director',
+    role: 'Web Dev Exec',
     img: Austin,
   },
   {
@@ -219,7 +219,7 @@ export const members: MemberDetails[] = [
   },
   {
     name: 'Dorothy Zheng',
-    role: 'Relationships Exec',
+    role: 'Relationships Director',
     img: Dorothy,
   },
   {
