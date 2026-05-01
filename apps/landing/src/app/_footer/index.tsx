@@ -3,7 +3,7 @@ import { Rating } from './rating';
 
 export default function Footer() {
   return (
-    <footer className="bg-team-floor-to py-12 px-content-padding">
+    <footer className="bg-team-floor-to py-12 px-content-padding z-80 relative">
       <div className="flex flex-col gap-12 min-w-1 max-w-content m-auto">
         <Rating />
         <Details />
