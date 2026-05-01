@@ -16,6 +16,7 @@ import Antoinette from './Erin.png';
 import Ferdinand from './Ferdinand.jpg';
 import Gordon from './Gordon.png';
 import Halle from './Halle.png';
+import Jacklyn from './Jacklyn.png';
 import James from './James.jpg';
 import Jason from './Jason.jpg';
 import Jeffrey from './Jeffrey.png';
@@ -29,9 +30,9 @@ import Kim from './Kim.jpg';
 import Lindsay from './Lindsay.png';
 import Lucas from './Lucas.jpg';
 import Mahek from './Mahek.png';
+import Maira from './Maira.png';
 import Michael from './Michael.jpg';
 import Muskaan from './Muskaan.jpg';
-import Placeholder from './owo.png';
 import Parsa from './Parsa.png';
 import Sasha from './Sasha.png';
 import Shaoming from './Shaoming.jpg';
@@ -96,6 +97,11 @@ export const members: MemberDetails[] = [
     img: Lucas,
   },
   {
+    name: 'Maira Opel',
+    role: 'BD Director',
+    img: Maira,
+  },
+  {
     name: 'Jeffrey Zang',
     role: 'BOD',
     img: Jeffrey,
@@ -109,6 +115,11 @@ export const members: MemberDetails[] = [
     name: 'David Hui',
     role: 'Mentor/Advisor/Board',
     img: David,
+  },
+  {
+    name: 'Jacklyn Biggin',
+    role: 'Mentor/Advisor',
+    img: Jacklyn,
   },
   {
     name: 'Sunni Xue',
@@ -151,11 +162,6 @@ export const members: MemberDetails[] = [
     img: Kim,
   },
   {
-    name: 'Janie Tong',
-    role: 'Web Dev Exec',
-    img: Placeholder,
-  },
-  {
     name: 'Annika Xu',
     role: 'Design Exec',
     img: Annika,
@@ -187,7 +193,7 @@ export const members: MemberDetails[] = [
   },
   {
     name: 'Austin Jian',
-    role: 'Relationships Director',
+    role: 'Web Dev Exec',
     img: Austin,
   },
   {
@@ -207,7 +213,7 @@ export const members: MemberDetails[] = [
   },
   {
     name: 'Dorothy Zheng',
-    role: 'Relationships Exec',
+    role: 'Relationships Director',
     img: Dorothy,
   },
   {
