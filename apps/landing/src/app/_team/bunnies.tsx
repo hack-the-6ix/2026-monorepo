@@ -38,20 +38,27 @@ function Bunny({ img, name, role, linkedin, ...props }: BunnyProps) {
           }
         }}
       >
-        <Image
-          className="absolute md:left-19 left-14 md:top-6 top-4.5 object-cover rounded-full border-2 bg-team-bunny-belt border-team-bunny-belt md:size-16 size-12"
-          alt={`${name} - ${role}`}
-          height={300}
-          width={300}
-          src={img}
-        />
-        <Image
-          className="md:size-48 size-36 object-contain"
-          width={200}
-          height={200}
-          alt="bunny"
-          src={bunny}
-        />
+        <a
+          href={linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative inline-block pointer-events-none md:pointer-events-auto"
+        >
+          <Image
+            className="absolute md:left-19 left-14 md:top-6 top-4.5 object-cover rounded-full border-2 bg-team-bunny-belt border-team-bunny-belt md:size-16 size-12"
+            alt={`${name} - ${role}`}
+            height={300}
+            width={300}
+            src={img}
+          />
+          <Image
+            className="md:size-48 size-36 object-contain"
+            width={200}
+            height={200}
+            alt="bunny"
+            src={bunny}
+          />
+        </a>
       </div>
     </div>
   );
@@ -87,11 +94,7 @@ export default function Bunnies() {
       <div
         onMouseEnter={() => animation.current?.pause()}
         onMouseLeave={() => animation.current?.play()}
-        onPointerDown={(e) => {
-          if (e.pointerType !== 'mouse') {
-            animation.current?.pause();
-          }
-        }}
+        onClick={() => animation.current?.pause()}
         className="flex shrink-0"
         ref={ref}
       >

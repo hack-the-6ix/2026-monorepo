@@ -66,8 +66,8 @@ export const members: MemberDetails[] = [
     img: Kelvin,
   },
   {
-    name: 'Frederick Pu',
-    role: 'Mentor/Advisor/Board',
+    name: 'Frederic Pu',
+    role: 'Mentor/Advisor/House Plant',
     linkedin: 'https://www.linkedin.com/in/fpunny/',
     img: Frederic,
   },
