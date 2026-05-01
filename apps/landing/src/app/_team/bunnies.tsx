@@ -30,14 +30,7 @@ function Bunny({ img, name, role, linkedin, ...props }: BunnyProps) {
           {role}
         </Typography>
       </div>
-      <div
-        className="relative"
-        onPointerDown={(e) => {
-          if (e.pointerType === 'mouse') {
-            window.open(linkedin, '_blank');
-          }
-        }}
-      >
+      <div>
         <a
           href={linkedin}
           target="_blank"
