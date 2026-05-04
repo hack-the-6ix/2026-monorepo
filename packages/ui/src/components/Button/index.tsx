@@ -23,6 +23,7 @@ export type ButtonProps<T extends ElementType> = PolymorphicProps<
   SharedButtonProps<{ iconLeft?: ReactNode; iconRight?: ReactNode }>,
   T
 >;
+
 export function Button<T extends ElementType = 'button'>({
   destructive,
   kind = 'primary',
