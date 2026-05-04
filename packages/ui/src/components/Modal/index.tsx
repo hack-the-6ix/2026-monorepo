@@ -2,7 +2,6 @@ import { ElementType, ReactNode, useEffect, useRef } from 'react';
 import cn from 'classnames';
 
 import { PolymorphicProps } from '../..';
-import { Button } from '../Button';
 import { Typography } from '../Typography';
 
 import './index.css';
@@ -10,8 +9,7 @@ import './index.css';
 export type ModalProps<T extends ElementType> = PolymorphicProps<
   {
     label: ReactNode;
-    actionButtonMessage: ReactNode;
-    destructive?: boolean;
+    actions: ReactNode;
     backgroundColor?: `bg-${string}` | null;
     isOpen: boolean;
     onClose: () => void;
@@ -21,8 +19,7 @@ export type ModalProps<T extends ElementType> = PolymorphicProps<
 
 export function Modal<T extends ElementType = 'dialog'>({
   label,
-  actionButtonMessage,
-  destructive = false,
+  actions,
   backgroundColor,
   isOpen,
   onClose,
@@ -60,23 +57,7 @@ export function Modal<T extends ElementType = 'dialog'>({
         {label}
       </Typography>
       {children}
-      <div className="button_position modal-content">
-        <Button
-          kind="secondary"
-          destructive={destructive}
-          onClick={onClose}
-          className="button_content"
-        >
-          Cancel
-        </Button>
-        <Button
-          kind="primary"
-          destructive={destructive}
-          className="button_content"
-        >
-          {actionButtonMessage}
-        </Button>
-      </div>
+      <div className="modal-content">{actions}</div>
     </Component>
   );
 }
