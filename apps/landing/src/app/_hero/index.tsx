@@ -153,6 +153,7 @@ export default function Hero() {
               loading="lazy"
               sizes="(max-width: 1440px) calc(100vw * 1.454), 2094px"
               className="object-contain object-left"
+              unoptimized
             />
           </div>
 
@@ -173,6 +174,7 @@ export default function Hero() {
               loading="lazy"
               sizes="(max-width: 1440px) calc(100vw * 1.274), 1834px"
               className="object-contain"
+              unoptimized
             />
           </div>
 
@@ -293,6 +295,7 @@ export default function Hero() {
               priority
               sizes="(max-width: 1440px) calc(100vw * 1.160), 1671px"
               className="object-contain"
+              unoptimized
             />
           </div>
 
@@ -311,6 +314,7 @@ export default function Hero() {
               alt=""
               fill
               priority
+              unoptimized
               sizes="(max-width: 1440px) calc(100vw * 1.490), 2146px"
               className="object-contain object-right"
             />
@@ -511,7 +515,7 @@ export default function Hero() {
                     as="p"
                     textSize="subtitle-sm"
                     textWeight="medium"
-                    className="text-[var(--color-neutral-50)] m-0 text-glow-subtle"
+                    className="text-[var(--color-neutral-50)] m-0"
                   >
                     {EVENT_INFO.date}
                   </Typography>
@@ -519,7 +523,7 @@ export default function Hero() {
                     as="p"
                     textSize="subtitle-sm"
                     textWeight="medium"
-                    className="text-[var(--color-neutral-50)] m-0 text-glow-subtle"
+                    className="text-[var(--color-neutral-50)] m-0"
                   >
                     ⋅
                   </Typography>
@@ -529,7 +533,7 @@ export default function Hero() {
                     as="p"
                     textSize="subtitle-sm"
                     textWeight="medium"
-                    className="text-[var(--color-neutral-50)] m-0 text-glow-subtle"
+                    className="text-[var(--color-neutral-50)] m-0"
                   >
                     {EVENT_INFO.location}
                   </Typography>
@@ -537,7 +541,7 @@ export default function Hero() {
                     as="p"
                     textSize="subtitle-sm"
                     textWeight="medium"
-                    className="text-[var(--color-neutral-50)] m-0 text-glow-subtle"
+                    className="text-[var(--color-neutral-50)] m-0"
                   >
                     ⋅
                   </Typography>
@@ -546,7 +550,7 @@ export default function Hero() {
                   as="p"
                   textSize="subtitle-sm"
                   textWeight="medium"
-                  className="text-[var(--color-neutral-50)] m-0 text-glow-subtle shrink-0"
+                  className="text-[var(--color-neutral-50)] m-0 shrink-0"
                 >
                   {EVENT_INFO.format}
                 </Typography>
@@ -555,7 +559,7 @@ export default function Hero() {
                 as="h1"
                 textSize="display"
                 textWeight="bold"
-                className="text-[var(--color-neutral-50)] m-0 text-glow"
+                className="text-[var(--color-neutral-50)] m-0"
               >
                 {HERO_CONTENT.title}
               </Typography>
@@ -564,7 +568,7 @@ export default function Hero() {
                   as="span"
                   textSize="subtitle-lg"
                   textWeight="medium"
-                  className="text-[var(--color-neutral-50)] text-glow"
+                  className="text-[var(--color-neutral-50)]"
                 >
                   {HERO_CONTENT.subtitlePrefix}
                 </Typography>
@@ -576,7 +580,7 @@ export default function Hero() {
                 as="p"
                 textSize="paragraph-lg"
                 textWeight="medium"
-                className="text-[var(--color-neutral-50)] m-0 text-glow-subtle"
+                className="text-[var(--color-neutral-50)] m-0"
               >
                 {FORM_CONTENT.description}
               </Typography>
@@ -591,7 +595,7 @@ export default function Hero() {
                     label="Email address"
                     hideLabel
                     className="w-[min(100%,406px)] shrink-0"
-                    inputBoxClassName="box-glow self-stretch"
+                    inputBoxClassName="self-stretch"
                     controlled={{
                       value: email,
                       onValueChange: setEmail,
@@ -610,7 +614,7 @@ export default function Hero() {
                     type="submit"
                     kind="primary"
                     aria-label="Sign up for updates"
-                    className="box-glow shrink-0 [@media(max-width:713.68px)]:w-[min(100%,406px)]"
+                    className="shrink-0 [@media(max-width:713.68px)]:w-[min(100%,406px)]"
                   >
                     {FORM_CONTENT.buttonText}
                   </Button>

@@ -1,25 +1,31 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ElementType } from 'react';
+import { PolymorphicProps } from '@hackthe6ix/ui/index.js';
 
-interface SectionProps extends Omit<ComponentPropsWithoutRef<'section'>, 'id'> {
-  id: string;
-  backgroundColor: string;
-}
+type SectionProps<T extends ElementType> = PolymorphicProps<
+  {
+    id: string;
+    backgroundColor: string;
+  },
+  T
+>;
 
-export default function Section({
+export default function Section<T extends ElementType>({
   id,
   backgroundColor,
   children,
   className = '',
+  as,
   ...props
-}: SectionProps) {
+}: SectionProps<T>) {
+  const Component = as || 'section';
   return (
-    <section
+    <Component
       id={id}
       style={{ background: backgroundColor }}
       className={`w-full min-h-screen flex flex-col py-12 ${className}`}
       {...props}
     >
       {children}
-    </section>
+    </Component>
   );
 }

@@ -52,7 +52,9 @@ export function InputGroup<T extends ElementType = 'div'>({
     >
       <Typography
         className="input-group__text"
-        textColor={disabled ? 'text-neutral-400' : 'text-indigo-700'}
+        textColor={
+          disabled ? 'text-neutral-400' : 'text-indigo-700 dark:text-white'
+        }
         textSize="paragraph-sm"
         textWeight="semi-bold"
         hidden={hideLabel}
