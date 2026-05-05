@@ -7,29 +7,28 @@ import {
   useEffectEvent,
   useState,
 } from 'react';
+import z from 'zod';
 
-export interface FormData {
-  characterSheet: {
-    test1?: string;
-    test2?: string;
-  };
+export const FormDataSchema = z.object({
+  characterSheet: z.object({
+    test1: z.string(),
+    test2: z.string().optional(),
+  }),
+  aboutYou: z.object({
+    test3: z.string().optional(),
+  }),
+  experiences: z.object({
+    test4: z.string(),
+  }),
+  longAnswer: z.object({
+    test5: z.string(),
+  }),
+  survey: z.object({
+    test6: z.string(),
+  }),
+});
 
-  aboutYou: {
-    test3?: string;
-  };
-
-  experiences: {
-    test4?: string;
-  };
-
-  longAnswer: {
-    test5?: string;
-  };
-
-  survey: {
-    test6?: string;
-  };
-}
+export type FormData = z.infer<typeof FormDataSchema>;
 
 interface ApplicationContextType {
   formData: FormData;
