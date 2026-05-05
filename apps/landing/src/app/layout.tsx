@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://hackthe6ix.com'),
+  metadataBase: new URL('https://daniel-autofill-bg-2026-landing.ht6.workers.dev/'),
   title: 'Hack the 6ix 2026',
   description:
     "Hack the 6ix is Toronto's largest summer hackathon, where anyone can hack to learn, create, collaborate, innovate, and network.",
