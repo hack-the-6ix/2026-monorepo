@@ -607,7 +607,7 @@ export default function Hero() {
                       'aria-label': 'Email address',
                       suppressHydrationWarning: false,
                       className:
-                        'font-medium text-[var(--color-neutral-50)] placeholder:text-[var(--color-text-placeholder)] flex-1 min-w-0 bg-transparent',
+                        'font-medium text-[var(--color-neutral-50)] placeholder:text-[var(--color-text-placeholder)] flex-1 min-w-0 bg-transparent autofill-bg-transparent',
                     }}
                   />
                   <Button

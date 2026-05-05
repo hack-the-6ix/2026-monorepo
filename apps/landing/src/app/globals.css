@@ -17,6 +17,17 @@
       0 0 16px rgba(253, 218, 152, 0.2);
   }
 
+  .autofill-bg-transparent:-webkit-autofill,
+  .autofill-bg-transparent:-webkit-autofill:hover,
+  .autofill-bg-transparent:-webkit-autofill:focus,
+  .autofill-bg-transparent:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-text-fill-color: var(--color-neutral-50) !important; /* can't find better way to do this */
+    background-color: transparent !important;
+    transition: background-color 9999s ease-out 0s;
+  }
+
   .box-glow {
     box-shadow:
       0 0 10px rgba(253, 218, 152, 0.2),
