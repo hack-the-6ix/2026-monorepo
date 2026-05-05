@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     siteName: 'Hack the 6ix',
     type: 'website',
     images: {
-        url: '/favicon.svg',
+        url: '/opengraph.png',
         width: 1200,
         height: 630,
         alt: 'Hack the 6ix 2026',
