@@ -1,15 +1,7 @@
-'use client';
-
 import { Button, Typography } from '@hackthe6ix/ui';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function WelcomePage() {
-  const router = useRouter();
-
-  const handleStart = () => {
-    router.push('/about-you/character-sheet');
-  };
-
   return (
     <div className="w-full min-h-screen flex items-center justify-center">
       <div className="gap-4 flex flex-col items-center">
@@ -17,7 +9,7 @@ export default function WelcomePage() {
           Welcome
         </Typography>
         <div className="flex flex-row gap-2">
-          <Button kind="primary" onClick={handleStart}>
+          <Button href="/about-you/character-sheet" kind="primary" as={Link}>
             Get Started
           </Button>
         </div>

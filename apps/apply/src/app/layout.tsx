@@ -28,11 +28,7 @@ export const metadata: Metadata = {
   description: "Hack the 6ix's 2026 application page",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     // TODO: add middleware for backend stuff and auth
     <html lang="en" data-theme="dark">

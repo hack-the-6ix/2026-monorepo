@@ -1,11 +1,7 @@
+import Navbar from '@/components/Navbar';
 import { ApplicationContextProvider } from '@/context/ApplicationContext';
-import Navbar from '../../components/Navbar';
 
-export default function ApplicationLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ApplicationLayout({ children }: LayoutProps<'/'>) {
   return (
     <ApplicationContextProvider>
       <div className="py-8 px-6 md:p-12 min-h-screen max-h-screen overflow-hidden">
