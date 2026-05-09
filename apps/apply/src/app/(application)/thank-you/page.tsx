@@ -9,10 +9,7 @@ export default function Review() {
   const router = useRouter();
 
   const handlePrevSection = () => {
-    router.push('/survey');
-  };
-  const handleNextSection = () => {
-    router.push('/thank-you');
+    router.push('/review');
   };
 
   const { formData } = useApplicationContext();
@@ -36,10 +33,7 @@ export default function Review() {
         </Typography>
       ))}
       <div className="justify-end flex">
-        <Navigator
-          handlePrevSection={handlePrevSection}
-          handleNextSection={handleNextSection}
-        />
+        <Navigator handlePrevSection={handlePrevSection} />
       </div>
     </div>
   );
