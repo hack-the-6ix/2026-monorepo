@@ -1,16 +1,13 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import Image from 'next/image';
+import { Inter } from 'next/font/google';
 
 import './globals.css';
+import Sidebar from '@/components/Sidebar';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
   subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  variable: '--font-default',
 });
 
 export const metadata: Metadata = {
@@ -25,13 +22,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${inter.variable} antialiased`}>
+        <div className="fixed inset-0 -z-10 h-full w-full">
+          <Image
+            src="/pre-acceptance.png"
+            alt="Background"
+            fill
+            className="object-cover"
+          />
+        </div>
+
+        <div className="flex min-h-screen">
+          <aside className="w-72 hidden md:block shrink-0">
+            <Sidebar />
+          </aside>
+          <main className="flex-1 overflow-y-auto">{children}</main>
+        </div>
       </body>
     </html>
   );
