@@ -54,7 +54,7 @@ export default function CharacterSelectPage() {
       <Background slide={2} mobileSlide={1} />
       <NavBar active="about-you" />
 
-      <div className="relative min-h-screen grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-16 px-6 pt-12 pb-4 md:pt-32 md:pb-16 max-w-6xl mx-auto md:items-center">
+      <div className="relative min-h-screen grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-16 px-6 pt-24 pb-4 md:pt-32 md:pb-16 max-w-6xl mx-auto md:items-center">
         <section className="md:row-start-1 md:col-start-1 flex flex-col gap-2 md:gap-6 max-w-md">
           {step === 1 ? (
             <>
@@ -64,7 +64,7 @@ export default function CharacterSelectPage() {
                 textSize="heading-sm"
                 textWeight="bold"
                 textColor="text-white"
-                className="!text-xl md:!text-3xl !leading-tight"
+                className="!text-xl md:!text-3xl !leading-tight md:whitespace-nowrap"
               >
                 Mirror, mirror, on the wall...{' '}
                 <Typography
@@ -124,18 +124,12 @@ export default function CharacterSelectPage() {
                 textSize="heading-sm"
                 textWeight="bold"
                 textColor="text-white"
-                className="!text-xl md:!text-3xl !leading-tight"
+                className="!text-xl md:!text-3xl !leading-tight md:whitespace-nowrap"
               >
                 What&apos;s your{' '}
-                <Typography
-                  as="span"
-                  textSize="heading-sm"
-                  textWeight="bold"
-                  textColor="text-yellow-300"
-                  className="!text-xl md:!text-3xl !leading-tight"
-                >
+                <span className="text-yellow-300 md:text-white">
                   lucky charm
-                </Typography>
+                </span>
                 ?
               </Typography>
               <div className="hidden md:flex flex-wrap gap-3">
