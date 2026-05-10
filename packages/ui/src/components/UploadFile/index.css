@@ -1,0 +1,52 @@
+@reference 'tailwindcss';
+@reference '../../theme.css';
+
+/* translucent bg and up opacity on hover */
+@layer components.upload {
+  .upload {
+    --upload-border: transparent;
+    --upload-bg: var(--input-bg-input, var(--color-neutral-50));
+
+    @variant dark {
+      --upload-bg: var(--input-bg-input, color-mix(in srgb, var(--color-neutral-50), transparent 85%));
+      
+      &:hover {
+        --upload-bg: var(--input-bg-input, color-mix(in srgb, var(--color-neutral-50), transparent 70%));
+      }
+    }
+
+    @apply relative flex flex-col items-center justify-center transition-all;
+    @apply w-full max-w-85 p-[16px_20px] rounded-[20px] border-2 shadow-sm;
+    @apply border-(--upload-border) bg-(--upload-bg);
+
+    @apply hover:border-primary-500 dark:hover:border-(--upload-border);
+
+    @apply has-disabled:cursor-not-allowed has-disabled:opacity-50;
+    @apply has-disabled:bg-neutral-100 has-disabled:text-neutral-500;
+    @apply has-disabled:pointer-events-none; 
+  }
+
+  .upload__input {
+    @apply absolute inset-0 opacity-0 cursor-pointer z-10;
+  }
+
+  .upload__content {
+    @apply flex flex-row items-center gap-6 w-full;
+  }
+
+  .upload__info {
+    @apply flex flex-col gap-0 text-left dark:text-white text-wrap;
+  }
+
+  .upload__icon {
+    @apply size-6 shrink-0 text-neutral-700 dark:text-white;
+  }
+
+  .cancel__icon {
+    @apply size-6 shrink-0 text-neutral-700 dark:text-white ml-auto cursor-pointer z-20 hover:text-primary-500;
+  }
+
+  .upload__browse {
+    @apply text-warning-400 font-bold;
+  }
+}

@@ -12,6 +12,7 @@
 
   .input-group__text--status {
     --input-group-status-text: var(--input-group-status, var(--color-indigo-700));
+    @apply dark:[--input-group-status-text:var(--input-group-status,var(--color-neutral-400))];
     @apply text-(--input-group-status-text);
   }
 

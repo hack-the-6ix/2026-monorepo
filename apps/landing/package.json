@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint --cache --fix .",
     "type-check": "tsc --noEmit",
+    "typegen": "next typegen",
     "cf:build": "opennextjs-cloudflare build",
     "cf:deploy": "opennextjs-cloudflare deploy",
     "cf:upload": "opennextjs-cloudflare upload",
@@ -22,7 +23,7 @@
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-icons": "^5.6.0"
+    "react-icons": "catalog:"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

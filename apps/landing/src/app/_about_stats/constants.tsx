@@ -7,7 +7,7 @@ export const ABOUT_HEADER = {
 export const ABOUT_CONTENT = {
   paragraph1:
     'Hack the 6ix is the largest summer student-run, not-for-profit hackathon based in Toronto, now in its',
-  paragraph1bold: '11th iteration.',
+  paragraph1bold: '12th iteration.',
   paragraph2:
     'We take pride in the diversity and talent of our hackers, who help us become a key player in the Toronto tech environment. As such, we provide an outlet for students to',
   paragraph2bold: 'present their ideas of the future.',
@@ -23,7 +23,7 @@ export const STATS_SCHOOLS = {
 } as const;
 
 export const STATS_PROJECTS = {
-  num: '68',
+  num: '131',
   stat: 'projects',
 } as const;
 
@@ -33,7 +33,7 @@ export const STATS_PRIZES = {
 } as const;
 
 export const STATS_HACKERS = {
-  num: '600+',
+  num: '500+',
   stat: 'hackers',
 } as const;
 

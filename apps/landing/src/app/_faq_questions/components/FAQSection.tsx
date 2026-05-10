@@ -97,7 +97,7 @@ const QUESTIONS = {
     {
       title: 'When do hacker applications open?',
       content:
-        'Hacker applications for Hack the 6ix 2026 will open in early June. Follow us on our social platforms to be the first to know when applications are released!',
+        'Hacker applications for Hack the 6ix 2026 will open in mid May. Follow us on our social platforms to be the first to know when applications are released!',
     },
     {
       title: 'Am I eligible to participate?',
