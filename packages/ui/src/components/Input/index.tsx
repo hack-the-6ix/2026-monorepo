@@ -38,7 +38,10 @@ export function Input({
   return (
     <InputGroup {...props} ref={ref}>
       <Typography
-        className={cn('input__box', inputBoxClassName)}
+        className={cn(
+          'input__box dark:text-white dark:font-normal',
+          inputBoxClassName,
+        )}
         textColor="text-indigo-700"
         textSize="paragraph-sm"
         textWeight="medium"
