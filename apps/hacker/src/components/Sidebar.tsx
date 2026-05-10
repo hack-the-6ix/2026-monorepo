@@ -1,8 +1,9 @@
 'use client';
 
-import Image from 'next/image';
-import Logo from '@/app/assets/logo.svg';
 import { Button, Typography } from '@hackthe6ix/ui';
+import Image from 'next/image';
+
+import Logo from '@/app/assets/logo.svg';
 
 const Sidebar = () => {
   return (
