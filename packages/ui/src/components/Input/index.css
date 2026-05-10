@@ -21,6 +21,6 @@
   }
 
   .input__el {
-    @apply placeholder:text-neutral-400 outline-none;
+    @apply placeholder:text-neutral-400 outline-none w-full;
   }
 }

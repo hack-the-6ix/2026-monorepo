@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Typescript type check
-        run: pnpm type-check
+        run: pnpm typegen && pnpm type-check
       - name: Lint check
         if: success() || failure()
         run: pnpm lint

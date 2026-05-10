@@ -8,7 +8,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "apply",
+	"name": "2026-apply",
 	"main": ".open-next/worker.js",
 	"compatibility_date": "2025-12-01",
 	"compatibility_flags": [
@@ -19,22 +19,22 @@
 		"binding": "ASSETS",
 		"directory": ".open-next/assets"
 	},
-	"images": {
+	// "images": {
 		// Enable image optimization
 		// see https://opennext.js.org/cloudflare/howtos/image
-		"binding": "IMAGES"
-	},
+		// "binding": "IMAGES"
+	// },
 	"services": [
 		{
 			// Self-reference service binding, the service name must match the worker name
 			// see https://opennext.js.org/cloudflare/caching
 			"binding": "WORKER_SELF_REFERENCE",
-			"service": "apply"
+			"service": "2026-apply"
 		}
 	],
 	"observability": {
 		"enabled": true
-	}
+	},
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
@@ -52,5 +52,5 @@
 	 * Note: Use secrets to store sensitive data.
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
 	 */
-	// "vars": {  "MY_VARIABLE": "production_value" }
+	"vars": {  "HT6_API_URL": "https://v2.api.hackthe6ix.com/" }
 }

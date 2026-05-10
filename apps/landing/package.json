@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint --cache --fix .",
     "type-check": "tsc --noEmit",
+    "typegen": "next typegen",
     "cf:build": "opennextjs-cloudflare build",
     "cf:deploy": "opennextjs-cloudflare deploy",
     "cf:upload": "opennextjs-cloudflare upload",
