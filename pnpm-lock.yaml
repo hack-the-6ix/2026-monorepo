@@ -26,7 +26,7 @@ catalogs:
       version: 2.5.1
     eslint:
       specifier: ^9.39.4
-      version: 9.39.3
+      version: 9.39.4
     next:
       specifier: ^16
       version: 16.1.6
@@ -112,6 +112,64 @@ importers:
       eslint:
         specifier: 'catalog:'
         version: 9.39.3(jiti@2.6.1)
+      tailwindcss:
+        specifier: 'catalog:'
+        version: 4.2.1
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      wrangler:
+        specifier: 'catalog:'
+        version: 4.70.0
+
+  apps/hacker:
+    dependencies:
+      '@hackthe6ix/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
+      '@hackthe6ix/typescript-config':
+        specifier: workspace:*
+        version: link:../../configs/typescript-config
+      '@hackthe6ix/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@opennextjs/cloudflare':
+        specifier: 'catalog:'
+        version: 1.17.1(next@16.1.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(wrangler@4.70.0)
+      classnames:
+        specifier: 'catalog:'
+        version: 2.5.1
+      next:
+        specifier: 'catalog:'
+        version: 16.1.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react:
+        specifier: 'catalog:'
+        version: 19.2.4
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.2.4(react@19.2.4)
+      react-icons:
+        specifier: 'catalog:'
+        version: 5.6.0(react@19.2.4)
+    devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3
+        version: 3.3.5
+      '@tailwindcss/postcss':
+        specifier: 'catalog:'
+        version: 4.2.1
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.11.0
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 19.2.3(@types/react@19.2.14)
+      eslint:
+        specifier: 'catalog:'
+        version: 9.39.4(jiti@2.6.1)
       tailwindcss:
         specifier: 'catalog:'
         version: 4.2.1
@@ -6712,7 +6770,7 @@ snapshots:
 
   '@types/node-fetch@2.6.13':
     dependencies:
-      '@types/node': 25.5.0
+      '@types/node': 22.19.15
       form-data: 4.0.5
 
   '@types/node@18.19.130':
@@ -6730,6 +6788,7 @@ snapshots:
   '@types/node@25.5.0':
     dependencies:
       undici-types: 7.18.2
+    optional: true
 
   '@types/react-dom@19.2.3(@types/react@19.2.14)':
     dependencies:
@@ -9252,7 +9311,8 @@ snapshots:
 
   undici-types@7.16.0: {}
 
-  undici-types@7.18.2: {}
+  undici-types@7.18.2:
+    optional: true
 
   undici@7.18.2: {}
 
