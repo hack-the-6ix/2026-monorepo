@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Button, Typography } from '@hackthe6ix/ui';
 
 import { Background } from '@/components/Background';
@@ -27,12 +28,13 @@ export default function WelcomePage() {
         <Typography
           as="p"
           textSize="subtitle-lg"
-          textWeight="bold"
           textColor="text-yellow-300"
         >
           Applications due: [date]
         </Typography>
-        <Button className="mt-2 px-12">Start</Button>
+        <Button as={Link} href="/character-select" className="mt-2 w-full max-w-md justify-center">
+          Start
+        </Button>
       </div>
     </main>
   );
