@@ -1,12 +1,9 @@
 import { CSSProperties } from 'react';
 import Image from 'next/image';
 
-export type CharacterKey =
-  | 'turnip'
-  | 'brocoli'
-  | 'tomato'
-  | 'mushroom'
-  | 'lantern';
+import type { CharacterKey } from '@/lib/schemas/character';
+
+export type { CharacterKey };
 
 const CHARACTERS: { key: CharacterKey; src: string }[] = [
   { key: 'turnip', src: '/assets/characters/turnip.svg' },
@@ -126,7 +123,7 @@ export function CharacterFrame({
 }: CharacterFrameProps) {
   return (
     <div
-      className={`relative aspect-[4/5] w-full max-w-[200px] md:max-w-[300px] ${className}`}
+      className={`relative aspect-[4/5] w-full max-w-[210px] md:max-w-[360px] ${className}`}
     >
       <Image
         src="/assets/frame.svg"
