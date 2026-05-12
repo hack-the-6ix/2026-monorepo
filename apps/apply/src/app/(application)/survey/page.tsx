@@ -82,7 +82,7 @@ function StyledCheckbox({
         onChange={onChange}
         className="w-4 h-4 mt-0.5 accent-primary-400 shrink-0"
       />
-      <Typography textSize="paragraph-md" textColor="text-white">
+      <Typography textSize="paragraph-lg" textColor="text-white">
         {children}
       </Typography>
     </label>
