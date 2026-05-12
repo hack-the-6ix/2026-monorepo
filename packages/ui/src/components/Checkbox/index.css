@@ -1,0 +1,31 @@
+@reference 'tailwindcss';
+@reference '../../theme.css';
+
+@layer components.input {
+  .checkbox__box {
+    @apply transition-all px-2 py-3 outline-0 flex items-center gap-3;
+  }
+
+  .checkbox__el {
+    @apply hidden;
+  }
+
+  .checkbox__ui {
+    @apply flex items-center justify-center rounded-sm border-2 border-solid;
+    @apply bg-neutral-50 border-primary-400 hover:border-primary-600 focus:border-primary-600;
+    @apply aspect-square min-h-5 min-w-5;
+    @apply transition-all ease-in-out shrink-0;
+  }
+
+  .checkbox__ui--filled {
+    @apply bg-primary-400 hover:bg-primary-600 focus:bg-primary-600;
+  }
+
+  .checkbox__ui--disabled {
+    @apply border-neutral-400;
+  }
+
+  .checkbox__ui--error {
+    @apply border-error-500;
+  }
+}

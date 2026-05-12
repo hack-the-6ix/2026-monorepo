@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 import cn from 'classnames';
-import { ChevronUp } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 import { Button } from '../Button';
 import { InputGroup, InputGroupProps } from '../InputGroup';
@@ -134,7 +134,7 @@ export function Selector({
             textSize="paragraph-sm"
             className={cn('dark:text-white', isOpen && 'tansform rotate-180')}
           >
-            <ChevronUp />
+            <ChevronDown />
           </Typography>
         }
       </Typography>
@@ -145,10 +145,7 @@ export function Selector({
           {filteredOptions.map((option) => (
             <div
               key={option.value}
-              className={cn(
-                'options',
-                option.value === 'OTHER_OPTION' && 'options__other',
-              )}
+              className={'options'}
               onClick={() => handleSelect(option)}
             >
               <Typography
