@@ -13,7 +13,7 @@ import { Typography } from '../Typography';
 
 import './index.css';
 
-export interface InputProps extends Omit<InputGroupProps<'div'>, 'ref'> {
+export interface CheckboxProps extends Omit<InputGroupProps<'div'>, 'ref'> {
   input?: Omit<ComponentPropsWithRef<'input'>, 'required' | 'disabled'>;
   controlled?: {
     onValueChange: (value: boolean) => void;
@@ -25,7 +25,7 @@ export interface InputProps extends Omit<InputGroupProps<'div'>, 'ref'> {
   };
 }
 
-export const Checkbox = forwardRef<HTMLDivElement, InputProps>(
+export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
   ({ input, controlled, option, ...props }, forwardedRef) => {
     const ref = useRef<HTMLDivElement>(null);
     useImperativeHandle(forwardedRef, () => ref.current!);
