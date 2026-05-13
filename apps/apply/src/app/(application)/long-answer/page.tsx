@@ -83,6 +83,8 @@ function LongAnswerContent() {
       <InputArea
         id={current.fieldName}
         name={current.fieldName}
+        label=""
+        hideLabel={true}
         showCounter
         maxLength={current.maxWords}
         controlled={{
