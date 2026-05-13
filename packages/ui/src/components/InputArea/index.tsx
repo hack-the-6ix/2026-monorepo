@@ -13,7 +13,7 @@ import { Typography } from '../Typography';
 
 import './index.css';
 
-export interface InputProps extends InputGroupProps<'div'> {
+export interface InputAreaProps extends InputGroupProps<'div'> {
   input?: Omit<ComponentPropsWithRef<'textarea'>, 'required' | 'disabled'>;
   controlled?: {
     onValueChange: (value: string) => void;
@@ -29,7 +29,7 @@ export function InputArea({
   showCounter,
   maxLength = 500,
   ...props
-}: InputProps) {
+}: InputAreaProps) {
   const ref = useRef<HTMLDivElement>(null);
   useImperativeHandle(props.ref, () => ref.current!);
   const [localValue, setLocalValue] = useState(
