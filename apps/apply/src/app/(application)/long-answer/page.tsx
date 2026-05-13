@@ -1,9 +1,10 @@
 'use client';
+import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Typography } from '@hackthe6ix/ui';
 
 import FormStep from '@/components/FormStep';
 import { useApplicationContext } from '@/context/ApplicationContext';
+import { InputArea } from '@hackthe6ix/ui';
 
 const PAGES = [
   {
@@ -32,11 +33,7 @@ const PAGES = [
   },
 ];
 
-function countWords(text: string): number {
-  return text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-}
-
-export default function LongAnswer() {
+function LongAnswerContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get('page') || '1');
@@ -69,7 +66,8 @@ export default function LongAnswer() {
   const current = PAGES[page - 1];
   const longAnswer = formData.longAnswer as Record<string, string>;
   const value = longAnswer[current.fieldName] || '';
-  const wordCount = countWords(value);
+
+  const wordCount = value.trim() === '' ? 0 : value.trim().split(/\s+/).length;
   const isOverLimit = wordCount > current.maxWords;
   const isEmpty = value.trim() === '';
 
@@ -82,30 +80,28 @@ export default function LongAnswer() {
       label={current.label}
       required
     >
-      <div className="flex flex-col gap-2">
-        <textarea
-          id={current.fieldName}
-          name={current.fieldName}
-          value={value}
-          onChange={(e) => updateField(current.fieldName, e.target.value)}
-          placeholder={current.placeholder}
-          rows={current.rows}
-          className={`w-full resize-y rounded-lg bg-white/10 border text-white placeholder-white/40 p-4 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:border-transparent transition-all min-h-[8rem] ${
-            isOverLimit
-              ? 'border-error-400 focus:ring-error-400'
-              : 'border-white/20 focus:ring-primary-400'
-          }`}
-        />
-        <div className="flex justify-end">
-          <Typography
-            textSize="paragraph-sm"
-            textColor={isOverLimit ? 'text-error-400' : 'text-white'}
-            className={isOverLimit ? 'opacity-100' : 'opacity-50'}
-          >
-            {wordCount} / {current.maxWords} words
-          </Typography>
-        </div>
-      </div>
+      <InputArea
+        id={current.fieldName}
+        name={current.fieldName}
+        showCounter
+        maxLength={current.maxWords}
+        controlled={{
+          value,
+          onValueChange: (v) => updateField(current.fieldName, v),
+        }}
+        input={{
+          placeholder: current.placeholder,
+          rows: current.rows,
+        }}
+      />
     </FormStep>
+  );
+}
+
+export default function LongAnswer() {
+  return (
+    <Suspense>
+      <LongAnswerContent />
+    </Suspense>
   );
 }

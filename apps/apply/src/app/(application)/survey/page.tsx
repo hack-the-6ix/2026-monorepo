@@ -1,4 +1,5 @@
 'use client';
+import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Typography } from '@hackthe6ix/ui';
 
@@ -133,7 +134,8 @@ function YellowLink({ href, children }: { href: string; children: React.ReactNod
   );
 }
 
-export default function Survey() {
+// Inner component that safely uses useSearchParams
+function SurveyContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get('page') || '1');
@@ -343,5 +345,14 @@ export default function Survey() {
     >
       {renderPage()}
     </FormStep>
+  );
+}
+
+// Default export wraps the inner component in Suspense
+export default function Survey() {
+  return (
+    <Suspense>
+      <SurveyContent />
+    </Suspense>
   );
 }
