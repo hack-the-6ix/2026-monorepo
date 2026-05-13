@@ -13,8 +13,6 @@ interface SurveyData {
   howDidYouHearAboutHT6: string[];
   howDidYouHearAnotherHackathon: string;
   howDidYouHearOther: string;
-  gender: string;
-  ethnicity: string;
   mlhCodeOfConduct: boolean;
   mlhDataPermission: boolean;
   mlhEmailPermission: boolean;
@@ -52,15 +50,6 @@ const ENUMS = {
     'Another hackathon (please specify below)',
     'Other (please specify below)',
   ],
-  gender: [
-    'Man', 'Woman', 'Non-binary', 'Genderqueer',
-    'Agender', 'Prefer not to say', 'Other',
-  ],
-  ethnicity: [
-    'Asian', 'Black or African American', 'Hispanic or Latino',
-    'Middle Eastern', 'Native American', 'Pacific Islander',
-    'White', 'Mixed', 'Prefer not to say', 'Other',
-  ],
 };
 
 type PageKey =
@@ -78,15 +67,14 @@ interface PageConfig {
 }
 
 const PAGES: PageConfig[] = [
-  { key: 'hackathonCount',    label: 'How many overnight, in-person hackathons have you attended?',                       required: true  },
-  { key: 'hackathonList',     label: 'Which overnight, in person hackathons have you attended in the last 12 months?',    required: false },
-  { key: 'hackathonCapacity', label: 'In what capacity have you attended these hackathons? Select all that apply.',       required: false },
-  { key: 'previousHT6',      label: 'Previous Hack the 6ix Experience. Select all that apply.',                          required: false },
-  { key: 'howDidYouHear',    label: 'Where did you hear about Hack the 6ix? Select all that apply.',                     required: false },
-  { key: 'mlh',              label: 'Final step: we need your permission!',                                               required: true  },
+  { key: 'hackathonCount',    label: 'How many overnight, in-person hackathons have you attended?',                     required: true  },
+  { key: 'hackathonList',     label: 'Which overnight, in person hackathons have you attended in the last 12 months?',  required: false },
+  { key: 'hackathonCapacity', label: 'In what capacity have you attended these hackathons? Select all that apply.',     required: false },
+  { key: 'previousHT6',      label: 'Previous Hack the 6ix Experience. Select all that apply.',                        required: false },
+  { key: 'howDidYouHear',    label: 'Where did you hear about Hack the 6ix? Select all that apply.',                   required: false },
+  { key: 'mlh',              label: 'Final step: we need your permission!',                                             required: true  },
 ];
 
-// Sub-components
 function StyledCheckbox({
   checked,
   onChange,
@@ -108,28 +96,6 @@ function StyledCheckbox({
         {children}
       </Typography>
     </label>
-  );
-}
-
-function StyledSelect({
-  value, onChange, options, placeholder,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  options: string[];
-  placeholder: string;
-}) {
-  return (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="w-full rounded-lg bg-white/10 border border-white/20 text-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition-all appearance-none cursor-pointer"
-    >
-      <option value="" disabled className="bg-neutral-800 text-white/50">{placeholder}</option>
-      {options.map((opt) => (
-        <option key={opt} value={opt} className="bg-neutral-800 text-white">{opt}</option>
-      ))}
-    </select>
   );
 }
 
@@ -167,7 +133,6 @@ function YellowLink({ href, children }: { href: string; children: React.ReactNod
   );
 }
 
-// Main component
 export default function Survey() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -183,12 +148,11 @@ export default function Survey() {
   const toggleArray = (
     field: 'hackathonCapacity' | 'howDidYouHearAboutHT6' | 'previousHT6Experience',
     value: string,
-    max?: number,
   ) => {
     const current: string[] = (survey[field] as string[]) ?? [];
     if (current.includes(value)) {
       updateField(field, current.filter((v) => v !== value) as SurveyData[typeof field]);
-    } else if (!max || current.length < max) {
+    } else {
       updateField(field, [...current, value] as SurveyData[typeof field]);
     }
   };
@@ -199,7 +163,6 @@ export default function Survey() {
   const hackathonCount = parseInt(survey.hackathonsAttended || '0', 10);
   const attendedHackathon = !isNaN(hackathonCount) && hackathonCount >= 1;
 
-  // Skip hackathonList and hackathonCapacity pages if count is 0 or empty
   const activePages = PAGES.filter(
     (p) => p.key !== 'hackathonList' && p.key !== 'hackathonCapacity' || attendedHackathon,
   );
@@ -209,7 +172,7 @@ export default function Survey() {
   const canProceed = (): boolean => {
     if (!currentPageConfig) return false;
     switch (currentPageConfig.key) {
-      case 'hackathonCount':    return survey.hackathonsAttended !== '' && survey.hackathonsAttended !== undefined;
+      case 'hackathonCount':    return !!survey.hackathonsAttended && survey.hackathonsAttended !== '';
       case 'hackathonList':     return true;
       case 'hackathonCapacity': return true;
       case 'previousHT6':      return true;
@@ -236,7 +199,6 @@ export default function Survey() {
 
     switch (currentPageConfig.key) {
 
-      // ── Hackathon count ──────────────────────────────────────────────────
       case 'hackathonCount':
         return (
           <StyledInput
@@ -251,7 +213,6 @@ export default function Survey() {
           />
         );
 
-      // ── Hackathon list ───────────────────────────────────────────────────
       case 'hackathonList':
         return (
           <StyledInput
@@ -261,7 +222,6 @@ export default function Survey() {
           />
         );
 
-      // ── Hackathon capacity ───────────────────────────────────────────────
       case 'hackathonCapacity':
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -277,7 +237,6 @@ export default function Survey() {
           </div>
         );
 
-      // ── Previous HT6 ─────────────────────────────────────────────────────
       case 'previousHT6':
         return (
           <div className="flex flex-col gap-3">
@@ -293,7 +252,6 @@ export default function Survey() {
           </div>
         );
 
-      // ── How did you hear ─────────────────────────────────────────────────
       case 'howDidYouHear':
         return (
           <div className="flex flex-col gap-4">
@@ -325,7 +283,6 @@ export default function Survey() {
           </div>
         );
 
-      // ── MLH ──────────────────────────────────────────────────────────────
       case 'mlh':
         return (
           <div className="flex flex-col gap-4">
