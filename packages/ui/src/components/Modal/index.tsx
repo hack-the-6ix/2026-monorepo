@@ -1,5 +1,3 @@
-'use client';
-
 import { ElementType, ReactNode, useEffect, useRef } from 'react';
 import cn from 'classnames';
 

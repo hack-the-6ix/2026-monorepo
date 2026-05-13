@@ -10,7 +10,3 @@ export * from './components/Button';
 export * from './components/Input';
 export * from './components/InputGroup';
 export * from './components/Typography';
-export * from './components/InputArea';
-export * from './components/Tooltip';
-export * from './components/UploadFile';
-export * from './components/Modal';
