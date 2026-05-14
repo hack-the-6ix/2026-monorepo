@@ -67,14 +67,10 @@ function LongAnswerContent() {
   const longAnswer = formData.longAnswer as Record<string, string>;
   const value = longAnswer[current.fieldName] || '';
 
-  const wordCount = value.trim() === '' ? 0 : value.trim().split(/\s+/).length;
-  const isOverLimit = wordCount > current.maxWords;
-  const isEmpty = value.trim() === '';
-
   return (
     <FormStep
       handlePrevSection={handlePrevSection}
-      handleNextSection={isEmpty || isOverLimit ? undefined : handleNextSection}
+      handleNextSection={handleNextSection}
       current={page}
       total={PAGES.length}
       label={current.label}

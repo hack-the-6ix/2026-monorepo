@@ -1,57 +1,18 @@
 'use client';
 import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Typography } from '@hackthe6ix/ui';
+import { HyperLink, Input, Typography } from '@hackthe6ix/ui';
 
 import FormStep from '@/components/FormStep';
-import { useApplicationContext } from '@/context/ApplicationContext';
+import { useApplicationContext, FormData } from '@/context/ApplicationContext';
 
-interface SurveyData {
-  hackathonsAttended: string;
-  hackathonsAttendedList: string;
-  hackathonCapacity: string[];
-  previousHT6Experience: string[];
-  howDidYouHearAboutHT6: string[];
-  howDidYouHearAnotherHackathon: string;
-  howDidYouHearOther: string;
-  mlhCodeOfConduct: boolean;
-  mlhDataPermission: boolean;
-  mlhEmailPermission: boolean;
-}
+import {
+  HACKATHON_CAPACITY,
+  HOW_DID_YOU_HEAR_ABOUT_HT6,
+  PREVIOUS_HT6_EXPERIENCE,
+} from './enums';
 
-const ENUMS = {
-  hackathonCapacity: [
-    'Hacker',
-    'Volunteer',
-    'Organizer',
-    'Mentor',
-    'Judge',
-    'Workshop host',
-    'Other',
-  ],
-  previousHT6Experience: [
-    "I've previously applied for Hack the 6ix",
-    "I've previously attended Hack the 6ix as a hacker",
-    "I've previously attended Hack the 6ix as a volunteer",
-    "I've previously attended Hack the 6ix in another capacity (mentor, workshop host, etc)",
-  ],
-  howDidYouHearAboutHT6: [
-    'Word of Mouth',
-    'Instagram',
-    'Discord',
-    'Website',
-    'LinkedIn',
-    'Email',
-    'X/Twitter',
-    'JamHacks',
-    'Hack Western',
-    'SheHacks',
-    'ElleHacks',
-    'QHacks',
-    'Another hackathon (please specify below)',
-    'Other (please specify below)',
-  ],
-};
+type SurveyData = FormData['survey'];
 
 type PageKey =
   | 'hackathonCount'
@@ -68,12 +29,12 @@ interface PageConfig {
 }
 
 const PAGES: PageConfig[] = [
-  { key: 'hackathonCount',    label: 'How many overnight, in-person hackathons have you attended?',                     required: true  },
-  { key: 'hackathonList',     label: 'Which overnight, in person hackathons have you attended in the last 12 months?',  required: false },
-  { key: 'hackathonCapacity', label: 'In what capacity have you attended these hackathons? Select all that apply.',     required: false },
-  { key: 'previousHT6',      label: 'Previous Hack the 6ix Experience. Select all that apply.',                        required: false },
-  { key: 'howDidYouHear',    label: 'Where did you hear about Hack the 6ix? Select all that apply.',                   required: false },
-  { key: 'mlh',              label: 'Final step: we need your permission!',                                             required: true  },
+  { key: 'hackathonCount',    label: 'How many overnight, in-person hackathons have you attended?',                    required: true  },
+  { key: 'hackathonList',     label: 'Which overnight, in person hackathons have you attended in the last 12 months?', required: false },
+  { key: 'hackathonCapacity', label: 'In what capacity have you attended these hackathons? Select all that apply.',    required: false },
+  { key: 'previousHT6',      label: 'Previous Hack the 6ix Experience. Select all that apply.',                       required: false },
+  { key: 'howDidYouHear',    label: 'Where did you hear about Hack the 6ix? Select all that apply.',                  required: false },
+  { key: 'mlh',              label: 'Final step, we need your permission!',                                            required: true  },
 ];
 
 function StyledCheckbox({
@@ -100,48 +61,13 @@ function StyledCheckbox({
   );
 }
 
-function StyledInput({
-  value, onChange, placeholder, type = 'text', min,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  placeholder: string;
-  type?: string;
-  min?: number;
-}) {
-  return (
-    <input
-      type={type}
-      min={min}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder}
-      className="w-full rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/40 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition-all"
-    />
-  );
-}
-
-function YellowLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-warning-400 font-medium underline underline-offset-2 hover:text-warning-300 transition-colors"
-    >
-      {children}
-    </a>
-  );
-}
-
-// Inner component that safely uses useSearchParams
 function SurveyContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get('page') || '1');
 
   const { formData, updateFormData } = useApplicationContext();
-  const survey = (formData.survey as unknown as SurveyData) ?? {};
+  const survey = formData.survey;
 
   const updateField = <K extends keyof SurveyData>(field: K, value: SurveyData[K]) => {
     updateFormData('survey', { ...survey, [field]: value });
@@ -171,19 +97,6 @@ function SurveyContent() {
   const totalPages = activePages.length;
   const currentPageConfig = activePages[page - 1];
 
-  const canProceed = (): boolean => {
-    if (!currentPageConfig) return false;
-    switch (currentPageConfig.key) {
-      case 'hackathonCount':    return !!survey.hackathonsAttended && survey.hackathonsAttended !== '';
-      case 'hackathonList':     return true;
-      case 'hackathonCapacity': return true;
-      case 'previousHT6':      return true;
-      case 'howDidYouHear':    return true;
-      case 'mlh':               return !!survey.mlhCodeOfConduct && !!survey.mlhDataPermission;
-      default:                  return true;
-    }
-  };
-
   const goToPage = (p: number) => router.push(`/survey?page=${p}`);
 
   const handlePrevSection = () => {
@@ -203,31 +116,47 @@ function SurveyContent() {
 
       case 'hackathonCount':
         return (
-          <StyledInput
-            type="number"
-            min={0}
-            value={survey.hackathonsAttended ?? ''}
-            onChange={(v) => {
-              const num = parseInt(v, 10);
-              if (v === '' || num >= 0) updateField('hackathonsAttended', v);
+          <Input
+            id="hackathonsAttended"
+            name="hackathonsAttended"
+            label=""
+            hideLabel
+            controlled={{
+              value: survey.hackathonsAttended ?? '',
+              onValueChange: (v) => {
+                const num = parseInt(v, 10);
+                if (v === '' || num >= 0) updateField('hackathonsAttended', v);
+              },
             }}
-            placeholder="0"
+            input={{
+              type: 'number',
+              min: 0,
+              placeholder: '0',
+            }}
           />
         );
 
       case 'hackathonList':
         return (
-          <StyledInput
-            value={survey.hackathonsAttendedList ?? ''}
-            onChange={(v) => updateField('hackathonsAttendedList', v)}
-            placeholder="e.g. Hack the 6ix, QHacks, Hack Western..."
+          <Input
+            id="hackathonsAttendedList"
+            name="hackathonsAttendedList"
+            label=""
+            hideLabel
+            controlled={{
+              value: survey.hackathonsAttendedList ?? '',
+              onValueChange: (v) => updateField('hackathonsAttendedList', v),
+            }}
+            input={{
+              placeholder: 'e.g. Hack the 6ix, QHacks, Hack Western...',
+            }}
           />
         );
 
       case 'hackathonCapacity':
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {ENUMS.hackathonCapacity.map((option) => (
+            {HACKATHON_CAPACITY.map((option) => (
               <StyledCheckbox
                 key={option}
                 checked={(survey.hackathonCapacity ?? []).includes(option)}
@@ -242,7 +171,7 @@ function SurveyContent() {
       case 'previousHT6':
         return (
           <div className="flex flex-col gap-3">
-            {ENUMS.previousHT6Experience.map((option) => (
+            {PREVIOUS_HT6_EXPERIENCE.map((option) => (
               <StyledCheckbox
                 key={option}
                 checked={(survey.previousHT6Experience ?? []).includes(option)}
@@ -258,7 +187,7 @@ function SurveyContent() {
         return (
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {ENUMS.howDidYouHearAboutHT6.map((option) => (
+              {HOW_DID_YOU_HEAR_ABOUT_HT6.map((option) => (
                 <StyledCheckbox
                   key={option}
                   checked={hearSelected.includes(option)}
@@ -269,17 +198,29 @@ function SurveyContent() {
               ))}
             </div>
             {needsAnotherHackathonText && (
-              <StyledInput
-                value={survey.howDidYouHearAnotherHackathon ?? ''}
-                onChange={(v) => updateField('howDidYouHearAnotherHackathon', v)}
-                placeholder="Which hackathon?"
+              <Input
+                id="howDidYouHearAnotherHackathon"
+                name="howDidYouHearAnotherHackathon"
+                label=""
+                hideLabel
+                controlled={{
+                  value: survey.howDidYouHearAnotherHackathon ?? '',
+                  onValueChange: (v) => updateField('howDidYouHearAnotherHackathon', v),
+                }}
+                input={{ placeholder: 'Which hackathon?' }}
               />
             )}
             {needsOtherText && (
-              <StyledInput
-                value={survey.howDidYouHearOther ?? ''}
-                onChange={(v) => updateField('howDidYouHearOther', v)}
-                placeholder="Please specify..."
+              <Input
+                id="howDidYouHearOther"
+                name="howDidYouHearOther"
+                label=""
+                hideLabel
+                controlled={{
+                  value: survey.howDidYouHearOther ?? '',
+                  onValueChange: (v) => updateField('howDidYouHearOther', v),
+                }}
+                input={{ placeholder: 'Please specify...' }}
               />
             )}
           </div>
@@ -292,31 +233,35 @@ function SurveyContent() {
               checked={survey.mlhCodeOfConduct ?? false}
               onChange={() => updateField('mlhCodeOfConduct', !survey.mlhCodeOfConduct)}
             >
-              I have read and agree to the{' '}
-              <YellowLink href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md">
-                MLH Code of Conduct
-              </YellowLink>.{' '}
-              <span className="text-error-400">*</span>
+              <span className="inline">
+                I have read and agree to the{' '}
+                <HyperLink href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md" target="_blank" rel="noopener noreferrer" className="!px-0 !py-0 inline">
+                  MLH Code of Conduct
+                </HyperLink>.{' '}
+                <span className="text-error-400">*</span>
+              </span>
             </StyledCheckbox>
 
             <StyledCheckbox
               checked={survey.mlhDataPermission ?? false}
               onChange={() => updateField('mlhDataPermission', !survey.mlhDataPermission)}
             >
-              I authorize you to share my application/registration information with Major
-              League Hacking for event administration, ranking, and MLH administration
-              in-line with the{' '}
-              <YellowLink href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md">
-                MLH Privacy Policy
-              </YellowLink>. I further agree to the terms of both the{' '}
-              <YellowLink href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md">
-                MLH Contest Terms and Conditions
-              </YellowLink>{' '}
-              and the{' '}
-              <YellowLink href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md">
-                MLH Privacy Policy
-              </YellowLink>.{' '}
-              <span className="text-error-400">*</span>
+              <span className="inline">
+                I authorize you to share my application/registration information with Major
+                League Hacking for event administration, ranking, and MLH administration
+                in-line with the{' '}
+                <HyperLink href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md" target="_blank" rel="noopener noreferrer" className="!px-0 !py-0 inline">
+                  MLH Privacy Policy
+                </HyperLink>. I further agree to the terms of both the{' '}
+                <HyperLink href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank" rel="noopener noreferrer" className="!px-0 !py-0 inline">
+                  MLH Contest Terms and Conditions
+                </HyperLink>{' '}
+                and the{' '}
+                <HyperLink href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md" target="_blank" rel="noopener noreferrer" className="!px-0 !py-0 inline">
+                  MLH Privacy Policy
+                </HyperLink>.{' '}
+                <span className="text-error-400">*</span>
+              </span>
             </StyledCheckbox>
 
             <StyledCheckbox
@@ -335,20 +280,20 @@ function SurveyContent() {
   };
 
   return (
-    <FormStep
-      handlePrevSection={handlePrevSection}
-      handleNextSection={canProceed() ? handleNextSection : undefined}
-      current={page}
-      total={totalPages}
-      label={currentPageConfig?.label ?? ''}
-      required={currentPageConfig?.required ?? false}
-    >
-      {renderPage()}
-    </FormStep>
+        <FormStep
+          handlePrevSection={handlePrevSection}
+          handleNextSection={handleNextSection}
+          current={page}
+          total={totalPages}
+          label={currentPageConfig?.label ?? ''}
+          required={currentPageConfig?.required ?? false}
+        >
+          {renderPage()}
+        
+        </FormStep>
   );
 }
 
-// Default export wraps the inner component in Suspense
 export default function Survey() {
   return (
     <Suspense>
