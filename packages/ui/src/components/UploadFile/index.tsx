@@ -1,3 +1,5 @@
+'use client';
+
 import { ChangeEvent, useImperativeHandle, useRef, useState } from 'react';
 import cn from 'classnames';
 import { Upload, X } from 'lucide-react';
