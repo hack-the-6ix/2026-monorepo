@@ -5,9 +5,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button, Typography } from '@hackthe6ix/ui';
 
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+
 import { CharacterFrame } from '@/components/CharacterFrame';
-import { ArrowLeftIcon, ArrowRightIcon } from '@/components/Icons';
-import { StepIndicator } from '@/components/StepIndicator';
 import { useApplicationContext } from '@/context/ApplicationContext';
 import type { AccessoryKey, CharacterKey } from '@/lib/schemas/character';
 
@@ -88,11 +88,11 @@ export default function CharacterSheetPage() {
                 textSize="subtitle-sm"
                 textWeight="bold"
                 textColor="text-yellow-300"
-                className="hidden md:block"
+                className="hidden md:block whitespace-nowrap"
               >
                 What do you see?
               </Typography>
-              <div className="hidden md:grid grid-cols-5 gap-3 max-w-none">
+              <div className="hidden md:grid grid-cols-5 gap-3 md:max-lg:gap-16 max-w-none">
                 {COLORS.map((c) => {
                   const isSelected = character === COLOR_TO_CHARACTER[c.id];
                   return (
@@ -113,16 +113,31 @@ export default function CharacterSheetPage() {
                 })}
               </div>
             </div>
-            <div className="hidden md:flex flex-col gap-3 mt-4 items-end md:mt-16 md:translate-x-[20%]">
+            <div className="hidden md:flex flex-col gap-3 mt-4 md:items-start lg:items-end md:mt-16 md:max-lg:mt-2 lg:translate-x-[20%]">
               <Button
                 onClick={() => setStep(2)}
                 disabled={!character}
-                iconLeft={<ArrowRightIcon />}
+                iconLeft={<ArrowRight size="inherit" />}
                 className="w-[200px] justify-center"
               >
                 That&apos;s me!
               </Button>
-              <StepIndicator current={1} total={2} />
+              <div className="flex items-center gap-3">
+                <Typography
+                  as="span"
+                  textSize="paragraph-sm"
+                  textWeight="medium"
+                  textColor="text-white/80"
+                >
+                  1/2
+                </Typography>
+                <div className="relative h-2.5 w-40 rounded-full bg-white/20 overflow-hidden">
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full bg-primary-500 transition-all"
+                    style={{ width: '50%' }}
+                  />
+                </div>
+              </div>
             </div>
           </>
         ) : (
@@ -141,7 +156,7 @@ export default function CharacterSheetPage() {
                 </span>
                 ?
               </Typography>
-              <div className="hidden md:flex flex-wrap gap-3">
+              <div className="hidden md:flex flex-nowrap gap-3">
                 {CHARMS.map((c) => {
                   const isSelected = accessory === c.id;
                   return (
@@ -169,12 +184,12 @@ export default function CharacterSheetPage() {
                 })}
               </div>
             </div>
-            <div className="hidden md:flex flex-col gap-3 mt-4 items-end md:mt-16 md:translate-x-[20%]">
+            <div className="hidden md:flex flex-col gap-3 mt-4 md:items-start lg:items-end md:mt-16 md:max-lg:mt-2 lg:translate-x-[20%]">
               <div className="flex gap-3">
                 <Button
                   kind="secondary"
                   onClick={() => setStep(1)}
-                  iconLeft={<ArrowLeftIcon />}
+                  iconLeft={<ArrowLeft size="inherit" />}
                   className="w-[140px] justify-center [--button-color:#fff]"
                 >
                   Back
@@ -182,19 +197,34 @@ export default function CharacterSheetPage() {
                 <Button
                   onClick={() => router.push('/about-you')}
                   disabled={!accessory}
-                  iconLeft={<ArrowRightIcon />}
+                  iconLeft={<ArrowRight size="inherit" />}
                   className="w-[140px] justify-center"
                 >
                   Next
                 </Button>
               </div>
-              <StepIndicator current={2} total={2} />
+              <div className="flex items-center gap-3">
+                <Typography
+                  as="span"
+                  textSize="paragraph-sm"
+                  textWeight="medium"
+                  textColor="text-white/80"
+                >
+                  2/2
+                </Typography>
+                <div className="relative h-2.5 w-40 rounded-full bg-white/20 overflow-hidden">
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full bg-primary-500 transition-all"
+                    style={{ width: '100%' }}
+                  />
+                </div>
+              </div>
             </div>
           </>
         )}
       </section>
 
-      <section className="md:row-span-2 md:row-start-1 md:col-start-2 flex items-center justify-center md:translate-x-24 md:translate-y-20">
+      <section className="flex items-center justify-center md:fixed md:right-[22vw] md:bottom-[19vw] lg:bottom-[28vw] md:max-lg:right-[20vw] md:max-lg:bottom-[88vw] md:translate-x-1/2 md:translate-y-1/2 md:z-10 md:pointer-events-none">
         <CharacterFrame
           characterKey={displayCharacter}
           accessory={accessorySrc}
@@ -229,12 +259,27 @@ export default function CharacterSheetPage() {
               <Button
                 onClick={() => setStep(2)}
                 disabled={!character}
-                iconLeft={<ArrowRightIcon />}
+                iconLeft={<ArrowRight size="inherit" />}
                 className="w-full max-w-[300px] self-center"
               >
                 That&apos;s me!
               </Button>
-              <StepIndicator current={1} total={2} className="self-end" />
+              <div className="flex items-center gap-3 self-end">
+                <Typography
+                  as="span"
+                  textSize="paragraph-sm"
+                  textWeight="medium"
+                  textColor="text-white/80"
+                >
+                  1/2
+                </Typography>
+                <div className="relative h-2.5 w-40 rounded-full bg-white/20 overflow-hidden">
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full bg-primary-500 transition-all"
+                    style={{ width: '50%' }}
+                  />
+                </div>
+              </div>
             </div>
           </>
         ) : (
@@ -272,7 +317,7 @@ export default function CharacterSheetPage() {
                 <Button
                   kind="secondary"
                   onClick={() => setStep(1)}
-                  iconLeft={<ArrowLeftIcon />}
+                  iconLeft={<ArrowLeft size="inherit" />}
                   className="w-full [--button-color:#fff]"
                 >
                   Back
@@ -280,13 +325,28 @@ export default function CharacterSheetPage() {
                 <Button
                   onClick={() => router.push('/about-you')}
                   disabled={!accessory}
-                  iconLeft={<ArrowRightIcon />}
+                  iconLeft={<ArrowRight size="inherit" />}
                   className="w-full"
                 >
                   Next
                 </Button>
               </div>
-              <StepIndicator current={2} total={2} className="self-end" />
+              <div className="flex items-center gap-3 self-end">
+                <Typography
+                  as="span"
+                  textSize="paragraph-sm"
+                  textWeight="medium"
+                  textColor="text-white/80"
+                >
+                  2/2
+                </Typography>
+                <div className="relative h-2.5 w-40 rounded-full bg-white/20 overflow-hidden">
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full bg-primary-500 transition-all"
+                    style={{ width: '100%' }}
+                  />
+                </div>
+              </div>
             </div>
           </>
         )}

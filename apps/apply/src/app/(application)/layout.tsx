@@ -6,7 +6,7 @@ export default function ApplicationLayout({ children }: LayoutProps<'/'>) {
     <ApplicationContextProvider>
       <div className="py-8 px-6 md:p-12 min-h-screen md:max-h-screen md:overflow-hidden">
         <Navbar />
-        <main className="pt-4 md:pt-30 md:p-25">{children}</main>
+        <main className="pt-4 md:pt-30 md:p-25 md:max-lg:px-[calc(15vw-3rem)]">{children}</main>
       </div>
     </ApplicationContextProvider>
   );
