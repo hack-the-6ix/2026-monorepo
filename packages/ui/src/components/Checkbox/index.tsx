@@ -1,12 +1,8 @@
 'use client';
 
-import {
-  ComponentPropsWithRef,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import { ComponentPropsWithRef } from 'react';
 import cn from 'classnames';
+import { Check } from 'lucide-react';
 
 import { InputGroup, InputGroupProps } from '../InputGroup';
 import { Typography } from '../Typography';
@@ -23,76 +19,66 @@ export interface CheckboxProps extends Omit<InputGroupProps<'div'>, 'ref'> {
     label: string;
     value: string;
   };
+  ref?: React.Ref<HTMLDivElement>;
 }
 
-export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
-  ({ input, controlled, option, ...props }, forwardedRef) => {
-    const ref = useRef<HTMLDivElement>(null);
-    useImperativeHandle(forwardedRef, () => ref.current!);
+export const Checkbox = ({
+  ref, 
+  input,
+  controlled,
+  option,
+  ...props
+}: CheckboxProps) => {
+  const isChecked =
+    controlled?.value ?? input?.checked ?? input?.defaultChecked;
 
-    return (
-      <InputGroup {...props} ref={ref}>
-        <Typography
-          className={'checkbox__box dark:text-white dark:font-normal'}
-          textColor={
-            props.disabled ? 'text-neutral-400'
-            : props.info?.type === 'error' ?
-              'text-error-500'
-            : 'text-indigo-700'
-          }
-          textSize="paragraph-sm"
-          textWeight="medium"
-          as="label"
+  return (
+    <InputGroup {...props} ref={ref}>
+      <Typography
+        className={'checkbox__box dark:text-white dark:font-normal'}
+        textColor={
+          props.disabled ? 'text-neutral-400'
+          : props.info?.type === 'error' ?
+            'text-error-500'
+          : 'text-indigo-700'
+        }
+        textSize="paragraph-sm"
+        textWeight="medium"
+        as="label"
+      >
+        <input
+          {...input}
+          type="checkbox"
+          className={cn('checkbox__el', input?.className)}
+          onChange={(e) => {
+            controlled?.onValueChange?.(e.target.checked);
+            input?.onChange?.(e);
+          }}
+          checked={isChecked}
+          aria-describedby={`${props.id}--${props.name}--status`}
+          aria-invalid={props.info?.type === 'error'}
+          value={option.value}
+          required={props.required}
+          disabled={props.disabled}
+          id={`${props.id}--input`}
+          name={props.name}
+        />
+        <div
+          className={cn(
+            'checkbox__ui',
+            isChecked && 'checkbox__ui--filled',
+            props.disabled && 'checkbox__ui--disabled',
+            props.info?.type === 'error' &&
+              !props.disabled &&
+              'checkbox__ui--error',
+          )}
         >
-          <input
-            {...input}
-            type="checkbox"
-            className={cn('checkbox__el', input?.className)}
-            onChange={(e) => {
-              controlled?.onValueChange?.(e.target.checked);
-              input?.onChange?.(e);
-            }}
-            checked={controlled?.value ?? input?.defaultChecked}
-            aria-describedby={`${props.id}--${props.name}--status`}
-            aria-invalid={props.info?.type === 'error'}
-            value={option.value}
-            required={props.required}
-            disabled={props.disabled}
-            id={`${props.id}--input`}
-            name={props.name}
-          />
-          <div
-            className={cn(
-              'checkbox__ui',
-              (controlled?.value ?? input?.defaultChecked) &&
-                'checkbox__ui--filled',
-              props.disabled && 'checkbox__ui--disabled',
-              props.info?.type === 'error' &&
-                !props.disabled &&
-                'checkbox__ui--error',
-            )}
-          >
-            {(controlled?.value ?? input?.defaultChecked) && (
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10 3L4.5 8.5L2 6"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            )}
-          </div>
-          <span>{option.label}</span>
-        </Typography>
-      </InputGroup>
-    );
-  },
-);
+          {isChecked && (
+            <Check size={12} strokeWidth={3} className="text-primary-100" />
+          )}
+        </div>
+        <span>{option.label}</span>
+      </Typography>
+    </InputGroup>
+  );
+};
