@@ -10,24 +10,24 @@ const PAGES = [
   {
     fieldName: 'longEssay',
     label:
-      "Tell us about a project you've enjoyed working on (this can be non-technical!). What made you decide to work on this project? What challenges did you face and how did you overcome them?",
-    placeholder: 'My favourite project...',
+      "What is something you are exceptional at? We're talking the best of the best.",
+    placeholder: 'I am the goat at...',
     maxWords: 200,
     rows: 10,
   },
   {
     fieldName: 'shortEssay',
     label:
-      'If you could not do anything related to school, work, or coding for 4 months, what would you do and why?',
-    placeholder: 'I would...',
+      "What is your craziest hackathon story? Tell us everything, we're nosy! If you haven't been to a hackathon before, tell us about your craziest group project (Please leave names of people out of this).",
+    placeholder: 'So basically...',
     maxWords: 50,
     rows: 8,
   },
   {
     fieldName: 'oneSentenceEssay',
     label:
-      'You are given an elephant. You cannot sell or give away the elephant. What do you do with the elephant?',
-    placeholder: 'I would...',
+      'How would your worst enemy describe you?',
+    placeholder: 'They would say...',
     maxWords: 20,
     rows: 4,
   },
