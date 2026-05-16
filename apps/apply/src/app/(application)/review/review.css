@@ -1,0 +1,146 @@
+/* Submit application confirmation — dimmer overlay than default hosted modal */
+dialog.submit-application-modal {
+  width: min(92vw, 22rem);
+  max-width: min(92vw, 22rem);
+}
+
+dialog.submit-application-modal::backdrop {
+  background: rgba(8, 6, 24, 0.72);
+}
+
+.review-edit-button {
+  --button-color: white;
+  --button-color-focus: var(--color-warning-300);
+  --button-color-pressed: var(--color-warning-400);
+  border-color: rgb(255 255 255 / 0.85) !important;
+  background: transparent !important;
+  color: white !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.review-edit-button:hover {
+  border-color: var(--color-warning-300) !important;
+  color: var(--color-warning-300) !important;
+}
+
+.review-back-button {
+  --button-color: white;
+  --button-color-focus: var(--color-primary-500);
+  --button-color-pressed: var(--color-primary-600);
+  border-color: white !important;
+  color: white !important;
+  background: transparent !important;
+}
+
+.review-back-button:hover {
+  border-color: var(--color-primary-500) !important;
+  color: var(--color-primary-500) !important;
+}
+
+.review-panel-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.25) transparent;
+}
+
+.review-panel-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.review-panel-scroll::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.25);
+}
+
+.review-panel-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* No document scroll; only card body scrolls */
+body:has(.review-route) {
+  overflow: hidden !important;
+}
+
+.review-route {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.review-route .review-page,
+.review-route .review-panel {
+  flex: 1 1 0%;
+  min-height: 0;
+}
+
+.review-route .review-panel-scroll {
+  flex: 1 1 0%;
+  min-height: 0;
+}
+
+@media (min-width: 768px) {
+  main:has(.review-route) {
+    overflow: hidden !important;
+    padding-top: 5rem !important;
+    padding-right: 3rem !important;
+    padding-bottom: 1rem !important;
+    padding-left: 3rem !important;
+  }
+
+  .review-route {
+    height: 100%;
+    max-height: 100%;
+  }
+
+  .review-route .review-page,
+  .review-route .review-panel {
+    max-height: 100%;
+  }
+
+  .review-actions {
+    flex-shrink: 0;
+  }
+}
+
+.review-mobile-actions {
+  background: transparent;
+}
+
+.review-tooltip-wrap {
+  --review-tooltip-bg: #1f1b4b;
+  --review-tooltip-bubble-offset-left: 12px;
+  --review-tooltip-bubble-offset-top: -4px;
+
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 24px rgb(0 0 0 / 0.4));
+}
+
+.review-tooltip-arrow {
+  position: absolute;
+  top: -7px;
+  left: 8px;
+  width: 14px;
+  height: 14px;
+  background-color: var(--review-tooltip-bg);
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 2px 0 0 0;
+}
+
+.review-tooltip-popup {
+  position: relative;
+  width: min(calc(100vw - 3rem), 20rem);
+  max-width: 20rem;
+  margin: var(--review-tooltip-bubble-offset-top) 0 0
+    calc(-1 * var(--review-tooltip-bubble-offset-left));
+  padding: 0.875rem 1rem;
+  border-radius: 1rem;
+  background-color: var(--review-tooltip-bg);
+  color: #f9fafb;
+  font-size: 0.75rem;
+  line-height: 1.375;
+  font-weight: 500;
+  text-align: left;
+}
