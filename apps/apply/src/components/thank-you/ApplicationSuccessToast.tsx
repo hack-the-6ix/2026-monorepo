@@ -35,4 +35,3 @@ export default function ApplicationSuccessToast({
     </div>
   );
 }
-

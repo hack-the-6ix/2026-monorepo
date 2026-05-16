@@ -78,9 +78,9 @@ function requiredStringsOk(
 }
 
 function requiredBoolOk(values: unknown[]): ReviewSectionStatus {
-  return values.every((v) => v === true || v === 'true')
-    ? 'complete'
-    : 'incomplete';
+  return values.every((v) => v === true || v === 'true') ? 'complete' : (
+      'incomplete'
+    );
 }
 
 export const reviewSections: ReviewSectionConfig[] = [
@@ -177,7 +177,9 @@ export const reviewSections: ReviewSectionConfig[] = [
         label: 'Province',
         required: true,
         getValue: (d) =>
-          displayValue(section(d, 'aboutYou')['province'] as string | undefined),
+          displayValue(
+            section(d, 'aboutYou')['province'] as string | undefined,
+          ),
       },
       {
         label: 'Country',
@@ -277,7 +279,9 @@ export const reviewSections: ReviewSectionConfig[] = [
         label: 'Program',
         required: true,
         getValue: (d) =>
-          displayValue(section(d, 'experiences')['program'] as string | undefined),
+          displayValue(
+            section(d, 'experiences')['program'] as string | undefined,
+          ),
       },
       {
         label: 'Year of study',
@@ -316,9 +320,7 @@ export const reviewSections: ReviewSectionConfig[] = [
         label: 'Resume share permission',
         getValue: (d) =>
           displayValue(
-            formatBoolean(
-              section(d, 'experiences')['resume_share_permission'],
-            ),
+            formatBoolean(section(d, 'experiences')['resume_share_permission']),
           ),
       },
       {
@@ -404,8 +406,8 @@ export const reviewSections: ReviewSectionConfig[] = [
         s['mlh_email'],
         s['mlh_data'],
       ]);
-      return stringsOk === 'complete' && boolsOk === 'complete'
-        ? 'complete'
+      return stringsOk === 'complete' && boolsOk === 'complete' ?
+          'complete'
         : 'incomplete';
     },
     fields: [
@@ -413,7 +415,9 @@ export const reviewSections: ReviewSectionConfig[] = [
         label: 'Workshop interest',
         required: true,
         getValue: (d) =>
-          displayValue(formatWorkshops(section(d, 'survey')['workshops_interest'])),
+          displayValue(
+            formatWorkshops(section(d, 'survey')['workshops_interest']),
+          ),
       },
       {
         label: 'Dietary restrictions',
@@ -425,9 +429,7 @@ export const reviewSections: ReviewSectionConfig[] = [
       {
         label: 'Allergies',
         getValue: (d) =>
-          displayValue(
-            section(d, 'survey')['allergies'] as string | undefined,
-          ),
+          displayValue(section(d, 'survey')['allergies'] as string | undefined),
       },
       {
         label: 'MLH Code of Conduct',

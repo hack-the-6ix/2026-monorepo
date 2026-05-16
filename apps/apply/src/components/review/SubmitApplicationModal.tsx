@@ -37,9 +37,7 @@ export default function SubmitApplicationModal({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      label={
-        <span className="whitespace-nowrap">Submit Application?</span>
-      }
+      label={<span className="whitespace-nowrap">Submit Application?</span>}
       actions={actions}
       className="submit-application-modal gap-4 !w-[min(92vw,22rem)] !max-w-[min(92vw,22rem)] !bg-[#1a1625] !p-6 text-center shadow-[0_12px_48px_rgba(0,0,0,0.55)] md:gap-5 md:!p-7"
     >

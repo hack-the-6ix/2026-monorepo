@@ -5,15 +5,15 @@ import { Button, Typography } from '@hackthe6ix/ui';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+import ReviewSection from '@/components/review/ReviewSection';
+import ReviewStatusBadge from '@/components/review/ReviewStatusBadge';
+import SubmitApplicationModal from '@/components/review/SubmitApplicationModal';
+import { useApplicationContext } from '@/context/ApplicationContext';
 import {
   getApplicationReadiness,
   getSectionStatus,
   reviewSections,
 } from './reviewConfig';
-import ReviewSection from '@/components/review/ReviewSection';
-import ReviewStatusBadge from '@/components/review/ReviewStatusBadge';
-import SubmitApplicationModal from '@/components/review/SubmitApplicationModal';
-import { useApplicationContext } from '@/context/ApplicationContext';
 
 export default function ReviewPage() {
   const router = useRouter();

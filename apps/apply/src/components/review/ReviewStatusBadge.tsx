@@ -16,9 +16,9 @@ export default function ReviewStatusBadge({
     return (
       <div
         className={`inline-flex items-center gap-2 rounded-full px-4 py-2 ${
-          fullWidth
-            ? 'w-full justify-center border-0 bg-[#B8EBD0] py-3 md:border md:border-success-400/30 md:bg-success-500/15 md:py-2.5'
-            : 'border border-success-400/30 bg-success-500/15'
+          fullWidth ?
+            'w-full justify-center border-0 bg-[#B8EBD0] py-3 md:border md:border-success-400/30 md:bg-success-500/15 md:py-2.5'
+          : 'border border-success-400/30 bg-success-500/15'
         } ${className}`}
       >
         <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-success-400 text-white">

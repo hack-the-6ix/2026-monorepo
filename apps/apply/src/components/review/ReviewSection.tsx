@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Button, Typography } from '@hackthe6ix/ui';
 import { ArrowRight, Check } from 'lucide-react';
@@ -15,7 +15,6 @@ import ReviewField from './ReviewField';
 
 const INCOMPLETE_SECTION_TOOLTIP =
   'Oops! Looks like this section contains a required question that is either blank or a bit too long.';
-
 
 interface ReviewSectionProps {
   section: ReviewSectionConfig;
@@ -47,13 +46,8 @@ function CompleteIcon() {
 
 function SectionIncompleteTooltip({ description }: { description: string }) {
   const triggerRef = useRef<HTMLSpanElement>(null);
-  const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
-
-  useLayoutEffect(() => {
-    setMounted(true);
-  }, []);
 
   const placeTooltip = useCallback(() => {
     const trigger = triggerRef.current;
@@ -103,8 +97,7 @@ function SectionIncompleteTooltip({ description }: { description: string }) {
       >
         <IncompleteIcon />
       </span>
-      {mounted &&
-        visible &&
+      {visible &&
         createPortal(
           <div
             role="tooltip"
@@ -140,15 +133,13 @@ export default function ReviewSection({
           >
             {section.title}
           </Typography>
-          {isIncomplete ? (
+          {isIncomplete ?
             <SectionIncompleteTooltip
               description={
                 section.incompleteTooltip ?? INCOMPLETE_SECTION_TOOLTIP
               }
             />
-          ) : (
-            <CompleteIcon />
-          )}
+          : <CompleteIcon />}
         </div>
 
         <Button

@@ -6,9 +6,9 @@ import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+import { getApplicationReadiness } from '@/app/(application)/review/reviewConfig';
 import ThankYouCandle from '@/assets/thank_you_candle.png';
 import ApplicationSuccessToast from '@/components/thank-you/ApplicationSuccessToast';
-import { getApplicationReadiness } from '@/app/(application)/review/reviewConfig';
 import { useApplicationContext } from '@/context/ApplicationContext';
 
 const DASHBOARD_URL =
