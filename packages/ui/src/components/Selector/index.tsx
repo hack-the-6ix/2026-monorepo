@@ -43,7 +43,10 @@ export function Selector({
 
   const [isOpen, setIsOpen] = useState(false);
   const [isOtherSelected, setIsOtherSelected] = useState(false);
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState(() => {
+    if (!controlled?.value) return '';
+    return options.find((opt) => opt.value === controlled.value)?.label ?? '';
+  });
 
   const allOptions = useMemo(() => {
     if (hasOther)
@@ -165,7 +168,10 @@ export function Selector({
           className="fixed inset-0 z-10"
           onClick={() => {
             setIsOpen(false);
-            setSearchInput('');
+            const currentLabel =
+              options.find((opt) => opt.value === controlled?.value)?.label ??
+              '';
+            setSearchInput(currentLabel);
           }}
         />
       )}

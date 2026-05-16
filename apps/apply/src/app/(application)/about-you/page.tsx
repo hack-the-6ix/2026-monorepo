@@ -1,49 +1,277 @@
 'use client';
-import { Input } from '@hackthe6ix/ui';
-import { useRouter } from 'next/navigation';
+import { Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Input, Selector, Typography } from '@hackthe6ix/ui';
 
 import FormStep from '@/components/FormStep';
-import { useApplicationContext } from '@/context/ApplicationContext';
+import { useApplicationContext, FormData } from '@/context/ApplicationContext';
+import { GENDER_OPTIONS, ETHNICITY_OPTIONS, COUNTRY_OPTIONS, PROVINCE_OPTIONS } from './enums';
 
-export default function AboutYou() {
+type AboutYouData = FormData['aboutYou'];
+
+type PageKey = 'fullName' | 'email' | 'location' | 'demographics';
+
+interface PageConfig {
+  key: PageKey;
+  label: string;
+  required: boolean;
+}
+
+const PAGES: PageConfig[] = [
+  { key: 'fullName',      label: 'Gorgeous! Now, about yourself...',          required: true  },
+  { key: 'email',         label: "What's your email?",                        required: true  },
+  { key: 'location',      label: 'Where are you located?',                    required: true  },
+{ key: 'demographics',  label: 'Please specify your gender and background:', required: false },
+];
+
+function StyledCheckbox({
+  checked,
+  onChange,
+  children,
+}: {
+  checked: boolean;
+  onChange: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="flex items-start gap-3 cursor-pointer rounded-lg bg-white/10 border border-white/20 px-4 py-3 hover:bg-white/15 transition-colors select-none">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={onChange}
+        className="w-4 h-4 mt-0.5 accent-primary-400 shrink-0"
+      />
+      <Typography textSize="paragraph-sm" textColor="text-white">
+        {children}
+      </Typography>
+    </label>
+  );
+}
+
+function AboutYouContent() {
   const router = useRouter();
-
-  const handlePrevSection = () => {
-    router.push('/about-you/character-sheet');
-  };
-  const handleNextSection = () => {
-    router.push('/experiences');
-  };
+  const searchParams = useSearchParams();
+  const page = parseInt(searchParams.get('page') || '1');
 
   const { formData, updateFormData } = useApplicationContext();
+  const aboutYou = formData.aboutYou;
 
-  const updateField = (fieldName: string, value: string) => {
-    updateFormData('aboutYou', {
-      ...formData.aboutYou,
-      [fieldName]: value,
-    });
+  const updateField = <K extends keyof AboutYouData>(field: K, value: AboutYouData[K]) => {
+    updateFormData('aboutYou', { ...aboutYou, [field]: value });
+  };
+
+  const totalPages = PAGES.length;
+  const currentPageConfig = PAGES[page - 1];
+
+  const goToPage = (p: number) => router.push(`/about-you?page=${p}`);
+
+  const handlePrevSection = () => {
+    if (page > 1) goToPage(page - 1);
+    else router.push('/about-you/character-sheet');
+  };
+
+  const handleNextSection = () => {
+    if (page < totalPages) goToPage(page + 1);
+    else router.push('/experiences');
+  };
+
+  const renderPage = () => {
+    if (!currentPageConfig) return null;
+
+    switch (currentPageConfig.key) {
+      case 'fullName':
+        return (
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                id="firstName"
+                name="firstName"
+                label="First Name"
+                required
+                controlled={{
+                  value: aboutYou.firstName ?? '',
+                  onValueChange: (v) => updateField('firstName', v),
+                }}
+                input={{ placeholder: 'John' }}
+              />
+              <Input
+                id="lastName"
+                name="lastName"
+                label="Last Name"
+                required
+                controlled={{
+                  value: aboutYou.lastName ?? '',
+                  onValueChange: (v) => updateField('lastName', v),
+                }}
+                input={{ placeholder: 'Doe' }}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                id="phoneNumber"
+                name="phoneNumber"
+                label="Phone Number"
+                required
+                controlled={{
+                  value: aboutYou.phoneNumber ?? '',
+                  onValueChange: (v) => updateField('phoneNumber', v.replace(/\D/g, '').slice(0, 10)),
+                }}
+                input={{ type: 'tel', inputMode: 'numeric', placeholder: '6471234567' }}
+              />
+              <Input
+                id="age"
+                name="age"
+                label="Age"
+                required
+                controlled={{
+                  value: aboutYou.age ?? '',
+                  onValueChange: (v) => updateField('age', v),
+                }}
+                input={{ type: 'number', min: 0, placeholder: '18' }}
+              />
+            </div>
+          </div>
+        );
+
+      case 'email':
+        return (
+          <div className="flex flex-col gap-4">
+            <Input
+              id="email"
+              name="email"
+              label=""
+              hideLabel
+              controlled={{
+                value: aboutYou.email ?? '',
+                onValueChange: (v) => updateField('email', v),
+              }}
+              input={{ type: 'email', placeholder: 'john.doe@university.com' }}
+            />
+            <StyledCheckbox
+              checked={aboutYou.emailPermission ?? false}
+              onChange={() => updateField('emailPermission', !aboutYou.emailPermission)}
+            >
+              I give permission to Hack the 6ix for sending me emails containing information
+              from the event sponsors.
+            </StyledCheckbox>
+          </div>
+        );
+
+      case 'location':
+        return (
+          <div className="flex flex-col gap-4">
+            <Input
+              id="city"
+              name="city"
+              label="City"
+              required
+              controlled={{
+                value: aboutYou.city ?? '',
+                onValueChange: (v) => updateField('city', v),
+              }}
+              input={{ placeholder: 'Toronto' }}
+            />
+            <div className="grid grid-cols-2 gap-4">
+              <Selector
+                id="country"
+                name="country"
+                label="Country"
+                required
+                options={[...COUNTRY_OPTIONS]}
+                hasOther={false}
+                controlled={{
+                  value: aboutYou.country ?? '',
+                  onValueChange: (v) => {
+                    updateFormData('aboutYou', {
+                      ...aboutYou,
+                      country: v,
+                      province: v !== 'Canada' ? '' : aboutYou.province,
+                    });
+                  },
+                }}
+              />
+              {aboutYou.country === 'Canada' && (
+                <Selector
+                  id="province"
+                  name="province"
+                  label="Province"
+                  required
+                  options={[...PROVINCE_OPTIONS]}
+                  hasOther={false}
+                  controlled={{
+                    value: aboutYou.province ?? '',
+                    onValueChange: (v) => updateField('province', v),
+                  }}
+                />
+              )}
+            </div>
+          </div>
+        );
+
+      case 'demographics':
+        return (
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <Selector
+                id="gender"
+                name="gender"
+                label="Gender"
+                options={[...GENDER_OPTIONS]}
+                hasOther={false}
+                controlled={{
+                  value: aboutYou.gender ?? '',
+                  onValueChange: (v) => updateField('gender', v),
+                }}
+              />
+              <Selector
+                id="ethnicity"
+                name="ethnicity"
+                label="Ethnicity"
+                options={[...ETHNICITY_OPTIONS]}
+                hasOther={false}
+                controlled={{
+                  value: aboutYou.ethnicity ?? '',
+                  onValueChange: (v) => updateField('ethnicity', v),
+                }}
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <Typography textSize="paragraph-sm" textWeight="semi-bold" textColor="text-white">
+                Why are we asking this?
+              </Typography>
+              <Typography textSize="paragraph-sm" textColor="text-white/70">
+                Hack the 6ix is committed to fostering an inclusive and diverse community. We
+                collect this information solely to better understand our applicant pool and
+                ensure we are reaching a wide range of backgrounds. This data is anonymized and
+                will never be used to make admission decisions.
+              </Typography>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
   };
 
   return (
     <FormStep
       handlePrevSection={handlePrevSection}
       handleNextSection={handleNextSection}
-      current={1}
-      total={2}
-      label="About You"
-      required={true}
+      current={page}
+      total={totalPages}
+      label={currentPageConfig?.label ?? ''}
+      required={currentPageConfig?.required ?? false}
     >
-      <Input
-        label="Test3"
-        hideLabel={false}
-        name="test3"
-        id="test3"
-        controlled={{
-          value: formData.aboutYou.test3 || '',
-          onValueChange: (val) => updateField('test3', val),
-        }}
-        input={{ placeholder: 'placeholder' }}
-      />
+      {renderPage()}
     </FormStep>
+  );
+}
+
+export default function AboutYou() {
+  return (
+    <Suspense>
+      <AboutYouContent />
+    </Suspense>
   );
 }

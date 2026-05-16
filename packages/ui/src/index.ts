@@ -16,3 +16,5 @@ export * from './components/Selector';
 export * from './components/Tooltip';
 export * from './components/Typography';
 export * from './components/UploadFile';
+export * from './components/Tooltip';
+export * from './components/Selector';
