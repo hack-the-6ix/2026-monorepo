@@ -1,11 +1,16 @@
 'use client';
 import { Suspense } from 'react';
+import { Checkbox, Input, Selector, Typography } from '@hackthe6ix/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Input, Selector, Typography } from '@hackthe6ix/ui';
 
 import FormStep from '@/components/FormStep';
-import { useApplicationContext, FormData } from '@/context/ApplicationContext';
-import { GENDER_OPTIONS, ETHNICITY_OPTIONS, COUNTRY_OPTIONS, PROVINCE_OPTIONS } from './enums';
+import { FormData, useApplicationContext } from '@/context/ApplicationContext';
+import {
+  COUNTRY_OPTIONS,
+  ETHNICITY_OPTIONS,
+  GENDER_OPTIONS,
+  PROVINCE_OPTIONS,
+} from './enums';
 
 type AboutYouData = FormData['aboutYou'];
 
@@ -18,35 +23,19 @@ interface PageConfig {
 }
 
 const PAGES: PageConfig[] = [
-  { key: 'fullName',      label: 'Gorgeous! Now, about yourself...',          required: true  },
-  { key: 'email',         label: "What's your email?",                        required: true  },
-  { key: 'location',      label: 'Where are you located?',                    required: true  },
-{ key: 'demographics',  label: 'Please specify your gender and background:', required: false },
+  {
+    key: 'fullName',
+    label: 'Gorgeous! Now, about yourself...',
+    required: true,
+  },
+  { key: 'email', label: "What's your email?", required: true },
+  { key: 'location', label: 'Where are you located?', required: true },
+  {
+    key: 'demographics',
+    label: 'Please specify your gender and background:',
+    required: false,
+  },
 ];
-
-function StyledCheckbox({
-  checked,
-  onChange,
-  children,
-}: {
-  checked: boolean;
-  onChange: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="flex items-start gap-3 cursor-pointer rounded-lg bg-white/10 border border-white/20 px-4 py-3 hover:bg-white/15 transition-colors select-none">
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-        className="w-4 h-4 mt-0.5 accent-primary-400 shrink-0"
-      />
-      <Typography textSize="paragraph-sm" textColor="text-white">
-        {children}
-      </Typography>
-    </label>
-  );
-}
 
 function AboutYouContent() {
   const router = useRouter();
@@ -56,7 +45,10 @@ function AboutYouContent() {
   const { formData, updateFormData } = useApplicationContext();
   const aboutYou = formData.aboutYou;
 
-  const updateField = <K extends keyof AboutYouData>(field: K, value: AboutYouData[K]) => {
+  const updateField = <K extends keyof AboutYouData>(
+    field: K,
+    value: AboutYouData[K],
+  ) => {
     updateFormData('aboutYou', { ...aboutYou, [field]: value });
   };
 
@@ -114,9 +106,17 @@ function AboutYouContent() {
                 required
                 controlled={{
                   value: aboutYou.phoneNumber ?? '',
-                  onValueChange: (v) => updateField('phoneNumber', v.replace(/\D/g, '').slice(0, 10)),
+                  onValueChange: (v) =>
+                    updateField(
+                      'phoneNumber',
+                      v.replace(/\D/g, '').slice(0, 10),
+                    ),
                 }}
-                input={{ type: 'tel', inputMode: 'numeric', placeholder: '6471234567' }}
+                input={{
+                  type: 'tel',
+                  inputMode: 'numeric',
+                  placeholder: '6471234567',
+                }}
               />
               <Input
                 id="age"
@@ -147,13 +147,21 @@ function AboutYouContent() {
               }}
               input={{ type: 'email', placeholder: 'john.doe@university.com' }}
             />
-            <StyledCheckbox
-              checked={aboutYou.emailPermission ?? false}
-              onChange={() => updateField('emailPermission', !aboutYou.emailPermission)}
-            >
-              I give permission to Hack the 6ix for sending me emails containing information
-              from the event sponsors.
-            </StyledCheckbox>
+            <Checkbox
+              id="emailPermission"
+              name="emailPermission"
+              label="Email Permission"
+              hideLabel
+              option={{
+                label:
+                  'I give permission to Hack the 6ix for sending me emails containing information from the event sponsors.',
+                value: 'emailPermission',
+              }}
+              controlled={{
+                value: aboutYou.emailPermission ?? false,
+                onValueChange: (v) => updateField('emailPermission', v),
+              }}
+            />
           </div>
         );
 
@@ -236,14 +244,19 @@ function AboutYouContent() {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <Typography textSize="paragraph-sm" textWeight="semi-bold" textColor="text-white">
+              <Typography
+                textSize="paragraph-sm"
+                textWeight="semi-bold"
+                textColor="text-white"
+              >
                 Why are we asking this?
               </Typography>
               <Typography textSize="paragraph-sm" textColor="text-white/70">
-                Hack the 6ix is committed to fostering an inclusive and diverse community. We
-                collect this information solely to better understand our applicant pool and
-                ensure we are reaching a wide range of backgrounds. This data is anonymized and
-                will never be used to make admission decisions.
+                Hack the 6ix is committed to fostering an inclusive and diverse
+                community. We collect this information solely to better
+                understand our applicant pool and ensure we are reaching a wide
+                range of backgrounds. This data is anonymized and will never be
+                used to make admission decisions.
               </Typography>
             </div>
           </div>
