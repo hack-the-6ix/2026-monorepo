@@ -39,17 +39,6 @@ function displayValue(value: string | undefined): string {
   return isFilled(value) ? value!.trim() : 'Not filled';
 }
 
-function firstString(
-  ...candidates: (string | undefined | null)[]
-): string | undefined {
-  for (const c of candidates) {
-    if (c != null && String(c).trim().length > 0) {
-      return String(c).trim();
-    }
-  }
-  return undefined;
-}
-
 function rawToDisplay(v: unknown): string | undefined {
   if (v == null || v === '') return undefined;
   const s = String(v).trim();
@@ -59,15 +48,6 @@ function rawToDisplay(v: unknown): string | undefined {
 function formatBoolean(v: unknown): string | undefined {
   if (v === true || v === 'true') return 'Yes';
   if (v === false || v === 'false') return 'No';
-  return undefined;
-}
-
-function formatWorkshops(v: unknown): string | undefined {
-  if (Array.isArray(v)) {
-    const joined = v.filter(Boolean).join(', ');
-    return joined.length > 0 ? joined : undefined;
-  }
-  if (typeof v === 'string' && v.trim().length > 0) return v.trim();
   return undefined;
 }
 
@@ -119,17 +99,9 @@ export const reviewSections: ReviewSectionConfig[] = [
     getStatus: (d) => {
       const cs = section(d, 'characterSheet');
       const ay = section(d, 'aboutYou');
-      const name = firstString(
-        cs['full_name'] as string | undefined,
-        cs['test1'] as string | undefined,
-      );
-      const email = firstString(
-        cs['email'] as string | undefined,
-        cs['test2'] as string | undefined,
-      );
       return requiredStringsOk([
-        name,
-        email,
+        cs['full_name'] as string | undefined,
+        cs['email'] as string | undefined,
         ay['city'] as string | undefined,
         ay['province'] as string | undefined,
         ay['country'] as string | undefined,
@@ -139,28 +111,18 @@ export const reviewSections: ReviewSectionConfig[] = [
       {
         label: 'Full name',
         required: true,
-        getValue: (d) => {
-          const cs = section(d, 'characterSheet');
-          return displayValue(
-            firstString(
-              cs['full_name'] as string | undefined,
-              cs['test1'] as string | undefined,
-            ),
-          );
-        },
+        getValue: (d) =>
+          displayValue(
+            section(d, 'characterSheet')['full_name'] as string | undefined,
+          ),
       },
       {
         label: 'Email',
         required: true,
-        getValue: (d) => {
-          const cs = section(d, 'characterSheet');
-          return displayValue(
-            firstString(
-              cs['email'] as string | undefined,
-              cs['test2'] as string | undefined,
-            ),
-          );
-        },
+        getValue: (d) =>
+          displayValue(
+            section(d, 'characterSheet')['email'] as string | undefined,
+          ),
       },
       {
         label: 'Email consent',
@@ -265,15 +227,10 @@ export const reviewSections: ReviewSectionConfig[] = [
     fields: [
       {
         label: 'School (most recently attended)',
-        getValue: (d) => {
-          const ex = section(d, 'experiences');
-          return displayValue(
-            firstString(
-              ex['school'] as string | undefined,
-              ex['test4'] as string | undefined,
-            ),
-          );
-        },
+        getValue: (d) =>
+          displayValue(
+            section(d, 'experiences')['school'] as string | undefined,
+          ),
       },
       {
         label: 'Program',
@@ -353,10 +310,7 @@ export const reviewSections: ReviewSectionConfig[] = [
     getStatus: (d) => {
       const la = section(d, 'longAnswer');
       return requiredStringsOk([
-        firstString(
-          la['long_essay'] as string | undefined,
-          la['test5'] as string | undefined,
-        ),
+        la['long_essay'] as string | undefined,
         la['short_essay'] as string | undefined,
       ]);
     },
@@ -364,15 +318,10 @@ export const reviewSections: ReviewSectionConfig[] = [
       {
         label: 'Long essay',
         required: true,
-        getValue: (d) => {
-          const la = section(d, 'longAnswer');
-          return displayValue(
-            firstString(
-              la['long_essay'] as string | undefined,
-              la['test5'] as string | undefined,
-            ),
-          );
-        },
+        getValue: (d) =>
+          displayValue(
+            section(d, 'longAnswer')['long_essay'] as string | undefined,
+          ),
       },
       {
         label: 'Short essay',
@@ -399,26 +348,9 @@ export const reviewSections: ReviewSectionConfig[] = [
     editHref: '/survey',
     getStatus: (d) => {
       const s = section(d, 'survey');
-      const workshops = formatWorkshops(s['workshops_interest']);
-      const stringsOk = requiredStringsOk([workshops]);
-      const boolsOk = requiredBoolOk([
-        s['mlh_coc'],
-        s['mlh_email'],
-        s['mlh_data'],
-      ]);
-      return stringsOk === 'complete' && boolsOk === 'complete' ?
-          'complete'
-        : 'incomplete';
+      return requiredBoolOk([s['mlh_coc'], s['mlh_data']]);
     },
     fields: [
-      {
-        label: 'Workshop interest',
-        required: true,
-        getValue: (d) =>
-          displayValue(
-            formatWorkshops(section(d, 'survey')['workshops_interest']),
-          ),
-      },
       {
         label: 'Dietary restrictions',
         getValue: (d) =>
@@ -439,7 +371,6 @@ export const reviewSections: ReviewSectionConfig[] = [
       },
       {
         label: 'MLH emails',
-        required: true,
         getValue: (d) =>
           displayValue(formatBoolean(section(d, 'survey')['mlh_email'])),
       },

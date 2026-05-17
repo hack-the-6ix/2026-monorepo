@@ -20,6 +20,8 @@ export default function ThankYouPage() {
   const { isReady } = getApplicationReadiness(formData);
   const [toastVisible, setToastVisible] = useState(true);
 
+  // TODO: Gate this page on a backend "submission success" response instead of
+  // client-side form readiness.
   useEffect(() => {
     if (!isReady) {
       router.replace('/review');

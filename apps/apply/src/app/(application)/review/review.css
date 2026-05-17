@@ -107,40 +107,21 @@ body:has(.review-route) {
   background: transparent;
 }
 
-.review-tooltip-wrap {
-  --review-tooltip-bg: #1f1b4b;
-  --review-tooltip-bubble-offset-left: 12px;
-  --review-tooltip-bubble-offset-top: -4px;
-
-  position: fixed;
-  z-index: 9999;
-  pointer-events: none;
-  filter: drop-shadow(0 8px 24px rgb(0 0 0 / 0.4));
+.review-section h2 .tooltip {
+  display: inline-flex !important;
+  aspect-ratio: auto !important;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  padding: 0 !important;
+  line-height: 0;
 }
 
-.review-tooltip-arrow {
-  position: absolute;
-  top: -7px;
-  left: 8px;
-  width: 14px;
-  height: 14px;
-  background-color: var(--review-tooltip-bg);
-  transform: translateX(-50%) rotate(45deg);
-  border-radius: 2px 0 0 0;
-}
-
-.review-tooltip-popup {
-  position: relative;
-  width: min(calc(100vw - 3rem), 20rem);
-  max-width: 20rem;
-  margin: var(--review-tooltip-bubble-offset-top) 0 0
-    calc(-1 * var(--review-tooltip-bubble-offset-left));
-  padding: 0.875rem 1rem;
-  border-radius: 1rem;
-  background-color: var(--review-tooltip-bg);
-  color: #f9fafb;
-  font-size: 0.75rem;
-  line-height: 1.375;
-  font-weight: 500;
-  text-align: left;
+.review-section h2 .tooltip .tooltip__icon {
+  display: flex;
+  width: 1rem;
+  height: 1rem;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
 }

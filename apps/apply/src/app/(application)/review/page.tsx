@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button, Typography } from '@hackthe6ix/ui';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -36,17 +36,17 @@ export default function ReviewPage() {
     router.push('/thank-you');
   };
 
-  const sectionList = (
-    <>
-      {reviewSections.map((section) => (
+  const sectionList = useMemo(
+    () =>
+      reviewSections.map((section) => (
         <ReviewSection
           key={section.id}
           section={section}
           formData={formData}
           status={getSectionStatus(section, formData)}
         />
-      ))}
-    </>
+      )),
+    [formData],
   );
 
   const desktopActions = (
@@ -71,8 +71,7 @@ export default function ReviewPage() {
   );
 
   return (
-    <>
-      <div className="review-page mx-auto flex h-full min-h-0 w-full max-w-5xl flex-1 flex-col overflow-hidden">
+    <div className="review-page mx-auto flex h-full min-h-0 w-full max-w-5xl flex-1 flex-col overflow-hidden">
         {/* Mobile header — on page background */}
         <header className="mb-4 flex shrink-0 flex-col gap-4 md:hidden">
           <Typography
@@ -135,7 +134,6 @@ export default function ReviewPage() {
           onClose={() => setSubmitModalOpen(false)}
           onConfirm={handleConfirmSubmit}
         />
-      </div>
-    </>
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import { ComponentPropsWithRef, ElementType, ReactNode } from 'react';
+import cn from 'classnames';
 import { Info } from 'lucide-react';
 
 import { PolymorphicProps } from '../..';
@@ -23,13 +24,14 @@ export function Tooltip<T extends ElementType = 'div'>({
   bgColor,
   textColor,
   icon = <Info />,
+  className,
   ...props
 }: TooltipProps<T>) {
   const Component = as ?? 'div';
   return (
     <Component
       {...(props as ComponentPropsWithRef<T>)}
-      className="tooltip"
+      className={cn('tooltip', className)}
       style={
         {
           '--tooltip-bg': bgColor,
