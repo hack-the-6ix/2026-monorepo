@@ -36,8 +36,4 @@
   .options {
     @apply px-4 py-2 hover:bg-indigo-50 dark:hover:bg-primary-700 cursor-pointer transition-colors;
   }
-
-  .options__other {
-    @apply border-t border-neutral-100 dark:border-neutral-800;
-  }
 }

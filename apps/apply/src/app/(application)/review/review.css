@@ -1,0 +1,127 @@
+/* Submit application confirmation — dimmer overlay than default hosted modal */
+dialog.submit-application-modal {
+  width: min(92vw, 22rem);
+  max-width: min(92vw, 22rem);
+}
+
+dialog.submit-application-modal::backdrop {
+  background: rgba(8, 6, 24, 0.72);
+}
+
+.review-edit-button {
+  --button-color: white;
+  --button-color-focus: var(--color-warning-300);
+  --button-color-pressed: var(--color-warning-400);
+  border-color: rgb(255 255 255 / 0.85) !important;
+  background: transparent !important;
+  color: white !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.review-edit-button:hover {
+  border-color: var(--color-warning-300) !important;
+  color: var(--color-warning-300) !important;
+}
+
+.review-back-button {
+  --button-color: white;
+  --button-color-focus: var(--color-primary-500);
+  --button-color-pressed: var(--color-primary-600);
+  border-color: white !important;
+  color: white !important;
+  background: transparent !important;
+}
+
+.review-back-button:hover {
+  border-color: var(--color-primary-500) !important;
+  color: var(--color-primary-500) !important;
+}
+
+.review-panel-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.25) transparent;
+}
+
+.review-panel-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.review-panel-scroll::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.25);
+}
+
+.review-panel-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* No document scroll; only card body scrolls */
+body:has(.review-route) {
+  overflow: hidden !important;
+}
+
+.review-route {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.review-route .review-page,
+.review-route .review-panel {
+  flex: 1 1 0%;
+  min-height: 0;
+}
+
+.review-route .review-panel-scroll {
+  flex: 1 1 0%;
+  min-height: 0;
+}
+
+@media (min-width: 768px) {
+  main:has(.review-route) {
+    overflow: hidden !important;
+    padding-top: 5rem !important;
+    padding-right: 3rem !important;
+    padding-bottom: 1rem !important;
+    padding-left: 3rem !important;
+  }
+
+  .review-route {
+    height: 100%;
+    max-height: 100%;
+  }
+
+  .review-route .review-page,
+  .review-route .review-panel {
+    max-height: 100%;
+  }
+
+  .review-actions {
+    flex-shrink: 0;
+  }
+}
+
+.review-mobile-actions {
+  background: transparent;
+}
+
+.review-section h2 .tooltip {
+  display: inline-flex !important;
+  aspect-ratio: auto !important;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  padding: 0 !important;
+  line-height: 0;
+}
+
+.review-section h2 .tooltip .tooltip__icon {
+  display: flex;
+  width: 1rem;
+  height: 1rem;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
