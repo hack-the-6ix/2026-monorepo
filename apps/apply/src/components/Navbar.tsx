@@ -24,6 +24,10 @@ export default function Navbar() {
   const [burgerVisible, setBurgerVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
+  if (pathname === '/thank-you') {
+    return null;
+  }
+
   const openBurger = () => {
     setBurgerVisible(true);
     setIsClosing(false);

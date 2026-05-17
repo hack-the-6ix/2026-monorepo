@@ -1,0 +1,66 @@
+@keyframes thank-you-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body:has(.thank-you-route) {
+  overflow: hidden !important;
+}
+
+.thank-you-route {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.thank-you-route .thank-you-page {
+  flex: 1 1 0%;
+  min-height: 0;
+}
+
+.thank-you-route .thank-you-hero {
+  flex: 1 1 0%;
+  min-height: 0;
+}
+
+.thank-you-candle {
+  filter: drop-shadow(0 0 18px rgb(246 189 85 / 0.45));
+  transform: rotate(-18deg);
+  transform-origin: 50% 88%;
+}
+
+.thank-you-dashboard-button {
+  --button-color: var(--color-primary-400);
+  --button-color-focus: var(--color-primary-500);
+  --button-color-pressed: var(--color-primary-600);
+}
+
+main:has(.thank-you-route) {
+  overflow: hidden !important;
+  padding-top: 1.25rem !important;
+  padding-right: 1.5rem !important;
+  padding-bottom: 1rem !important;
+  padding-left: 1.5rem !important;
+}
+
+@media (min-width: 768px) {
+  main:has(.thank-you-route) {
+    padding-top: 2rem !important;
+    padding-right: 2rem !important;
+    padding-bottom: 1.5rem !important;
+    padding-left: 2rem !important;
+  }
+
+  .thank-you-route {
+    height: 100%;
+    max-height: 100%;
+  }
+}

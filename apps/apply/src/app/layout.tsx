@@ -104,7 +104,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
           <div className="absolute inset-0 bg-black/50 mix-blend-overlay"></div>
         </div>
 
-        <div className="relative z-10">{children}</div>
+        <div className="relative z-10 flex h-dvh max-h-dvh min-h-0 flex-col overflow-hidden">
+          {children}
+        </div>
       </body>
     </html>
   );
