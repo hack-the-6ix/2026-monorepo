@@ -20,13 +20,15 @@ export interface CheckboxProps extends Omit<InputGroupProps<'div'>, 'ref'> {
     value: string;
   };
   ref?: React.Ref<HTMLDivElement>;
+  className?: string;
 }
 
 export const Checkbox = ({
-  ref, 
+  ref,
   input,
   controlled,
   option,
+  className,
   ...props
 }: CheckboxProps) => {
   const isChecked =
@@ -35,7 +37,10 @@ export const Checkbox = ({
   return (
     <InputGroup {...props} ref={ref}>
       <Typography
-        className={'checkbox__box dark:text-white dark:font-normal'}
+        className={cn(
+          'checkbox__box dark:text-white dark:font-normal',
+          className,
+        )}
         textColor={
           props.disabled ? 'text-neutral-400'
           : props.info?.type === 'error' ?
