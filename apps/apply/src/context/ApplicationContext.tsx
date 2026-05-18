@@ -23,10 +23,30 @@ export const FormDataSchema = z.object({
     test4: z.string(),
   }),
   longAnswer: z.object({
-    test5: z.string(),
+    longEssay: z
+      .string()
+      .min(1)
+      .refine((val) => val.trim().split(/\s+/).length <= 200),
+    shortEssay: z
+      .string()
+      .min(1)
+      .refine((val) => val.trim().split(/\s+/).length <= 50),
+    oneSentenceEssay: z
+      .string()
+      .min(1)
+      .refine((val) => val.trim().split(/\s+/).length <= 20),
   }),
   survey: z.object({
-    test6: z.string(),
+    hackathonsAttended: z.string().min(1),
+    hackathonsAttendedList: z.string().optional(),
+    hackathonCapacity: z.array(z.string()).optional(),
+    previousHT6Experience: z.array(z.string()).optional(),
+    howDidYouHearAboutHT6: z.array(z.string()).optional(),
+    howDidYouHearAnotherHackathon: z.string().optional(),
+    howDidYouHearOther: z.string().optional(),
+    mlhCodeOfConduct: z.boolean(),
+    mlhDataPermission: z.boolean(),
+    mlhEmailPermission: z.boolean().optional(),
   }),
 });
 
@@ -55,10 +75,21 @@ export const ApplicationContextProvider = ({
       test4: '',
     },
     longAnswer: {
-      test5: '',
+      longEssay: '',
+      shortEssay: '',
+      oneSentenceEssay: '',
     },
     survey: {
-      test6: '',
+      hackathonsAttended: '',
+      hackathonsAttendedList: '',
+      hackathonCapacity: [],
+      previousHT6Experience: [],
+      howDidYouHearAboutHT6: [],
+      howDidYouHearAnotherHackathon: '',
+      howDidYouHearOther: '',
+      mlhCodeOfConduct: false,
+      mlhDataPermission: false,
+      mlhEmailPermission: false,
     },
   });
 
