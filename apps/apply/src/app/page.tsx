@@ -3,17 +3,35 @@ import Link from 'next/link';
 
 export default function WelcomePage() {
   return (
-    <div className="w-full min-h-screen flex items-center justify-center">
-      <div className="gap-4 flex flex-col items-center">
-        <Typography textSize="heading-sm" textColor="text-primary-300">
-          Welcome
+    <main className="relative min-h-screen flex flex-col items-center pt-[28vh] md:justify-center md:pt-0 overflow-hidden">
+      <div className="flex flex-col items-center text-center gap-4 px-6 max-w-2xl">
+        <Typography
+          as="p"
+          textSize="subtitle-lg"
+          textWeight="bold"
+          textColor="text-yellow-300"
+        >
+          HACK THE 6IX 2026
         </Typography>
-        <div className="flex flex-row gap-2">
-          <Button href="/about-you/character-sheet" kind="primary" as={Link}>
-            Get Started
-          </Button>
-        </div>
+        <Typography
+          as="h1"
+          textSize="display"
+          textWeight="bold"
+          textColor="text-white"
+        >
+          Hacker Application
+        </Typography>
+        <Typography as="p" textSize="subtitle-lg" textColor="text-yellow-300">
+          Applications due: [date]
+        </Typography>
+        <Button
+          as={Link}
+          href="/about-you/character-sheet"
+          className="mt-2 w-full max-w-md justify-center"
+        >
+          Start
+        </Button>
       </div>
-    </div>
+    </main>
   );
 }

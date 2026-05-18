@@ -9,11 +9,13 @@ import {
 } from 'react';
 import z from 'zod';
 
+import {
+  characterSheetSchema,
+  initialCharacterSheet,
+} from '@/lib/schemas/character';
+
 export const FormDataSchema = z.object({
-  characterSheet: z.object({
-    test1: z.string(),
-    test2: z.string().optional(),
-  }),
+  characterSheet: characterSheetSchema,
   aboutYou: z.object({
     test3: z.string().optional(),
   }),
@@ -65,10 +67,7 @@ export const ApplicationContextProvider = ({
   children: ReactNode;
 }) => {
   const [formData, setFormData] = useState<FormData>({
-    characterSheet: {
-      test1: '',
-      test2: '',
-    },
+    characterSheet: initialCharacterSheet,
     aboutYou: {
       test3: '',
     },
