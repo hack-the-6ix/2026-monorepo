@@ -26,7 +26,7 @@ catalogs:
       version: 2.5.1
     eslint:
       specifier: ^9.39.4
-      version: 9.39.3
+      version: 9.39.4
     next:
       specifier: ^16
       version: 16.1.6
@@ -78,6 +78,9 @@ importers:
       '@opennextjs/cloudflare':
         specifier: 'catalog:'
         version: 1.17.1(next@16.1.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(wrangler@4.70.0)
+      classnames:
+        specifier: 'catalog:'
+        version: 2.5.1
       lucide-react:
         specifier: ^0.577.0
         version: 0.577.0(react@19.2.4)
