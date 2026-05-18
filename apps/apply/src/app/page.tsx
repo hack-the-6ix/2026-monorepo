@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { Button, Typography } from '@hackthe6ix/ui';
+import Link from 'next/link';
 
 export default function WelcomePage() {
   return (
@@ -21,11 +21,7 @@ export default function WelcomePage() {
         >
           Hacker Application
         </Typography>
-        <Typography
-          as="p"
-          textSize="subtitle-lg"
-          textColor="text-yellow-300"
-        >
+        <Typography as="p" textSize="subtitle-lg" textColor="text-yellow-300">
           Applications due: [date]
         </Typography>
         <Button

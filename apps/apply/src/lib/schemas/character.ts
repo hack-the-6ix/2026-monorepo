@@ -21,6 +21,6 @@ export const characterSheetSchema = z.object({
 export type CharacterSheetData = z.infer<typeof characterSheetSchema>;
 
 export const initialCharacterSheet: CharacterSheetData = {
-  character: null,
+  character: 'turnip',
   accessory: null,
 };

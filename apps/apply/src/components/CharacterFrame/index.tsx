@@ -106,7 +106,8 @@ const ACCESSORY_OVERRIDES: Partial<
 
 function getAnchor(characterKey: CharacterKey, accessory: string) {
   return (
-    ACCESSORY_OVERRIDES[characterKey]?.[accessory] ?? DEFAULT_ANCHOR[characterKey]
+    ACCESSORY_OVERRIDES[characterKey]?.[accessory] ??
+    DEFAULT_ANCHOR[characterKey]
   );
 }
 
