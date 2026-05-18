@@ -4,6 +4,16 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
 @theme {
   --animate-fade-in: fade-in 3s ease-out forwards;
 

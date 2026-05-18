@@ -1,11 +1,10 @@
 'use client';
 import { Suspense } from 'react';
+import { Checkbox, HyperLink, Input, Typography } from '@hackthe6ix/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { HyperLink, Input, Typography } from '@hackthe6ix/ui';
 
 import FormStep from '@/components/FormStep';
-import { useApplicationContext, FormData } from '@/context/ApplicationContext';
-
+import { FormData, useApplicationContext } from '@/context/ApplicationContext';
 import {
   HACKATHON_CAPACITY,
   HOW_DID_YOU_HEAR_ABOUT_HT6,
@@ -29,37 +28,35 @@ interface PageConfig {
 }
 
 const PAGES: PageConfig[] = [
-  { key: 'hackathonCount',    label: 'How many overnight, in-person hackathons have you attended?',                    required: true  },
-  { key: 'hackathonList',     label: 'Which overnight, in person hackathons have you attended in the last 12 months?', required: false },
-  { key: 'hackathonCapacity', label: 'In what capacity have you attended these hackathons? Select all that apply.',    required: false },
-  { key: 'previousHT6',      label: 'Previous Hack the 6ix Experience. Select all that apply.',                       required: false },
-  { key: 'howDidYouHear',    label: 'Where did you hear about Hack the 6ix? Select all that apply.',                  required: false },
-  { key: 'mlh',              label: 'Final step, we need your permission!',                                            required: true  },
+  {
+    key: 'hackathonCount',
+    label: 'How many overnight, in-person hackathons have you attended?',
+    required: true,
+  },
+  {
+    key: 'hackathonList',
+    label:
+      'Which overnight, in person hackathons have you attended in the last 12 months?',
+    required: false,
+  },
+  {
+    key: 'hackathonCapacity',
+    label:
+      'In what capacity have you attended these hackathons? Select all that apply.',
+    required: false,
+  },
+  {
+    key: 'previousHT6',
+    label: 'Previous Hack the 6ix Experience. Select all that apply.',
+    required: false,
+  },
+  {
+    key: 'howDidYouHear',
+    label: 'Where did you hear about Hack the 6ix? Select all that apply.',
+    required: false,
+  },
+  { key: 'mlh', label: 'Final step, we need your permission!', required: true },
 ];
-
-function StyledCheckbox({
-  checked,
-  onChange,
-  children,
-}: {
-  checked: boolean;
-  onChange: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="flex items-start gap-3 cursor-pointer rounded-lg bg-white/10 border border-white/20 px-4 py-3 hover:bg-white/15 transition-colors select-none">
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-        className="w-4 h-4 mt-0.5 accent-primary-400 shrink-0"
-      />
-      <Typography textSize="paragraph-sm" textColor="text-white">
-        {children}
-      </Typography>
-    </label>
-  );
-}
 
 function SurveyContent() {
   const router = useRouter();
@@ -69,30 +66,43 @@ function SurveyContent() {
   const { formData, updateFormData } = useApplicationContext();
   const survey = formData.survey;
 
-  const updateField = <K extends keyof SurveyData>(field: K, value: SurveyData[K]) => {
+  const updateField = <K extends keyof SurveyData>(
+    field: K,
+    value: SurveyData[K],
+  ) => {
     updateFormData('survey', { ...survey, [field]: value });
   };
 
   const toggleArray = (
-    field: 'hackathonCapacity' | 'howDidYouHearAboutHT6' | 'previousHT6Experience',
+    field:
+      | 'hackathonCapacity'
+      | 'howDidYouHearAboutHT6'
+      | 'previousHT6Experience',
     value: string,
   ) => {
     const current: string[] = (survey[field] as string[]) ?? [];
     if (current.includes(value)) {
-      updateField(field, current.filter((v) => v !== value) as SurveyData[typeof field]);
+      updateField(
+        field,
+        current.filter((v) => v !== value) as SurveyData[typeof field],
+      );
     } else {
       updateField(field, [...current, value] as SurveyData[typeof field]);
     }
   };
 
   const hearSelected = survey.howDidYouHearAboutHT6 ?? [];
-  const needsAnotherHackathonText = hearSelected.includes('Another hackathon (please specify below)');
+  const needsAnotherHackathonText = hearSelected.includes(
+    'Another hackathon (please specify below)',
+  );
   const needsOtherText = hearSelected.includes('Other (please specify below)');
   const hackathonCount = parseInt(survey.hackathonsAttended || '0', 10);
   const attendedHackathon = !isNaN(hackathonCount) && hackathonCount >= 1;
 
   const activePages = PAGES.filter(
-    (p) => p.key !== 'hackathonList' && p.key !== 'hackathonCapacity' || attendedHackathon,
+    (p) =>
+      (p.key !== 'hackathonList' && p.key !== 'hackathonCapacity') ||
+      attendedHackathon,
   );
   const totalPages = activePages.length;
   const currentPageConfig = activePages[page - 1];
@@ -113,7 +123,6 @@ function SurveyContent() {
     if (!currentPageConfig) return null;
 
     switch (currentPageConfig.key) {
-
       case 'hackathonCount':
         return (
           <Input
@@ -155,30 +164,43 @@ function SurveyContent() {
 
       case 'hackathonCapacity':
         return (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3">
             {HACKATHON_CAPACITY.map((option) => (
-              <StyledCheckbox
+              <Checkbox
                 key={option}
-                checked={(survey.hackathonCapacity ?? []).includes(option)}
-                onChange={() => toggleArray('hackathonCapacity', option)}
-              >
-                {option}
-              </StyledCheckbox>
+                id={`hackathonCapacity-${option}`}
+                name="hackathonCapacity"
+                option={{ label: option, value: option }}
+                controlled={{
+                  value: (survey.hackathonCapacity ?? []).includes(option),
+                  onValueChange: () => toggleArray('hackathonCapacity', option),
+                }}
+                label=""
+                hideLabel
+                className="text-base"
+              />
             ))}
           </div>
         );
 
       case 'previousHT6':
         return (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col">
             {PREVIOUS_HT6_EXPERIENCE.map((option) => (
-              <StyledCheckbox
+              <Checkbox
                 key={option}
-                checked={(survey.previousHT6Experience ?? []).includes(option)}
-                onChange={() => toggleArray('previousHT6Experience', option)}
-              >
-                {option}
-              </StyledCheckbox>
+                id={`previousHT6Experience-${option}`}
+                name="previousHT6Experience"
+                option={{ label: option, value: option }}
+                controlled={{
+                  value: (survey.previousHT6Experience ?? []).includes(option),
+                  onValueChange: () =>
+                    toggleArray('previousHT6Experience', option),
+                }}
+                label=""
+                hideLabel
+                className="text-base"
+              />
             ))}
           </div>
         );
@@ -186,15 +208,22 @@ function SurveyContent() {
       case 'howDidYouHear':
         return (
           <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3">
               {HOW_DID_YOU_HEAR_ABOUT_HT6.map((option) => (
-                <StyledCheckbox
+                <Checkbox
                   key={option}
-                  checked={hearSelected.includes(option)}
-                  onChange={() => toggleArray('howDidYouHearAboutHT6', option)}
-                >
-                  {option}
-                </StyledCheckbox>
+                  id={`howDidYouHearAboutHT6-${option}`}
+                  name="howDidYouHearAboutHT6"
+                  option={{ label: option, value: option }}
+                  controlled={{
+                    value: hearSelected.includes(option),
+                    onValueChange: () =>
+                      toggleArray('howDidYouHearAboutHT6', option),
+                  }}
+                  label=""
+                  hideLabel
+                  className="text-base"
+                />
               ))}
             </div>
             {needsAnotherHackathonText && (
@@ -205,7 +234,8 @@ function SurveyContent() {
                 hideLabel
                 controlled={{
                   value: survey.howDidYouHearAnotherHackathon ?? '',
-                  onValueChange: (v) => updateField('howDidYouHearAnotherHackathon', v),
+                  onValueChange: (v) =>
+                    updateField('howDidYouHearAnotherHackathon', v),
                 }}
                 input={{ placeholder: 'Which hackathon?' }}
               />
@@ -228,49 +258,95 @@ function SurveyContent() {
 
       case 'mlh':
         return (
-          <div className="flex flex-col gap-4">
-            <StyledCheckbox
-              checked={survey.mlhCodeOfConduct ?? false}
-              onChange={() => updateField('mlhCodeOfConduct', !survey.mlhCodeOfConduct)}
-            >
-              <span className="inline">
-                I have read and agree to the{' '}
-                <HyperLink href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md" target="_blank" rel="noopener noreferrer" className="!px-0 !py-0 inline">
-                  MLH Code of Conduct
-                </HyperLink>.{' '}
-                <span className="text-error-400">*</span>
-              </span>
-            </StyledCheckbox>
+          <div className="flex flex-col">
+            <Checkbox
+              id="mlhCodeOfConduct"
+              name="mlhCodeOfConduct"
+              option={{
+                value: 'mlhCodeOfConduct',
+                label: (
+                  <span className="inline text-base">
+                    I have read and agree to the{' '}
+                    <HyperLink
+                      href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="!px-0 !py-0 inline text-base"
+                    >
+                      MLH Code of Conduct
+                    </HyperLink>
+                    <span className="text-error-400">*</span>
+                  </span>
+                ) as unknown as string, // Cast to bypass your design system's string-only typings
+              }}
+              controlled={{
+                value: survey.mlhCodeOfConduct ?? false,
+                onValueChange: (checked) =>
+                  updateField('mlhCodeOfConduct', checked),
+              }}
+              label=""
+              hideLabel
+            />
 
-            <StyledCheckbox
-              checked={survey.mlhDataPermission ?? false}
-              onChange={() => updateField('mlhDataPermission', !survey.mlhDataPermission)}
-            >
-              <span className="inline">
-                I authorize you to share my application/registration information with Major
-                League Hacking for event administration, ranking, and MLH administration
-                in-line with the{' '}
-                <HyperLink href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md" target="_blank" rel="noopener noreferrer" className="!px-0 !py-0 inline">
-                  MLH Privacy Policy
-                </HyperLink>. I further agree to the terms of both the{' '}
-                <HyperLink href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank" rel="noopener noreferrer" className="!px-0 !py-0 inline">
-                  MLH Contest Terms and Conditions
-                </HyperLink>{' '}
-                and the{' '}
-                <HyperLink href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md" target="_blank" rel="noopener noreferrer" className="!px-0 !py-0 inline">
-                  MLH Privacy Policy
-                </HyperLink>.{' '}
-                <span className="text-error-400">*</span>
-              </span>
-            </StyledCheckbox>
+            <Checkbox
+              id="mlhEmailPermission"
+              name="mlhEmailPermission"
+              option={{
+                value: 'mlhEmailPermission',
+                label:
+                  'I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.',
+              }}
+              controlled={{
+                value: survey.mlhEmailPermission ?? false,
+                onValueChange: (checked) =>
+                  updateField('mlhEmailPermission', checked),
+              }}
+              label=""
+              hideLabel
+              className="text-base"
+            />
 
-            <StyledCheckbox
-              checked={survey.mlhEmailPermission ?? false}
-              onChange={() => updateField('mlhEmailPermission', !survey.mlhEmailPermission)}
-            >
-              I authorize MLH to send me occasional emails about relevant events, career
-              opportunities, and community announcements.
-            </StyledCheckbox>
+            <Checkbox
+              id="mlhDataPermission"
+              name="mlhDataPermission"
+              option={{
+                value: 'mlhDataPermission',
+                label: (
+                  <span className="inline text-base">
+                    I authorize you to share my application/registration
+                    informationwith Major League Hacking for event
+                    administration, ranking, and MLH administration in-line with
+                    the MLH Privacy Policy. I further agree to the terms of both
+                    the{' '}
+                    <HyperLink
+                      href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="!px-0 !py-0 inline text-base"
+                    >
+                      MLH Contest Terms and Conditions
+                    </HyperLink>{' '}
+                    and the{' '}
+                    <HyperLink
+                      href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="!px-0 !py-0 inline text-base"
+                    >
+                      MLH Privacy Policy
+                    </HyperLink>
+                    <span className="text-error-400">*</span>
+                  </span>
+                ) as unknown as string,
+              }}
+              controlled={{
+                value: survey.mlhDataPermission ?? false,
+                onValueChange: (checked) =>
+                  updateField('mlhDataPermission', checked),
+              }}
+              label=""
+              hideLabel
+            />
           </div>
         );
 
@@ -280,17 +356,16 @@ function SurveyContent() {
   };
 
   return (
-        <FormStep
-          handlePrevSection={handlePrevSection}
-          handleNextSection={handleNextSection}
-          current={page}
-          total={totalPages}
-          label={currentPageConfig?.label ?? ''}
-          required={currentPageConfig?.required ?? false}
-        >
-          {renderPage()}
-        
-        </FormStep>
+    <FormStep
+      handlePrevSection={handlePrevSection}
+      handleNextSection={handleNextSection}
+      current={page}
+      total={totalPages}
+      label={currentPageConfig?.label ?? ''}
+      required={currentPageConfig?.required ?? false}
+    >
+      {renderPage()}
+    </FormStep>
   );
 }
 

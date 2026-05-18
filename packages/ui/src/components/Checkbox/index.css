@@ -3,7 +3,7 @@
 
 @layer components.input {
   .checkbox__box {
-    @apply transition-all px-2 py-3 outline-0 flex items-center gap-3;
+    @apply transition-all px-2 py-3 outline-0 flex items-start gap-3;
   }
 
   .checkbox__el {

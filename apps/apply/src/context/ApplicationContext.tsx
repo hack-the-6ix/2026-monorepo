@@ -21,9 +21,18 @@ export const FormDataSchema = z.object({
     test4: z.string(),
   }),
   longAnswer: z.object({
-    longEssay: z.string().min(1),
-    shortEssay: z.string().min(1),
-    oneSentenceEssay: z.string().min(1),
+    longEssay: z
+      .string()
+      .min(1)
+      .refine((val) => val.trim().split(/\s+/).length <= 200),
+    shortEssay: z
+      .string()
+      .min(1)
+      .refine((val) => val.trim().split(/\s+/).length <= 50),
+    oneSentenceEssay: z
+      .string()
+      .min(1)
+      .refine((val) => val.trim().split(/\s+/).length <= 20),
   }),
   survey: z.object({
     hackathonsAttended: z.string().min(1),
