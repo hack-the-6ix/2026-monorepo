@@ -23,7 +23,7 @@ export default function FormStep({
 }: FormStepProp) {
   return (
     <div className="w-full">
-      <div className="gap-5 flex flex-col md:w-[65vw] max-h-[70vh] overflow-y-auto no-scrollbar">
+      <div className="gap-5 flex flex-col md:w-[65vw]">
         <Typography
           textSize="heading-sm"
           textColor="text-white"
