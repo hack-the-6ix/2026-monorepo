@@ -105,12 +105,12 @@ function AboutYouContent() {
                 label="Phone Number"
                 required
                 controlled={{
-                  value: aboutYou.phoneNumber ?? '',
-                  onValueChange: (v) =>
-                    updateField(
-                      'phoneNumber',
-                      v.replace(/\D/g, '').slice(0, 10),
-                    ),
+                  value:
+                    aboutYou.phoneNumber ? String(aboutYou.phoneNumber) : '',
+                  onValueChange: (v) => {
+                    const digits = v.replace(/\D/g, '').slice(0, 10);
+                    updateField('phoneNumber', digits ? Number(digits) : 0);
+                  },
                 }}
                 input={{
                   type: 'tel',
@@ -124,8 +124,8 @@ function AboutYouContent() {
                 label="Age"
                 required
                 controlled={{
-                  value: aboutYou.age ?? '',
-                  onValueChange: (v) => updateField('age', v),
+                  value: aboutYou.age ? String(aboutYou.age) : '',
+                  onValueChange: (v) => updateField('age', v ? Number(v) : 0),
                 }}
                 input={{ type: 'number', min: 0, placeholder: '18' }}
               />
@@ -243,21 +243,22 @@ function AboutYouContent() {
                 }}
               />
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="group relative inline-flex cursor-help">
               <Typography
                 textSize="paragraph-sm"
                 textWeight="semi-bold"
                 textColor="text-white"
+                className="underline decoration-dotted underline-offset-2"
               >
                 Why are we asking this?
               </Typography>
-              <Typography textSize="paragraph-sm" textColor="text-white/70">
+              <div className="hidden group-hover:block absolute top-full mt-2 left-0 z-50 w-[80vw] md:w-[320px] rounded-2xl bg-neutral-50 p-3.5 shadow-lg text-indigo-800 text-sm font-medium leading-relaxed">
                 Hack the 6ix is committed to fostering an inclusive and diverse
                 community. We collect this information solely to better
                 understand our applicant pool and ensure we are reaching a wide
                 range of backgrounds. This data is anonymized and will never be
                 used to make admission decisions.
-              </Typography>
+              </div>
             </div>
           </div>
         );
