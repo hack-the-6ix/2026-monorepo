@@ -31,6 +31,8 @@ export interface SelectorProps extends InputGroupProps<'div'> {
   hasOther?: boolean;
 }
 
+const MAX_OPTIONS = 30;
+
 export function Selector({
   options,
   input,
@@ -45,17 +47,26 @@ export function Selector({
   const [isOtherSelected, setIsOtherSelected] = useState(false);
   const [searchInput, setSearchInput] = useState('');
 
-  const allOptions = useMemo(() => {
-    if (hasOther)
-      return [...options, { label: 'Other...', value: 'OTHER_OPTION' }];
-    return options;
-  }, [options, hasOther]);
-
-  const filteredOptions = useMemo(() => {
-    return allOptions.filter((opt) =>
+  const { slicedOptions, hasMoreResults } = useMemo(() => {
+    const matches = options.filter((opt) =>
       opt.label.toLowerCase().includes(searchInput.toLowerCase()),
     );
-  }, [allOptions, searchInput]);
+
+    const hasMore = matches.length > MAX_OPTIONS;
+    const sliced = matches.slice(0, MAX_OPTIONS);
+
+    if (hasOther) {
+      sliced.push({
+        label: 'Other...',
+        value: 'OTHER_OPTION',
+      });
+    }
+
+    return {
+      slicedOptions: sliced,
+      hasMoreResults: hasMore,
+    };
+  }, [options, searchInput, hasOther]);
 
   const handleSelect = (option: Option) => {
     if (option.value === 'OTHER_OPTION') {
@@ -133,6 +144,7 @@ export function Selector({
             textColor="text-indigo-700"
             textSize="paragraph-sm"
             className={cn('dark:text-white', isOpen && 'tansform rotate-180')}
+            onClick={() => setIsOpen(true)}
           >
             <ChevronDown />
           </Typography>
@@ -142,10 +154,10 @@ export function Selector({
       {/* dropdown menu */}
       {isOpen && !isOtherSelected && !props.disabled && (
         <div className="dropdown_menu">
-          {filteredOptions.map((option) => (
+          {slicedOptions.map((option) => (
             <div
               key={option.value}
-              className={'options'}
+              className="options"
               onClick={() => handleSelect(option)}
             >
               <Typography
@@ -157,12 +169,24 @@ export function Selector({
               </Typography>
             </div>
           ))}
+          {hasMoreResults && (
+            <div className="options">
+              <Typography
+                textSize="paragraph-sm"
+                textColor="text-indigo-700"
+                className="italic text-center dark:text-white"
+              >
+                Showing first {MAX_OPTIONS} results. Keep typing to narrow
+                down...
+              </Typography>
+            </div>
+          )}
         </div>
       )}
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-10"
+          className="fixed inset-0"
           onClick={() => {
             setIsOpen(false);
             setSearchInput('');
