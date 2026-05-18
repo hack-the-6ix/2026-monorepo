@@ -1,6 +1,6 @@
 'use client';
 import { Suspense } from 'react';
-import { Checkbox, HyperLink, Input, Typography } from '@hackthe6ix/ui';
+import { Checkbox, HyperLink, Input } from '@hackthe6ix/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import FormStep from '@/components/FormStep';

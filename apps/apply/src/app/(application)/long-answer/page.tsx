@@ -1,10 +1,10 @@
 'use client';
 import { Suspense } from 'react';
+import { InputArea } from '@hackthe6ix/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import FormStep from '@/components/FormStep';
 import { useApplicationContext } from '@/context/ApplicationContext';
-import { InputArea } from '@hackthe6ix/ui';
 
 const PAGES = [
   {
@@ -25,8 +25,7 @@ const PAGES = [
   },
   {
     fieldName: 'oneSentenceEssay',
-    label:
-      'How would your worst enemy describe you?',
+    label: 'How would your worst enemy describe you?',
     placeholder: 'They would say...',
     maxWords: 20,
     rows: 4,

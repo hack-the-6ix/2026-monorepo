@@ -9,10 +9,10 @@ export type PolymorphicProps<Props, T extends ElementType> = Merge<
 export * from './components/Button';
 export * from './components/Checkbox';
 export * from './components/Input';
-export * from './components/InputGroup';
-export * from './components/Selector';
-export * from './components/Typography';
 export * from './components/InputArea';
+export * from './components/InputGroup';
 export * from './components/Modal';
-export * from './components/UploadFile';
+export * from './components/Selector';
 export * from './components/Tooltip';
+export * from './components/Typography';
+export * from './components/UploadFile';

@@ -72,68 +72,68 @@ export default function ReviewPage() {
 
   return (
     <div className="review-page mx-auto flex h-full min-h-0 w-full max-w-5xl flex-1 flex-col overflow-hidden">
-        {/* Mobile header — on page background */}
-        <header className="mb-4 flex shrink-0 flex-col gap-4 md:hidden">
-          <Typography
-            textSize="heading-sm"
-            textColor="text-white"
-            textWeight="bold"
-            as="h1"
-          >
-            Review your application
-          </Typography>
-          <ReviewStatusBadge ready={isReady} fullWidth />
+      {/* Mobile header — on page background */}
+      <header className="mb-4 flex shrink-0 flex-col gap-4 md:hidden">
+        <Typography
+          textSize="heading-sm"
+          textColor="text-white"
+          textWeight="bold"
+          as="h1"
+        >
+          Review your application
+        </Typography>
+        <ReviewStatusBadge ready={isReady} fullWidth />
+      </header>
+
+      {/* Glass card — only inner content scrolls */}
+      <div className="review-panel flex min-h-0 flex-1 flex-col overflow-hidden md:rounded-3xl md:border md:border-white/10 md:bg-[rgba(22,14,42,0.62)] md:p-8 md:backdrop-blur-md">
+        <header className="mb-6 hidden shrink-0 md:mb-8 md:block">
+          <div className="flex flex-wrap items-center gap-3">
+            <Typography
+              textSize="heading-sm"
+              textColor="text-white"
+              textWeight="bold"
+              as="h1"
+              className="shrink-0"
+            >
+              Review your application
+            </Typography>
+            <ReviewStatusBadge ready={isReady} className="md:w-auto" />
+          </div>
         </header>
 
-        {/* Glass card — only inner content scrolls */}
-        <div className="review-panel flex min-h-0 flex-1 flex-col overflow-hidden md:rounded-3xl md:border md:border-white/10 md:bg-[rgba(22,14,42,0.62)] md:p-8 md:backdrop-blur-md">
-          <header className="mb-6 hidden shrink-0 md:mb-8 md:block">
-            <div className="flex flex-wrap items-center gap-3">
-              <Typography
-                textSize="heading-sm"
-                textColor="text-white"
-                textWeight="bold"
-                as="h1"
-                className="shrink-0"
-              >
-                Review your application
-              </Typography>
-              <ReviewStatusBadge ready={isReady} className="md:w-auto" />
-            </div>
-          </header>
-
-          <div className="review-panel-scroll min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-y-contain [-webkit-overflow-scrolling:touch] md:pr-2">
-            <div className="flex flex-col">{sectionList}</div>
-          </div>
-
-          {desktopActions}
+        <div className="review-panel-scroll min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-y-contain [-webkit-overflow-scrolling:touch] md:pr-2">
+          <div className="flex flex-col">{sectionList}</div>
         </div>
 
-        {/* Mobile footer — in document flow, outside scroll */}
-        <footer className="review-mobile-actions flex shrink-0 flex-col gap-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden">
-          <Button
-            onClick={openSubmitModal}
-            iconLeft={<ArrowRight size="inherit" />}
-            className="w-full"
-            disabled={!isReady}
-          >
-            Submit
-          </Button>
-          <Button
-            kind="secondary"
-            onClick={handleBack}
-            iconLeft={<ArrowLeft size="inherit" />}
-            className="review-back-button w-full"
-          >
-            Back
-          </Button>
-        </footer>
+        {desktopActions}
+      </div>
 
-        <SubmitApplicationModal
-          isOpen={submitModalOpen}
-          onClose={() => setSubmitModalOpen(false)}
-          onConfirm={handleConfirmSubmit}
-        />
+      {/* Mobile footer — in document flow, outside scroll */}
+      <footer className="review-mobile-actions flex shrink-0 flex-col gap-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden">
+        <Button
+          onClick={openSubmitModal}
+          iconLeft={<ArrowRight size="inherit" />}
+          className="w-full"
+          disabled={!isReady}
+        >
+          Submit
+        </Button>
+        <Button
+          kind="secondary"
+          onClick={handleBack}
+          iconLeft={<ArrowLeft size="inherit" />}
+          className="review-back-button w-full"
+        >
+          Back
+        </Button>
+      </footer>
+
+      <SubmitApplicationModal
+        isOpen={submitModalOpen}
+        onClose={() => setSubmitModalOpen(false)}
+        onConfirm={handleConfirmSubmit}
+      />
     </div>
   );
 }
