@@ -4,9 +4,9 @@ import { ApplicationContextProvider } from '@/context/ApplicationContext';
 export default function ApplicationLayout({ children }: LayoutProps<'/'>) {
   return (
     <ApplicationContextProvider>
-      <div className="flex min-h-dvh flex-col px-6 py-8 md:p-12">
+      <div className="flex h-dvh min-h-dvh min-h-0 flex-col overflow-x-hidden p-6 md:py-8 md:px-12 no-scrollbar">
         <Navbar />
-        <main className="flex flex-1 flex-col pt-15 md:pt-30 md:p-25">
+        <main className="flex min-h-0 flex-1 flex-col pt-15 md:pt-25 md:px-25 no-scrollbar">
           {children}
         </main>
       </div>

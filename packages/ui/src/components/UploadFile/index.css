@@ -16,7 +16,7 @@
     }
 
     @apply relative flex flex-col items-center justify-center transition-all;
-    @apply w-full max-w-85 p-[16px_20px] rounded-[20px] border-2 shadow-sm;
+    @apply w-full p-[16px_20px] rounded-[20px] border-2 shadow-sm;
     @apply border-(--upload-border) bg-(--upload-bg);
 
     @apply hover:border-primary-500 dark:hover:border-(--upload-border);

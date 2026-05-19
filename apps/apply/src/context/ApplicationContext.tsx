@@ -9,11 +9,13 @@ import {
 } from 'react';
 import z from 'zod';
 
+import {
+  characterSheetSchema,
+  initialCharacterSheet,
+} from '@/lib/schemas/character';
+
 export const FormDataSchema = z.object({
-  characterSheet: z.object({
-    test1: z.string(),
-    test2: z.string().optional(),
-  }),
+  characterSheet: characterSheetSchema,
   aboutYou: z.object({
     firstName: z.string(),
     lastName: z.string(),
@@ -28,7 +30,14 @@ export const FormDataSchema = z.object({
     ethnicity: z.string().optional(),
   }),
   experiences: z.object({
-    test4: z.string(),
+    school: z.string(),
+    program: z.string(),
+    yearOfStudy: z.string(),
+    resume: z.instanceof(File).nullable(),
+    sponsorPermission: z.boolean().optional(),
+    github: z.string(),
+    linkedin: z.string(),
+    portfolio: z.string(),
   }),
   longAnswer: z.object({
     longEssay: z
@@ -75,10 +84,7 @@ export const ApplicationContextProvider = ({
   children: ReactNode;
 }) => {
   const [formData, setFormData] = useState<FormData>({
-    characterSheet: {
-      test1: '',
-      test2: '',
-    },
+    characterSheet: initialCharacterSheet,
     aboutYou: {
       firstName: '',
       lastName: '',
@@ -93,7 +99,14 @@ export const ApplicationContextProvider = ({
       ethnicity: '',
     },
     experiences: {
-      test4: '',
+      school: '',
+      program: '',
+      yearOfStudy: '',
+      resume: null,
+      sponsorPermission: false,
+      github: '',
+      linkedin: '',
+      portfolio: '',
     },
     longAnswer: {
       longEssay: '',
