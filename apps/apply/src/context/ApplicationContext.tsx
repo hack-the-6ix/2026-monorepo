@@ -20,7 +20,14 @@ export const FormDataSchema = z.object({
     test3: z.string().optional(),
   }),
   experiences: z.object({
-    test4: z.string(),
+    school: z.string(),
+    program: z.string(),
+    yearOfStudy: z.string(),
+    resume: z.instanceof(File).nullable(),
+    sponsorPermission: z.boolean().optional(),
+    github: z.string(),
+    linkedin: z.string(),
+    portfolio: z.string(),
   }),
   longAnswer: z.object({
     longEssay: z
@@ -72,7 +79,14 @@ export const ApplicationContextProvider = ({
       test3: '',
     },
     experiences: {
-      test4: '',
+      school: '',
+      program: '',
+      yearOfStudy: '',
+      resume: null,
+      sponsorPermission: false,
+      github: '',
+      linkedin: '',
+      portfolio: '',
     },
     longAnswer: {
       longEssay: '',

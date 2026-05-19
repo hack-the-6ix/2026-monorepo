@@ -27,7 +27,7 @@ export default function FormStep({
   return (
     <div
       className={cn(
-        'w-full gap-5 flex flex-col max-h-[80vh] overflow-y-auto no-scrollbar',
+        'w-full gap-5 flex flex-col max-h-[90vh] overflow-y-auto no-scrollbar md:overflow-y-visible pb-15 md:pb-0',
         width ? width : 'md:w-[65vw]',
       )}
     >

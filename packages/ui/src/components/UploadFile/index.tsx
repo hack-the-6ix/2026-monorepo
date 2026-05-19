@@ -56,7 +56,7 @@ export function FileUpload({
   };
 
   return (
-    <InputGroup {...props} ref={ref}>
+    <InputGroup {...props} ref={ref} className={className}>
       <div className={cn('upload', className)}>
         <input
           type="file"
