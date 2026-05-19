@@ -1,4 +1,4 @@
-import { Typography } from '@hackthe6ix/ui';
+import { TextSize, Typography } from '@hackthe6ix/ui';
 import cn from 'classnames';
 
 import Navigator from './Navigator';
@@ -12,6 +12,7 @@ interface FormStepProp {
   required?: boolean;
   children?: React.ReactNode;
   width?: string;
+  labelSize?: TextSize;
 }
 
 export default function FormStep({
@@ -21,6 +22,7 @@ export default function FormStep({
   total = 1,
   required = false,
   label = '',
+  labelSize,
   children,
   width,
 }: FormStepProp) {
@@ -32,7 +34,7 @@ export default function FormStep({
       )}
     >
       <Typography
-        textSize="heading-sm"
+        textSize={labelSize ?? 'heading-sm'}
         textColor="text-white"
         textWeight="bold"
       >

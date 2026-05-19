@@ -73,6 +73,7 @@ function LongAnswerContent() {
       current={page}
       total={PAGES.length}
       label={current.label}
+      labelSize="subtitle-lg"
       required
     >
       <InputArea
