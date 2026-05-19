@@ -50,7 +50,7 @@ function LongAnswerContent() {
     if (page > 1) {
       router.push(`/long-answer?page=${page - 1}`);
     } else {
-      router.push('/experiences');
+      router.push('/experiences?page=4');
     }
   };
 
@@ -73,6 +73,7 @@ function LongAnswerContent() {
       current={page}
       total={PAGES.length}
       label={current.label}
+      labelSize="subtitle-lg"
       required
     >
       <InputArea

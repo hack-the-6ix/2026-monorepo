@@ -5,6 +5,7 @@ import { Button, Typography } from '@hackthe6ix/ui';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+import { upsertFormResponse } from '@/client';
 import ReviewSection from '@/components/review/ReviewSection';
 import ReviewStatusBadge from '@/components/review/ReviewStatusBadge';
 import SubmitApplicationModal from '@/components/review/SubmitApplicationModal';
@@ -22,7 +23,7 @@ export default function ReviewPage() {
   const [submitModalOpen, setSubmitModalOpen] = useState(false);
 
   const handleBack = () => {
-    router.push('/survey');
+    router.push('/survey?page=6');
   };
 
   const openSubmitModal = () => {
@@ -30,10 +31,18 @@ export default function ReviewPage() {
     setSubmitModalOpen(true);
   };
 
-  const handleConfirmSubmit = () => {
+  const handleConfirmSubmit = async () => {
     if (!isReady) return;
     setSubmitModalOpen(false);
-    router.push('/thank-you');
+    try {
+      await upsertFormResponse({
+        responseJson: formData,
+        isSubmitted: true,
+      });
+      router.push('/thank-you');
+    } catch (error) {
+      console.error('Submission failed:', error);
+    }
   };
 
   const sectionList = useMemo(

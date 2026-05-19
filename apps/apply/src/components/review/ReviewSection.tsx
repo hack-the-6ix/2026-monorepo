@@ -85,7 +85,13 @@ export default function ReviewSection({
         </Button>
       </div>
 
-      <dl className="grid w-full grid-cols-1 gap-4 md:max-w-2xl md:grid-cols-2 md:gap-x-6 md:gap-y-5">
+      <dl
+        className={
+          section.id === 'long-answer' ?
+            'flex w-full flex-col gap-5 md:max-w-4xl'
+          : 'grid w-full grid-cols-1 gap-4 md:max-w-2xl md:grid-cols-2 md:gap-x-6 md:gap-y-5'
+        }
+      >
         {section.fields.map((field) => {
           const value = field.getValue(formData);
           return (

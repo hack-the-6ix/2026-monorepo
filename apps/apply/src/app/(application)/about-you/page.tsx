@@ -59,7 +59,7 @@ function AboutYouContent() {
 
   const handlePrevSection = () => {
     if (page > 1) goToPage(page - 1);
-    else router.push('/about-you/character-sheet');
+    else router.push('/about-you/character-sheet?page=2');
   };
 
   const handleNextSection = () => {

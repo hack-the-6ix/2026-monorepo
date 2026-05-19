@@ -82,7 +82,7 @@ function CharacterSheet() {
     page === 1 ? 'Mirror, mirror, on the wall...' : "What's your lucky charm?";
 
   return (
-    <div className="flex flex-col-reverse md:grid md:grid-cols-3 gap-3 md:items-center">
+    <div className="flex flex-col-reverse md:grid md:grid-cols-3 gap-10 md:items-center">
       <FormStep
         label={stepLabel}
         current={page}
@@ -90,7 +90,7 @@ function CharacterSheet() {
         required={false}
         handlePrevSection={handlePrevSection}
         handleNextSection={handleNextSection}
-        width="md:w-[50vw] md:col-span-2 "
+        width="md:w-[45vw] md:col-span-2"
       >
         {page === 1 ?
           <div className="flex flex-col gap-3">
@@ -166,7 +166,7 @@ function CharacterSheet() {
       <CharacterFrame
         characterKey={displayCharacter}
         accessory={accessorySrc}
-        className="hidden md:flex"
+        className="hidden md:flex md:-translate-y-5"
       />
     </div>
   );

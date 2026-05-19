@@ -18,6 +18,7 @@ export async function fetchHt6<T, P = undefined>(
   const fetchOptions: RequestInit = {
     method: options.method || 'GET',
     headers,
+    credentials: 'include',
   };
 
   if (options.body) {
@@ -31,4 +32,25 @@ export async function fetchHt6<T, P = undefined>(
     throw await response.json();
   }
   return response.json();
+}
+
+export interface UpsertResponsePayload {
+  sessionToken?: string;
+  targetUserId?: string;
+  responseJson: Record<string, unknown> | null;
+  isSubmitted: boolean;
+}
+
+export async function upsertFormResponse(
+  body: UpsertResponsePayload,
+): Promise<ApiResponse<Record<string, never>>> {
+  const path = `/seasons/S26/forms/${process.env.FORM_ID}/responses`;
+
+  return await fetchHt6<
+    ApiResponse<Record<string, never>>,
+    UpsertResponsePayload
+  >(path, {
+    method: 'POST',
+    body,
+  });
 }
