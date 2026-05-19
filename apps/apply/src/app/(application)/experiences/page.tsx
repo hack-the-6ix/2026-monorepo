@@ -43,7 +43,7 @@ function ExperienceContent({ currentPageKey }: { currentPageKey: string }) {
     field: K,
     value: ExperienceData[K],
   ) => {
-    updateFormData('aboutYou', { ...experienceFormData, [field]: value });
+    updateFormData('experiences', { ...experienceFormData, [field]: value });
   };
 
   switch (currentPageKey) {
@@ -159,7 +159,7 @@ function ExperienceContent({ currentPageKey }: { currentPageKey: string }) {
   }
 }
 
-export default function Experiences() {
+function Experiences() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { formData } = useApplicationContext();
@@ -181,17 +181,23 @@ export default function Experiences() {
   };
 
   return (
+    <FormStep
+      handlePrevSection={handlePrevSection}
+      handleNextSection={handleNextSection}
+      current={page}
+      total={PAGES.length}
+      label={currentPageConfig.label}
+      required={currentPageConfig.required}
+    >
+      <ExperienceContent currentPageKey={currentPageConfig.key} />
+    </FormStep>
+  );
+}
+
+export default function ExperiencesPage() {
+  return (
     <Suspense>
-      <FormStep
-        handlePrevSection={handlePrevSection}
-        handleNextSection={handleNextSection}
-        current={page}
-        total={PAGES.length}
-        label={currentPageConfig.label}
-        required={currentPageConfig.required}
-      >
-        <ExperienceContent currentPageKey={currentPageConfig.key} />
-      </FormStep>
+      <Experiences />
     </Suspense>
   );
 }

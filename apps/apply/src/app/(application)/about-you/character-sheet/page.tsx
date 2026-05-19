@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -37,7 +38,7 @@ const CHARMS: { id: AccessoryKey; label: string; src: string }[] = [
   { id: 'clover', label: 'Clover', src: '/assets/accessories/Clover.svg' },
 ];
 
-export default function CharacterSheetPage() {
+function CharacterSheet() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get('page') || '1', 10) as 1 | 2;
@@ -168,5 +169,13 @@ export default function CharacterSheetPage() {
         className="hidden md:flex"
       />
     </div>
+  );
+}
+
+export default function CharacterSheetPage() {
+  return (
+    <Suspense>
+      <CharacterSheet />
+    </Suspense>
   );
 }
