@@ -17,7 +17,17 @@ import {
 export const FormDataSchema = z.object({
   characterSheet: characterSheetSchema,
   aboutYou: z.object({
-    test3: z.string().optional(),
+    firstName: z.string(),
+    lastName: z.string(),
+    phoneNumber: z.number(),
+    age: z.number(),
+    email: z.email(),
+    emailPermission: z.boolean().optional(),
+    city: z.string(),
+    province: z.string().optional(),
+    country: z.string(),
+    gender: z.string().optional(),
+    ethnicity: z.string().optional(),
   }),
   experiences: z.object({
     school: z.string(),
@@ -76,7 +86,17 @@ export const ApplicationContextProvider = ({
   const [formData, setFormData] = useState<FormData>({
     characterSheet: initialCharacterSheet,
     aboutYou: {
-      test3: '',
+      firstName: '',
+      lastName: '',
+      phoneNumber: 0,
+      age: 0,
+      email: '',
+      emailPermission: false,
+      city: '',
+      province: '',
+      country: '',
+      gender: '',
+      ethnicity: '',
     },
     experiences: {
       school: '',
