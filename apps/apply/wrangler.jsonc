@@ -52,5 +52,5 @@
 	 * Note: Use secrets to store sensitive data.
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
 	 */
-	"vars": {  "HT6_API_URL": "https://v2.api.hackthe6ix.com/api" }
+	"vars": {  "HT6_API_URL": "https://v2.api.hackthe6ix.com/api", "HOST_URL": "https://2026-apply.ht6.workers.dev" }
 }
