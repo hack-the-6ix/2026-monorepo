@@ -1,36 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button, Typography } from '@hackthe6ix/ui';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
-import { getApplicationReadiness } from '@/app/(application)/review/reviewConfig';
 import ThankYouCandle from '@/assets/thank_you_candle.png';
 import ApplicationSuccessToast from '@/components/thank-you/ApplicationSuccessToast';
-import { useApplicationContext } from '@/context/ApplicationContext';
 
 const DASHBOARD_URL =
   process.env.NEXT_PUBLIC_DASHBOARD_URL ?? 'https://2026.dash.hackthe6ix.com';
 
 export default function ThankYouPage() {
-  const router = useRouter();
-  const { formData } = useApplicationContext();
-  const { isReady } = getApplicationReadiness(formData);
   const [toastVisible, setToastVisible] = useState(true);
-
-  // TODO: Gate this page on a backend "submission success" response instead of
-  // client-side form readiness.
-  useEffect(() => {
-    if (!isReady) {
-      router.replace('/review');
-    }
-  }, [isReady, router]);
-
-  if (!isReady) {
-    return null;
-  }
 
   return (
     <div className="thank-you-page flex min-h-0 w-full flex-1 flex-col">
