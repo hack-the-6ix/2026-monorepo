@@ -62,7 +62,7 @@ function ExperienceContent({ currentPageKey }: { currentPageKey: string }) {
       );
     case 'programAndYear':
       return (
-        <div className="grid grid-cols-2 gap-5.5 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5.5 w-full">
           <Selector
             id="program"
             name="program"
