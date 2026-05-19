@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "2026-hacker",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-12-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".open-next/assets",
+  },
+  // "images": {
+  // Enable image optimization
+  // see https://opennext.js.org/cloudflare/howtos/image
+  // "binding": "IMAGES"
+  // },
+  "services": [
+    {
+      // Self-reference service binding, the service name must match the worker name
+      // see https://opennext.js.org/cloudflare/caching
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "2026-hacker",
+    },
+  ],
+  "observability": {
+    "enabled": true,
+  },
+}

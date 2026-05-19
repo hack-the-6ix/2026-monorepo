@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+@import '@hackthe6ix/ui/theme.css';
+
+@source "../../../../packages/ui/src/**/*.tsx";
+@source "../../../../packages/ui/src/**/*.css";
