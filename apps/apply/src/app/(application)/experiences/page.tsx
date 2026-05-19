@@ -1,4 +1,5 @@
 'use client';
+import { Suspense } from 'react';
 import { Checkbox, FileUpload, Input, Selector } from '@hackthe6ix/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -180,15 +181,17 @@ export default function Experiences() {
   };
 
   return (
-    <FormStep
-      handlePrevSection={handlePrevSection}
-      handleNextSection={handleNextSection}
-      current={page}
-      total={PAGES.length}
-      label={currentPageConfig.label}
-      required={currentPageConfig.required}
-    >
-      <ExperienceContent currentPageKey={currentPageConfig.key} />
-    </FormStep>
+    <Suspense>
+      <FormStep
+        handlePrevSection={handlePrevSection}
+        handleNextSection={handleNextSection}
+        current={page}
+        total={PAGES.length}
+        label={currentPageConfig.label}
+        required={currentPageConfig.required}
+      >
+        <ExperienceContent currentPageKey={currentPageConfig.key} />
+      </FormStep>
+    </Suspense>
   );
 }
