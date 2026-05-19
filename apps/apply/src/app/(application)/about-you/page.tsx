@@ -74,7 +74,7 @@ function AboutYouContent() {
       case 'fullName':
         return (
           <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="md:grid md:grid-cols-2 gap-4">
               <Input
                 id="firstName"
                 name="firstName"
@@ -98,7 +98,7 @@ function AboutYouContent() {
                 input={{ placeholder: 'Doe' }}
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="md:grid md:grid-cols-2 gap-4">
               <Input
                 id="phoneNumber"
                 name="phoneNumber"
@@ -179,7 +179,7 @@ function AboutYouContent() {
               }}
               input={{ placeholder: 'Toronto' }}
             />
-            <div className="grid grid-cols-2 gap-4">
+            <div className="md:grid md:grid-cols-2 gap-4">
               <Selector
                 id="country"
                 name="country"
@@ -219,7 +219,7 @@ function AboutYouContent() {
       case 'demographics':
         return (
           <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="md:grid md:grid-cols-2 gap-4">
               <Selector
                 id="gender"
                 name="gender"
