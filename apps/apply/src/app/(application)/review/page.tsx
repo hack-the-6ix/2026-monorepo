@@ -22,7 +22,7 @@ export default function ReviewPage() {
   const [submitModalOpen, setSubmitModalOpen] = useState(false);
 
   const handleBack = () => {
-    router.push('/survey');
+    router.push('/survey?page=6');
   };
 
   const openSubmitModal = () => {

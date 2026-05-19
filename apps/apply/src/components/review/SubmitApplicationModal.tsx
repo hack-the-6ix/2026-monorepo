@@ -14,7 +14,7 @@ export default function SubmitApplicationModal({
   onConfirm,
 }: SubmitApplicationModalProps) {
   const actions = (
-    <div className="grid w-full grid-cols-2 gap-3">
+    <div className="w-full flex flex-col-reverse md:grid md:grid-cols-2 gap-3">
       <Button
         kind="secondary"
         type="button"
@@ -26,7 +26,7 @@ export default function SubmitApplicationModal({
       <Button
         type="button"
         onClick={onConfirm}
-        className="w-full bg-gradient-to-b from-primary-400 to-primary-600 px-4 !border-primary-600 hover:from-primary-500 hover:to-primary-700 hover:!border-primary-700"
+        className="w-full from-primary-400 to-primary-600 px-4  hover:from-primary-500 hover:to-primary-700 hover:!border-primary-700"
       >
         Submit
       </Button>

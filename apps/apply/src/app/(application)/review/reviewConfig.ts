@@ -1,3 +1,5 @@
+import { FormData } from '../../../context/ApplicationContext';
+
 /** Loosely typed application snapshot for review display only. */
 export type ReviewFormData = {
   characterSheet: Record<string, unknown>;
@@ -6,6 +8,58 @@ export type ReviewFormData = {
   longAnswer: Record<string, unknown>;
   survey: Record<string, unknown>;
 };
+
+export function mapContextToReviewData(ctx: FormData): ReviewFormData {
+  return {
+    characterSheet: {
+      character_base: ctx.characterSheet?.character,
+      character_item: ctx.characterSheet?.accessory,
+      full_name:
+        `${ctx.aboutYou?.firstName || ''} ${ctx.aboutYou?.lastName || ''}`.trim() ||
+        undefined,
+      email: ctx.aboutYou?.email,
+    },
+    aboutYou: {
+      city: ctx.aboutYou?.city,
+      province: ctx.aboutYou?.province,
+      country: ctx.aboutYou?.country,
+      gender: ctx.aboutYou?.gender,
+      ethnicity: ctx.aboutYou?.ethnicity,
+      email_consent: ctx.aboutYou?.emailPermission,
+      ice_first_name: ctx.aboutYou?.firstName,
+      ice_last_name: ctx.aboutYou?.lastName,
+      ice_relationship: ctx.aboutYou?.firstName ? 'Contact' : undefined,
+      ice_phone:
+        ctx.aboutYou?.phoneNumber ?
+          String(ctx.aboutYou.phoneNumber)
+        : undefined,
+    },
+    experiences: {
+      school: ctx.experiences?.school,
+      program: ctx.experiences?.program,
+      year_of_study: ctx.experiences?.yearOfStudy,
+      resume_name: ctx.experiences?.resume?.name,
+      resume_blob: ctx.experiences?.resume ? '[File Uploaded]' : undefined,
+      resume_share_permission: ctx.experiences?.sponsorPermission,
+      github_link: ctx.experiences?.github,
+      linkedin_link: ctx.experiences?.linkedin,
+      portfolio_link: ctx.experiences?.portfolio,
+    },
+    longAnswer: {
+      long_essay: ctx.longAnswer?.longEssay,
+      short_essay: ctx.longAnswer?.shortEssay,
+      one_sentence_essay: ctx.longAnswer?.oneSentenceEssay,
+    },
+    survey: {
+      hackathons_attended: ctx.survey?.hackathonsAttended,
+      dietary_restrictions: undefined, // Add values here if added to context schema later
+      allergies: undefined,
+      mlh_coc: ctx.survey?.mlhCodeOfConduct,
+      mlh_data: ctx.survey?.mlhDataPermission,
+      mlh_email: ctx.survey?.mlhEmailPermission,
+    },
+  };
+}
 
 export type ReviewSectionStatus = 'complete' | 'incomplete';
 
@@ -70,25 +124,18 @@ export const reviewSections: ReviewSectionConfig[] = [
     editHref: '/about-you/character-sheet',
     getStatus: (d) => {
       const cs = section(d, 'characterSheet');
-      return requiredStringsOk([
-        cs['character_base'] as string | undefined,
-        cs['character_item'] as string | undefined,
-      ]);
+      return requiredStringsOk([cs['character'] as string | undefined]);
     },
     fields: [
       {
         label: 'Character base',
         getValue: (d) =>
-          displayValue(
-            rawToDisplay(section(d, 'characterSheet')['character_base']),
-          ),
+          displayValue(rawToDisplay(section(d, 'characterSheet')['character'])),
       },
       {
         label: 'Character item',
         getValue: (d) =>
-          displayValue(
-            rawToDisplay(section(d, 'characterSheet')['character_item']),
-          ),
+          displayValue(rawToDisplay(section(d, 'characterSheet')['accessory'])),
       },
     ],
   },
@@ -97,37 +144,44 @@ export const reviewSections: ReviewSectionConfig[] = [
     title: 'About You',
     editHref: '/about-you',
     getStatus: (d) => {
-      const cs = section(d, 'characterSheet');
       const ay = section(d, 'aboutYou');
       return requiredStringsOk([
-        cs['full_name'] as string | undefined,
-        cs['email'] as string | undefined,
+        ay['firstName'] as string | undefined,
+        ay['lastName'] as string | undefined,
+        ay['email'] as string | undefined,
         ay['city'] as string | undefined,
-        ay['province'] as string | undefined,
         ay['country'] as string | undefined,
       ]);
     },
     fields: [
       {
-        label: 'Full name',
+        label: 'First name',
         required: true,
         getValue: (d) =>
           displayValue(
-            section(d, 'characterSheet')['full_name'] as string | undefined,
+            section(d, 'aboutYou')['firstName'] as string | undefined,
+          ),
+      },
+      {
+        label: 'Last name',
+        required: true,
+        getValue: (d) =>
+          displayValue(
+            section(d, 'aboutYou')['lastName'] as string | undefined,
           ),
       },
       {
         label: 'Email',
         required: true,
         getValue: (d) =>
-          displayValue(
-            section(d, 'characterSheet')['email'] as string | undefined,
-          ),
+          displayValue(section(d, 'aboutYou')['email'] as string | undefined),
       },
       {
         label: 'Email consent',
         getValue: (d) =>
-          displayValue(formatBoolean(section(d, 'aboutYou')['email_consent'])),
+          displayValue(
+            formatBoolean(section(d, 'aboutYou')['emailPermission']),
+          ),
       },
       {
         label: 'City',
@@ -137,7 +191,7 @@ export const reviewSections: ReviewSectionConfig[] = [
       },
       {
         label: 'Province',
-        required: true,
+        required: false,
         getValue: (d) =>
           displayValue(
             section(d, 'aboutYou')['province'] as string | undefined,
@@ -164,54 +218,6 @@ export const reviewSections: ReviewSectionConfig[] = [
     ],
   },
   {
-    id: 'emergency-contact',
-    title: 'Emergency Contact',
-    editHref: '/about-you',
-    getStatus: (d) => {
-      const ay = section(d, 'aboutYou');
-      return requiredStringsOk([
-        ay['ice_first_name'] as string | undefined,
-        ay['ice_last_name'] as string | undefined,
-        ay['ice_relationship'] as string | undefined,
-        ay['ice_phone'] as string | undefined,
-      ]);
-    },
-    fields: [
-      {
-        label: 'First name',
-        required: true,
-        getValue: (d) =>
-          displayValue(
-            section(d, 'aboutYou')['ice_first_name'] as string | undefined,
-          ),
-      },
-      {
-        label: 'Last name',
-        required: true,
-        getValue: (d) =>
-          displayValue(
-            section(d, 'aboutYou')['ice_last_name'] as string | undefined,
-          ),
-      },
-      {
-        label: 'Relationship',
-        required: true,
-        getValue: (d) =>
-          displayValue(
-            section(d, 'aboutYou')['ice_relationship'] as string | undefined,
-          ),
-      },
-      {
-        label: 'Phone',
-        required: true,
-        getValue: (d) =>
-          displayValue(
-            section(d, 'aboutYou')['ice_phone'] as string | undefined,
-          ),
-      },
-    ],
-  },
-  {
     id: 'experiences',
     title: 'Your Experiences',
     editHref: '/experiences',
@@ -219,9 +225,7 @@ export const reviewSections: ReviewSectionConfig[] = [
       const ex = section(d, 'experiences');
       return requiredStringsOk([
         ex['program'] as string | undefined,
-        ex['year_of_study'] as string | undefined,
-        ex['resume_name'] as string | undefined,
-        ex['resume_blob'] as string | undefined,
+        ex['yearOfStudy'] as string | undefined,
       ]);
     },
     fields: [
@@ -245,16 +249,7 @@ export const reviewSections: ReviewSectionConfig[] = [
         required: true,
         getValue: (d) =>
           displayValue(
-            section(d, 'experiences')['year_of_study'] as string | undefined,
-          ),
-      },
-      {
-        label: 'Hackathons attended',
-        getValue: (d) =>
-          displayValue(
-            section(d, 'experiences')['hackathons_attended'] as
-              | string
-              | undefined,
+            section(d, 'experiences')['yearOfStudy'] as string | undefined,
           ),
       },
       {
@@ -277,28 +272,28 @@ export const reviewSections: ReviewSectionConfig[] = [
         label: 'Resume share permission',
         getValue: (d) =>
           displayValue(
-            formatBoolean(section(d, 'experiences')['resume_share_permission']),
+            formatBoolean(section(d, 'experiences')['sponsorPermission']),
           ),
       },
       {
         label: 'GitHub',
         getValue: (d) =>
           displayValue(
-            section(d, 'experiences')['github_link'] as string | undefined,
-          ),
-      },
-      {
-        label: 'Portfolio',
-        getValue: (d) =>
-          displayValue(
-            section(d, 'experiences')['portfolio_link'] as string | undefined,
+            section(d, 'experiences')['github'] as string | undefined,
           ),
       },
       {
         label: 'LinkedIn',
         getValue: (d) =>
           displayValue(
-            section(d, 'experiences')['linkedin_link'] as string | undefined,
+            section(d, 'experiences')['linkedin'] as string | undefined,
+          ),
+      },
+      {
+        label: 'Portfolio',
+        getValue: (d) =>
+          displayValue(
+            section(d, 'experiences')['portfolio'] as string | undefined,
           ),
       },
     ],
@@ -310,8 +305,9 @@ export const reviewSections: ReviewSectionConfig[] = [
     getStatus: (d) => {
       const la = section(d, 'longAnswer');
       return requiredStringsOk([
-        la['long_essay'] as string | undefined,
-        la['short_essay'] as string | undefined,
+        la['longEssay'] as string | undefined,
+        la['shortEssay'] as string | undefined,
+        la['oneSentenceEssay'] as string | undefined,
       ]);
     },
     fields: [
@@ -320,7 +316,7 @@ export const reviewSections: ReviewSectionConfig[] = [
         required: true,
         getValue: (d) =>
           displayValue(
-            section(d, 'longAnswer')['long_essay'] as string | undefined,
+            section(d, 'longAnswer')['longEssay'] as string | undefined,
           ),
       },
       {
@@ -328,16 +324,15 @@ export const reviewSections: ReviewSectionConfig[] = [
         required: true,
         getValue: (d) =>
           displayValue(
-            section(d, 'longAnswer')['short_essay'] as string | undefined,
+            section(d, 'longAnswer')['shortEssay'] as string | undefined,
           ),
       },
       {
         label: 'One-sentence essay',
+        required: true,
         getValue: (d) =>
           displayValue(
-            section(d, 'longAnswer')['one_sentence_essay'] as
-              | string
-              | undefined,
+            section(d, 'longAnswer')['oneSentenceEssay'] as string | undefined,
           ),
       },
     ],
@@ -348,37 +343,81 @@ export const reviewSections: ReviewSectionConfig[] = [
     editHref: '/survey',
     getStatus: (d) => {
       const s = section(d, 'survey');
-      return requiredBoolOk([s['mlh_coc'], s['mlh_data']]);
+      return (
+        requiredStringsOk([s['hackathonsAttended'] as string | undefined]) &&
+        requiredBoolOk([s['mlhCodeOfConduct'], s['mlhDataPermission']])
+      );
     },
     fields: [
       {
-        label: 'Dietary restrictions',
+        label: 'Hackathons attended number',
         getValue: (d) =>
           displayValue(
-            section(d, 'survey')['dietary_restrictions'] as string | undefined,
+            section(d, 'survey')['hackathonsAttended'] as string | undefined,
           ),
       },
       {
-        label: 'Allergies',
+        label: 'Hackathons attended list',
         getValue: (d) =>
-          displayValue(section(d, 'survey')['allergies'] as string | undefined),
+          displayValue(
+            section(d, 'survey')['hackathonsAttendedList'] as
+              | string
+              | undefined,
+          ),
+      },
+      {
+        label: 'Roles in hackathons',
+        getValue: (d) => {
+          const arr = section(d, 'survey')['hackathonCapacity'] as
+            | string[]
+            | undefined;
+          const joinedString =
+            arr && arr.length > 0 ? arr.join(', ') : undefined;
+          return displayValue(joinedString);
+        },
+      },
+      {
+        label: 'Previous HT6 Experience',
+        getValue: (d) => {
+          const arr = section(d, 'survey')['previousHT6Experience'] as
+            | string[]
+            | undefined;
+          const joinedString =
+            arr && arr.length > 0 ? arr.join(', ') : undefined;
+          return displayValue(joinedString);
+        },
+      },
+      {
+        label: 'HT6 lead source',
+        getValue: (d) => {
+          const arr = section(d, 'survey')['howDidYouHearAboutHT6'] as
+            | string[]
+            | undefined;
+          const joinedString =
+            arr && arr.length > 0 ? arr.join(', ') : undefined;
+          return displayValue(joinedString);
+        },
       },
       {
         label: 'MLH Code of Conduct',
         required: true,
         getValue: (d) =>
-          displayValue(formatBoolean(section(d, 'survey')['mlh_coc'])),
+          displayValue(formatBoolean(section(d, 'survey')['mlhCodeOfConduct'])),
       },
       {
         label: 'MLH emails',
         getValue: (d) =>
-          displayValue(formatBoolean(section(d, 'survey')['mlh_email'])),
+          displayValue(
+            formatBoolean(section(d, 'survey')['mlhEmailPermission']),
+          ),
       },
       {
         label: 'MLH data sharing',
         required: true,
         getValue: (d) =>
-          displayValue(formatBoolean(section(d, 'survey')['mlh_data'])),
+          displayValue(
+            formatBoolean(section(d, 'survey')['mlhDataPermission']),
+          ),
       },
     ],
   },

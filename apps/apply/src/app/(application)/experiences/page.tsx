@@ -170,7 +170,7 @@ function Experiences() {
 
   const handlePrevSection = () => {
     if (page > 1) goToPage(page - 1);
-    else router.push('/about-you/character-sheet');
+    else router.push('/about-you?page=4');
   };
   const handleNextSection = () => {
     if (page < 4) goToPage(page + 1);
