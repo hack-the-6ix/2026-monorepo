@@ -36,7 +36,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen md:max-h-screen overflow-hidden bg-[linear-gradient(226deg,#F6BD55_-36.92%,#A53368_4.83%,#3E33AE_84.03%,#100C3F_149.65%)]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh overflow-hidden bg-[linear-gradient(226deg,#F6BD55_-36.92%,#A53368_4.83%,#3E33AE_84.03%,#100C3F_149.65%)]`}
       >
         {/* Desktop Bg */}
         <div className="hidden md:block fixed inset-0 z-0 pointer-events-none animate-fade-in will-change-opacity">
@@ -102,6 +102,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
             className="absolute right-0 -bottom-[68vw] h-auto w-full animate-fade-in [animation-delay:300ms] opacity-0"
           />
           <div className="absolute inset-0 bg-black/50 mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-black/20"></div>
         </div>
 
         <div className="relative z-10 flex h-dvh max-h-dvh min-h-0 flex-col overflow-hidden">
