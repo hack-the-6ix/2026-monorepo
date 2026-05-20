@@ -1,12 +1,10 @@
 'use client';
 
-import React from 'react';
 import { Typography } from '@hackthe6ix/ui';
 
 const UnderConstruction = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[85vh] text-center px-4 max-w-xl mx-auto gap-6">
-      {/* Pulsing Alert Badge */}
       <div className="flex items-center gap-2 bg-yellow-300/10 border border-yellow-300/30 px-4 py-1.5 rounded-full mb-2">
         <span className="w-2 h-2 rounded-full bg-yellow-300 animate-ping" />
         <Typography
@@ -19,7 +17,6 @@ const UnderConstruction = () => {
         </Typography>
       </div>
 
-      {/* Main Title */}
       <Typography
         as="h1"
         textSize="heading-lg"
@@ -33,7 +30,6 @@ const UnderConstruction = () => {
         </span>
       </Typography>
 
-      {/* Description */}
       <Typography
         as="p"
         textSize="paragraph-lg"
@@ -41,7 +37,8 @@ const UnderConstruction = () => {
         textColor="text-white"
         className="opacity-80 max-w-md leading-relaxed"
       >
-        We are currently polishing the dashboard, setting up team formations, and brewing our launch builds. Check back shortly!
+        We are currently polishing the dashboard, setting up team formations,
+        and brewing our launch builds. Check back shortly!
       </Typography>
     </div>
   );
