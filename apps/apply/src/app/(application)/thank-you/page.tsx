@@ -11,7 +11,7 @@ import { getResponse } from '@/client';
 import ApplicationSuccessToast from '@/components/thank-you/ApplicationSuccessToast';
 
 const DASHBOARD_URL =
-  process.env.NEXT_PUBLIC_DASHBOARD_URL ?? 'https://dash.hackthe6ix.com';
+  process.env.NEXT_PUBLIC_DASHBOARD_URL ?? 'https://2026.dash.hackthe6ix.com';
 
 export default function ThankYouPage() {
   const [toastVisible, setToastVisible] = useState(false);
