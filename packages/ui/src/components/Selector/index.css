@@ -21,7 +21,7 @@
   }
 
   .input__el {
-    @apply placeholder:text-neutral-400 outline-none w-full;
+    @apply placeholder:text-neutral-400 outline-none w-full text-base md:text-sm;
   }
 
   .reset_button {
