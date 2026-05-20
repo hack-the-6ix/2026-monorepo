@@ -82,7 +82,7 @@ function CharacterSheet() {
     page === 1 ? 'Mirror, mirror, on the wall...' : "What's your lucky charm?";
 
   return (
-    <div className="flex flex-col-reverse md:grid md:grid-cols-3 gap-10 md:items-center">
+    <div className="flex flex-col-reverse md:grid md:grid-cols-3 gap-10 md:items-center max-h-[90%]">
       <FormStep
         label={stepLabel}
         current={page}
@@ -98,6 +98,7 @@ function CharacterSheet() {
               textColor="text-warning-400"
               textSize="subtitle-lg"
               textWeight="bold"
+              className="hidden md:block"
             >
               What do you see?
             </Typography>
