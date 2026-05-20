@@ -5,10 +5,12 @@
   "scripts": {
     "dev:landing": "pnpm --filter landing dev",
     "dev:apply": "pnpm --filter apply dev",
+    "dev:hacker": "pnpm --filter hacker dev",
     "dev:ui": "pnpm --filter ui dev",
     "build": "pnpm --parallel --filter \"./apps/*\" build",
     "build:landing": "pnpm --filter landing build",
     "build:apply": "pnpm --filter apply build",
+    "build:hacker": "pnpm --filter hacker build",
     "build:ui": "pnpm --filter ui build",
     "type-check": "pnpm -r type-check",
     "typegen": "pnpm -r typegen",

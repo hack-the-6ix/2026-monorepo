@@ -12,7 +12,7 @@ const PAGES = [
     label:
       "What is something you are exceptional at? We're talking the best of the best.",
     placeholder: 'I am the goat at...',
-    maxWords: 200,
+    maxWords: 150,
     rows: 10,
   },
   {
@@ -20,14 +20,14 @@ const PAGES = [
     label:
       "What is your craziest hackathon story? Tell us everything, we're nosy! If you haven't been to a hackathon before, tell us about your craziest group project (Please leave names of people out of this).",
     placeholder: 'So basically...',
-    maxWords: 50,
+    maxWords: 100,
     rows: 8,
   },
   {
     fieldName: 'oneSentenceEssay',
     label: 'How would your worst enemy describe you?',
     placeholder: 'They would say...',
-    maxWords: 20,
+    maxWords: 15,
     rows: 4,
   },
 ];
