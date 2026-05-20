@@ -26,10 +26,9 @@ export function mapContextToReviewData(ctx: FormData): ReviewFormData {
       gender: ctx.aboutYou?.gender,
       ethnicity: ctx.aboutYou?.ethnicity,
       email_consent: ctx.aboutYou?.emailPermission,
-      ice_first_name: ctx.aboutYou?.firstName,
-      ice_last_name: ctx.aboutYou?.lastName,
-      ice_relationship: ctx.aboutYou?.firstName ? 'Contact' : undefined,
-      ice_phone:
+      first_name: ctx.aboutYou?.firstName,
+      last_name: ctx.aboutYou?.lastName,
+      phone:
         ctx.aboutYou?.phoneNumber ?
           String(ctx.aboutYou.phoneNumber)
         : undefined,
@@ -148,6 +147,8 @@ export const reviewSections: ReviewSectionConfig[] = [
       return requiredStringsOk([
         ay['firstName'] as string | undefined,
         ay['lastName'] as string | undefined,
+        ay['phoneNumber'] as string | undefined,
+        ay['age'] as string | undefined,
         ay['email'] as string | undefined,
         ay['city'] as string | undefined,
         ay['country'] as string | undefined,
@@ -169,6 +170,20 @@ export const reviewSections: ReviewSectionConfig[] = [
           displayValue(
             section(d, 'aboutYou')['lastName'] as string | undefined,
           ),
+      },
+      {
+        label: 'Phone number',
+        required: true,
+        getValue: (d) =>
+          displayValue(
+            section(d, 'aboutYou')['phoneNumber'] as string | undefined,
+          ),
+      },
+      {
+        label: 'age',
+        required: true,
+        getValue: (d) =>
+          displayValue(section(d, 'aboutYou')['age'] as string | undefined),
       },
       {
         label: 'Email',

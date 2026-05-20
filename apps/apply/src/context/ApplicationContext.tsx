@@ -7,6 +7,7 @@ import {
   useEffectEvent,
   useState,
 } from 'react';
+import { isValidPhoneNumber } from 'libphonenumber-js';
 import z from 'zod';
 
 import {
@@ -19,7 +20,10 @@ export const FormDataSchema = z.object({
   aboutYou: z.object({
     firstName: z.string(),
     lastName: z.string(),
-    phoneNumber: z.number(),
+    phoneNumber: z.string().refine((val) => isValidPhoneNumber(val), {
+      message:
+        'Please enter a valid phone number (including country code starting with +)',
+    }),
     age: z.number(),
     email: z.email(),
     emailPermission: z.boolean().optional(),
@@ -89,7 +93,7 @@ export const ApplicationContextProvider = ({
     aboutYou: {
       firstName: '',
       lastName: '',
-      phoneNumber: 0,
+      phoneNumber: '',
       age: 0,
       email: '',
       emailPermission: false,

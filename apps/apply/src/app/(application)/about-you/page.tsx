@@ -1,6 +1,7 @@
 'use client';
 import { Suspense } from 'react';
 import { Checkbox, Input, Selector, Typography } from '@hackthe6ix/ui';
+import { AsYouType, parseIncompletePhoneNumber } from 'libphonenumber-js';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import FormStep from '@/components/FormStep';
@@ -105,17 +106,17 @@ function AboutYouContent() {
                 label="Phone Number"
                 required
                 controlled={{
-                  value:
-                    aboutYou.phoneNumber ? String(aboutYou.phoneNumber) : '',
+                  value: aboutYou.phoneNumber || '',
                   onValueChange: (v) => {
-                    const digits = v.replace(/\D/g, '').slice(0, 10);
-                    updateField('phoneNumber', digits ? Number(digits) : 0);
+                    const raw = parseIncompletePhoneNumber(v);
+                    const formatted = new AsYouType().input(raw);
+                    updateField('phoneNumber', formatted);
                   },
                 }}
                 input={{
                   type: 'tel',
-                  inputMode: 'numeric',
-                  placeholder: '6471234567',
+                  inputMode: 'tel',
+                  placeholder: '+16471234567',
                 }}
               />
               <Input
