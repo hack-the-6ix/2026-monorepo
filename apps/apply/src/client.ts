@@ -68,3 +68,29 @@ export async function uploadResumeFile(
     body: formData,
   });
 }
+
+export interface FormResponseItem {
+  formResponseId: string;
+  formId: string;
+  userId: string;
+  seasonCode: string;
+  responseJson: Record<string, unknown> | null;
+  isSubmitted: boolean;
+  updatedAt: string;
+}
+
+export interface PaginatedFormResponses {
+  data: FormResponseItem[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+export async function getResponse(): Promise<PaginatedFormResponses> {
+  const path = '/seasons/S26/responses';
+
+  return await fetchHt6<PaginatedFormResponses>(path);
+}
