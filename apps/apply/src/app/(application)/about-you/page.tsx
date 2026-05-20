@@ -255,9 +255,10 @@ function AboutYouContent() {
                   Why are we asking this?
                 </Typography>
                 <Typography
-                  textSize="paragraph-sm"
+                  textSize="label"
                   textColor="text-white"
                   textWeight="medium"
+                  className="block md:hidden"
                 >
                   Hack the 6ix is committed to fostering an inclusive and
                   diverse community. We collect this information solely to
