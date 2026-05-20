@@ -54,3 +54,17 @@ export async function upsertFormResponse(
     body,
   });
 }
+
+export async function uploadResumeFile(
+  file: File,
+): Promise<{ fileId: string }> {
+  const path = `/seasons/S26/forms/${process.env.FORM_ID}/questions/resumeBlob/files`;
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  return await fetchHt6<{ fileId: string }, FormData>(path, {
+    method: 'POST',
+    body: formData,
+  });
+}
