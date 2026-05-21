@@ -27,6 +27,8 @@ export async function fetchHt6<T, P = unknown>(
   if (options.body) {
     if (options.body instanceof FormData) {
       fetchOptions.body = options.body;
+      delete headers['Content-Type'];
+      headers['Content-Type'] = 'multipart/form-data';
     } else {
       headers['Content-Type'] = 'application/json';
       fetchOptions.body = JSON.stringify(options.body);
