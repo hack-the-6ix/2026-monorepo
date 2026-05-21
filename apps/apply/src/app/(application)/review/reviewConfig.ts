@@ -26,10 +26,9 @@ export function mapContextToReviewData(ctx: FormData): ReviewFormData {
       gender: ctx.aboutYou?.gender,
       ethnicity: ctx.aboutYou?.ethnicity,
       email_consent: ctx.aboutYou?.emailPermission,
-      ice_first_name: ctx.aboutYou?.firstName,
-      ice_last_name: ctx.aboutYou?.lastName,
-      ice_relationship: ctx.aboutYou?.firstName ? 'Contact' : undefined,
-      ice_phone:
+      first_name: ctx.aboutYou?.firstName,
+      last_name: ctx.aboutYou?.lastName,
+      phone:
         ctx.aboutYou?.phoneNumber ?
           String(ctx.aboutYou.phoneNumber)
         : undefined,
@@ -38,8 +37,8 @@ export function mapContextToReviewData(ctx: FormData): ReviewFormData {
       school: ctx.experiences?.school,
       program: ctx.experiences?.program,
       year_of_study: ctx.experiences?.yearOfStudy,
-      resume_name: ctx.experiences?.resume?.name,
-      resume_blob: ctx.experiences?.resume ? '[File Uploaded]' : undefined,
+      resume_name: ctx.experiences?.resumeName,
+      resume_blob: ctx.experiences?.resumeId ? '[File Uploaded]' : undefined,
       resume_share_permission: ctx.experiences?.sponsorPermission,
       github_link: ctx.experiences?.github,
       linkedin_link: ctx.experiences?.linkedin,
@@ -85,12 +84,18 @@ function section(
   return d[key];
 }
 
-function isFilled(value: string | undefined): boolean {
-  return Boolean(value && value.trim().length > 0);
+function isFilled(value: unknown): boolean {
+  if (value == null) return false;
+  if (typeof value === 'string') return value.trim().length > 0;
+  if (typeof value === 'number') return !isNaN(value);
+  if (typeof value === 'boolean') return true;
+  return Boolean(value);
 }
 
-function displayValue(value: string | undefined): string {
-  return isFilled(value) ? value!.trim() : 'Not filled';
+function displayValue(value: unknown): string {
+  if (value == null || value === '') return 'Not filled';
+  const s = String(value).trim();
+  return s.length > 0 ? s : 'Not filled';
 }
 
 function rawToDisplay(v: unknown): string | undefined {
@@ -148,6 +153,8 @@ export const reviewSections: ReviewSectionConfig[] = [
       return requiredStringsOk([
         ay['firstName'] as string | undefined,
         ay['lastName'] as string | undefined,
+        ay['phoneNumber'] as string | undefined,
+        ay['age'] as string | undefined,
         ay['email'] as string | undefined,
         ay['city'] as string | undefined,
         ay['country'] as string | undefined,
@@ -169,6 +176,20 @@ export const reviewSections: ReviewSectionConfig[] = [
           displayValue(
             section(d, 'aboutYou')['lastName'] as string | undefined,
           ),
+      },
+      {
+        label: 'Phone number',
+        required: true,
+        getValue: (d) =>
+          displayValue(
+            section(d, 'aboutYou')['phoneNumber'] as string | undefined,
+          ),
+      },
+      {
+        label: 'age',
+        required: true,
+        getValue: (d) =>
+          displayValue(section(d, 'aboutYou')['age'] as string | undefined),
       },
       {
         label: 'Email',
@@ -226,6 +247,8 @@ export const reviewSections: ReviewSectionConfig[] = [
       return requiredStringsOk([
         ex['program'] as string | undefined,
         ex['yearOfStudy'] as string | undefined,
+        ex['resumeName'] as string | undefined,
+        ex['resumeId'] as string | undefined,
       ]);
     },
     fields: [
@@ -257,7 +280,7 @@ export const reviewSections: ReviewSectionConfig[] = [
         required: true,
         getValue: (d) =>
           displayValue(
-            section(d, 'experiences')['resume_name'] as string | undefined,
+            section(d, 'experiences')['resumeName'] as string | undefined,
           ),
       },
       {
@@ -265,7 +288,7 @@ export const reviewSections: ReviewSectionConfig[] = [
         required: true,
         getValue: (d) =>
           displayValue(
-            section(d, 'experiences')['resume_blob'] as string | undefined,
+            section(d, 'experiences')['resumeId'] as string | undefined,
           ),
       },
       {

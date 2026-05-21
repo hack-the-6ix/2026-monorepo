@@ -20,7 +20,7 @@
 
   .tooltiptext {
     @apply hidden absolute top-full mt-4 left-0 -translate-x-3.5;
-    @apply w-[80vw] md:w-[320px] p-3.5 z-100 rounded-2xl shadow-lg;
+    @apply w-[50vw] md:w-[320px] p-3.5 z-100 rounded-2xl shadow-lg;
     @apply text-left font-medium leading-relaxed;
     
     color: var(--tooltip-text-color);

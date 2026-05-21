@@ -54,3 +54,43 @@ export async function upsertFormResponse(
     body,
   });
 }
+
+export async function uploadResumeFile(
+  file: File,
+): Promise<{ fileId: string }> {
+  const path = `/seasons/S26/forms/${process.env.FORM_ID}/questions/resumeBlob/files`;
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  return await fetchHt6<{ fileId: string }, FormData>(path, {
+    method: 'POST',
+    body: formData,
+  });
+}
+
+export interface FormResponseItem {
+  formResponseId: string;
+  formId: string;
+  userId: string;
+  seasonCode: string;
+  responseJson: Record<string, unknown> | null;
+  isSubmitted: boolean;
+  updatedAt: string;
+}
+
+export interface PaginatedFormResponses {
+  data: FormResponseItem[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+export async function getResponse(): Promise<PaginatedFormResponses> {
+  const path = '/seasons/S26/responses';
+
+  return await fetchHt6<PaginatedFormResponses>(path);
+}

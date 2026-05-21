@@ -82,7 +82,7 @@ function CharacterSheet() {
     page === 1 ? 'Mirror, mirror, on the wall...' : "What's your lucky charm?";
 
   return (
-    <div className="flex flex-col-reverse md:grid md:grid-cols-3 gap-10 md:items-center">
+    <div className="flex flex-col-reverse md:grid md:grid-cols-3 gap-12 md:items-center -mt-1 md:mt-0">
       <FormStep
         label={stepLabel}
         current={page}
@@ -93,11 +93,12 @@ function CharacterSheet() {
         width="md:w-[45vw] md:col-span-2"
       >
         {page === 1 ?
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1 md:gap-3 -mt-6 md:mt-0">
             <Typography
               textColor="text-warning-400"
               textSize="subtitle-lg"
               textWeight="bold"
+              className="hidden md:block"
             >
               What do you see?
             </Typography>
@@ -117,7 +118,7 @@ function CharacterSheet() {
                     aria-pressed={isSelected}
                     onClick={() => setCharacter(COLOR_TO_CHARACTER[c.id])}
                     style={{ backgroundColor: c.hex }}
-                    className={`w-full aspect-5/3 md:aspect-square md:size-12 rounded-lg cursor-pointer transition-all ring-4 ${
+                    className={`w-full aspect-5/2 md:aspect-square md:size-12 rounded-lg cursor-pointer transition-all ring-4 ${
                       isSelected ?
                         'ring-[#3DB4E8] scale-105'
                       : 'ring-yellow-300 hover:scale-105'
@@ -127,7 +128,7 @@ function CharacterSheet() {
               })}
             </div>
           </div>
-        : <div className="flex flex-col gap-3">
+        : <div className="flex flex-col gap-1 md:gap-3 -mt-6 md:mt-0">
             <CharacterFrame
               characterKey={displayCharacter}
               accessory={accessorySrc}

@@ -1,6 +1,7 @@
 'use client';
 import { Suspense } from 'react';
 import { Checkbox, Input, Selector, Typography } from '@hackthe6ix/ui';
+import { AsYouType, parseIncompletePhoneNumber } from 'libphonenumber-js';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import FormStep from '@/components/FormStep';
@@ -74,7 +75,7 @@ function AboutYouContent() {
       case 'fullName':
         return (
           <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
               <Input
                 id="firstName"
                 name="firstName"
@@ -98,24 +99,24 @@ function AboutYouContent() {
                 input={{ placeholder: 'Doe' }}
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
               <Input
                 id="phoneNumber"
                 name="phoneNumber"
                 label="Phone Number"
                 required
                 controlled={{
-                  value:
-                    aboutYou.phoneNumber ? String(aboutYou.phoneNumber) : '',
+                  value: aboutYou.phoneNumber || '',
                   onValueChange: (v) => {
-                    const digits = v.replace(/\D/g, '').slice(0, 10);
-                    updateField('phoneNumber', digits ? Number(digits) : 0);
+                    const raw = parseIncompletePhoneNumber(v);
+                    const formatted = new AsYouType().input(raw);
+                    updateField('phoneNumber', formatted);
                   },
                 }}
                 input={{
                   type: 'tel',
-                  inputMode: 'numeric',
-                  placeholder: '6471234567',
+                  inputMode: 'tel',
+                  placeholder: '+16471234567',
                 }}
               />
               <Input
@@ -179,7 +180,7 @@ function AboutYouContent() {
               }}
               input={{ placeholder: 'Toronto' }}
             />
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
               <Selector
                 id="country"
                 name="country"
@@ -219,7 +220,7 @@ function AboutYouContent() {
       case 'demographics':
         return (
           <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
               <Selector
                 id="gender"
                 name="gender"
@@ -244,14 +245,28 @@ function AboutYouContent() {
               />
             </div>
             <div className="group relative inline-flex cursor-help">
-              <Typography
-                textSize="paragraph-sm"
-                textWeight="semi-bold"
-                textColor="text-white"
-                className="underline decoration-dotted underline-offset-2"
-              >
-                Why are we asking this?
-              </Typography>
+              <div className="flex flex-col gap-2">
+                <Typography
+                  textSize="paragraph-sm"
+                  textWeight="semi-bold"
+                  textColor="text-white"
+                  className="underline decoration-dotted underline-offset-2 cursor-help"
+                >
+                  Why are we asking this?
+                </Typography>
+                <Typography
+                  textSize="label"
+                  textColor="text-white"
+                  textWeight="medium"
+                  className="block md:hidden"
+                >
+                  Hack the 6ix is committed to fostering an inclusive and
+                  diverse community. We collect this information solely to
+                  better understand our applicant pool and ensure we are
+                  reaching a wide range of backgrounds. This data is anonymized
+                  and will never be used to make admission decisions.
+                </Typography>
+              </div>
               <div className="hidden group-hover:block absolute top-full mt-2 left-0 z-50 w-[80vw] md:w-[320px] rounded-2xl bg-neutral-50 p-3.5 shadow-lg text-indigo-800 text-sm font-medium leading-relaxed">
                 Hack the 6ix is committed to fostering an inclusive and diverse
                 community. We collect this information solely to better

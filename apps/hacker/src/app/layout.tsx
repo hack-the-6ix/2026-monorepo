@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { Inter } from 'next/font/google';
+import Image from 'next/image';
+
+import Sidebar from '@/components/Sidebar';
 
 import './globals.css';
-import Sidebar from '@/components/Sidebar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -14,6 +15,8 @@ export const metadata: Metadata = {
   title: 'Hacker Dashboard | Hack the 6ix',
   description: 'Hacker Dashboard',
 };
+
+const IS_UNDER_CONSTRUCTION = true;
 
 export default function RootLayout({
   children,
@@ -33,9 +36,11 @@ export default function RootLayout({
         </div>
 
         <div className="flex min-h-screen">
-          <aside className="w-72 hidden md:block shrink-0">
-            <Sidebar />
-          </aside>
+          {!IS_UNDER_CONSTRUCTION && (
+            <aside className="w-72 hidden md:block shrink-0">
+              <Sidebar />
+            </aside>
+          )}
           <main className="flex-1 overflow-y-auto">{children}</main>
         </div>
       </body>

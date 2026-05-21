@@ -124,7 +124,7 @@ export function CharacterFrame({
 }: CharacterFrameProps) {
   return (
     <div
-      className={`relative aspect-[4/5] w-full max-w-[210px] md:max-w-none md:w-[18vw] md:max-lg:w-[24vw] ${className}`}
+      className={`relative aspect-4/5 w-full max-w-[210px] md:max-w-none md:w-[18vw] md:max-lg:w-[24vw] ${className}`}
     >
       <Image
         src="/assets/frame.svg"
