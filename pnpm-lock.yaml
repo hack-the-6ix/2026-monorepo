@@ -28,7 +28,7 @@ catalogs:
       specifier: ^9.39.4
       version: 9.39.4
     next:
-      specifier: ^16.2.6
+      specifier: ^16.1.0
       version: 16.2.6
     prettier:
       specifier: ^3.8.3
