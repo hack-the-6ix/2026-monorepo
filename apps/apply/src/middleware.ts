@@ -1,20 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { fetchWithCookies } from './actions';
+const SESSION_COOKIE_NAME = 'ht6_session';
 
 export async function middleware(request: NextRequest) {
+  const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME);
+
+  if (request.nextUrl.pathname === '/auth/callback') {
+    return NextResponse.next();
+  }
+
   try {
-    const res = await fetchWithCookies(`${process.env.HT6_API_URL}/auth/check`);
-    if (!res.ok) throw new Error('Failed auth check. Triggering login');
+    const headers: HeadersInit = {};
+    if (sessionCookie) {
+      headers['Cookie'] = `${SESSION_COOKIE_NAME}=${sessionCookie.value}`;
+    }
+
+    const res = await fetch(`${process.env.HT6_API_URL}/auth/check`, {
+      headers,
+    });
+
+    if (!res.ok) throw new Error('Auth check failed');
+
+    return NextResponse.next();
   } catch (err) {
     console.error(err);
 
     const loginUrl = new URL(`${process.env.HT6_API_URL}/auth/login`);
-
-    const fallbackRedirectTarget =
-      process.env.HOST_URL || request.nextUrl.origin;
-
-    loginUrl.searchParams.set('redirectUrl', fallbackRedirectTarget);
+    const redirectTarget = process.env.HOST_URL || request.nextUrl.origin;
+    loginUrl.searchParams.set('redirectUrl', redirectTarget);
 
     return NextResponse.redirect(loginUrl.toString());
   }
