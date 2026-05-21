@@ -29,7 +29,7 @@ const PAGES: PageConfig[] = [
     label: 'Gorgeous! Now, about yourself...',
     required: true,
   },
-  { key: 'email', label: "What's your email?", required: true },
+  // { key: 'email', label: "What's your email?", required: true },
   { key: 'location', label: 'Where are you located?', required: true },
   {
     key: 'demographics',
