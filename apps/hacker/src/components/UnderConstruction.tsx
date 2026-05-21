@@ -6,7 +6,6 @@ const UnderConstruction = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[85vh] text-center px-4 max-w-xl mx-auto gap-6">
       <div className="flex items-center gap-2 bg-yellow-300/10 border border-yellow-300/30 px-4 py-1.5 rounded-full mb-2">
-        <span className="w-2 h-2 rounded-full bg-yellow-300 animate-ping" />
         <Typography
           as="span"
           textSize="label"
