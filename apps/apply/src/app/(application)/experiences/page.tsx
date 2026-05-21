@@ -1,8 +1,9 @@
 'use client';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import { Checkbox, FileUpload, Input, Selector } from '@hackthe6ix/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import { uploadResumeFile } from '@/client';
 import FormStep from '@/components/FormStep';
 import { FormData, useApplicationContext } from '@/context/ApplicationContext';
 import { PROGRAM_OPTIONS, YEAR_OF_STUDY_OPTIONS } from './enums';
@@ -35,6 +36,7 @@ const PAGES: PageConfig[] = [
 
 function ExperienceContent({ currentPageKey }: { currentPageKey: string }) {
   const { formData, updateFormData } = useApplicationContext();
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const experienceFormData = formData.experiences;
 
   type ExperienceData = FormData['experiences'];
@@ -44,6 +46,18 @@ function ExperienceContent({ currentPageKey }: { currentPageKey: string }) {
     value: ExperienceData[K],
   ) => {
     updateFormData('experiences', { ...experienceFormData, [field]: value });
+  };
+
+  const fileUpload = async (file: File) => {
+    setUploadError(null); // Reset error on new attempt
+    try {
+      const response = await uploadResumeFile(file);
+      const fileId = response.fileId;
+      updateField('resumeId', fileId);
+      updateField('resumeName', file.name);
+    } catch {
+      setUploadError('Failed to upload file. Please try again.');
+    }
   };
 
   switch (currentPageKey) {
@@ -99,8 +113,11 @@ function ExperienceContent({ currentPageKey }: { currentPageKey: string }) {
             name="resume"
             label=""
             hideLabel
-            onFileSelect={(file) => updateField('resume', file)}
+            onFileSelect={(file) => fileUpload(file)}
             className="w-full"
+            info={
+              uploadError ? { type: 'error', message: uploadError } : undefined
+            }
           />
           <Checkbox
             id="sponsorPermission"

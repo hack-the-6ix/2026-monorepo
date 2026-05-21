@@ -26,7 +26,7 @@ catalogs:
       version: 2.5.1
     eslint:
       specifier: ^9.39.4
-      version: 9.39.4
+      version: 9.39.3
     next:
       specifier: ^16
       version: 16.1.6
@@ -81,6 +81,9 @@ importers:
       classnames:
         specifier: 'catalog:'
         version: 2.5.1
+      libphonenumber-js:
+        specifier: ^1.13.2
+        version: 1.13.2
       lucide-react:
         specifier: ^0.577.0
         version: 0.577.0(react@19.2.4)
@@ -3557,6 +3560,9 @@ packages:
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
+
+  libphonenumber-js@1.13.2:
+    resolution: {integrity: sha512-S3kmBrptp3yRTm83NUcHy9g1vbwiWMzI8WvY22+koBJ6zkRteLnedBL2VX0MIAGwx2yiyxX4J85pceZyQ6ffgg==}
 
   lightningcss-android-arm64@1.31.1:
     resolution: {integrity: sha512-HXJF3x8w9nQ4jbXRiNppBCqeZPIAfUo8zE/kOEGbW5NZvGc/K7nMxbhIr+YlFlHW5mpbg/YFPdbnCh1wAXCKFg==}
@@ -8377,6 +8383,8 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+
+  libphonenumber-js@1.13.2: {}
 
   lightningcss-android-arm64@1.31.1:
     optional: true
