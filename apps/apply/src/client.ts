@@ -14,6 +14,7 @@ export async function fetchHt6<T, P = unknown>(
   const headers: Record<string, string> = {};
   if (token) {
     headers['X-Access-Token'] = token;
+    headers['Authorization'] = `Bearer ${token}`;
   }
 
   const fetchOptions: RequestInit = {
