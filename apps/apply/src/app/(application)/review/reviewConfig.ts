@@ -17,7 +17,6 @@ export function mapContextToReviewData(ctx: FormData): ReviewFormData {
       full_name:
         `${ctx.aboutYou?.firstName || ''} ${ctx.aboutYou?.lastName || ''}`.trim() ||
         undefined,
-      email: ctx.aboutYou?.email,
     },
     aboutYou: {
       city: ctx.aboutYou?.city,
@@ -25,7 +24,6 @@ export function mapContextToReviewData(ctx: FormData): ReviewFormData {
       country: ctx.aboutYou?.country,
       gender: ctx.aboutYou?.gender,
       ethnicity: ctx.aboutYou?.ethnicity,
-      email_consent: ctx.aboutYou?.emailPermission,
       first_name: ctx.aboutYou?.firstName,
       last_name: ctx.aboutYou?.lastName,
       phone:
@@ -55,6 +53,7 @@ export function mapContextToReviewData(ctx: FormData): ReviewFormData {
       allergies: undefined,
       mlh_coc: ctx.survey?.mlhCodeOfConduct,
       mlh_data: ctx.survey?.mlhDataPermission,
+      email_consent: ctx.survey?.emailPermission,
       mlh_email: ctx.survey?.mlhEmailPermission,
     },
   };
@@ -155,7 +154,6 @@ export const reviewSections: ReviewSectionConfig[] = [
         ay['lastName'] as string | undefined,
         ay['phoneNumber'] as string | undefined,
         ay['age'] as string | undefined,
-        ay['email'] as string | undefined,
         ay['city'] as string | undefined,
         ay['country'] as string | undefined,
       ]);
@@ -190,19 +188,6 @@ export const reviewSections: ReviewSectionConfig[] = [
         required: true,
         getValue: (d) =>
           displayValue(section(d, 'aboutYou')['age'] as string | undefined),
-      },
-      {
-        label: 'Email',
-        required: true,
-        getValue: (d) =>
-          displayValue(section(d, 'aboutYou')['email'] as string | undefined),
-      },
-      {
-        label: 'Email consent',
-        getValue: (d) =>
-          displayValue(
-            formatBoolean(section(d, 'aboutYou')['emailPermission']),
-          ),
       },
       {
         label: 'City',
@@ -433,6 +418,11 @@ export const reviewSections: ReviewSectionConfig[] = [
           displayValue(
             formatBoolean(section(d, 'survey')['mlhEmailPermission']),
           ),
+      },
+      {
+        label: 'Email consent',
+        getValue: (d) =>
+          displayValue(formatBoolean(section(d, 'survey')['emailPermission'])),
       },
       {
         label: 'MLH data sharing',
