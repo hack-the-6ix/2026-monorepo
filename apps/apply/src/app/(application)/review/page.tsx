@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { upsertFormResponse } from '@/client';
+import ApplicationFailureToast from '@/components/thank-you/ApplicationFailureToast';
 import ReviewSection from '@/components/review/ReviewSection';
 import ReviewStatusBadge from '@/components/review/ReviewStatusBadge';
 import SubmitApplicationModal from '@/components/review/SubmitApplicationModal';
@@ -21,6 +22,7 @@ export default function ReviewPage() {
   const { formData } = useApplicationContext();
   const { isReady } = getApplicationReadiness(formData);
   const [submitModalOpen, setSubmitModalOpen] = useState(false);
+  const [failureToastVisible, setFailureToastVisible] = useState(false);
 
   const handleBack = () => {
     router.push('/survey?page=6');
@@ -34,14 +36,15 @@ export default function ReviewPage() {
   const handleConfirmSubmit = async () => {
     if (!isReady) return;
     setSubmitModalOpen(false);
+    setFailureToastVisible(false);
     try {
       await upsertFormResponse({
         responseJson: formData,
         isSubmitted: true,
       });
       router.push('/thank-you');
-    } catch (error) {
-      console.error('Submission failed:', error);
+    } catch {
+      setFailureToastVisible(true);
     }
   };
 
@@ -80,7 +83,16 @@ export default function ReviewPage() {
   );
 
   return (
-    <div className="review-page mx-auto flex h-full min-h-0 w-full max-w-5xl flex-1 flex-col overflow-hidden">
+    <div className="review-page relative mx-auto flex h-full min-h-0 w-full max-w-5xl flex-1 flex-col overflow-hidden">
+      {failureToastVisible && (
+        <div className="pointer-events-none fixed inset-x-0 top-[max(1rem,env(safe-area-inset-top))] z-50 flex justify-center px-4">
+          <div className="pointer-events-auto w-full max-w-md md:max-w-lg">
+            <ApplicationFailureToast
+              onDismiss={() => setFailureToastVisible(false)}
+            />
+          </div>
+        </div>
+      )}
       {/* Mobile header — on page background */}
       <header className="mb-4 flex shrink-0 flex-col gap-4 md:hidden">
         <Typography
