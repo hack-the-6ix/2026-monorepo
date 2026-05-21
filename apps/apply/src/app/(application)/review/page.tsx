@@ -18,7 +18,7 @@ import {
 
 export default function ReviewPage() {
   const router = useRouter();
-  const { formData } = useApplicationContext();
+  const { formData, setIsSubmitted } = useApplicationContext();
   const { isReady } = getApplicationReadiness(formData);
   const [submitModalOpen, setSubmitModalOpen] = useState(false);
 
@@ -39,6 +39,7 @@ export default function ReviewPage() {
         responseJson: formData,
         isSubmitted: true,
       });
+      setIsSubmitted(true);
       router.push('/thank-you');
     } catch (error) {
       console.error('Submission failed:', error);
