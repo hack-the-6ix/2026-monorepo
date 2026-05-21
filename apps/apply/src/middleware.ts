@@ -1,20 +1,23 @@
-export async function middleware() {
-  //   try {
-  //     const res = await fetchWithCookies(`${process.env.HT6_API_URL}/auth/check`);
-  //     if (!res.ok) throw new Error('Failed auth check. Triggering login');
-  //   } catch (err) {
-  //     console.error(err);
+import { NextRequest, NextResponse } from 'next/server';
 
-  //     const loginUrl = new URL(`${process.env.HT6_API_URL}/auth/login`);
+import { fetchWithCookies } from './actions';
 
-  //     const fallbackRedirectTarget =
-  //       process.env.HOST_URL || request.nextUrl.origin;
+export async function middleware(request: NextRequest) {
+  try {
+    const res = await fetchWithCookies(`${process.env.HT6_API_URL}/auth/check`);
+    if (!res.ok) throw new Error('Failed auth check. Triggering login');
+  } catch (err) {
+    console.error(err);
 
-  //     loginUrl.searchParams.set('redirectUrl', fallbackRedirectTarget);
+    const loginUrl = new URL(`${process.env.HT6_API_URL}/auth/login`);
 
-  //     return NextResponse.redirect(loginUrl.toString());
-  //   }
-  return;
+    const fallbackRedirectTarget =
+      process.env.HOST_URL || request.nextUrl.origin;
+
+    loginUrl.searchParams.set('redirectUrl', fallbackRedirectTarget);
+
+    return NextResponse.redirect(loginUrl.toString());
+  }
 }
 
 export const config = {
