@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 const SESSION_COOKIE_NAME = 'ht6_session';
 
@@ -10,10 +11,10 @@ export async function middleware(request: NextRequest) {
     const redirectUrl = request.nextUrl.searchParams.get('redirectUrl') || '/';
 
     if (!sessionId) {
-      return NextResponse.redirect(new URL('/error', request.url));
+      return NextResponse.redirect(new URL('/login', request.url));
     }
 
-    const response = NextResponse.redirect(redirectUrl);
+    const response = NextResponse.redirect(new URL(redirectUrl, request.url));
     response.cookies.set(SESSION_COOKIE_NAME, sessionId, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -26,26 +27,17 @@ export async function middleware(request: NextRequest) {
 
   const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME);
 
-  try {
-    if (!sessionCookie) throw new Error('No session cookie');
-
-    const res = await fetch(`${process.env.HT6_API_URL}/auth/check`, {
-      headers: { Cookie: `${SESSION_COOKIE_NAME}=${sessionCookie.value}` },
-    });
-
-    if (!res.ok) throw new Error('Auth check failed');
-
+  if (pathname.startsWith('/login') || pathname.startsWith('/api/auth')) {
     return NextResponse.next();
-  } catch (err) {
-    console.error(err);
+  }
 
+  if (!sessionCookie || !sessionCookie.value) {
     const loginUrl = new URL(`${process.env.HT6_API_URL}/auth/login`);
-    loginUrl.searchParams.set(
-      'redirectUrl',
-      process.env.HOST_URL || request.nextUrl.origin,
-    );
+    loginUrl.searchParams.set('redirectUrl', request.nextUrl.origin);
     return NextResponse.redirect(loginUrl.toString());
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
