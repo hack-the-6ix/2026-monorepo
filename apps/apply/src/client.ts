@@ -6,7 +6,7 @@ export interface ApiResponse<Data> {
 const formId =
   process.env.NEXT_PUBLIC_FORM_ID || 'd19d6cf2-9b05-4828-b0b1-65ac7867dcf5';
 
-export async function fetchHt6<T, P = undefined>(
+export async function fetchHt6<T, P = unknown>(
   path: string,
   options: { body?: P; method?: string } = {},
 ): Promise<T> {
