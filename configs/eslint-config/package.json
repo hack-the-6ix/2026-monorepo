@@ -13,22 +13,22 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@eslint/js": "^9.39.3",
+    "@eslint/js": "^9.39.4",
     "eslint": "catalog:",
-    "eslint-config-next": "^16.1.6",
+    "eslint-config-next": "^16.2.6",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "globals": "^17.4.0",
-    "jiti": "^2.6.1",
+    "globals": "^17.6.0",
+    "jiti": "^2.7.0",
     "typescript": "catalog:",
-    "typescript-eslint": "^8.56.1"
+    "typescript-eslint": "^8.59.4"
   },
   "devDependencies": {
     "@hackthe6ix/typescript-config": "workspace:^",
-    "@types/node": "^22.19.15",
+    "@types/node": "^22.19.19",
     "eslint": "catalog:"
   }
 }

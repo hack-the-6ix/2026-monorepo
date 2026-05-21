@@ -15,7 +15,7 @@
     "typescript": "catalog:"
   },
   "devDependencies": {
-    "@hackthe6ix/eslint-config": "workspace:",
+    "@hackthe6ix/eslint-config": "workspace:^",
     "eslint": "catalog:"
   }
 }
