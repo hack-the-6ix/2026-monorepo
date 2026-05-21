@@ -25,7 +25,12 @@ export async function fetchHt6<T, P = undefined>(
   };
 
   if (options.body) {
-    fetchOptions.body = JSON.stringify(options.body);
+    if (options.body instanceof FormData) {
+      fetchOptions.body = options.body;
+    } else {
+      headers['Content-Type'] = 'application/json';
+      fetchOptions.body = JSON.stringify(options.body);
+    }
   }
 
   const baseUrl =
