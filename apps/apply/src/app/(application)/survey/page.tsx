@@ -305,7 +305,22 @@ function SurveyContent() {
               hideLabel
               className="text-base"
             />
-
+            <Checkbox
+              id="emailPermission"
+              name="emailPermission"
+              label="Email Permission"
+              hideLabel
+              option={{
+                label:
+                  'I give permission to Hack the 6ix for sending me emails containing information from the event sponsors.',
+                value: 'emailPermission',
+              }}
+              controlled={{
+                value: survey.emailPermission ?? false,
+                onValueChange: (v) => updateField('emailPermission', v),
+              }}
+              className="text-base"
+            />
             <Checkbox
               id="mlhDataPermission"
               name="mlhDataPermission"
