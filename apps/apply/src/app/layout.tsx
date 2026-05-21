@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Image from 'next/image';
 
-import CatPortrait from '@/assets/cat_portrait.png';
 import Couch from '@/assets/couch.png';
 import DrinkPortrait from '@/assets/drink_portrait.png';
 import Floor from '@/assets/floor.png';
@@ -64,11 +63,6 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
             className="absolute bottom-0 -right-[5vw] w-auto h-[38vw] animate-fade-in [animation-delay:300ms] opacity-0"
           />
           <Image
-            src={CatPortrait}
-            alt=""
-            className="absolute top-[19vh] right-[11vw] z-[1] w-auto h-[clamp(7.5rem,15vw,13.5rem)] animate-fade-in [animation-delay:450ms] opacity-0"
-          />
-          <Image
             src={Lamp}
             alt="Lamp"
             className="absolute bottom-[1vw] -left-[5vw] w-auto h-[32vw] animate-fade-in [animation-delay:300ms] opacity-0"
@@ -102,11 +96,6 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
             priority
           />
           <div className="absolute -left-25 bottom-0 w-[130%] h-[40%] rounded-full -rotate-45 bg-[rgba(255,209,120,0.2)] shadow-[0_0_100px_100px_rgba(255,209,120,0.2)]"></div>
-          <Image
-            src={CatPortrait}
-            alt=""
-            className="absolute top-[22vh] right-[3vw] w-auto h-[clamp(6.5rem,30vw,13rem)] animate-fade-in [animation-delay:450ms] opacity-0"
-          />
           <Image
             src={MobileTable}
             alt=""
