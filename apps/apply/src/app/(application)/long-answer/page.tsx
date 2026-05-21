@@ -18,7 +18,7 @@ const PAGES = [
   {
     fieldName: 'shortEssay',
     label:
-      "What is your craziest hackathon story? Tell us everything, we're nosy! If you haven't been to a hackathon before, tell us about your craziest group project (Please leave names of people out of this).",
+      "What is your craziest hackathon story? Tell us everything, we're nosy! If you haven't been to a hackathon before, tell us about your craziest group project.",
     placeholder: 'So basically...',
     maxWords: 100,
     rows: 8,

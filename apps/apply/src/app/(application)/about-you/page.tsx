@@ -1,6 +1,6 @@
 'use client';
 import { Suspense } from 'react';
-import { Checkbox, Input, Selector, Typography } from '@hackthe6ix/ui';
+import { Input, Selector, Typography } from '@hackthe6ix/ui';
 import { AsYouType, parseIncompletePhoneNumber } from 'libphonenumber-js';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -29,7 +29,7 @@ const PAGES: PageConfig[] = [
     label: 'Gorgeous! Now, about yourself...',
     required: true,
   },
-  { key: 'email', label: "What's your email?", required: true },
+  // { key: 'email', label: "What's your email?", required: true },
   { key: 'location', label: 'Where are you located?', required: true },
   {
     key: 'demographics',
@@ -134,37 +134,37 @@ function AboutYouContent() {
           </div>
         );
 
-      case 'email':
-        return (
-          <div className="flex flex-col gap-4">
-            <Input
-              id="email"
-              name="email"
-              label=""
-              hideLabel
-              controlled={{
-                value: aboutYou.email ?? '',
-                onValueChange: (v) => updateField('email', v),
-              }}
-              input={{ type: 'email', placeholder: 'john.doe@university.com' }}
-            />
-            <Checkbox
-              id="emailPermission"
-              name="emailPermission"
-              label="Email Permission"
-              hideLabel
-              option={{
-                label:
-                  'I give permission to Hack the 6ix for sending me emails containing information from the event sponsors.',
-                value: 'emailPermission',
-              }}
-              controlled={{
-                value: aboutYou.emailPermission ?? false,
-                onValueChange: (v) => updateField('emailPermission', v),
-              }}
-            />
-          </div>
-        );
+      // case 'email':
+      //   return (
+      //     <div className="flex flex-col gap-4">
+      //       <Input
+      //         id="email"
+      //         name="email"
+      //         label=""
+      //         hideLabel
+      //         controlled={{
+      //           value: aboutYou.email ?? '',
+      //           onValueChange: (v) => updateField('email', v),
+      //         }}
+      //         input={{ type: 'email', placeholder: 'john.doe@university.com' }}
+      //       />
+      //       <Checkbox
+      //         id="emailPermission"
+      //         name="emailPermission"
+      //         label="Email Permission"
+      //         hideLabel
+      //         option={{
+      //           label:
+      //             'I give permission to Hack the 6ix for sending me emails containing information from the event sponsors.',
+      //           value: 'emailPermission',
+      //         }}
+      //         controlled={{
+      //           value: aboutYou.emailPermission ?? false,
+      //           onValueChange: (v) => updateField('emailPermission', v),
+      //         }}
+      //       />
+      //     </div>
+      //   );
 
       case 'location':
         return (

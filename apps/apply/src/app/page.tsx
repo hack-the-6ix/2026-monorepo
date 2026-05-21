@@ -38,7 +38,8 @@ export default function WelcomePage() {
             Hacker Application
           </Typography>
           <Typography as="p" textSize="subtitle-lg" textColor="text-yellow-300">
-            Applications due: [date]
+            Round 1 Applications due:{' '}
+            <span className="text-error-400">May 26th 11:59EST</span>
           </Typography>
           <Button
             as={Link}
