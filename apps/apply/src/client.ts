@@ -3,6 +3,9 @@ export interface ApiResponse<Data> {
   message: Data;
 }
 
+const formId =
+  process.env.NEXT_PUBLIC_FORM_ID || 'd19d6cf2-9b05-4828-b0b1-65ac7867dcf5';
+
 export async function fetchHt6<T, P = undefined>(
   path: string,
   options: { body?: P; method?: string } = {},
@@ -25,7 +28,8 @@ export async function fetchHt6<T, P = undefined>(
     fetchOptions.body = JSON.stringify(options.body);
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_HT6_API_URL;
+  const baseUrl =
+    process.env.HT6_API_URL || 'https://v2.api.hackthe6ix.com/api';
   const response = await fetch(`${baseUrl}${path}`, fetchOptions);
 
   if (!response.ok) {
@@ -44,7 +48,7 @@ export interface UpsertResponsePayload {
 export async function upsertFormResponse(
   body: UpsertResponsePayload,
 ): Promise<ApiResponse<Record<string, never>>> {
-  const path = `/seasons/S26/forms/${process.env.NEXT_PUBLIC_FORM_ID}/responses`;
+  const path = `/seasons/S26/forms/${formId}/responses`;
 
   return await fetchHt6<
     ApiResponse<Record<string, never>>,
@@ -58,7 +62,7 @@ export async function upsertFormResponse(
 export async function uploadResumeFile(
   file: File,
 ): Promise<{ fileId: string }> {
-  const path = `/seasons/S26/forms/${process.env.NEXT_PUBLIC_FORM_ID}/questions/resumeBlob/files`;
+  const path = `/seasons/S26/forms/${formId}/questions/resumeBlob/files`;
 
   const formData = new FormData();
   formData.append('file', file);
