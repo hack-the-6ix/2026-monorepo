@@ -11,9 +11,7 @@ export async function fetchHt6<T, P = unknown>(
   options: { body?: P; method?: string } = {},
 ): Promise<T> {
   const token = localStorage.getItem('token');
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
+  const headers: Record<string, string> = {};
   if (token) {
     headers['X-Access-Token'] = token;
   }
@@ -27,7 +25,6 @@ export async function fetchHt6<T, P = unknown>(
   if (options.body) {
     if (options.body instanceof FormData) {
       fetchOptions.body = options.body;
-      delete headers['Content-Type'];
     } else {
       headers['Content-Type'] = 'application/json';
       fetchOptions.body = JSON.stringify(options.body);
