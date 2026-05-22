@@ -53,8 +53,12 @@ function ExperienceContent({ currentPageKey }: { currentPageKey: string }) {
     try {
       const response = await uploadResumeFile(file);
       const fileId = response.fileId;
-      updateField('resumeId', fileId);
-      updateField('resumeName', file.name);
+    
+      updateFormData('experiences', {
+        ...experienceFormData,
+        resumeId: fileId,
+        resumeName: file.name,
+      });
     } catch {
       setUploadError(
         'The resume upload feature is temporarily unavailable due to a system configuration issue. A fix is currently being applied, and service is expected to resume by eod (May 21st). Please come back and re-upload later',
