@@ -21,9 +21,13 @@ export default function WelcomePage() {
         >
           Hacker Application
         </Typography>
-        <Typography as="p" textSize="subtitle-lg" textColor="text-yellow-300">
-          Round 1 Applications due:{' '}
-          <span className="text-error-400">May 26th 11:59EST</span>
+        <Typography as="p" textSize="subtitle-sm" textColor="text-yellow-300">
+          Early Round Applications due:{' '}
+          <span className="text-error-400">May 26th 11:59 PM EST</span>
+        </Typography>
+        <Typography as="p" textSize="paragraph-lg" textColor="text-yellow-300">
+          Regular Round Applications due:{' '}
+          <span className="text-error-400">June 7th 11:59 PM EST</span>
         </Typography>
         <Button
           as={Link}
