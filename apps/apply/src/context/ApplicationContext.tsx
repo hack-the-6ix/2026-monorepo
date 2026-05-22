@@ -8,10 +8,8 @@ import {
   useState,
 } from 'react';
 import { isValidPhoneNumber } from 'libphonenumber-js';
-import { usePathname, useRouter } from 'next/navigation';
 import z from 'zod';
 
-import { getResponse, upsertFormResponse } from '@/client';
 import {
   characterSheetSchema,
   initialCharacterSheet,
@@ -79,8 +77,6 @@ export type FormData = z.infer<typeof FormDataSchema>;
 interface ApplicationContextType {
   formData: FormData;
   updateFormData: (section: keyof FormData, data: unknown) => void;
-  isSubmitted: boolean;
-  setIsSubmitted: (submitted: boolean) => void;
 }
 
 const ApplicationContext = createContext<ApplicationContextType | undefined>(
@@ -92,10 +88,6 @@ export const ApplicationContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     characterSheet: initialCharacterSheet,
     aboutYou: {
@@ -159,61 +151,17 @@ export const ApplicationContextProvider = ({
       // eslint-disable-next-line react-hooks/set-state-in-effect
       loadSavedData(savedData);
     }
-
-    getResponse()
-      .then((res) => {
-        const currentResponse = res.data?.[0];
-        if (currentResponse?.isSubmitted) {
-          setIsSubmitted(true);
-        }
-      })
-      .catch((err) =>
-        console.error('Failed to fetch existing application status', err),
-      );
   }, []);
-
-  useEffect(() => {
-    if (isSubmitted && pathname !== '/thank-you') {
-      router.replace('/thank-you');
-    }
-  }, [isSubmitted, pathname, router]);
 
   useEffect(() => {
     localStorage.setItem('application_data', JSON.stringify(formData));
   }, [formData]);
-
-  // -------- UPSERT TO DB WHEN USER LEAVES WINDOW --------
-  const onLeaveSave = useEffectEvent(async () => {
-    if (isSubmitted) return;
-
-    try {
-      await upsertFormResponse({
-        responseJson: formData as unknown as Record<string, unknown>,
-        isSubmitted: false,
-      });
-    } catch (error) {
-      console.error('Background window-leave save failed:', error);
-    }
-  });
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        onLeaveSave();
-      }
-    };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [isSubmitted]);
 
   return (
     <ApplicationContext.Provider
       value={{
         formData,
         updateFormData,
-        isSubmitted,
-        setIsSubmitted,
       }}
     >
       {children}
