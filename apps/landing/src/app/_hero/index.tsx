@@ -1,7 +1,8 @@
 'use client';
-import React, { useState } from 'react';
-import { Button, Input, Typography } from '@hackthe6ix/ui';
+import React from 'react';
+import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Section from '../../components/Section';
 import { EVENT_INFO, FORM_CONTENT, HERO_CONTENT } from '../_hero/constants';
@@ -13,67 +14,6 @@ const ARTBOARD_W = 4035;
 const ARTBOARD_H = 3662;
 
 export default function Hero() {
-  // EMAIL FORM SUBMIT
-  const [email, setEmail] = useState<string>('');
-  const [submitStatus, setSubmitStatus] = useState<{
-    message: string;
-    isError: boolean;
-  } | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!email.trim()) {
-      setSubmitStatus({
-        message: 'Please provide an email',
-        isError: true,
-      });
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setSubmitStatus({
-        message: 'Please provide a valid email',
-        isError: true,
-      });
-      return;
-    }
-    setSubmitStatus(null);
-
-    try {
-      const response = await fetch(
-        'https://landingapi.hackthe6ix.com/api/subscribe',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        },
-      );
-
-      const data = await response.text();
-
-      if (response.ok) {
-        setSubmitStatus({
-          message: data,
-          isError: false,
-        });
-        setEmail('');
-      } else {
-        setSubmitStatus({
-          message: data || 'Failed to subscribe. Please try again.',
-          isError: true,
-        });
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitStatus({
-        message: 'An error occurred. Please try again later.',
-        isError: true,
-      });
-    }
-  };
-
   // PAGE:
   return (
     <Section
@@ -585,47 +525,15 @@ export default function Hero() {
                 {FORM_CONTENT.description}
               </Typography>
               <div>
-                <form
-                  onSubmit={handleSubmit}
-                  className="flex flex-row gap-2 items-center [@media(max-width:713.68px)]:flex-col"
+                <Button
+                  as={Link}
+                  href="https://2026.apply.hackthe6ix.com"
+                  kind="primary"
+                  aria-label="Apply Now"
+                  className="shrink-0 [@media(max-width:713.68px)]:w-[min(100%,406px)]"
                 >
-                  <Input
-                    id="hero-email"
-                    name="email"
-                    label="Email address"
-                    hideLabel
-                    className="w-[min(100%,406px)] shrink-0"
-                    inputBoxClassName="self-stretch"
-                    controlled={{
-                      value: email,
-                      onValueChange: setEmail,
-                    }}
-                    input={{
-                      type: 'email',
-                      autoComplete: 'email',
-                      placeholder: FORM_CONTENT.placeholder,
-                      'aria-label': 'Email address',
-                      suppressHydrationWarning: false,
-                      className:
-                        'font-medium text-[var(--color-neutral-50)] placeholder:text-[var(--color-text-placeholder)] flex-1 min-w-0 bg-transparent autofill-bg-transparent',
-                    }}
-                  />
-                  <Button
-                    type="submit"
-                    kind="primary"
-                    aria-label="Sign up for updates"
-                    className="shrink-0 [@media(max-width:713.68px)]:w-[min(100%,406px)]"
-                  >
-                    {FORM_CONTENT.buttonText}
-                  </Button>
-                </form>
-                {submitStatus && (
-                  <p
-                    className={`--text-sm mt-3 ${submitStatus.isError ? 'text-[var(--color-error-600)]' : 'text-[var(--color-success-600)]'}`}
-                  >
-                    {submitStatus.message}
-                  </p>
-                )}
+                  {FORM_CONTENT.buttonText}
+                </Button>
               </div>
             </div>
           </div>
