@@ -17,9 +17,8 @@ export const HERO_CONTENT = {
 
 export const FORM_CONTENT = {
   description:
-    'Applications open soon! Sign up to receive the latest updates in your inbox.',
-  placeholder: 'name@email.com',
-  buttonText: 'Sign Up',
+    'Early applications are now open! Apply before May 26th to receive an early decision.',
+  buttonText: 'Apply Now',
 } as const;
 
 export const META = {
