@@ -92,6 +92,11 @@ const QUESTIONS = {
       content:
         'If you have any other questions, feel free to reach out to us by emailing hello@hackthe6ix.com. Our team would be happy to help you out.',
     },
+    {
+      title: "How many members can be on a team?",
+      content:
+        'Teams can have between 1–4 members. You’re welcome to apply with an existing team or find teammates through our Discord before the event.',
+    },
   ],
   Application: [
     {
@@ -108,6 +113,11 @@ const QUESTIONS = {
       title: "What if I don't have a team or idea?",
       content:
         "Don't sweat it - we will be coordinating team formation and idea generation events leading up to, as well as during the event.",
+    },
+    {
+      title: "What is the Early Round?",
+      content:
+        "A portion of our spots are reserved for applicants who apply before May 26th. We encourage applying early if possible, as we anticipate the early round admission rate to be higher than the regular round. Early round applicants will receive a decision by June 7th. If you aren’t selected in the early round, your application will automatically roll over for consideration in the regular round.",
     },
   ],
   Event: [
