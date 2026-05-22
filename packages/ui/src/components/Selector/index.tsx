@@ -44,10 +44,16 @@ export function Selector({
   useImperativeHandle(props.ref, () => ref.current!);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isOtherSelected, setIsOtherSelected] = useState(false);
+  const [isOtherSelected, setIsOtherSelected] = useState(() => {
+    if (!controlled?.value) return false;
+    return hasOther && !options.find((opt) => opt.value === controlled.value);
+  });
   const [searchInput, setSearchInput] = useState(() => {
     if (!controlled?.value) return '';
-    return options.find((opt) => opt.value === controlled.value)?.label ?? '';
+    return (
+      options.find((opt) => opt.value === controlled.value)?.label ??
+      (hasOther ? controlled.value : '')
+    );
   });
 
   const { slicedOptions, hasMoreResults } = useMemo(() => {

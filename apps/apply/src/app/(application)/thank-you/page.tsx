@@ -7,27 +7,27 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import ThankYouCandle from '@/assets/thank_you_candle.png';
-import { getResponse } from '@/client';
 import ApplicationSuccessToast from '@/components/thank-you/ApplicationSuccessToast';
+import { useApplicationContext } from '@/context/ApplicationContext';
 
 const DASHBOARD_URL =
   process.env.NEXT_PUBLIC_DASHBOARD_URL ?? 'https://2026.dash.hackthe6ix.com';
 
 export default function ThankYouPage() {
   const [toastVisible, setToastVisible] = useState(false);
+  const { isSubmitted } = useApplicationContext();
   const router = useRouter();
 
   useEffect(() => {
-    getResponse()
-      .then((res) => {
-        const submitted = res.data.some((r) => r.isSubmitted);
-        setToastVisible(true);
-        if (!submitted) router.replace('/review');
-      })
-      .catch(() => {
-        router.replace('/review');
-      });
-  }, [router]);
+    if (!isSubmitted) {
+      router.replace('/review');
+    } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setToastVisible(true);
+    }
+  }, [isSubmitted, router]);
+
+  if (!isSubmitted) return null;
 
   return (
     <div className="thank-you-page flex min-h-0 w-full flex-1 flex-col">
