@@ -1,9 +1,9 @@
 import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
-import { assets } from './assets';
 import Section from '../../components/Section';
 import { featureFlags } from '../../feature-flags';
+import { assets } from './assets';
 import LogoGrid from './LogoGrid';
 
 export default function Sponsors() {

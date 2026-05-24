@@ -6,11 +6,11 @@ import Link from 'next/link';
 import { assets } from './assets';
 
 const platinumSponsors = [
-    {
-      src: assets.sponsorBase44Logo,
-      alt: 'Base44',
-      href: 'https://www.base44.com',
-    },
+  {
+    src: assets.sponsorBase44Logo,
+    alt: 'Base44',
+    href: 'https://www.base44.com',
+  },
 ];
 
 const goldSponsors = [
@@ -31,16 +31,6 @@ const silverSponsors = [
     src: assets.sponsorChexyLogo,
     alt: 'Chexy',
     href: 'https://www.chexy.com',
-  },
-  {
-    src: assets.sponsorDeloitteLogo,
-    alt: 'Deloitte',
-    href: 'https://www.deloitte.com',
-  },
-  {
-    src: assets.sponsorPoparideLogo,
-    alt: 'Poparide',
-    href: 'https://www.poparide.com',
   },
   {
     src: assets.sponsorShopifyLogo,
@@ -75,12 +65,6 @@ const bronzeSponsors: {
     alt: 'Warp',
     href: 'https://www.warp.dev',
   },
-  {
-    src: assets.sponsorTMURogersCyberSecureLogo,
-    alt: 'TMU Rogers Cybersecure Program',
-    href: 'https://cybersecurecatalyst.ca/',
-    doubleWidth: true,
-  },
 ];
 
 function SponsorCard({
@@ -96,9 +80,9 @@ function SponsorCard({
 }) {
   const aspectMatch = aspectClassName.match(/\[(\d+)\/(\d+)\]/);
   const aspectStyle =
-    doubleWidth && aspectMatch
-      ? { aspectRatio: `${Number(aspectMatch[1]) * 2} / ${aspectMatch[2]}` }
-      : undefined;
+    doubleWidth && aspectMatch ?
+      { aspectRatio: `${Number(aspectMatch[1]) * 2} / ${aspectMatch[2]}` }
+    : undefined;
 
   return (
     <Link
@@ -108,7 +92,7 @@ function SponsorCard({
       className={`w-full ${doubleWidth ? 'col-span-2' : ''}`}
     >
       <div
-        className={`bg-white rounded-xl ${cardClassName} flex items-center justify-center w-full ${doubleWidth ? '' : aspectClassName}`}
+        className={`bg-white/75 rounded-3xl ${cardClassName} flex items-center justify-center w-full ${doubleWidth ? '' : aspectClassName}`}
         style={aspectStyle}
       >
         <div className="relative w-full h-full">
@@ -129,26 +113,45 @@ export default function LogoGrid() {
     <div className="pt-8 flex flex-col gap-4 md:gap-8 w-full md:max-w-[50%] items-center">
       <div className="grid grid-cols-1 max-w-[85%] w-full">
         {platinumSponsors.map((sponsor, index) => (
-          <SponsorCard key={`${sponsor.alt}-${index}`} sponsor={sponsor} cardClassName="px-15 py-4" aspectClassName="aspect-[2/1]" />
+          <SponsorCard
+            key={`${sponsor.alt}-${index}`}
+            sponsor={sponsor}
+            cardClassName="px-6 py-2 md:px-15 md:py-4"
+            aspectClassName="aspect-[4/3] md:aspect-[3/1]"
+          />
         ))}
       </div>
       <div className="grid grid-cols-1 max-w-[85%] gap-3 md:grid-cols-2 md:gap-8 w-full">
         {goldSponsors.map((sponsor, index) => (
-          <SponsorCard key={`${sponsor.alt}-${index}`} sponsor={sponsor} />
-        ))}
-      </div>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-8 max-w-[85%] w-full">
-        {silverSponsors.map((sponsor, index) => (
-          <SponsorCard key={`${sponsor.alt}-${index}`} sponsor={sponsor} />
-        ))}
-      </div>
-      <div className="grid grid-cols-3 gap-3 md:grid-cols-4 md:gap-8 max-w-[85%] w-full">
-        {bronzeSponsors.map((sponsor, index) => (
           <SponsorCard
             key={`${sponsor.alt}-${index}`}
             sponsor={sponsor}
-            doubleWidth={sponsor.doubleWidth}
+            aspectClassName="aspect-[2/1] md:aspect-[3/2]"
           />
+        ))}
+      </div>
+      <div className="flex flex-wrap justify-center gap-3 md:gap-8 max-w-[85%] w-full">
+        {silverSponsors.map((sponsor, index) => (
+          <div
+            key={`${sponsor.alt}-${index}`}
+            className="w-[calc(50%_-_0.375rem)] md:w-[calc(33.333%_-_1.333rem)]"
+          >
+            <SponsorCard sponsor={sponsor} />
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-wrap justify-center gap-3 md:gap-8 max-w-[85%] w-full">
+        {bronzeSponsors.map((sponsor, index) => (
+          <div
+            key={`${sponsor.alt}-${index}`}
+            className={
+              sponsor.doubleWidth ?
+                'w-[calc(66.667%_-_0.25rem)] md:w-[calc(50%_-_1rem)]'
+              : 'w-[calc(33.333%_-_0.5rem)] md:w-[calc(25%_-_1.5rem)]'
+            }
+          >
+            <SponsorCard sponsor={sponsor} doubleWidth={sponsor.doubleWidth} />
+          </div>
         ))}
       </div>
     </div>
