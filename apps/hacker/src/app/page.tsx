@@ -6,16 +6,12 @@ import ReviewingView from '@/components/status/ReviewingView';
 import RejectedView from '@/components/status/RejectedView';
 import WaitlistView from '@/components/status/WaitlistView';
 import AcceptedView from '@/components/status/AcceptedView';
-import ConfirmedView from '@/components/status/ConfirmedView';
 import DeclinedView from '@/components/status/DeclinedView';
+import { useHackerStatus } from '@/context/HackerStatusContext';
 
 export default function Home() {
-  const [status, setStatus] = useState<HackerStatus>('under_review');
+  const { status, setStatus } = useHackerStatus();
   const [userName, setUserName] = useState('Michael');
-
-  const handleAcceptInvite = () => {
-    setStatus('confirmed');
-  };
 
   const handleDeclineInvite = () => {
     setStatus('declined');
@@ -33,13 +29,8 @@ export default function Home() {
         return (
           <AcceptedView
             name={userName}
-            onAccept={handleAcceptInvite}
             onDecline={handleDeclineInvite}
           />
-        );
-      case 'confirmed':
-        return (
-          <ConfirmedView name={userName} onDecline={handleDeclineInvite} />
         );
       case 'declined':
         return <DeclinedView name={userName} />;
@@ -70,7 +61,6 @@ export default function Home() {
               'rejected',
               'waitlist',
               'accepted',
-              'confirmed',
               'declined',
             ] as HackerStatus[]
           ).map((s) => (

@@ -12,17 +12,19 @@ const ReviewingView = ({ name }: ReviewingViewProps) => {
         textSize="subtitle-sm"
         textWeight="bold"
         textColor="text-white"
-        className="mt-48"
+        className="mt-6 md:mt-32"
       >
         Welcome back, {name}!
       </Typography>
+
       <Typography
         as="h1"
         textSize="heading-lg"
         textWeight="bold"
         textColor="text-white"
+        className="leading-tight"
       >
-        Your application is{' '}
+        Your application is <br className="block md:hidden" />
         <span className="text-yellow-300">being reviewed.</span>
       </Typography>
       <Typography
@@ -30,11 +32,13 @@ const ReviewingView = ({ name }: ReviewingViewProps) => {
         textSize="paragraph-lg"
         textWeight="regular"
         textColor="text-white"
+        className="max-w-xs md:max-w-none"
       >
         Thanks for applying to Hack the 6ix 2026! The first round of hacker
         acceptances will be released on{' '}
         <span className="text-yellow-300">Date</span>.
       </Typography>
+
       <Typography
         as="p"
         textSize="paragraph-lg"
@@ -45,10 +49,10 @@ const ReviewingView = ({ name }: ReviewingViewProps) => {
         Got questions? Feel free to reach out to us!
       </Typography>
 
-      <div className="mt-4">
+      <div className="mt-4 w-full flex justify-center">
         <Button
           kind="secondary"
-          className="px-6 hover:bg-teal-500/10 transition"
+          className="w-full md:w-auto max-w-[280px] md:max-w-none px-6 hover:bg-teal-500/10 transition"
           onClick={() => {
             window.location.href = 'mailto:hello@hackthe6ix.com';
           }}

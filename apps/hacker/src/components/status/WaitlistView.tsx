@@ -12,7 +12,7 @@ const WaitlistView = ({ name }: WaitlistViewProps) => {
         textSize="subtitle-sm"
         textWeight="bold"
         textColor="text-white"
-        className="mt-48"
+        className="mt-6 md:mt-32"
       >
         Welcome back, {name}!
       </Typography>
@@ -30,7 +30,7 @@ const WaitlistView = ({ name }: WaitlistViewProps) => {
         textSize="paragraph-lg"
         textWeight="regular"
         textColor="text-white"
-        className="max-w-5xl"
+        className="max-w-xs md:max-w-5xl"
       >
         We received an overwhelming amount of applications this year and have
         placed you on the waitlist. We’ll let you know if a spot opens up, so
@@ -46,10 +46,10 @@ const WaitlistView = ({ name }: WaitlistViewProps) => {
         Got questions? Feel free to reach out to us!
       </Typography>
 
-      <div className="mt-4">
+      <div className="mt-4 w-full flex justify-center">
         <Button
           kind="secondary"
-          className="px-6 hover:bg-teal-500/10 transition"
+          className="w-full md:w-auto max-w-[280px] md:max-w-none px-6 hover:bg-teal-500/10 transition"
           onClick={() => {
             window.location.href = 'mailto:hello@hackthe6ix.com';
           }}
