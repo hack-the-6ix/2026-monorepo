@@ -12,7 +12,8 @@ export interface Team {
 
 export interface TeamMember {
   userId: string;
-  status: string;
+  firstName: string | null;
+  lastName: string | null;
 }
 
 export interface TeamDetails extends Team {

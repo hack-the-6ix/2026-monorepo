@@ -12,11 +12,19 @@ import {
   getCurrentUserId,
   getStoredTeamId,
   getTeamDetails,
-  getUserProfile,
   isUuid,
   leaveOrRemoveTeamMember,
   TeamDetails,
+  TeamMember,
 } from '@/client';
+
+const getMemberDisplayName = (member: TeamMember) => {
+  const fullName = [member.firstName, member.lastName]
+    .filter(Boolean)
+    .join(' ');
+
+  return fullName || member.userId;
+};
 
 const CreateTeamPage = () => {
   const router = useRouter();
@@ -26,10 +34,6 @@ const CreateTeamPage = () => {
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
   const [isLeavingTeam, setIsLeavingTeam] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [memberNames, setMemberNames] = useState<Record<string, string>>({});
-  const [currentMemberUserId, setCurrentMemberUserId] = useState<string | null>(
-    null,
-  );
 
   useEffect(() => {
     const loadTeamDetails = async () => {
@@ -42,33 +46,6 @@ const CreateTeamPage = () => {
       try {
         const teamDetails = await getTeamDetails(teamId);
         setTeam(teamDetails);
-        const memberProfiles = await Promise.allSettled(
-          teamDetails.members.map((member) => getUserProfile(member.userId)),
-        );
-
-        const { names, currentUserId } = memberProfiles.reduce<{
-          names: Record<string, string>;
-          currentUserId: string | null;
-        }>(
-          (result, profileResult) => {
-            if (profileResult.status !== 'fulfilled') return result;
-
-            const fullName = [
-              profileResult.value.firstName,
-              profileResult.value.lastName,
-            ]
-              .filter(Boolean)
-              .join(' ');
-
-            result.names[profileResult.value.userId] =
-              fullName || profileResult.value.email;
-            result.currentUserId = profileResult.value.userId;
-            return result;
-          },
-          { names: {}, currentUserId: null },
-        );
-        setMemberNames(names);
-        setCurrentMemberUserId(currentUserId);
       } catch {
         setErrorMessage('Unable to load your team details.');
       }
@@ -100,8 +77,7 @@ const CreateTeamPage = () => {
 
     const tokenUserId = getCurrentUserId();
     const userId =
-      isUuid(currentMemberUserId) ? currentMemberUserId
-      : isUuid(tokenUserId) ? tokenUserId
+      isUuid(tokenUserId) ? tokenUserId
       : team.members.length === 1 && isUuid(team.members[0].userId) ?
         team.members[0].userId
       : isUuid(team.teamLeaderId) ? team.teamLeaderId
@@ -212,7 +188,7 @@ const CreateTeamPage = () => {
                     textColor="text-white"
                     className="md:text-lg"
                   >
-                    {memberNames[member.userId] || member.userId}
+                    {getMemberDisplayName(member)}
                   </Typography>
                 ))}
               </div>
