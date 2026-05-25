@@ -1,7 +1,113 @@
+'use client';
+
+import { FormEvent, useEffect, useState } from 'react';
 import { Button, HyperLink, Input, Typography } from '@hackthe6ix/ui';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+import {
+  createTeam,
+  getCurrentUserId,
+  getUserProfile,
+  isUuid,
+  joinTeam,
+  setStoredTeamId,
+} from '@/client';
+
+const getErrorMessage = (error: unknown, fallback: string) => {
+  if (
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    typeof error.message === 'string'
+  ) {
+    return error.message;
+  }
+
+  if (
+    typeof error === 'object' &&
+    error !== null &&
+    'error' in error &&
+    Array.isArray(error.error) &&
+    error.error[0] &&
+    typeof error.error[0] === 'object' &&
+    'message' in error.error[0] &&
+    typeof error.error[0].message === 'string'
+  ) {
+    return error.error[0].message;
+  }
+
+  return fallback;
+};
 
 const TeamFormationPage = () => {
+  const router = useRouter();
+  const [teamCode, setTeamCode] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isJoiningTeam, setIsJoiningTeam] = useState(false);
+  const [isCreatingTeam, setIsCreatingTeam] = useState(false);
+  const [firstName, setFirstName] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadCurrentUserName = async () => {
+      const userId = getCurrentUserId();
+      if (!isUuid(userId)) return;
+
+      try {
+        const profile = await getUserProfile(userId!);
+        setFirstName(profile.firstName || profile.email);
+      } catch {
+        setFirstName(null);
+      }
+    };
+
+    void loadCurrentUserName();
+  }, []);
+
+  const handleJoinTeam = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const trimmedTeamCode = teamCode.trim();
+    if (!trimmedTeamCode) {
+      setErrorMessage('Please enter a team code.');
+      return;
+    }
+
+    try {
+      setIsJoiningTeam(true);
+      setErrorMessage('');
+      await joinTeam(trimmedTeamCode);
+      setStoredTeamId(trimmedTeamCode);
+      router.push('/team');
+    } catch (error) {
+      setErrorMessage(
+        getErrorMessage(
+          error,
+          'Unable to join that team. Please check the team code.',
+        ),
+      );
+    } finally {
+      setIsJoiningTeam(false);
+    }
+  };
+
+  const handleCreateTeam = async () => {
+    try {
+      setIsCreatingTeam(true);
+      setErrorMessage('');
+      const team = await createTeam({ teamName: 'Untitled Team' });
+      setStoredTeamId(team.teamId);
+      router.push('/create-team');
+    } catch (error) {
+      setErrorMessage(
+        getErrorMessage(
+          error,
+          'Unable to create a team right now. Please try again.',
+        ),
+      );
+      setIsCreatingTeam(false);
+    }
+  };
+
   return (
     <section className="flex min-h-screen items-center justify-center px-8 py-20 text-center text-white md:px-6">
       <div className="mx-auto flex w-full max-w-md flex-col items-center md:max-w-5xl">
@@ -12,7 +118,7 @@ const TeamFormationPage = () => {
           textColor="text-white"
           className="mb-4"
         >
-          Hi Michael!
+          Hi {firstName || 'there'}!
         </Typography>
 
         <Typography
@@ -38,7 +144,10 @@ const TeamFormationPage = () => {
           <span className=" text-[#F6BD55]">---- at 11:59PM EST.</span>
         </Typography>
 
-        <form className="mt-12 flex w-full max-w-md flex-col items-stretch gap-6 md:mt-8 md:max-w-xl md:flex-row md:items-end md:justify-center md:gap-4">
+        <form
+          className="mt-12 flex w-full max-w-md flex-col items-stretch gap-6 md:mt-8 md:max-w-xl md:flex-row md:items-end md:justify-center md:gap-4"
+          onSubmit={handleJoinTeam}
+        >
           <div className="w-full md:max-w-64">
             <Typography
               as="label"
@@ -60,6 +169,10 @@ const TeamFormationPage = () => {
                 placeholder: 'ie. ABCDEFG',
                 autoComplete: 'off',
                 className: 'placeholder:text-white',
+                value: teamCode,
+                onChange: (event) => {
+                  setTeamCode(event.target.value);
+                },
               }}
               className="w-full"
               inputBoxClassName="border-transparent bg-[#3C3564] px-5 py-3 text-white"
@@ -67,13 +180,25 @@ const TeamFormationPage = () => {
           </div>
 
           <Button
-            as={Link}
-            href="/team"
+            type="submit"
+            disabled={isJoiningTeam || isCreatingTeam}
             className="w-full rounded-full border-primary-500 bg-primary-500 px-6 py-3 text-white hover:border-primary-600 hover:bg-primary-600 md:w-auto md:min-w-32"
           >
-            Join team
+            {isJoiningTeam ? 'Joining...' : 'Join team'}
           </Button>
         </form>
+
+        {errorMessage && (
+          <Typography
+            as="p"
+            textSize="paragraph-sm"
+            textWeight="bold"
+            textColor="text-error-500"
+            className="mt-4"
+          >
+            {errorMessage}
+          </Typography>
+        )}
 
         <div className="mt-6 flex w-full max-w-md flex-wrap items-center justify-center gap-x-2 gap-y-1">
           <Typography
@@ -87,8 +212,14 @@ const TeamFormationPage = () => {
           <HyperLink
             href="/create-team"
             className="px-1 text-[#F6BD55] underline underline-offset-2"
+            onClick={(event) => {
+              event.preventDefault();
+              if (!isCreatingTeam && !isJoiningTeam) {
+                void handleCreateTeam();
+              }
+            }}
           >
-            Create a team
+            {isCreatingTeam ? 'Creating...' : 'Create a team'}
           </HyperLink>
         </div>
 
