@@ -140,7 +140,7 @@ const CreateTeamPage = () => {
 
         {team ?
           <>
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            <div className="group mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
               <Typography
                 as="span"
                 textSize="subtitle-sm"
@@ -154,6 +154,7 @@ const CreateTeamPage = () => {
                 textSize="subtitle-sm"
                 textWeight="bold"
                 textColor="text-[#F6BD55]"
+                className="transition-[text-shadow] group-hover:[text-shadow:0_0_18px_rgba(246,189,85,0.8)] group-focus-within:[text-shadow:0_0_18px_rgba(246,189,85,0.8)]"
               >
                 {team.teamId}
               </Typography>
@@ -165,7 +166,7 @@ const CreateTeamPage = () => {
                   type="button"
                   aria-label={copied ? 'Team code copied' : 'Copy team code'}
                   title={copied ? 'Copied' : 'Copy team code'}
-                  className="rounded p-1 transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                  className="rounded p-1 transition-[filter,opacity] hover:opacity-70 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.75)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                   onClick={handleCopyTeamCode}
                 >
                   <Image
