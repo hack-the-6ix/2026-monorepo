@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: 'Hacker Dashboard',
 };
 
-const IS_UNDER_CONSTRUCTION = true;
+const IS_UNDER_CONSTRUCTION = false;
 
 export default function RootLayout({
   children,

@@ -2,6 +2,7 @@
 
 import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Logo from '@/app/assets/logo.svg';
 
@@ -13,22 +14,10 @@ const Sidebar = () => {
           <Image src={Logo} alt="Hack the 6ix Logo" />
         </div>
         <div className="flex flex-col gap-4 items-center">
-          <Button
-            kind="tertiary"
-            className=""
-            onClick={() => {
-              console.log('application status');
-            }}
-          >
+          <Button as={Link} href="/" kind="tertiary" className="">
             Application Status
           </Button>
-          <Button
-            kind="tertiary"
-            className=""
-            onClick={() => {
-              console.log('team formation');
-            }}
-          >
+          <Button as={Link} href="/team-formation" kind="tertiary" className="">
             Team Formation
           </Button>
         </div>
