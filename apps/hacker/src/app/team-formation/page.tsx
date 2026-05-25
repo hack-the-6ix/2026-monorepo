@@ -30,7 +30,7 @@ const TeamFormationPage = () => {
           textSize="paragraph-lg"
           textWeight="regular"
           textColor="text-white"
-          className="mt-5 max-w-md leading-snug md:max-w-3xl"
+          className="mt-5 max-w-md leading-snug md:max-w-4xl"
         >
           Don&apos;t have a team? No worries! You can create your own team and
           invite your friends, join a team, or continue solo. You can change
@@ -39,18 +39,32 @@ const TeamFormationPage = () => {
         </Typography>
 
         <form className="mt-12 flex w-full max-w-md flex-col items-stretch gap-6 md:mt-8 md:max-w-xl md:flex-row md:items-end md:justify-center md:gap-4">
-          <Input
-            id="team-code"
-            name="team-code"
-            label="Team code"
-            required
-            input={{
-              placeholder: 'ie. ABCDEFG',
-              autoComplete: 'off',
-            }}
-            className="w-full md:max-w-64"
-            inputBoxClassName="border-transparent bg-[#3C3564] px-5 py-3 text-white"
-          />
+          <div className="w-full md:max-w-64">
+            <Typography
+              as="label"
+              htmlFor="team-code--input"
+              textSize="paragraph-sm"
+              textWeight="semi-bold"
+              textColor="text-white"
+              className="mb-1 block pl-3 text-left text-white"
+            >
+              Team code<span className="text-error-500">*</span>
+            </Typography>
+            <Input
+              id="team-code"
+              name="team-code"
+              label="Team code"
+              hideLabel
+              required
+              input={{
+                placeholder: 'ie. ABCDEFG',
+                autoComplete: 'off',
+                className: 'placeholder:text-white',
+              }}
+              className="w-full"
+              inputBoxClassName="border-transparent bg-[#3C3564] px-5 py-3 text-white"
+            />
+          </div>
 
           <Button
             as={Link}
@@ -97,13 +111,13 @@ const TeamFormationPage = () => {
           textSize="label"
           textWeight="regular"
           textColor="text-white"
-          className="mt-28 hidden max-w-2xl leading-relaxed md:block"
+          className="mt-28 hidden max-w-3xl leading-relaxed md:block"
         >
-          Applications are reviewed individually and your team&apos;s
-          application has no bearing on your application decision. The team you
-          join on the dashboard is non-binding and doesn&apos;t have to be the
-          team you ultimately hack with. Official teams are finalized on Devpost
-          during the event.
+          Please note that team formation is non-committal and primarily used
+          for admission for application period. We cannot guarantee that
+          everyone on a team will be granted admission to Hack the 6ix. Official
+          hacking teams are determined by the teams submitted to the Hack the
+          6ix on Devpost on the weekend of the event.
         </Typography>
       </div>
     </section>
