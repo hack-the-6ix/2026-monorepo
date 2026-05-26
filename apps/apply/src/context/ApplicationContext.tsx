@@ -182,7 +182,7 @@ export const ApplicationContextProvider = ({
   }, []);
 
   useEffect(() => {
-    if (isSubmitted && pathname !== '/review') {
+    if (isSubmitted && pathname !== '/review' && pathname !== '/thank-you') {
       router.replace('/review');
     }
   }, [isSubmitted, pathname, router]);
