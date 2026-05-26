@@ -73,10 +73,12 @@ export default function ReviewPage() {
         </Button>
       )}
       <Button
-        onClick={openSubmitModal}
+        onClick={
+          isSubmitted ? () => router.push('/thank-you') : openSubmitModal
+        }
         iconLeft={<ArrowRight size="inherit" />}
         className="md:min-w-35 md:w-auto"
-        disabled={!isReady}
+        disabled={!isReady && !isSubmitted}
       >
         {isSubmitted ? 'Next' : 'Submit'}
       </Button>
@@ -133,7 +135,7 @@ export default function ReviewPage() {
           }
           iconLeft={<ArrowRight size="inherit" />}
           className="w-full"
-          disabled={!isReady || isSubmitted}
+          disabled={!isReady && !isSubmitted}
         >
           {isSubmitted ? 'Next' : 'Submit'}
         </Button>
