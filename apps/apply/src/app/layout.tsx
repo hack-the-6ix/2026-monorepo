@@ -30,7 +30,6 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    // TODO: add middleware for backend stuff and auth
     <html lang="en" data-theme="dark">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>

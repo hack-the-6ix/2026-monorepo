@@ -18,6 +18,7 @@ interface ReviewSectionProps {
   section: ReviewSectionConfig;
   formData: ReviewFormData;
   status: ReviewSectionStatus;
+  isSubmitted: boolean;
 }
 
 function IncompleteIcon() {
@@ -46,6 +47,7 @@ export default function ReviewSection({
   section,
   formData,
   status,
+  isSubmitted,
 }: ReviewSectionProps) {
   const isIncomplete = status === 'incomplete';
 
@@ -74,15 +76,17 @@ export default function ReviewSection({
           : <CompleteIcon />}
         </Typography>
 
-        <Button
-          kind="secondary"
-          as={Link}
-          href={section.editHref}
-          iconLeft={<ArrowRight size="inherit" />}
-          className="review-edit-button shrink-0"
-        >
-          Edit
-        </Button>
+        {!isSubmitted && (
+          <Button
+            kind="secondary"
+            as={Link}
+            href={section.editHref}
+            iconLeft={<ArrowRight size="inherit" />}
+            className="review-edit-button shrink-0"
+          >
+            Edit
+          </Button>
+        )}
       </div>
 
       <dl
