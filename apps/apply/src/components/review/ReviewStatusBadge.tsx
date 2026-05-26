@@ -5,12 +5,14 @@ interface ReviewStatusBadgeProps {
   ready: boolean;
   fullWidth?: boolean;
   className?: string;
+  isSubmitted: boolean,
 }
 
 export default function ReviewStatusBadge({
   ready,
   fullWidth = false,
   className = '',
+  isSubmitted,
 }: ReviewStatusBadgeProps) {
   if (ready) {
     return (
@@ -30,7 +32,7 @@ export default function ReviewStatusBadge({
           textColor="text-success-300"
           className={fullWidth ? 'text-[#1B6B45] md:text-success-300' : ''}
         >
-          Ready to Submit
+          {isSubmitted ? 'Submitted' : 'Ready to Submit'}
         </Typography>
       </div>
     );
