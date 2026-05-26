@@ -5,7 +5,7 @@ interface ReviewStatusBadgeProps {
   ready: boolean;
   fullWidth?: boolean;
   className?: string;
-  isSubmitted: boolean,
+  isSubmitted: boolean;
 }
 
 export default function ReviewStatusBadge({

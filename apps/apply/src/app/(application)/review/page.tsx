@@ -97,7 +97,11 @@ export default function ReviewPage() {
         >
           Review your application
         </Typography>
-        <ReviewStatusBadge ready={isReady || isSubmitted} fullWidth isSubmitted={isSubmitted}/>
+        <ReviewStatusBadge
+          ready={isReady || isSubmitted}
+          fullWidth
+          isSubmitted={isSubmitted}
+        />
       </header>
 
       {/* Glass card — only inner content scrolls */}
