@@ -21,6 +21,12 @@
   // see https://opennext.js.org/cloudflare/howtos/image
   // "binding": "IMAGES"
   // },
+  "r2_buckets": [
+    {
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",
+      "bucket_name": "2026-apply-cache",
+    },
+  ],
   "services": [
     {
       // Self-reference service binding, the service name must match the worker name
