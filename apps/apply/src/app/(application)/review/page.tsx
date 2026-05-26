@@ -111,7 +111,10 @@ export default function ReviewPage() {
             >
               Review your application
             </Typography>
-            <ReviewStatusBadge ready={isReady} className="md:w-auto" />
+            <ReviewStatusBadge
+              ready={isReady || isSubmitted}
+              className="md:w-auto"
+            />
           </div>
         </header>
 
@@ -130,7 +133,7 @@ export default function ReviewPage() {
           }
           iconLeft={<ArrowRight size="inherit" />}
           className="w-full"
-          disabled={!isReady}
+          disabled={!isReady || isSubmitted}
         >
           {isSubmitted ? 'Next' : 'Submit'}
         </Button>
