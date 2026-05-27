@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function WelcomePage() {
   return (
     <main className="relative min-h-screen flex flex-col items-center pt-[28vh] md:justify-center md:pt-0 overflow-hidden">
-      <div className="flex flex-col items-center text-center gap-4 px-6 max-w-2xl">
+      <div className="flex flex-col items-center text-center gap-4 px-6 max-w-3xl">
         <Typography
           as="p"
           textSize="subtitle-lg"
@@ -22,12 +22,8 @@ export default function WelcomePage() {
           Hacker Application
         </Typography>
         <Typography as="p" textSize="subtitle-sm" textColor="text-yellow-300">
-          Early Round Applications due:{' '}
-          <span className="text-error-400">May 26th 11:59 PM EST</span>
-        </Typography>
-        <Typography as="p" textSize="paragraph-lg" textColor="text-yellow-300">
-          Regular Round Applications due:{' '}
-          <span className="text-error-400">June 7th 11:59 PM EST</span>
+          Regular Round Applications Due:{' '}
+          <span className="text-error-400">June 17th 11:59 PM EST</span>
         </Typography>
         <Button
           as={Link}

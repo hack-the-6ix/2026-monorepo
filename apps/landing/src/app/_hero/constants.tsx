@@ -17,7 +17,7 @@ export const HERO_CONTENT = {
 
 export const FORM_CONTENT = {
   description:
-    'Early applications are now open! Apply before May 26th to receive an early decision.',
+    'Applications are now open! Apply before June 17th.',
   buttonText: 'Apply Now',
 } as const;
 

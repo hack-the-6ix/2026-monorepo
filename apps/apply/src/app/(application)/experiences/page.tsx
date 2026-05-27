@@ -53,7 +53,7 @@ function ExperienceContent({ currentPageKey }: { currentPageKey: string }) {
     try {
       const response = await uploadResumeFile(file);
       const fileId = response.fileId;
-    
+
       updateFormData('experiences', {
         ...experienceFormData,
         resumeId: fileId,
