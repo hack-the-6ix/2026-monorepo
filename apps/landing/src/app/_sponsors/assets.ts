@@ -1,5 +1,5 @@
 import sponsorBackboardIoLogo from '../../assets/sponsors/backboard_io_logo.png';
-import sponsorBase44Logo from '../../assets/sponsors/base44_logo.svg';
+import sponsorBase44Logo from '../../assets/sponsors/base44_logo.png';
 import sponsorBrucePowerLogo from '../../assets/sponsors/bruce_power_logo.png';
 import sponsorChexyLogo from '../../assets/sponsors/chexy_logo.png';
 import sponsorElevenLabsLogo from '../../assets/sponsors/elevenlabs_logo.png';
