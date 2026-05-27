@@ -18,6 +18,7 @@ import {
 } from '@/lib/schemas/character';
 
 export const FormDataSchema = z.object({
+  normalRound: z.boolean(),
   characterSheet: characterSheetSchema,
   aboutYou: z.object({
     firstName: z.string(),
@@ -97,6 +98,7 @@ export const ApplicationContextProvider = ({
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
+    normalRound: true,
     characterSheet: initialCharacterSheet,
     aboutYou: {
       firstName: '',
