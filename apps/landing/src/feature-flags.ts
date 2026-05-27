@@ -1,3 +1,3 @@
 export const featureFlags = {
-  showSponsor: false,
+  showSponsor: true,
 } as const;
