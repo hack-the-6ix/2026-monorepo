@@ -32,6 +32,15 @@ export default function WelcomePage() {
         >
           Start
         </Button>
+        <Button
+          as={Link}
+          kind="secondary"
+          target="_blank"
+          href="https://chefoverflow.hackthe6ix.com/"
+          className="mt-2 w-full max-w-md justify-center"
+        >
+          Play HT6 Chef Overflow
+        </Button>
       </div>
     </main>
   );

@@ -57,14 +57,25 @@ export default function ThankYouPage() {
           Thanks for applying!
         </Typography>
 
-        <Button
-          as="a"
-          href={DASHBOARD_URL}
-          iconLeft={<ArrowRight size="inherit" className="size-3.5" />}
-          className="thank-you-dashboard-button w-full max-w-xs border-primary-500 bg-primary-400 px-6 py-3 hover:border-primary-600 hover:bg-primary-500 md:w-auto md:min-w-52 md:max-w-none"
-        >
-          Go to Dashboard
-        </Button>
+        <div className="flex flex-col gap-3">
+          <Button
+            as="a"
+            href={DASHBOARD_URL}
+            iconLeft={<ArrowRight size="inherit" className="size-3.5" />}
+            className="thank-you-dashboard-button w-full max-w-xs border-primary-500 bg-primary-400 px-6 py-3 hover:border-primary-600 hover:bg-primary-500 md:w-auto md:min-w-52 md:max-w-none"
+          >
+            Go to Dashboard
+          </Button>
+          <Button
+            as="a"
+            kind="secondary"
+            target="_blank"
+            href="https://chefoverflow.hackthe6ix.com/"
+            className="thank-you-dashboard-button w-full max-w-xs md:w-auto md:min-w-52 md:max-w-none"
+          >
+            Play HT6 Chef Overflow
+          </Button>
+        </div>
       </div>
     </div>
   );
