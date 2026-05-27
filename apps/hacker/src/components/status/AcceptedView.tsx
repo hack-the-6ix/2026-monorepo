@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Button, Typography } from '@hackthe6ix/ui';
 
 interface AcceptedViewProps {
@@ -6,6 +7,8 @@ interface AcceptedViewProps {
 }
 
 const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 space-y-4">
       <Typography
@@ -44,7 +47,7 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
         <Button
           kind="secondary"
           className="w-full md:w-auto max-w-[280px] md:max-w-none px-6 hover:bg-teal-500/10 transition order-2 md:order-1"
-          onClick={onDecline}
+          onClick={() => setIsOpen(true)}
         >
           I can no longer attend
         </Button>
@@ -55,6 +58,45 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
           Accept Invitation
         </Button>
       </div>
+
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
+          <div className="bg-[#0b0f19] border border-slate-800 rounded-[20px] w-full max-w-[300px] p-6 text-center shadow-2xl relative">
+            <Typography
+              as="h2"
+              textSize="paragraph-lg"
+              textWeight="bold"
+              textColor="text-white"
+              className="mb-3 leading-snug"
+            >
+              Can no longer attend HT6?
+            </Typography>
+            <p className="text-[#A0AEC0] text-xs font-normal leading-relaxed mb-6">
+              This opportunity will be passed onto a waitlisted participant.{' '}
+              <span className="text-[#EF5A5A] font-semibold">
+                This action cannot be undone.
+              </span>
+            </p>
+            <div className="flex items-center justify-center gap-3">
+              <button
+                className="px-5 py-2.5 rounded-full border border-slate-600 hover:border-slate-500 hover:bg-slate-800/30 text-white font-medium active:scale-95 transition-all text-xs"
+                onClick={() => setIsOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-5 py-2.5 rounded-full bg-[#EF5A5A] hover:bg-[#D94545] text-white font-medium active:scale-95 transition-all text-xs shadow-lg shadow-[#EF5A5A]/15"
+                onClick={() => {
+                  setIsOpen(false);
+                  onDecline();
+                }}
+              >
+                I can no longer attend
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
