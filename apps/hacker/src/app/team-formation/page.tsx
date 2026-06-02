@@ -8,10 +8,9 @@ import {
   createTeam,
   getCurrentUserId,
   getUserProfile,
-  isUuid,
   joinTeam,
   setStoredTeamId,
-} from '@/client';
+} from '@/actions';
 
 const getErrorMessage = (error: unknown, fallback: string) => {
   if (
@@ -50,7 +49,6 @@ const TeamFormationPage = () => {
   useEffect(() => {
     const loadCurrentUserName = async () => {
       const userId = getCurrentUserId();
-      if (!isUuid(userId)) return;
 
       try {
         const profile = await getUserProfile(userId!);

@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 
 import {
   clearStoredTeamId,
-  getApiErrorMessage,
   getCurrentUserId,
   getStoredTeamId,
   getTeamDetails,
@@ -16,7 +15,8 @@ import {
   leaveOrRemoveTeamMember,
   TeamDetails,
   TeamMember,
-} from '@/client';
+} from '@/actions';
+import { getApiErrorMessage } from '@/client';
 
 const getMemberDisplayName = (member: TeamMember) => {
   const fullName = [member.firstName, member.lastName]

@@ -14,10 +14,15 @@ const Sidebar = () => {
           <Image src={Logo} alt="Hack the 6ix Logo" />
         </div>
         <div className="flex flex-col gap-4 items-center">
-          <Button as={Link} href="/" kind="tertiary" className="">
+          <Button as={Link} href="/" kind="tertiary" className="text-white">
             Application Status
           </Button>
-          <Button as={Link} href="/team-formation" kind="tertiary" className="">
+          <Button
+            as={Link}
+            href="/team-formation"
+            kind="tertiary"
+            className="text-white"
+          >
             Team Formation
           </Button>
         </div>
