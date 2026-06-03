@@ -2,10 +2,10 @@
 
 import Image from 'next/image';
 
-import { useHackerStatus } from '@/context/HackerStatusContext';
+import { useHacker } from '@/context/HackerContext';
 
 const DynamicBackground = () => {
-  const { status } = useHackerStatus();
+  const { status } = useHacker();
 
   const isPostAcceptance = status === 'accepted' || status === 'declined';
 
