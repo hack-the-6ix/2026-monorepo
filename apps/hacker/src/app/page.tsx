@@ -1,17 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
-import { HackerStatus } from '@/types/status';
-import ReviewingView from '@/components/status/ReviewingView';
 import RejectedView from '@/components/status/RejectedView';
-import WaitlistView from '@/components/status/WaitlistView';
+import ReviewingView from '@/components/status/ReviewingView';
 import AcceptedView from '@/components/status/AcceptedView';
 import DeclinedView from '@/components/status/DeclinedView';
+import WaitlistView from '@/components/status/WaitlistView';
 import { useHackerStatus } from '@/context/HackerStatusContext';
 
 export default function Home() {
-  const { status, setStatus } = useHackerStatus();
-  const [userName, setUserName] = useState('Michael');
+  const { status, setStatus, loading, displayName } = useHackerStatus();
 
   const handleDeclineInvite = () => {
     setStatus('declined');
@@ -20,64 +17,44 @@ export default function Home() {
   const renderStatusView = () => {
     switch (status) {
       case 'under_review':
-        return <ReviewingView name={userName} />;
+        return <ReviewingView name={displayName} />;
       case 'rejected':
-        return <RejectedView name={userName} />;
+        return <RejectedView name={displayName} />;
       case 'waitlist':
-        return <WaitlistView name={userName} />;
+        return <WaitlistView name={displayName} />;
       case 'accepted':
         return (
-          <AcceptedView
-            name={userName}
-            onDecline={handleDeclineInvite}
-          />
+          <AcceptedView name={displayName} onDecline={handleDeclineInvite} />
         );
       case 'declined':
-        return <DeclinedView name={userName} />;
+        return <DeclinedView name={displayName} />;
       default:
-        return <ReviewingView name={userName} />;
+        return <ReviewingView name={displayName} />;
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center px-6 text-center text-white">
+        <div className="max-w-md space-y-3 rounded-3xl border border-white/10 bg-black/20 px-6 py-8 backdrop-blur-md">
+          <p className="text-sm uppercase tracking-[0.25em] text-yellow-300">
+            Loading
+          </p>
+          <h1 className="text-3xl font-semibold">
+            Fetching your application status
+          </h1>
+          <p className="text-sm text-white/80">
+            We&apos;re checking the backend for the current hacker profile.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen">
       {/* Dynamic application status layout */}
       {renderStatusView()}
-
-      {/* 
-        DEVELOPMENT STATUS SWITCHER 
-        This is a helpful dev tool that lets you toggle between all Figma states 
-        instantly to see and style each view. You can remove or disable this 
-        when ready to connect your production database!
-      */}
-      <div className="fixed bottom-4 right-4 bg-slate-900/90 border border-slate-700 p-4 rounded-xl shadow-2xl flex flex-col gap-2 z-50 text-xs text-white max-w-[200px]">
-        <div className="font-bold text-teal-400 border-b border-slate-700 pb-1 mb-1">
-          🛠 Dev View Switcher
-        </div>
-        <div className="flex flex-col gap-1">
-          {(
-            [
-              'under_review',
-              'rejected',
-              'waitlist',
-              'accepted',
-              'declined',
-            ] as HackerStatus[]
-          ).map((s) => (
-            <button
-              key={s}
-              onClick={() => setStatus(s)}
-              className={`text-left px-2 py-1 rounded transition ${
-                status === s ?
-                  'bg-teal-500 text-black font-bold'
-                : 'hover:bg-slate-800 text-slate-300'
-              }`}
-            >
-              {s.replace('_', ' ').toUpperCase()}
-            </button>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
