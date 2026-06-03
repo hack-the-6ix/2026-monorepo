@@ -39,6 +39,7 @@ const TeamPage = () => {
 
       const teamId = hackerRole?.teamId;
       if (!teamId) {
+        router.push('/team-formation');
         setErrorMessage('No team code was found. Create or join a team first.');
         return;
       }

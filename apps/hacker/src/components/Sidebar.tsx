@@ -5,8 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import Logo from '@/app/assets/logo.svg';
+import { useHacker } from '@/context/HackerContext';
 
 const Sidebar = () => {
+  const { hackerRole } = useHacker();
+  const teamHref = hackerRole?.teamId ? '/team' : '/team-formation';
   return (
     <>
       <nav className="flex flex-col h-full py-12 px-6">
@@ -19,7 +22,7 @@ const Sidebar = () => {
           </Button>
           <Button
             as={Link}
-            href="/team-formation"
+            href={teamHref}
             kind="tertiary"
             className="text-white"
           >
