@@ -33,7 +33,7 @@ const Sidebar = () => {
             as={Link}
             href={teamHref}
             kind="tertiary"
-            className={`text-primary-400 ${isActive('/') ? 'underline' : ''}`}
+            className={`text-primary-400 ${isActive(teamHref) ? 'underline' : ''}`}
           >
             Team Formation
           </Button>

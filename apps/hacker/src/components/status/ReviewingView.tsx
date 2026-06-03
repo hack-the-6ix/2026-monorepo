@@ -36,7 +36,7 @@ const ReviewingView = ({ name }: ReviewingViewProps) => {
       >
         Thanks for applying to Hack the 6ix 2026! The first round of hacker
         acceptances will be released on{' '}
-        <span className="text-yellow-300">Date</span>.
+        <span className="text-yellow-300">June 7th 11:59PM</span>.
       </Typography>
 
       <Typography
