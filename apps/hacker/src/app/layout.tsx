@@ -5,7 +5,6 @@ import DynamicBackground from '@/components/DynamicBackground';
 import MobileHeader from '@/components/MobileHeader';
 import Sidebar from '@/components/Sidebar';
 import { HackerProvider } from '@/context/HackerContext';
-import { HackerStatusProvider } from '@/context/HackerStatusContext';
 
 import './globals.css';
 
@@ -29,24 +28,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
-        <HackerStatusProvider>
-          <HackerProvider>
-            <DynamicBackground />
-            <div className="flex flex-col md:flex-row min-h-screen">
-              <header className="md:hidden w-full absolute top-0 left-0 right-0 z-10 bg-transparent">
-                <MobileHeader />
-              </header>
-              {!IS_UNDER_CONSTRUCTION && (
-                <aside className="w-72 hidden md:block shrink-0">
-                  <Sidebar />
-                </aside>
-              )}
-              <main className="flex-1 overflow-y-auto pt-20 md:pt-0">
-                {children}
-              </main>
-            </div>
-          </HackerProvider>
-        </HackerStatusProvider>
+        <HackerProvider>
+          <DynamicBackground />
+          <div className="flex flex-col md:flex-row min-h-screen">
+            <header className="md:hidden w-full absolute top-0 left-0 right-0 z-10 bg-transparent">
+              <MobileHeader />
+            </header>
+            {!IS_UNDER_CONSTRUCTION && (
+              <aside className="w-72 hidden md:block shrink-0">
+                <Sidebar />
+              </aside>
+            )}
+            <main className="flex-1 overflow-y-auto pt-20 md:pt-0">
+              {children}
+            </main>
+          </div>
+        </HackerProvider>
       </body>
     </html>
   );

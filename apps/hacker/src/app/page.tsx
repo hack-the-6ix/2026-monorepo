@@ -4,15 +4,14 @@ import AcceptedView from '@/components/status/AcceptedView';
 import DeclinedView from '@/components/status/DeclinedView';
 import RejectedView from '@/components/status/RejectedView';
 import ReviewingView from '@/components/status/ReviewingView';
+import RsvpedView from '@/components/status/RsvpedView';
 import WaitlistView from '@/components/status/WaitlistView';
-import { useHackerStatus } from '@/context/HackerStatusContext';
+import { useHacker } from '@/context/HackerContext';
 
 export default function Home() {
-  const { status, setStatus, loading, displayName } = useHackerStatus();
+  const { status, loading, displayName } = useHacker();
 
-  const handleDeclineInvite = () => {
-    setStatus('declined');
-  };
+  const handleDeclineInvite = () => {};
 
   const renderStatusView = () => {
     switch (status) {
@@ -25,6 +24,10 @@ export default function Home() {
       case 'accepted':
         return (
           <AcceptedView name={displayName} onDecline={handleDeclineInvite} />
+        );
+      case 'rsvped':
+        return (
+          <RsvpedView name={displayName} onDecline={handleDeclineInvite} />
         );
       case 'declined':
         return <DeclinedView name={displayName} />;
