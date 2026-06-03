@@ -111,7 +111,7 @@ const TeamFormationPage = () => {
           Don&apos;t have a team? No worries! You can create your own team and
           invite your friends, join a team, or continue solo. You can change
           this at any point before{' '}
-          <span className=" text-[#F6BD55]">---- at 11:59PM EST.</span>
+          <span className=" text-[#F6BD55]">June 26th at 11:59PM EST.</span>
         </Typography>
 
         <form
