@@ -164,6 +164,7 @@ export const ApplicationContextProvider = ({
   useEffect(() => {
     const savedData = localStorage.getItem('application_data');
     if (savedData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       loadSavedData(savedData);
     }
 
