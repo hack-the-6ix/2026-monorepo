@@ -9,10 +9,38 @@ import {
 } from 'react';
 
 import { getHackerRole, getMe, HackerRole, UserProfile } from '@/actions';
+import { HackerStatus } from '@/types/status';
+
+const hackerStatusMap: Record<string, HackerStatus> = {
+  'no apply': 'under_review',
+  applied: 'under_review',
+  accepted: 'accepted',
+  rejected: 'rejected',
+  // rsvped: 'accepted',
+  // 'checked-in': 'accepted',
+  // waitlisted: 'waitlist',
+  // waitlist: 'waitlist',
+  // declined: 'declined',
+};
+
+function getDisplayName(profile: UserProfile | null) {
+  if (!profile) return 'Hacker';
+
+  const fullName = [profile.firstName, profile.lastName]
+    .filter(Boolean)
+    .join(' ')
+    .trim();
+  if (fullName) return fullName;
+
+  const emailName = profile.email.split('@')[0]?.trim();
+  return emailName || 'Hacker';
+}
 
 interface HackerContextValue {
   profile: UserProfile | null;
   hackerRole: HackerRole | null;
+  status: HackerStatus;
+  displayName: string;
   loading: boolean;
   error: string | null;
   refresh: () => Promise<void>;
@@ -44,10 +72,21 @@ export function HackerProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const hackerRole = profile ? getHackerRole(profile) : null;
+  const status =
+    hackerStatusMap[hackerRole?.status ?? 'applied'] ?? 'under_review';
+  const displayName = getDisplayName(profile);
 
   return (
     <HackerContext.Provider
-      value={{ profile, hackerRole, loading, error, refresh }}
+      value={{
+        profile,
+        hackerRole,
+        status,
+        displayName,
+        loading,
+        error,
+        refresh,
+      }}
     >
       {children}
     </HackerContext.Provider>

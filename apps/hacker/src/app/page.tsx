@@ -5,14 +5,12 @@ import DeclinedView from '@/components/status/DeclinedView';
 import RejectedView from '@/components/status/RejectedView';
 import ReviewingView from '@/components/status/ReviewingView';
 import WaitlistView from '@/components/status/WaitlistView';
-import { useHackerStatus } from '@/context/HackerStatusContext';
+import { useHacker } from '@/context/HackerContext';
 
 export default function Home() {
-  const { status, setStatus, loading, displayName } = useHackerStatus();
+  const { status, loading, displayName } = useHacker();
 
-  const handleDeclineInvite = () => {
-    setStatus('declined');
-  };
+  const handleDeclineInvite = () => {};
 
   const renderStatusView = () => {
     switch (status) {

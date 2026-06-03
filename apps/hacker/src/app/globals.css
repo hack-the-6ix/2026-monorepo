@@ -3,3 +3,5 @@
 
 @source "../../../../packages/ui/src/**/*.tsx";
 @source "../../../../packages/ui/src/**/*.css";
+@source "../../../../packages/ui/src";
+@source "../../../../packages/ui/src/**/*.ts";
