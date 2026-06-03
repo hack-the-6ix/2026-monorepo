@@ -2,7 +2,6 @@ import { NextRequest } from 'next/server';
 
 import { fetchHt6 } from './client';
 export const seasonCode = process.env.NEXT_PUBLIC_SEASON_CODE || 'S26';
-const teamIdStorageKey = `hacker:${seasonCode}:teamId`;
 const uuidPattern =
   /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
@@ -31,6 +30,15 @@ export interface UserProfile {
   createdAt: string;
   isAdmin: boolean;
   roles: unknown[];
+}
+
+export interface HackerRole {
+  type: 'hacker';
+  seasonCode: string;
+  score: number;
+  status: string | null;
+  nfcId: string | null;
+  teamId: string | null;
 }
 
 export interface MessageResponse {
@@ -83,8 +91,20 @@ export async function getTeamDetails(teamId: string): Promise<TeamDetails> {
   return fetchHt6<TeamDetails>(`/seasons/${seasonCode}/teams/${teamId}`);
 }
 
-export async function getUserProfile(userId: string): Promise<UserProfile> {
-  return fetchHt6<UserProfile>(`/users/${userId}`);
+export async function getMe(): Promise<UserProfile> {
+  return fetchHt6<UserProfile>('/users/me');
+}
+
+export function getHackerRole(profile: UserProfile) {
+  return (
+    profile.roles.find(
+      (r): r is HackerRole =>
+        typeof r === 'object' &&
+        r !== null &&
+        (r as HackerRole).type === 'hacker' &&
+        (r as HackerRole).seasonCode === 'S26',
+    ) ?? null
+  );
 }
 
 export async function modifyTeam(
@@ -119,41 +139,6 @@ export async function leaveOrRemoveTeamMember(
       method: 'DELETE',
     },
   );
-}
-
-export function getStoredTeamId() {
-  return localStorage.getItem(teamIdStorageKey);
-}
-
-export function setStoredTeamId(teamId: string) {
-  localStorage.setItem(teamIdStorageKey, teamId);
-}
-
-export function clearStoredTeamId() {
-  localStorage.removeItem(teamIdStorageKey);
-}
-
-export function getCurrentUserId() {
-  const token = localStorage.getItem('token');
-  if (!token) return null;
-
-  const [, payload] = token.split('.');
-  if (!payload) return null;
-
-  try {
-    const normalizedPayload = payload.replace(/-/g, '+').replace(/_/g, '/');
-    const decodedPayload = JSON.parse(atob(normalizedPayload)) as {
-      id?: string;
-      sub?: string;
-      userId?: string;
-    };
-
-    return (
-      decodedPayload.userId || decodedPayload.sub || decodedPayload.id || null
-    );
-  } catch {
-    return null;
-  }
 }
 
 export function isUuid(value: string | null) {

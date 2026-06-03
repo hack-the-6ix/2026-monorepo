@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import Image from 'next/image';
 
 import Sidebar from '@/components/Sidebar';
+import { HackerProvider } from '@/context/HackerContext';
 
 import './globals.css';
 
@@ -41,7 +42,9 @@ export default function RootLayout({
               <Sidebar />
             </aside>
           )}
-          <main className="flex-1 overflow-y-auto">{children}</main>
+          <HackerProvider>
+            <main className="flex-1 overflow-y-auto">{children}</main>
+          </HackerProvider>
         </div>
       </body>
     </html>

@@ -7,16 +7,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import {
-  clearStoredTeamId,
-  getCurrentUserId,
-  getStoredTeamId,
   getTeamDetails,
-  isUuid,
   leaveOrRemoveTeamMember,
   TeamDetails,
   TeamMember,
 } from '@/actions';
 import { getApiErrorMessage } from '@/client';
+import { useHacker } from '@/context/HackerContext';
 
 const getMemberDisplayName = (member: TeamMember) => {
   const fullName = [member.firstName, member.lastName]
@@ -34,10 +31,13 @@ const TeamPage = () => {
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
   const [isLeavingTeam, setIsLeavingTeam] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const { profile, hackerRole, loading, refresh } = useHacker();
 
   useEffect(() => {
     const loadTeamDetails = async () => {
-      const teamId = getStoredTeamId();
+      if (loading) return;
+
+      const teamId = hackerRole?.teamId;
       if (!teamId) {
         setErrorMessage('No team code was found. Create or join a team first.');
         return;
@@ -52,7 +52,7 @@ const TeamPage = () => {
     };
 
     void loadTeamDetails();
-  }, []);
+  }, [loading, hackerRole]);
 
   const handleCopyTeamCode = async () => {
     if (!team) return;
@@ -73,25 +73,13 @@ const TeamPage = () => {
   };
 
   const handleLeaveTeam = async () => {
-    if (!team) return;
-
-    const tokenUserId = getCurrentUserId();
-    const userId =
-      isUuid(tokenUserId) ? tokenUserId
-      : team.members.length === 1 && isUuid(team.members[0].userId) ?
-        team.members[0].userId
-      : isUuid(team.teamLeaderId) ? team.teamLeaderId
-      : null;
-    if (!userId) {
-      setErrorMessage('Unable to identify the current user.');
-      return;
-    }
+    if (!team || !profile) return;
 
     try {
       setIsLeavingTeam(true);
       setErrorMessage('');
-      await leaveOrRemoveTeamMember(team.teamId, userId);
-      clearStoredTeamId();
+      await leaveOrRemoveTeamMember(team.teamId, profile.userId);
+      await refresh();
       router.push('/team-formation');
     } catch (error) {
       setErrorMessage(

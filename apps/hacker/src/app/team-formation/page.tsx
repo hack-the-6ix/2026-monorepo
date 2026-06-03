@@ -4,39 +4,9 @@ import { FormEvent, useEffect, useState } from 'react';
 import { Button, HyperLink, Input, Typography } from '@hackthe6ix/ui';
 import { useRouter } from 'next/navigation';
 
-import {
-  createTeam,
-  getCurrentUserId,
-  getUserProfile,
-  joinTeam,
-  setStoredTeamId,
-} from '@/actions';
-
-const getErrorMessage = (error: unknown, fallback: string) => {
-  if (
-    typeof error === 'object' &&
-    error !== null &&
-    'message' in error &&
-    typeof error.message === 'string'
-  ) {
-    return error.message;
-  }
-
-  if (
-    typeof error === 'object' &&
-    error !== null &&
-    'error' in error &&
-    Array.isArray(error.error) &&
-    error.error[0] &&
-    typeof error.error[0] === 'object' &&
-    'message' in error.error[0] &&
-    typeof error.error[0].message === 'string'
-  ) {
-    return error.error[0].message;
-  }
-
-  return fallback;
-};
+import { createTeam, joinTeam } from '@/actions';
+import { getApiErrorMessage } from '@/client';
+import { useHacker } from '@/context/HackerContext';
 
 const TeamFormationPage = () => {
   const router = useRouter();
@@ -45,21 +15,20 @@ const TeamFormationPage = () => {
   const [isJoiningTeam, setIsJoiningTeam] = useState(false);
   const [isCreatingTeam, setIsCreatingTeam] = useState(false);
   const [firstName, setFirstName] = useState<string | null>(null);
+  const { profile, loading, refresh } = useHacker();
 
   useEffect(() => {
+    if (loading) return;
     const loadCurrentUserName = async () => {
-      const userId = getCurrentUserId();
-
       try {
-        const profile = await getUserProfile(userId!);
-        setFirstName(profile.firstName || profile.email);
+        setFirstName(profile?.firstName || profile?.email || 'Bestie');
       } catch {
         setFirstName(null);
       }
     };
 
     void loadCurrentUserName();
-  }, []);
+  }, [profile, loading]);
 
   const handleJoinTeam = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -74,11 +43,11 @@ const TeamFormationPage = () => {
       setIsJoiningTeam(true);
       setErrorMessage('');
       await joinTeam(trimmedTeamCode);
-      setStoredTeamId(trimmedTeamCode);
+      await refresh();
       router.push('/team');
     } catch (error) {
       setErrorMessage(
-        getErrorMessage(
+        getApiErrorMessage(
           error,
           'Unable to join that team. Please check the team code.',
         ),
@@ -92,12 +61,12 @@ const TeamFormationPage = () => {
     try {
       setIsCreatingTeam(true);
       setErrorMessage('');
-      const team = await createTeam({ teamName: 'Untitled Team' });
-      setStoredTeamId(team.teamId);
+      await createTeam({ teamName: 'Untitled Team' });
+      await refresh();
       router.push('/create-team');
     } catch (error) {
       setErrorMessage(
-        getErrorMessage(
+        getApiErrorMessage(
           error,
           'Unable to create a team right now. Please try again.',
         ),
