@@ -57,7 +57,7 @@ export default function ReviewPage() {
           isSubmitted={isSubmitted}
         />
       )),
-    [formData],
+    [formData, isSubmitted],
   );
 
   const desktopActions = (
