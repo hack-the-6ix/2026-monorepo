@@ -15,10 +15,13 @@ const TeamFormationPage = () => {
   const [isJoiningTeam, setIsJoiningTeam] = useState(false);
   const [isCreatingTeam, setIsCreatingTeam] = useState(false);
   const [firstName, setFirstName] = useState<string | null>(null);
-  const { profile, loading, refresh } = useHacker();
+  const { hackerRole, profile, loading, refresh } = useHacker();
 
   useEffect(() => {
     if (loading) return;
+    if (hackerRole?.teamId) {
+      router.push('/team');
+    }
     const loadCurrentUserName = async () => {
       try {
         setFirstName(profile?.firstName || profile?.email || 'Bestie');
@@ -28,7 +31,7 @@ const TeamFormationPage = () => {
     };
 
     void loadCurrentUserName();
-  }, [profile, loading]);
+  }, [hackerRole, profile, loading, router]);
 
   const handleJoinTeam = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
