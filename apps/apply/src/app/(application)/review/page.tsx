@@ -18,7 +18,7 @@ import {
 
 export default function ReviewPage() {
   const router = useRouter();
-  const { formData } = useApplicationContext();
+  const { formData, setIsSubmitted, isSubmitted } = useApplicationContext();
   const { isReady } = getApplicationReadiness(formData);
   const [submitModalOpen, setSubmitModalOpen] = useState(false);
 
@@ -39,6 +39,7 @@ export default function ReviewPage() {
         responseJson: formData,
         isSubmitted: true,
       });
+      setIsSubmitted(true);
       router.push('/thank-you');
     } catch (error) {
       console.error('Submission failed:', error);
@@ -53,6 +54,7 @@ export default function ReviewPage() {
           section={section}
           formData={formData}
           status={getSectionStatus(section, formData)}
+          isSubmitted={isSubmitted}
         />
       )),
     [formData],
@@ -60,21 +62,25 @@ export default function ReviewPage() {
 
   const desktopActions = (
     <div className="review-actions hidden shrink-0 flex-col-reverse gap-3 pt-6 md:flex md:flex-row md:justify-end md:gap-4 md:pt-8">
+      {!isSubmitted && (
+        <Button
+          kind="secondary"
+          onClick={handleBack}
+          iconLeft={<ArrowLeft size="inherit" />}
+          className="review-back-button md:min-w-35 md:w-auto"
+        >
+          Back
+        </Button>
+      )}
       <Button
-        kind="secondary"
-        onClick={handleBack}
-        iconLeft={<ArrowLeft size="inherit" />}
-        className="review-back-button md:min-w-35 md:w-auto"
-      >
-        Back
-      </Button>
-      <Button
-        onClick={openSubmitModal}
+        onClick={
+          isSubmitted ? () => router.push('/thank-you') : openSubmitModal
+        }
         iconLeft={<ArrowRight size="inherit" />}
         className="md:min-w-35 md:w-auto"
-        disabled={!isReady}
+        disabled={!isReady && !isSubmitted}
       >
-        Submit
+        {isSubmitted ? 'Next' : 'Submit'}
       </Button>
     </div>
   );
@@ -91,7 +97,11 @@ export default function ReviewPage() {
         >
           Review your application
         </Typography>
-        <ReviewStatusBadge ready={isReady} fullWidth />
+        <ReviewStatusBadge
+          ready={isReady || isSubmitted}
+          fullWidth
+          isSubmitted={isSubmitted}
+        />
       </header>
 
       {/* Glass card — only inner content scrolls */}
@@ -107,7 +117,11 @@ export default function ReviewPage() {
             >
               Review your application
             </Typography>
-            <ReviewStatusBadge ready={isReady} className="md:w-auto" />
+            <ReviewStatusBadge
+              ready={isReady || isSubmitted}
+              isSubmitted={isSubmitted}
+              className="md:w-auto"
+            />
           </div>
         </header>
 
@@ -121,21 +135,25 @@ export default function ReviewPage() {
       {/* Mobile footer — in document flow, outside scroll */}
       <footer className="review-mobile-actions flex shrink-0 flex-col gap-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden">
         <Button
-          onClick={openSubmitModal}
+          onClick={
+            isSubmitted ? () => router.push('/thank-you') : openSubmitModal
+          }
           iconLeft={<ArrowRight size="inherit" />}
           className="w-full"
-          disabled={!isReady}
+          disabled={!isReady && !isSubmitted}
         >
-          Submit
+          {isSubmitted ? 'Next' : 'Submit'}
         </Button>
-        <Button
-          kind="secondary"
-          onClick={handleBack}
-          iconLeft={<ArrowLeft size="inherit" />}
-          className="review-back-button w-full"
-        >
-          Back
-        </Button>
+        {!isSubmitted && (
+          <Button
+            kind="secondary"
+            onClick={handleBack}
+            iconLeft={<ArrowLeft size="inherit" />}
+            className="review-back-button w-full"
+          >
+            Back
+          </Button>
+        )}
       </footer>
 
       <SubmitApplicationModal

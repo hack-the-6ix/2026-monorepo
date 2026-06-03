@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
-
 import { fetchHt6 } from './client';
+
 export const seasonCode = process.env.NEXT_PUBLIC_SEASON_CODE || 'S26';
 const uuidPattern =
   /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;

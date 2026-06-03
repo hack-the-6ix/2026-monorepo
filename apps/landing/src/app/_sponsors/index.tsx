@@ -1,11 +1,9 @@
 import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
-import Candle from '@/assets/sponsor_candle.png';
-import Grass from '@/assets/sponsor_grass.png';
-import Hills from '@/assets/sponsor_hill.png';
 import Section from '../../components/Section';
 import { featureFlags } from '../../feature-flags';
+import { assets } from './assets';
 import LogoGrid from './LogoGrid';
 
 export default function Sponsors() {
@@ -58,7 +56,7 @@ export default function Sponsors() {
       <div className="-mt-25 flex flex-col items-end justify-center z-0 md:-mt-75">
         <div className="flex flex-row w-full translate-x-5 items-end justify-center md:gap-10">
           <Image
-            src={Hills}
+            src={assets.Hills}
             alt="Purple Hills"
             width={700}
             height={700}
@@ -66,7 +64,7 @@ export default function Sponsors() {
             className="w-150 h-auto md:w-300"
           />
           <Image
-            src={Grass}
+            src={assets.Grass}
             alt="Big Grass"
             width={800}
             height={800}
@@ -85,7 +83,7 @@ export default function Sponsors() {
           />
           <div className="absolute flex -top-45 -translate-x-30 justify-center md:-top-90 md:left-1/3 md:translate-x-45 2xl:-top-95 2xl:translate-x-30">
             <Image
-              src={Candle}
+              src={assets.Candle}
               alt="cute candle"
               width={100}
               height={100}

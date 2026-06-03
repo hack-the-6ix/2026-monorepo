@@ -8,14 +8,17 @@ import {
   useState,
 } from 'react';
 import { isValidPhoneNumber } from 'libphonenumber-js';
+import { usePathname, useRouter } from 'next/navigation';
 import z from 'zod';
 
+import { getResponse, upsertFormResponse } from '@/client';
 import {
   characterSheetSchema,
   initialCharacterSheet,
 } from '@/lib/schemas/character';
 
 export const FormDataSchema = z.object({
+  normalRound: z.boolean(),
   characterSheet: characterSheetSchema,
   aboutYou: z.object({
     firstName: z.string(),
@@ -77,6 +80,8 @@ export type FormData = z.infer<typeof FormDataSchema>;
 interface ApplicationContextType {
   formData: FormData;
   updateFormData: (section: keyof FormData, data: unknown) => void;
+  isSubmitted: boolean;
+  setIsSubmitted: (submitted: boolean) => void;
 }
 
 const ApplicationContext = createContext<ApplicationContextType | undefined>(
@@ -88,7 +93,12 @@ export const ApplicationContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
+    normalRound: true,
     characterSheet: initialCharacterSheet,
     aboutYou: {
       firstName: '',
@@ -137,13 +147,19 @@ export const ApplicationContextProvider = ({
     setFormData((prev) => ({ ...prev, [section]: data }));
   };
 
-  const loadSavedData = useEffectEvent((savedData: string) => {
-    try {
-      setFormData(JSON.parse(savedData));
-    } catch (e) {
-      console.error('Failed to parse saved form data', e);
-    }
-  });
+  const loadSavedData = useEffectEvent(
+    (savedData: string | Record<string, unknown> | null) => {
+      try {
+        if (typeof savedData === 'string') {
+          setFormData(JSON.parse(savedData));
+        } else {
+          setFormData(savedData as FormData);
+        }
+      } catch (e) {
+        console.error('Failed to parse saved form data', e);
+      }
+    },
+  );
 
   useEffect(() => {
     const savedData = localStorage.getItem('application_data');
@@ -151,17 +167,64 @@ export const ApplicationContextProvider = ({
       // eslint-disable-next-line react-hooks/set-state-in-effect
       loadSavedData(savedData);
     }
+
+    getResponse()
+      .then((res) => {
+        const currentResponse = res.data?.[0];
+        if (currentResponse) {
+          loadSavedData(currentResponse.responseJson);
+        }
+        if (currentResponse?.isSubmitted) {
+          setIsSubmitted(true);
+        }
+      })
+      .catch((err) =>
+        console.error('Failed to fetch existing application status', err),
+      );
   }, []);
+
+  useEffect(() => {
+    if (isSubmitted && pathname !== '/review' && pathname !== '/thank-you') {
+      router.replace('/review');
+    }
+  }, [isSubmitted, pathname, router]);
 
   useEffect(() => {
     localStorage.setItem('application_data', JSON.stringify(formData));
   }, [formData]);
+
+  // -------- UPSERT TO DB WHEN USER LEAVES WINDOW --------
+  const onLeaveSave = useEffectEvent(async () => {
+    if (isSubmitted) return;
+
+    try {
+      await upsertFormResponse({
+        responseJson: formData as unknown as Record<string, unknown>,
+        isSubmitted: false,
+      });
+    } catch (error) {
+      console.error('Background window-leave save failed:', error);
+    }
+  });
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        onLeaveSave();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [isSubmitted]);
 
   return (
     <ApplicationContext.Provider
       value={{
         formData,
         updateFormData,
+        isSubmitted,
+        setIsSubmitted,
       }}
     >
       {children}
