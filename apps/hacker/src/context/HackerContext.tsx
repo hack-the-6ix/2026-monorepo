@@ -16,11 +16,10 @@ const hackerStatusMap: Record<string, HackerStatus> = {
   applied: 'under_review',
   accepted: 'accepted',
   rejected: 'rejected',
-  // rsvped: 'accepted',
-  // 'checked-in': 'accepted',
-  // waitlisted: 'waitlist',
-  // waitlist: 'waitlist',
-  // declined: 'declined',
+  waitlisted: 'waitlist',
+  declined: 'declined',
+  rsvped: 'rsvped',
+  'checked-in': 'rsvped',
 };
 
 function getDisplayName(profile: UserProfile | null) {
@@ -67,7 +66,6 @@ export function HackerProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     void refresh();
   }, []);
 

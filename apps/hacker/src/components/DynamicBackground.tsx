@@ -7,7 +7,8 @@ import { useHacker } from '@/context/HackerContext';
 const DynamicBackground = () => {
   const { status } = useHacker();
 
-  const isPostAcceptance = status === 'accepted' || status === 'declined';
+  const isPostAcceptance =
+    status === 'accepted' || status === 'declined' || status === 'rsvped';
 
   const desktopSrc =
     isPostAcceptance ? '/bg-post-acceptance.png' : '/bg-pre-acceptance.png';

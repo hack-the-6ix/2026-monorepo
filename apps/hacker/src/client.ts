@@ -33,6 +33,8 @@ export interface HackerRole {
     | 'applied'
     | 'accepted'
     | 'rejected'
+    | 'waitlisted'
+    | 'declined'
     | 'rsvped'
     | 'checked-in'
     | null;
