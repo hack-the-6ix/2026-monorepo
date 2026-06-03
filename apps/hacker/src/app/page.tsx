@@ -1,9 +1,9 @@
 'use client';
 
-import RejectedView from '@/components/status/RejectedView';
-import ReviewingView from '@/components/status/ReviewingView';
 import AcceptedView from '@/components/status/AcceptedView';
 import DeclinedView from '@/components/status/DeclinedView';
+import RejectedView from '@/components/status/RejectedView';
+import ReviewingView from '@/components/status/ReviewingView';
 import WaitlistView from '@/components/status/WaitlistView';
 import { useHackerStatus } from '@/context/HackerStatusContext';
 

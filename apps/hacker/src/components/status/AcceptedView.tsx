@@ -26,7 +26,7 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
         textWeight="bold"
         textColor="text-white"
       >
-        Congratulations, you've been{' '}
+        Congratulations, you&apos;ve been{' '}
         <span className="text-primary-300">accepted!</span>
       </Typography>
       <Typography

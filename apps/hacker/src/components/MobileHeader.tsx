@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { FaBars } from 'react-icons/fa6';
 import { Typography } from '@hackthe6ix/ui';
+import Image from 'next/image';
+
 import Logo from '@/app/assets/logo.svg';
 
 const MobileHeader = () => {

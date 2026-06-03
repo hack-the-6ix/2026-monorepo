@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
+import DynamicBackground from '@/components/DynamicBackground';
+import MobileHeader from '@/components/MobileHeader';
 import Sidebar from '@/components/Sidebar';
 import { HackerProvider } from '@/context/HackerContext';
-import './globals.css';
-import MobileHeader from '@/components/MobileHeader';
 import { HackerStatusProvider } from '@/context/HackerStatusContext';
-import DynamicBackground from '@/components/DynamicBackground';
+
+import './globals.css';
 
 const inter = Inter({
   subsets: ['latin'],

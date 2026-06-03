@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+
 import { fetchHt6 } from './client';
 
 export const seasonCode = process.env.NEXT_PUBLIC_SEASON_CODE || 'S26';

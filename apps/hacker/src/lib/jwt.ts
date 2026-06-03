@@ -1,4 +1,4 @@
-export function decodeJwtPayload(token: string): Record<string, any> {
+export function decodeJwtPayload(token: string): Record<string, unknown> {
   if (!token) return {};
   const payload = token.split('.')[1];
   if (!payload) return {};

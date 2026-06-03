@@ -1,10 +1,10 @@
-import { Button, Typography } from '@hackthe6ix/ui';
 import {
   FaFacebook,
   FaInstagram,
   FaLinkedin,
   FaXTwitter,
 } from 'react-icons/fa6';
+import { Typography } from '@hackthe6ix/ui';
 
 interface DeclinedViewProps {
   name: string;

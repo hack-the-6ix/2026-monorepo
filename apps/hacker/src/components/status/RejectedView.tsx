@@ -36,8 +36,8 @@ const RejectedView = ({ name }: RejectedViewProps) => {
         Thank you for your enthusiasm and dedication in applying to Hack the 6ix
         2026. We received an overwhelming number of applications and after
         careful consideration, we regret to inform you that your application was
-        not chosen for this year's hackathon. We strongly encourage you to try
-        again next year.
+        not chosen for this year&apos;s hackathon. We strongly encourage you to
+        try again next year.
       </Typography>
       <Typography
         as="p"
