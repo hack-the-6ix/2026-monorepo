@@ -53,7 +53,7 @@ const TeamPage = () => {
     };
 
     void loadTeamDetails();
-  }, [loading, hackerRole]);
+  }, [loading, hackerRole, router]);
 
   const handleCopyTeamCode = async () => {
     if (!team) return;
