@@ -36,16 +36,16 @@ export default function RootLayout({
           />
         </div>
 
-        <div className="flex min-h-screen">
-          {!IS_UNDER_CONSTRUCTION && (
-            <aside className="w-72 hidden md:block shrink-0">
-              <Sidebar />
-            </aside>
-          )}
-          <HackerProvider>
+        <HackerProvider>
+          <div className="flex min-h-screen">
+            {!IS_UNDER_CONSTRUCTION && (
+              <aside className="w-72 hidden md:block shrink-0">
+                <Sidebar />
+              </aside>
+            )}
             <main className="flex-1 overflow-y-auto">{children}</main>
-          </HackerProvider>
-        </div>
+          </div>
+        </HackerProvider>
       </body>
     </html>
   );
