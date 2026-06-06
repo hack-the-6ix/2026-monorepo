@@ -2,10 +2,18 @@
 
 import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
+import { useHacker } from '@/context/HackerContext';
 
 const Sidebar = () => {
+  const pathname = usePathname();
+
+  const { hackerRole } = useHacker();
+  const teamHref = hackerRole?.teamId ? '/team' : '/team-formation';
+  const isActive = (href: string) => pathname === href;
   return (
     <>
       <nav className="flex flex-col h-full py-12 px-6">
@@ -14,20 +22,18 @@ const Sidebar = () => {
         </div>
         <div className="flex flex-col gap-4 items-center">
           <Button
+            as={Link}
+            href="/"
             kind="tertiary"
-            className=""
-            onClick={() => {
-              console.log('application status');
-            }}
+            className={`text-primary-400 ${isActive('/') ? 'underline' : ''}`}
           >
             Application Status
           </Button>
           <Button
+            as={Link}
+            href={teamHref}
             kind="tertiary"
-            className=""
-            onClick={() => {
-              console.log('team formation');
-            }}
+            className={`text-primary-400 ${isActive(teamHref) ? 'underline' : ''}`}
           >
             Team Formation
           </Button>

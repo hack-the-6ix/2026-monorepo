@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Image from 'next/image';
 
+import DynamicBackground from '@/components/DynamicBackground';
+import MobileHeader from '@/components/MobileHeader';
 import Sidebar from '@/components/Sidebar';
+import { HackerProvider } from '@/context/HackerContext';
 
 import './globals.css';
 
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
   description: 'Hacker Dashboard',
 };
 
-const IS_UNDER_CONSTRUCTION = true;
+const IS_UNDER_CONSTRUCTION = false;
 
 export default function RootLayout({
   children,
@@ -26,23 +28,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
-        <div className="fixed inset-0 -z-10 h-full w-full">
-          <Image
-            src="/pre-acceptance.png"
-            alt="Background"
-            fill
-            className="object-cover"
-          />
-        </div>
-
-        <div className="flex min-h-screen">
-          {!IS_UNDER_CONSTRUCTION && (
-            <aside className="w-72 hidden md:block shrink-0">
-              <Sidebar />
-            </aside>
-          )}
-          <main className="flex-1 overflow-y-auto">{children}</main>
-        </div>
+        <HackerProvider>
+          <DynamicBackground />
+          <div className="flex flex-col md:flex-row min-h-screen">
+            <header className="md:hidden w-full absolute top-0 left-0 right-0 z-10 bg-transparent">
+              <MobileHeader />
+            </header>
+            {!IS_UNDER_CONSTRUCTION && (
+              <aside className="w-72 hidden md:block shrink-0">
+                <Sidebar />
+              </aside>
+            )}
+            <main className="flex-1 overflow-y-auto pt-20 md:pt-0">
+              {children}
+            </main>
+          </div>
+        </HackerProvider>
       </body>
     </html>
   );
