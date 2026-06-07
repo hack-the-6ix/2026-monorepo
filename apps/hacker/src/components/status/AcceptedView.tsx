@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Typography } from '@hackthe6ix/ui';
+import { useState } from 'react';
+import { Button } from '@hackthe6ix/ui';
 
 interface AcceptedViewProps {
   name: string;
@@ -11,50 +11,37 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 space-y-4">
-      <Typography
-        as="p"
-        textSize="subtitle-sm"
-        textWeight="bold"
-        textColor="text-white"
-        className="mt-6 md:mt-32"
-      >
+      {/* subtitle-sm → md:text-xl text-lg, bold */}
+      <p className="font-sans md:text-xl text-lg font-bold text-white mt-6 md:mt-32">
         Welcome back, {name}!
-      </Typography>
-      <Typography
-        as="h1"
-        textSize="heading-lg"
-        textWeight="bold"
-        textColor="text-white"
-      >
+      </p>
+
+      {/* heading-lg → md:text-4xl text-3xl, bold */}
+      <h1 className="font-sans md:text-4xl text-3xl font-bold text-white">
         Congratulations, you&apos;ve been{' '}
         <span className="text-primary-300">accepted!</span>
-      </Typography>
-      <Typography
-        as="p"
-        textSize="paragraph-lg"
-        textWeight="regular"
-        textColor="text-white"
-        className="max-w-xs md:max-w-none"
-      >
+      </h1>
+
+      {/* paragraph-lg → md:text-lg text-base, regular */}
+      <p className="font-sans md:text-lg text-base font-normal text-white max-w-xs md:max-w-none">
         Welcome to Hack the 6ix 2026! We are excited to offer you the
         opportunity to hack with us.
         <br /> <br />
         To confirm your attendance, please RSVP below by{' '}
         <span className="text-yellow-300">Date</span>.
-      </Typography>
+      </p>
 
       <div className="mt-4 w-full flex flex-col md:flex-row items-center justify-center gap-4">
+        {/* secondary Button */}
         <Button
-          kind="secondary"
-          className="w-full md:w-auto max-w-[280px] md:max-w-none px-6 hover:bg-teal-500/10 transition order-2 md:order-1"
+          className="inline-flex items-center justify-center gap-2 cursor-pointer rounded-full border-2 border-primary-500 py-2.5 px-6 text-primary-500 text-sm font-semibold transition-all hover:border-primary-600 hover:text-primary-600 active:border-primary-700 active:text-primary-700 focus-visible:outline-none w-full md:w-auto max-w-[280px] md:max-w-none hover:bg-teal-500/10 order-2 md:order-1"
           onClick={() => setIsOpen(true)}
         >
           I can no longer attend
         </Button>
-        <Button
-          kind="primary"
-          className="w-full md:w-auto max-w-[280px] md:max-w-none order-1 md:order-2"
-        >
+
+        {/* primary Button */}
+        <Button className="inline-flex items-center justify-center gap-2 cursor-pointer rounded-full border-2 border-primary-500 bg-primary-500 py-2.5 px-6 text-white text-sm font-semibold transition-all hover:border-primary-600 hover:bg-primary-600 active:border-primary-700 active:bg-primary-700 focus-visible:outline-none w-full md:w-auto max-w-[280px] md:max-w-none order-1 md:order-2">
           Accept Invitation
         </Button>
       </div>
@@ -62,15 +49,10 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
           <div className="bg-[#0b0f19] border border-slate-800 rounded-[20px] w-full max-w-[300px] p-6 text-center shadow-2xl relative">
-            <Typography
-              as="h2"
-              textSize="paragraph-lg"
-              textWeight="bold"
-              textColor="text-white"
-              className="mb-3 leading-snug"
-            >
+            {/* paragraph-lg → md:text-lg text-base, bold */}
+            <h2 className="font-sans md:text-lg text-base font-bold text-white mb-3 leading-snug">
               Can no longer attend HT6?
-            </Typography>
+            </h2>
             <p className="text-[#A0AEC0] text-xs font-normal leading-relaxed mb-6">
               This opportunity will be passed onto a waitlisted participant.{' '}
               <span className="text-[#EF5A5A] font-semibold">
@@ -78,13 +60,13 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
               </span>
             </p>
             <div className="flex items-center justify-center gap-3">
-              <button
+              <Button
                 className="px-5 py-2.5 rounded-full border border-slate-600 hover:border-slate-500 hover:bg-slate-800/30 text-white font-medium active:scale-95 transition-all text-xs"
                 onClick={() => setIsOpen(false)}
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
                 className="px-5 py-2.5 rounded-full bg-[#EF5A5A] hover:bg-[#D94545] text-white font-medium active:scale-95 transition-all text-xs shadow-lg shadow-[#EF5A5A]/15"
                 onClick={() => {
                   setIsOpen(false);
@@ -92,7 +74,7 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
                 }}
               >
                 I can no longer attend
-              </button>
+              </Button>
             </div>
           </div>
         </div>
