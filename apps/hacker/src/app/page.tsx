@@ -10,11 +10,16 @@ import WaitlistView from '@/components/status/WaitlistView';
 import { useHacker } from '@/context/HackerContext';
 
 export default function Home() {
-  const { profile, status, loading, displayName } = useHacker();
+  const { profile, status, loading, displayName, refresh } = useHacker();
 
-  const handleDeclineInvite = () => {
+  const handleDeclineInvite = async () => {
     if (!profile) return;
-    changeHackerRsvpStatus(profile?.userId, 'declined', 'S26');
+    try {
+      await changeHackerRsvpStatus(profile.userId, 'declined', 'S26');
+      await refresh();
+    } catch (error) {
+      console.error('Failed to decline invite:', error);
+    }
   };
 
   const renderStatusView = () => {
