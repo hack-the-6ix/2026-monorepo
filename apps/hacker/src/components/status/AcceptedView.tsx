@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { Button } from '@hackthe6ix/ui';
 import Link from 'next/link';
