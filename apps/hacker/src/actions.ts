@@ -145,3 +145,18 @@ export async function leaveOrRemoveTeamMember(
 export function isUuid(value: string | null) {
   return Boolean(value && uuidPattern.test(value));
 }
+
+export async function changeHackerRsvpStatus(
+  userId: string,
+  status: 'rsvped' | 'declined',
+  seasonCode: string,
+): Promise<MessageResponse> {
+  const body = {
+    seasonCode: seasonCode,
+    response: status,
+  };
+  return fetchHt6<MessageResponse>(`/hackers/${userId}/rsvp`, {
+    method: 'POST',
+    body,
+  });
+}
