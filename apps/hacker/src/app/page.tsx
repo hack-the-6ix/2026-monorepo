@@ -1,5 +1,6 @@
 'use client';
 
+import { changeHackerRsvpStatus } from '@/actions';
 import AcceptedView from '@/components/status/AcceptedView';
 import DeclinedView from '@/components/status/DeclinedView';
 import RejectedView from '@/components/status/RejectedView';
@@ -9,9 +10,12 @@ import WaitlistView from '@/components/status/WaitlistView';
 import { useHacker } from '@/context/HackerContext';
 
 export default function Home() {
-  const { status, loading, displayName } = useHacker();
+  const { profile, status, loading, displayName } = useHacker();
 
-  const handleDeclineInvite = () => {};
+  const handleDeclineInvite = () => {
+    if (!profile) return;
+    changeHackerRsvpStatus(profile?.userId, 'declined', 'S26');
+  };
 
   const renderStatusView = () => {
     switch (status) {
