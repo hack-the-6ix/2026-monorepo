@@ -224,7 +224,7 @@ const RSVPForm = () => {
             We&apos;ll be using Discord to communicate throughout the event.
             Please create an account{' '}
             <a
-              className="text-primary-400 underline"
+              className="text-primary-300 underline"
               href="https://support.discord.com/hc/en-us/articles/360033931551-Getting-Started"
               target="_blank"
             >
@@ -236,16 +236,18 @@ const RSVPForm = () => {
             textSize="paragraph-sm"
             textColor="text-white"
             textWeight="medium"
+            className="pt-0.5"
           >
             ALSO Take our hacker personality quiz at {''}
             <a
-              className="text-primary-400 underline"
+              className="text-primary-300 underline"
               href="https://ht6i.hackthe6ix.com/home"
               target="_blank"
             >
               ht6i.hackthe6ix.com
             </a>{' '}
-            to find out what kind of hacker you are! :]
+            to find out what kind of hacker you are :] Results will be used at
+            the hackathon!
           </Typography>
         </div>
         <div className="flex flex-col gap-4 w-full md:w-[50vw]">
