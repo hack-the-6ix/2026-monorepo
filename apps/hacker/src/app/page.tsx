@@ -35,9 +35,7 @@ export default function Home() {
           <AcceptedView name={displayName} onDecline={handleDeclineInvite} />
         );
       case 'rsvped':
-        return (
-          <RsvpedView name={displayName} onDecline={handleDeclineInvite} />
-        );
+        return <RsvpedView />;
       case 'declined':
         return <DeclinedView name={displayName} />;
       default:
