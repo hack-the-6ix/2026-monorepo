@@ -3,6 +3,7 @@
 import { changeHackerRsvpStatus } from '@/actions';
 import AcceptedView from '@/components/status/AcceptedView';
 import DeclinedView from '@/components/status/DeclinedView';
+import NotAppliedView from '@/components/status/NotAppliedView';
 import RejectedView from '@/components/status/RejectedView';
 import ReviewingView from '@/components/status/ReviewingView';
 import RsvpedView from '@/components/status/RsvpedView';
@@ -38,8 +39,10 @@ export default function Home() {
         return <RsvpedView />;
       case 'declined':
         return <DeclinedView name={displayName} />;
+      case 'no_apply':
+        return <NotAppliedView name={displayName} />;
       default:
-        return <ReviewingView name={displayName} />;
+        return <NotAppliedView name={displayName} />;
     }
   };
 

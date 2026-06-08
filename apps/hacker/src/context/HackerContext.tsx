@@ -12,7 +12,7 @@ import { getHackerRole, getMe, HackerRole, UserProfile } from '@/actions';
 import { HackerStatus } from '@/types/status';
 
 const hackerStatusMap: Record<string, HackerStatus> = {
-  'no apply': 'under_review',
+  'no apply': 'no_apply',
   applied: 'under_review',
   accepted: 'accepted',
   rejected: 'rejected',
@@ -72,7 +72,7 @@ export function HackerProvider({ children }: { children: ReactNode }) {
 
   const hackerRole = profile ? getHackerRole(profile) : null;
   const status =
-    hackerStatusMap[hackerRole?.status ?? 'applied'] ?? 'under_review';
+    hackerStatusMap[hackerRole?.status ?? 'no_apply'] ?? 'no_apply';
   const displayName = getDisplayName(profile);
 
   return (

@@ -6,7 +6,7 @@ interface ReviewingViewProps {
 
 const ReviewingView = ({ name }: ReviewingViewProps) => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 space-y-4">
+    <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-8 space-y-4">
       <Typography
         as="p"
         textSize="subtitle-sm"
@@ -34,9 +34,9 @@ const ReviewingView = ({ name }: ReviewingViewProps) => {
         textColor="text-white"
         className="max-w-xs md:max-w-none"
       >
-        Thanks for applying to Hack the 6ix 2026! The first round of hacker
-        acceptances will be released on{' '}
-        <span className="text-yellow-300">June 7th 11:59PM</span>.
+        Thanks for applying to Hack the 6ix 2026! Regular round decisions are
+        expected in late June to early July. You can follow our social media for
+        the official release date announcement.
       </Typography>
 
       <Typography
