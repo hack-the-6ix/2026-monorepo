@@ -86,3 +86,12 @@ export const DIETARY_OPTIONS = [
     value: 'kosher',
   },
 ];
+
+export const HACKER_TYPE_OPTIONS = [
+  { label: 'Vibe Coder', value: 'VIBE' },
+  { label: 'Tinkerer', value: 'TINK' },
+  { label: 'Works from Home', value: 'HOME' },
+  { label: 'Clutches Last Second', value: 'LEBR0N' },
+  { label: 'Red Bull Addict', value: 'WING-S' },
+  { label: 'Linkedin Warrior', value: '0PEN2W0RK' },
+];

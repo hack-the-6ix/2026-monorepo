@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Typography } from '@hackthe6ix/ui';
+import Link from 'next/link';
 
 interface AcceptedViewProps {
   name: string;
@@ -54,6 +55,8 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
         <Button
           kind="primary"
           className="w-full md:w-auto max-w-[280px] md:max-w-none order-1 md:order-2"
+          as={Link}
+          href="/rsvp-form"
         >
           Accept Invitation
         </Button>
