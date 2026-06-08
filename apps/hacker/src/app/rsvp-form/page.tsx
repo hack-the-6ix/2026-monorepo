@@ -1,14 +1,16 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Input, Selector, Typography } from '@hackthe6ix/ui';
+import { Button, Input, Selector, Typography } from '@hackthe6ix/ui';
 import {
   AsYouType,
   isValidPhoneNumber,
   parseIncompletePhoneNumber,
 } from 'libphonenumber-js';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import z from 'zod';
 
+import { changeHackerRsvpStatus, upsertFormResponse } from '@/actions';
 import { useHacker } from '@/context/HackerContext';
 import { DIETARY_OPTIONS, RELATIONSHIP_OPTIONS, SHIRT_OPTIONS } from './enum';
 
@@ -33,14 +35,24 @@ export type FormData = z.infer<typeof FormDataSchema>;
 
 const RSVPForm = () => {
   const router = useRouter();
-  const { hackerRole } = useHacker();
+  const { profile, hackerRole, refresh } = useHacker();
 
   useEffect(() => {
-    if (!hackerRole) return;
-    if (hackerRole.status != 'accepted') {
+    if (!hackerRole || hackerRole.status != 'accepted') {
       router.push('/');
     }
   }, [hackerRole, router]);
+
+  const handleSubmit = async () => {
+    if (!profile) return;
+    await upsertFormResponse({
+      responseJson: formData,
+      isSubmitted: true,
+    });
+    await changeHackerRsvpStatus(profile.userId, 'rsvped', 'S26');
+    refresh();
+    router.push('/');
+  };
 
   const [formData, setFormData] = useState<FormData>({
     ECI: {
@@ -71,7 +83,7 @@ const RSVPForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-start justify-center min-h-screen w-[70vw] px-4 pl-8 gap-8">
+    <div className="flex flex-col items-start justify-center min-h-screen md:w-[70vw] pt-15 p-8 gap-8">
       <Typography
         textSize="paragraph-lg"
         textColor="text-white"
@@ -90,8 +102,8 @@ const RSVPForm = () => {
         >
           Emergency contact information
         </Typography>
-        <div className="flex flex-col gap-4 w-[50vw]">
-          <div className="flex flex-row gap-6 w-full">
+        <div className="flex flex-col gap-4 w-full md:w-[50vw]">
+          <div className="flex flex-col md:flex-row gap-6 w-full">
             <Input
               id="firstName"
               name="firstName"
@@ -117,7 +129,7 @@ const RSVPForm = () => {
               className="flex-1 min-w-0"
             />
           </div>
-          <div className="flex flex-row gap-6 w-full">
+          <div className="flex flex-col md:flex-row gap-6 w-full">
             <Selector
               id="relationship"
               name="relationship"
@@ -181,8 +193,8 @@ const RSVPForm = () => {
             if you don&apos;t have one yet!
           </Typography>
         </div>
-        <div className="flex flex-col gap-4 w-[50vw]">
-          <div className="flex flex-row gap-6 w-full">
+        <div className="flex flex-col gap-4 w-full md:w-[50vw]">
+          <div className="flex flex-col md:flex-row gap-6 w-full">
             <Input
               id="discordUsername"
               name="discordUsername"
@@ -197,7 +209,7 @@ const RSVPForm = () => {
               className="flex-1 min-w-0"
             />
           </div>
-          <div className="flex flex-row gap-6 w-full">
+          <div className="flex flex-col md:flex-row gap-6 w-full">
             <Selector
               id="shirtSize"
               name="shirtSize"
@@ -227,6 +239,18 @@ const RSVPForm = () => {
               className="flex-1 min-w-0"
             />
           </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col w-full gap-2">
+        <hr className="text-white" />
+        <div className="flex flex-row justify-between w-full">
+          <Button as={Link} href="/" kind="secondary">
+            Back
+          </Button>
+          <Button onClick={handleSubmit} kind="primary">
+            Submit RVSP
+          </Button>
         </div>
       </div>
     </div>

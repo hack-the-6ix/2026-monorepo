@@ -160,3 +160,31 @@ export async function changeHackerRsvpStatus(
     body,
   });
 }
+
+const rsvpFormId = 'd28f0204-e7a4-4ea3-b2a2-852b67a483ae';
+
+export interface UpsertResponsePayload {
+  sessionToken?: string;
+  targetUserId?: string;
+  responseJson: Record<string, unknown> | null;
+  isSubmitted: boolean;
+}
+
+export interface ApiResponse<Data> {
+  status: number;
+  message: Data;
+}
+
+export async function upsertFormResponse(
+  body: UpsertResponsePayload,
+): Promise<ApiResponse<Record<string, never>>> {
+  const path = `/seasons/S26/forms/${rsvpFormId}/responses`;
+
+  return await fetchHt6<
+    ApiResponse<Record<string, never>>,
+    UpsertResponsePayload
+  >(path, {
+    method: 'POST',
+    body,
+  });
+}
