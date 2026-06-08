@@ -114,8 +114,8 @@ const RSVPForm = () => {
     }));
   };
 
-  const allAcknowledged = Object.values(formData.acknowledgements).every(
-    Boolean,
+  const allFilled = Object.values(formData).every((section) =>
+    Object.values(section).every(Boolean),
   );
 
   if (loading) {
@@ -263,22 +263,6 @@ const RSVPForm = () => {
               input={{ placeholder: 'ie. johndoe123' }}
               className="flex-1 min-w-0"
             />
-            <Selector
-              id="hackerType"
-              name="hackerType"
-              label="HT6I hacker type"
-              required
-              hasOther={false}
-              options={HACKER_TYPE_OPTIONS}
-              controlled={{
-                value: formData.personal.hackerType || '',
-                onValueChange: (val) =>
-                  updateField('personal', 'hackerType', val),
-              }}
-              className="flex-1 min-w-0"
-            />
-          </div>
-          <div className="flex flex-col md:flex-row gap-6 w-full">
             <Selector
               id="hackerType"
               name="hackerType"
@@ -474,11 +458,7 @@ const RSVPForm = () => {
           <Button as={Link} href="/" kind="secondary">
             Back
           </Button>
-          <Button
-            onClick={handleSubmit}
-            kind="primary"
-            disabled={!allAcknowledged}
-          >
+          <Button onClick={handleSubmit} kind="primary" disabled={!allFilled}>
             Submit RVSP
           </Button>
         </div>
