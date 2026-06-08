@@ -42,7 +42,7 @@ const RSVPForm = () => {
     if (status != 'accepted') {
       router.push('/');
     }
-  }, [hackerRole, router]);
+  }, [status, router]);
 
   const handleSubmit = async () => {
     if (!profile) return;
