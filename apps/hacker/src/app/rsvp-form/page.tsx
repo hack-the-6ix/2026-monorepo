@@ -1,13 +1,15 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input, Selector, Typography } from '@hackthe6ix/ui';
 import {
   AsYouType,
   isValidPhoneNumber,
   parseIncompletePhoneNumber,
 } from 'libphonenumber-js';
+import { useRouter } from 'next/navigation';
 import z from 'zod';
 
+import { useHacker } from '@/context/HackerContext';
 import { DIETARY_OPTIONS, RELATIONSHIP_OPTIONS, SHIRT_OPTIONS } from './enum';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,6 +32,16 @@ const FormDataSchema = z.object({
 export type FormData = z.infer<typeof FormDataSchema>;
 
 const RSVPForm = () => {
+  const router = useRouter();
+  const { hackerRole } = useHacker();
+
+  useEffect(() => {
+    if (!hackerRole) return;
+    if (hackerRole.status != 'applied') {
+      router.push('/');
+    }
+  }, [hackerRole, router]);
+
   const [formData, setFormData] = useState<FormData>({
     ECI: {
       firstName: '',
@@ -59,7 +71,7 @@ const RSVPForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 space-y-4">
+    <div className="flex flex-col items-start justify-center min-h-screen w-[70vw] px-4 pl-8 gap-8">
       <Typography
         textSize="paragraph-lg"
         textColor="text-white"
@@ -70,7 +82,7 @@ const RSVPForm = () => {
         everything you need for the event.
       </Typography>
 
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4 w-full">
         <Typography
           textSize="subtitle-lg"
           textColor="text-white"
@@ -78,8 +90,8 @@ const RSVPForm = () => {
         >
           Emergency contact information
         </Typography>
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-row gap-6">
+        <div className="flex flex-col gap-4 w-[50vw]">
+          <div className="flex flex-row gap-6 w-full">
             <Input
               id="firstName"
               name="firstName"
@@ -90,6 +102,7 @@ const RSVPForm = () => {
                 onValueChange: (v) => updateField('ECI', 'firstName', v),
               }}
               input={{ placeholder: 'ie. John' }}
+              className="flex-1 min-w-0"
             />
             <Input
               id="lastName"
@@ -101,19 +114,22 @@ const RSVPForm = () => {
                 onValueChange: (v) => updateField('ECI', 'lastName', v),
               }}
               input={{ placeholder: 'ie. Doe' }}
+              className="flex-1 min-w-0"
             />
           </div>
-          <div className="flex flex-row gap-6">
+          <div className="flex flex-row gap-6 w-full">
             <Selector
               id="relationship"
               name="relationship"
               label="Relationship"
               required
+              hasOther={false}
               options={RELATIONSHIP_OPTIONS}
               controlled={{
                 value: formData.ECI.relationship || '',
                 onValueChange: (val) => updateField('ECI', 'relationship', val),
               }}
+              className="flex-1 min-w-0"
             />
             <Input
               id="phoneNumber"
@@ -133,13 +149,14 @@ const RSVPForm = () => {
                 inputMode: 'tel',
                 placeholder: 'ie. +16471234567',
               }}
+              className="flex-1 min-w-0"
             />
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col">
+      <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col w-full">
           <Typography
             textSize="subtitle-lg"
             textColor="text-white"
@@ -157,14 +174,15 @@ const RSVPForm = () => {
             <a
               className="text-primary-400 underline"
               href="https://discord.com/register"
+              target="_blank"
             >
               here
             </a>{' '}
             if you don&apos;t have one yet!
           </Typography>
         </div>
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-row gap-6">
+        <div className="flex flex-col gap-4 w-[50vw]">
+          <div className="flex flex-row gap-6 w-full">
             <Input
               id="discordUsername"
               name="discordUsername"
@@ -176,20 +194,23 @@ const RSVPForm = () => {
                   updateField('personal', 'discordUsername', v),
               }}
               input={{ placeholder: 'ie. johndoe123' }}
+              className="flex-1 min-w-0"
             />
           </div>
-          <div className="flex flex-row gap-6">
+          <div className="flex flex-row gap-6 w-full">
             <Selector
               id="shirtSize"
               name="shirtSize"
               label="T-shirt size"
               required
+              hasOther={false}
               options={SHIRT_OPTIONS}
               controlled={{
                 value: formData.personal.shirtSize || '',
                 onValueChange: (val) =>
                   updateField('personal', 'shirtSize', val),
               }}
+              className="flex-1 min-w-0"
             />
             <Selector
               id="dietaryRestrictions"
@@ -203,6 +224,7 @@ const RSVPForm = () => {
                 onValueChange: (val) =>
                   updateField('personal', 'dietaryRestrictions', val),
               }}
+              className="flex-1 min-w-0"
             />
           </div>
         </div>

@@ -45,7 +45,7 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
         {/* primary Button */}
         <Button
           as={Link}
-          href="/rvsp-form"
+          href="/rsvp-form"
           className="inline-flex items-center justify-center gap-2 cursor-pointer rounded-full border-2 border-primary-500 bg-primary-500 py-2.5 px-6 text-white text-sm font-semibold transition-all hover:border-primary-600 hover:bg-primary-600 active:border-primary-700 active:bg-primary-700 focus-visible:outline-none w-full md:w-auto max-w-[280px] md:max-w-none order-1 md:order-2"
         >
           Accept Invitation
