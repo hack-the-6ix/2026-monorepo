@@ -1,5 +1,6 @@
 'use client';
 
+import { changeHackerRsvpStatus } from '@/actions';
 import AcceptedView from '@/components/status/AcceptedView';
 import DeclinedView from '@/components/status/DeclinedView';
 import RejectedView from '@/components/status/RejectedView';
@@ -9,9 +10,17 @@ import WaitlistView from '@/components/status/WaitlistView';
 import { useHacker } from '@/context/HackerContext';
 
 export default function Home() {
-  const { status, loading, displayName } = useHacker();
+  const { profile, status, loading, displayName, refresh } = useHacker();
 
-  const handleDeclineInvite = () => {};
+  const handleDeclineInvite = async () => {
+    if (!profile) return;
+    try {
+      await changeHackerRsvpStatus(profile.userId, 'declined', 'S26');
+      await refresh();
+    } catch (error) {
+      console.error('Failed to decline invite:', error);
+    }
+  };
 
   const renderStatusView = () => {
     switch (status) {
@@ -26,9 +35,7 @@ export default function Home() {
           <AcceptedView name={displayName} onDecline={handleDeclineInvite} />
         );
       case 'rsvped':
-        return (
-          <RsvpedView name={displayName} onDecline={handleDeclineInvite} />
-        );
+        return <RsvpedView />;
       case 'declined':
         return <DeclinedView name={displayName} />;
       default:
