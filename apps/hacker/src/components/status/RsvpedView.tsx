@@ -1,14 +1,6 @@
-import React, { useState } from 'react';
-import { Button, Typography } from '@hackthe6ix/ui';
+import { Typography } from '@hackthe6ix/ui';
 
-interface RsvpedViewProps {
-  name: string;
-  onDecline: () => void;
-}
-
-const RsvpedView = ({ name, onDecline }: RsvpedViewProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const RsvpedView = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 space-y-4">
       <Typography
