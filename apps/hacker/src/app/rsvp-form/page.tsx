@@ -35,11 +35,11 @@ export type FormData = z.infer<typeof FormDataSchema>;
 
 const RSVPForm = () => {
   const router = useRouter();
-  const { profile, hackerRole, refresh } = useHacker();
+  const { profile, status, refresh } = useHacker();
 
   useEffect(() => {
-    if (!hackerRole) return;
-    if (hackerRole.status != 'accepted') {
+    if (!status) return;
+    if (status != 'accepted') {
       router.push('/');
     }
   }, [hackerRole, router]);
