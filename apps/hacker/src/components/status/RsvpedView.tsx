@@ -5,7 +5,7 @@ import TicketImage from '../TicketImage';
 const RsvpedView = () => {
   return (
     <div className="flex flex-col md:flex-row items-center justify-center min-h-screen md:pr-10 gap-17 py-10">
-      <div className="flex flex-col items-center justify-center space-y-4 text-center -translate-y-20 md:min-h-[80vh] md:w-[50%]">
+      <div className="flex flex-col items-center justify-center space-y-4 text-center md:-translate-y-20 md:min-h-[80vh] md:w-[50%]">
         <Typography
           as="p"
           textSize="subtitle-sm"
