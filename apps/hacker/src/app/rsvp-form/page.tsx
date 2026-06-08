@@ -377,8 +377,7 @@ const RSVPForm = () => {
           </p>
           <ul className="list-disc pl-4 space-y-1">
             <li>
-              I agree to follow the Hack the 6ix Code of Conduct throughout the
-              event.
+              I agree to follow the MLH Code of Conduct throughout the event.
             </li>
             <li>
               Failure to comply may result in removal from the event without
@@ -408,7 +407,7 @@ const RSVPForm = () => {
             {
               key: 'codeOfConduct' as const,
               label:
-                'I have read and agree to abide by the Hack the 6ix Code of Conduct.',
+                'I have read and agree to abide by the MLH Code of Conduct.',
             },
             {
               key: 'allTerms' as const,
