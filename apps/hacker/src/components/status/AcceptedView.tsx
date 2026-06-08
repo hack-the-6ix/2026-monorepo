@@ -40,7 +40,7 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
         opportunity to hack with us.
         <br /> <br />
         To confirm your attendance, please RSVP below by{' '}
-        <span className="text-yellow-300">Date</span>.
+        <span className="text-yellow-300">June 15th</span>.
       </Typography>
 
       <div className="mt-4 w-full flex flex-col md:flex-row items-center justify-center gap-4">
