@@ -123,7 +123,7 @@ const RSVPForm = () => {
   }
 
   return (
-    <div className="flex flex-col items-start justify-center min-h-screen md:w-[70vw] pt-15 p-8 gap-8">
+    <div className="flex flex-col items-start justify-center min-h-screen md:w-[70vw] pt-20 p-8 gap-8">
       <Typography
         textSize="paragraph-lg"
         textColor="text-white"
