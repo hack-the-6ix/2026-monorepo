@@ -4,7 +4,7 @@ import { Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
 import Logo from '@/app/assets/logo.svg';
-import MobileNavbar from './MobileNavbar';
+// import MobileNavbar from './MobileNavbar';
 
 const MobileHeader = () => {
   return (
@@ -33,7 +33,7 @@ const MobileHeader = () => {
           </Typography>
         </div>
       </div>
-      <MobileNavbar />
+      {/* <MobileNavbar /> */}
     </div>
   );
 };
