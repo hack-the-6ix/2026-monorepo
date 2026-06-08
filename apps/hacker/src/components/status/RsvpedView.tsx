@@ -29,7 +29,7 @@ const RsvpedView = () => {
       >
         We&apos;ve received your information and can&apos;t wait to see what
         you&apos;ll build at Hack the 6ix! <br />
-        Keep an eye on our Discord for event updates, announcements, and next
+        Keep an eye on our emails for event updates, announcements, and next
         steps.
       </Typography>
     </div>
