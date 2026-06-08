@@ -25,7 +25,7 @@ const NotAppliedView = ({ name }: NotAppliedViewProps) => {
         textColor="text-white"
         className="leading-tight"
       >
-        Looks like you haven&apos;t applied yet
+        Looks like you haven&apos;t applied yet!
       </Typography>
       <Typography
         as="p"
@@ -34,7 +34,7 @@ const NotAppliedView = ({ name }: NotAppliedViewProps) => {
         textColor="text-white"
         className="max-w-xs md:max-w-none"
       >
-        ☟don&apos;t miss your chance☟
+        ☟ don&apos;t miss your chance ☟
       </Typography>
       <Button
         as={Link}
