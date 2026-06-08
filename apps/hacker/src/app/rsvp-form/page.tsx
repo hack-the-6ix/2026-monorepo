@@ -225,7 +225,7 @@ const RSVPForm = () => {
             Please create an account{' '}
             <a
               className="text-primary-400 underline"
-              href="https://discord.com/register"
+              href="https://support.discord.com/hc/en-us/articles/360033931551-Getting-Started"
               target="_blank"
             >
               here
