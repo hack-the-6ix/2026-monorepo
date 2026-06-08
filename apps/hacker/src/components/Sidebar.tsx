@@ -20,7 +20,7 @@ const Sidebar = () => {
         <div className="mt-8 mb-12 flex justify-center">
           <Image src={Logo} alt="Hack the 6ix Logo" />
         </div>
-        <div className="flex flex-col gap-4 items-center">
+        <div className="flex flex-col items-center">
           <Button
             as={Link}
             href="/"
