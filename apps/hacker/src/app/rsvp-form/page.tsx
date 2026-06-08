@@ -38,7 +38,8 @@ const RSVPForm = () => {
   const { profile, hackerRole, refresh } = useHacker();
 
   useEffect(() => {
-    if (!hackerRole || hackerRole.status != 'applied') {
+    if (!hackerRole) return;
+    if (hackerRole.status != 'accepted') {
       router.push('/');
     }
   }, [hackerRole, router]);
