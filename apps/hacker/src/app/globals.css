@@ -114,9 +114,9 @@
 
 @keyframes ticket-glow {
   from {
-    filter: drop-shadow(0 0 2px 7px rgba(154, 252, 255, 0.91));
+    filter: drop-shadow(0 0 2px rgba(154, 252, 255, 0.91));
   }
   to {
-    filter: drop-shadow(0 0 3px 5px  rgba(154, 252, 255, 0.91));
+    filter: drop-shadow(0 0 7px rgba(154, 252, 255, 0.91));
   }
 }
