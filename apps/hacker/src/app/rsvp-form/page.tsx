@@ -35,14 +35,14 @@ export type FormData = z.infer<typeof FormDataSchema>;
 
 const RSVPForm = () => {
   const router = useRouter();
-  const { profile, status, refresh } = useHacker();
+  const { profile, status, loading, refresh } = useHacker();
 
   useEffect(() => {
-    if (!status) return;
-    if (status != 'accepted') {
+    if (loading) return;
+    if (status !== 'accepted') {
       router.push('/');
     }
-  }, [status, router]);
+  }, [status, loading, router]);
 
   const handleSubmit = async () => {
     if (!profile) return;
@@ -82,6 +82,10 @@ const RSVPForm = () => {
       },
     }));
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // or your loading UI
+  }
 
   return (
     <div className="flex flex-col items-start justify-center min-h-screen md:w-[70vw] pt-15 p-8 gap-8">
