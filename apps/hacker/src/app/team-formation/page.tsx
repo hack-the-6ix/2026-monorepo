@@ -200,11 +200,11 @@ const TeamFormationPage = () => {
           textColor="text-white"
           className="mt-26 max-w-md leading-snug text-white/55 md:hidden"
         >
-          Please note that team formation is non-committal and primarily used
-          for admission for application period. We cannot guarantee that
-          everyone on a team will be granted admission to Hack the 6ix. Official
-          hacking teams are determined by the teams submitted to the Hack the
-          6ix on Devpost on the weekend of the event.
+          Applications are reviewed individually and your team&apos;s
+          application has no bearing on your admission decision. The team you
+          join on the dashboard is non-binding and doesn&apos;t have to be the
+          team you ultimately hack with. Official teams are finalized on Devpost
+          during the event.
         </Typography>
 
         <Typography
@@ -214,11 +214,11 @@ const TeamFormationPage = () => {
           textColor="text-white"
           className="mt-28 hidden max-w-3xl leading-relaxed md:block"
         >
-          Please note that team formation is non-committal and primarily used
-          for admission for application period. We cannot guarantee that
-          everyone on a team will be granted admission to Hack the 6ix. Official
-          hacking teams are determined by the teams submitted to the Hack the
-          6ix on Devpost on the weekend of the event.
+          Applications are reviewed individually and your team&apos;s
+          application has no bearing on your admission decision. The team you
+          join on the dashboard is non-binding and doesn&apos;t have to be the
+          team you ultimately hack with. Official teams are finalized on Devpost
+          during the event.
         </Typography>
       </div>
     </section>
