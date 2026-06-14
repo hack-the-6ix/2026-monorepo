@@ -4,6 +4,7 @@ import sponsorBrucePowerLogo from '../../assets/sponsors/bruce_power_logo.png';
 import sponsorChexyLogo from '../../assets/sponsors/chexy_logo.png';
 import sponsorElevenLabsLogo from '../../assets/sponsors/elevenlabs_logo.png';
 import sponsorFdmLogo from '../../assets/sponsors/fdm_logo.png';
+import sponsorPoparideLogo from '../../assets/sponsors/poparide_logo.png';
 import sponsorQnxLogo from '../../assets/sponsors/qnx_logo.png';
 import sponsorShopifyLogo from '../../assets/sponsors/shopify_logo.png';
 import Candle from '../../assets/sponsors/sponsor_candle.png';
@@ -21,6 +22,7 @@ export const assets = {
   sponsorChexyLogo,
   sponsorElevenLabsLogo,
   sponsorFdmLogo,
+  sponsorPoparideLogo,
   sponsorQnxLogo,
   sponsorShopifyLogo,
   sponsorWarpLogo,
