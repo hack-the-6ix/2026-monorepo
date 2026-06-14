@@ -136,6 +136,11 @@ const QUESTIONS = {
       content:
         'Absolutely nothing! Hack the 6ix is a completely free event run by a non-profit organization. All food, resources, and accommodations for hacking for the entire event will be provided free of charge.',
     },
+    {
+      title: 'What can I prepare before hacking begins?',
+      content:
+        "If you're building a hardware project, you may bring pre-made 3D-printed parts. However, you may not assemble hardware or complete any coding before the official start of hacking.\n\nYou're also encouraged to brainstorm ideas and plan your project with your team beforehand, but all development must begin once hacking starts.",
+    },
   ],
 };
 

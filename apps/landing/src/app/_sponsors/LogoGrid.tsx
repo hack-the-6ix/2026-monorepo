@@ -37,6 +37,11 @@ const silverSponsors = [
     alt: 'Shopify',
     href: 'https://www.shopify.com',
   },
+  {
+    src: assets.sponsorPoparideLogo,
+    alt: 'Poparide',
+    href: 'https://www.poparide.com/',
+  },
 ];
 
 const bronzeSponsors: {
