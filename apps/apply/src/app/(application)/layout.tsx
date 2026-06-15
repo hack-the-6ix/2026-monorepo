@@ -1,7 +1,14 @@
+import { redirect } from 'next/navigation';
+
 import Navbar from '@/components/Navbar';
 import { ApplicationContextProvider } from '@/context/ApplicationContext';
+import { featureFlags } from '@/feature-flags';
 
 export default function ApplicationLayout({ children }: LayoutProps<'/'>) {
+  if (!featureFlags.applicationFormOpen) {
+    redirect('/');
+  }
+
   return (
     <ApplicationContextProvider>
       <div className="flex h-dvh w-full flex-col overflow-hidden p-6 md:py-8 md:px-12 no-scrollbar">
