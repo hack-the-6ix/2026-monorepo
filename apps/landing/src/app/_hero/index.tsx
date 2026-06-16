@@ -2,6 +2,8 @@
 import React from 'react';
 import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
+import Link from 'next/link';
+
 import Section from '../../components/Section';
 import {
   DASHBOARD_URL,
@@ -529,7 +531,7 @@ export default function Hero() {
               </Typography>
               <div>
                 <Button
-                  as="a"
+                  as={Link}
                   href={DASHBOARD_URL}
                   kind="primary"
                   aria-label="Go to Dashboard"
