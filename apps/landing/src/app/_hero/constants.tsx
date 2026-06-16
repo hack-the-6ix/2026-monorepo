@@ -15,9 +15,12 @@ export const HERO_CONTENT = {
   subtitleHighlight: ['create', 'collaborate', 'innovate', 'network'],
 } as const;
 
+export const DASHBOARD_URL =
+  process.env.NEXT_PUBLIC_DASHBOARD_URL ?? 'https://2026.dash.hackthe6ix.com';
+
 export const FORM_CONTENT = {
-  description: 'Applications are now open! Apply before June 17th.',
-  buttonText: 'Apply Now',
+  description: 'Applications are now closed.',
+  buttonText: 'Go to Dashboard',
 } as const;
 
 export const META = {
