@@ -23,7 +23,9 @@ export default function WelcomePage() {
         </Typography>
         <Typography as="p" textSize="subtitle-sm" textColor="text-yellow-300">
           Regular Round Applications Due:{' '}
-          <span className="text-error-400">June 17th 11:59 PM ET</span>
+          <span className="text-error-400">
+            June <s>17th </s> 18th 11:59 PM ET
+          </span>
         </Typography>
         <Button
           as={Link}
