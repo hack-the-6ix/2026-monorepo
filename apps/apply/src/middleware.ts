@@ -1,17 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { fetchWithCookies } from '@/actions';
-import { featureFlags } from '@/feature-flags';
 
 export async function middleware(request: NextRequest) {
-  if (!featureFlags.applicationFormOpen) {
-    if (request.nextUrl.pathname !== '/') {
-      return NextResponse.redirect(new URL('/', request.url));
-    }
-
-    return NextResponse.next();
-  }
-
   try {
     const res = await fetchWithCookies(
       request,
