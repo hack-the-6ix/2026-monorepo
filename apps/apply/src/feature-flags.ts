@@ -1,4 +1,4 @@
 export const featureFlags = {
   // Flip this back to true to reopen the application flow.
-  applicationFormOpen: false,
+  applicationFormOpen: true,
 } as const;
