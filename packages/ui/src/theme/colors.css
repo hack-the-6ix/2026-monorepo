@@ -102,4 +102,9 @@
   --color-error-950: #460809;
 
   --background-image-modal: linear-gradient(to bottom, #1c1a34, #3b2643);
+
+  --color-workshop-pink: #E880E8;
+  --color-workshop-mint: #80E8C0;
+  --color-workshop-lavender: #9090E8;
+  --color-workshop-cyan: #80E8E8;
 }

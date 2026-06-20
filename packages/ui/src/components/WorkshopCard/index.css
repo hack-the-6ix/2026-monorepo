@@ -1,0 +1,68 @@
+@reference 'tailwindcss';
+@reference '../../theme.css';
+
+@layer components.workshop-card {
+  .workshop-card {
+    --workshop-accent: var(--color-workshop-pink);
+    @apply flex items-stretch gap-5 overflow-hidden rounded-2xl bg-[#2D3136];
+  }
+
+  .workshop-card--pink {
+    --workshop-accent: var(--color-workshop-pink);
+  }
+
+  .workshop-card--mint {
+    --workshop-accent: var(--color-workshop-mint);
+  }
+
+  .workshop-card--lavender {
+    --workshop-accent: var(--color-workshop-lavender);
+  }
+
+  .workshop-card--cyan {
+    --workshop-accent: var(--color-workshop-cyan);
+  }
+
+  .workshop-card--inactive {
+    @apply opacity-60;
+  }
+
+  .workshop-card--compact {
+    @apply items-center gap-3 rounded-xl px-4 py-3;
+  }
+
+  .workshop-card__bar {
+    @apply w-4 shrink-0 self-stretch;
+    background-color: var(--workshop-accent);
+  }
+
+  .workshop-card__swatch {
+    @apply size-3 shrink-0 rounded-sm;
+    background-color: var(--workshop-accent);
+  }
+
+  .workshop-card__content {
+    @apply flex min-w-0 flex-col gap-2 py-8 pr-6;
+  }
+
+  .workshop-card--compact .workshop-card__content {
+    @apply py-0 pr-0;
+  }
+
+  .workshop-card__title {
+    @apply uppercase tracking-wide;
+    color: var(--workshop-accent);
+  }
+
+  .workshop-card--inactive .workshop-card__title {
+    @apply text-[#666666];
+  }
+
+  .workshop-card__details {
+    @apply text-white;
+  }
+
+  .workshop-card--inactive .workshop-card__details {
+    @apply text-[#666666];
+  }
+}
