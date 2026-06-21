@@ -56,7 +56,7 @@ export default function Nav() {
     <>
       <div
         className={`px-5 md:pl-16 md:pr-8 z-300 fixed top-0 w-full h-17 transition-transform duration-300 justify-between gap-12 flex flex-row align-center ${
-          visible ? 'translate-y-0' : '-translate-y-full'
+          visible ? 'translate-y-0' : 'translate-y-[-300%]'
         }`}
       >
         <nav>
