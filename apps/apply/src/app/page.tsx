@@ -64,7 +64,10 @@ export default function WelcomePage() {
           >
             The Hack the 6ix 2026 application form is now closed. All decisions
             will be released on July 2nd at{' '}
-            <a href="https://2026.dash.hackthe6ix.com" className="underline">
+            <a
+              href="https://2026.dash.hackthe6ix.com"
+              className="underline text-primary-400"
+            >
               2026.dash.hackthe6ix.com
             </a>
           </Typography>
