@@ -34,9 +34,8 @@ const ReviewingView = ({ name }: ReviewingViewProps) => {
         textColor="text-white"
         className="max-w-xs md:max-w-none"
       >
-        Thanks for applying to Hack the 6ix 2026! Regular round decisions are
-        expected in late June to early July. You can follow our social media for
-        the official release date announcement.
+        Thanks for applying to Hack the 6ix 2026! Regular round decisions will
+        be released on July 2nd.
       </Typography>
 
       <Typography
