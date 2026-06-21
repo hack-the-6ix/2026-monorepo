@@ -55,7 +55,7 @@ export default function Nav() {
   return (
     <>
       <div
-        className={`px-5 md:px-16 z-300 fixed top-0 w-full h-17 transition-transform duration-300 justify-between gap-12 flex flex-row align-center ${
+        className={`px-5 md:pl-16 md:pr-8 z-300 fixed top-0 w-full h-17 transition-transform duration-300 justify-between gap-12 flex flex-row align-center ${
           visible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
@@ -74,23 +74,39 @@ export default function Nav() {
           </div>
         </nav>
 
-        <div className="hidden md:flex h-20 gap-9 items-center">
-          <SocialLinks />
-        </div>
-        {/* Mobile hamburger */}
-        <div className="md:hidden z-310 relative p-2">
-          <button
-            onClick={burgerVisible && !isClosing ? closeBurger : openBurger}
-            aria-label="Toggle Menu"
-          >
-            <div
-              className={`nav-toggle ${burgerVisible && !isClosing ? 'active' : ''}`}
+        <div className="flex flex-row-reverse md:flex-row gap-3 md:gap-7">
+          <div className="hidden md:flex h-20 gap-9 items-center">
+            <SocialLinks />
+          </div>
+          {/* Mobile hamburger */}
+          <div className="md:hidden z-310 relative p-2">
+            <button
+              onClick={burgerVisible && !isClosing ? closeBurger : openBurger}
+              aria-label="Toggle Menu"
             >
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </button>
+              <div
+                className={`nav-toggle ${burgerVisible && !isClosing ? 'active' : ''}`}
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </button>
+          </div>
+
+          <a
+            id="mlh-trust-badge"
+            className="top-0 z-[10000] block w-[10%] min-w-[80px] md:min-w-[100px] max-w-[100px]"
+            href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=blue"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="https://logged-assets.s3.amazonaws.com/trust-badge/2027/mlh-trust-badge-2027-blue.svg"
+              alt="Major League Hacking 2026 Hackathon Season"
+              className="w-full h-auto"
+            />
+          </a>
         </div>
       </div>
 
