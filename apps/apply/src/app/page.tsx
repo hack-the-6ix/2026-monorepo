@@ -46,27 +46,27 @@ export default function WelcomePage() {
             >
               Start
             </Button>
-          </>
-        ) : (
-          <Typography
+            <Button
+              as={Link}
+              kind="secondary"
+              target="_blank"
+              href="https://chefoverflow.hackthe6ix.com/"
+              className="mt-2 w-full max-w-md justify-center"
+            >
+              Play HT6 Chef Overflow
+            </Button>
+          </>)
+        : (<Typography
             as="p"
             textSize="subtitle-sm"
             textColor="text-yellow-300"
             className="max-w-xl"
           >
-            The Hack the 6ix 2026 application form is now closed. Thanks for
-            your interest, and keep an eye on your inbox for updates.
+            The Hack the 6ix 2026 application form is now closed. All decisions
+            will be released on July 2nd at{' '}
+            <a href="2026.dash.hackthe6ix.com">2026.dash.hackthe6ix.com</a>
           </Typography>
         )}
-        <Button
-          as={Link}
-          kind="secondary"
-          target="_blank"
-          href="https://chefoverflow.hackthe6ix.com/"
-          className="mt-2 w-full max-w-md justify-center"
-        >
-          Play HT6 Chef Overflow
-        </Button>
       </div>
     </main>
   );
