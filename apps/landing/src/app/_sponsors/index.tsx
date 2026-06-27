@@ -101,7 +101,7 @@ export default function Sponsors() {
               textWeight="bold"
               className="text-center md:text-4xl"
             >
-              Our Sponsors
+              Our Sponsors and Partners
             </Typography>
             {showSponsor ?
               <>

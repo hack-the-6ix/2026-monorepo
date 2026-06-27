@@ -72,6 +72,57 @@ const bronzeSponsors: {
   },
 ];
 
+const partners = [
+  {
+    src: assets.sponsorCssuLogo,
+    alt: 'CSSU',
+    href: 'https://www.cssu.ca/',
+  },
+  {
+    src: assets.sponsorFgfLogo,
+    alt: 'FGF',
+    href: 'https://www.fgfbrands.com/',
+  },
+  {
+    src: assets.sponsorFreeplayLogo,
+    alt: 'Freeplay',
+    href: 'https://www.freeplaytoronto.com/',
+  },
+  {
+    src: assets.sponsorUnibeeLogo,
+    alt: 'Unibee',
+    href: 'https://unibee.dev/',
+  },
+  {
+    src: assets.sponsorUtmistLogo,
+    alt: 'UTMIST',
+    href: 'https://www.utmist.ca/',
+  },
+];
+
+const inKinds = [
+  {
+    src: assets.sponsorFigmaLogo,
+    alt: 'Figma',
+    href: 'https://www.figma.com/',
+  },
+  {
+    src: assets.sponsorGensparkLogo,
+    alt: 'Genspark',
+    href: 'https://www.genspark.ai/',
+  },
+  {
+    src: assets.sponsorRedbullLogo,
+    alt: 'Redbull',
+    href: 'https://www.redbull.com/',
+  },
+  {
+    src: assets.sponsorInterviewCakeLogo,
+    alt: 'Interview cake',
+    href: 'https://www.interviewcake.com/',
+  },
+];
+
 function SponsorCard({
   sponsor,
   cardClassName = 'p-4',
@@ -97,7 +148,7 @@ function SponsorCard({
       className={`w-full ${doubleWidth ? 'col-span-2' : ''}`}
     >
       <div
-        className={`bg-white/75 rounded-3xl ${cardClassName} flex items-center justify-center w-full ${doubleWidth ? '' : aspectClassName}`}
+        className={`bg-white/75 rounded-xl md:rounded-3xl ${cardClassName} flex items-center justify-center w-full ${doubleWidth ? '' : aspectClassName}`}
         style={aspectStyle}
       >
         <div className="relative w-full h-full">
@@ -155,7 +206,31 @@ export default function LogoGrid() {
               : 'w-[calc(33.333%_-_0.5rem)] md:w-[calc(25%_-_1.5rem)]'
             }
           >
-            <SponsorCard sponsor={sponsor} doubleWidth={sponsor.doubleWidth} />
+            <SponsorCard
+              sponsor={sponsor}
+              doubleWidth={sponsor.doubleWidth}
+              cardClassName="p-2.5 md:p-4"
+            />
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-wrap justify-center gap-3 md:gap-8 max-w-[85%] w-full">
+        {partners.map((sponsor, index) => (
+          <div
+            key={`${sponsor.alt}-${index}`}
+            className="w-[calc(25%_-_0.5rem)] md:w-[calc(18%_-_1.5rem)]"
+          >
+            <SponsorCard sponsor={sponsor} cardClassName="p-2.5 md:p-4" />
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-wrap justify-center gap-3 md:gap-8 max-w-[85%] w-full">
+        {inKinds.map((sponsor, index) => (
+          <div
+            key={`${sponsor.alt}-${index}`}
+            className="w-[calc(18%_-_0.5rem)] md:w-[calc(15%_-_1.5rem)]"
+          >
+            <SponsorCard sponsor={sponsor} cardClassName="p-2.5 md:p-4" />
           </div>
         ))}
       </div>
