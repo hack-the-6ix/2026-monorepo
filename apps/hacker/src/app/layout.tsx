@@ -1,12 +1,14 @@
+/* eslint-disable simple-import-sort/imports */
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+
+import './globals.css';
 
 import DynamicBackground from '@/components/DynamicBackground';
 import MobileHeader from '@/components/MobileHeader';
 import Sidebar from '@/components/Sidebar';
 import { HackerProvider } from '@/context/HackerContext';
-
-import './globals.css';
 
 const inter = Inter({
   subsets: ['latin'],
