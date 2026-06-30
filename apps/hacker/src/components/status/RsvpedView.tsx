@@ -1,102 +1,42 @@
-import React, { useState } from 'react';
-import { Button, Typography } from '@hackthe6ix/ui';
+import { Typography } from '@hackthe6ix/ui';
 
-interface RsvpedViewProps {
-  name: string;
-  onDecline: () => void;
-}
+import TicketImage from '../TicketImage';
 
-const RsvpedView = ({ name, onDecline }: RsvpedViewProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const RsvpedView = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 space-y-4">
-      <Typography
-        as="p"
-        textSize="subtitle-sm"
-        textWeight="bold"
-        textColor="text-white"
-        className="mt-6 md:mt-32"
-      >
-        Welcome back, {name}!
-      </Typography>
-      <Typography
-        as="h1"
-        textSize="heading-lg"
-        textWeight="bold"
-        textColor="text-white"
-      >
-        Congratulations, you&apos;ve{' '}
-        <span className="text-primary-300">RSVPed! 🎉</span>
-      </Typography>
-      <Typography
-        as="p"
-        textSize="paragraph-lg"
-        textWeight="regular"
-        textColor="text-white"
-        className="max-w-xs md:max-w-none"
-      >
-        Welcome to Hack the 6ix 2026! We are excited to have you hack with us.
-        <br /> <br />
-        Your RSVP has been confirmed. We will reach out with more details as the
-        event approaches!
-      </Typography>
-
-      <div className="mt-4 w-full flex flex-col md:flex-row items-center justify-center gap-4">
-        <Button
-          kind="secondary"
-          className="w-full md:w-auto max-w-[280px] md:max-w-none px-6 hover:bg-slate-500/10 transition order-2 md:order-1"
-          onClick={() => setIsOpen(true)}
+    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen md:pr-10 gap-17 py-10">
+      <div className="flex flex-col items-center justify-center space-y-4 text-center md:-translate-y-20 md:min-h-[80vh] md:w-[50%]">
+        <Typography
+          as="p"
+          textSize="subtitle-sm"
+          textWeight="bold"
+          textColor="text-white"
+          className="mt-6 md:mt-32"
         >
-          I can no longer attend
-        </Button>
-        <Button
-          kind="primary"
-          disabled
-          className="w-full md:w-auto max-w-[280px] md:max-w-none order-1 md:order-2 opacity-50 cursor-not-allowed"
+          You’re all set!
+        </Typography>
+        <Typography
+          as="h1"
+          textSize="heading-lg"
+          textWeight="bold"
+          textColor="text-primary-400"
         >
-          Invitation Accepted
-        </Button>
+          RSVP confirmed! 🎉
+        </Typography>
+        <Typography
+          as="p"
+          textSize="paragraph-lg"
+          textWeight="regular"
+          textColor="text-white"
+          className="max-w-xs md:max-w-none"
+        >
+          We&apos;ve received your information and can&apos;t wait to see what
+          you&apos;ll build at Hack the 6ix! <br />
+          Keep an eye on our emails for event updates, announcements, and next
+          steps.
+        </Typography>
       </div>
-
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
-          <div className="bg-[#0b0f19] border border-slate-800 rounded-[20px] w-full max-w-[300px] p-6 text-center shadow-2xl relative">
-            <Typography
-              as="h2"
-              textSize="paragraph-lg"
-              textWeight="bold"
-              textColor="text-white"
-              className="mb-3 leading-snug"
-            >
-              Can no longer attend HT6?
-            </Typography>
-            <p className="text-[#A0AEC0] text-xs font-normal leading-relaxed mb-6">
-              This opportunity will be passed onto a waitlisted participant.{' '}
-              <span className="text-[#EF5A5A] font-semibold">
-                This action cannot be undone.
-              </span>
-            </p>
-            <div className="flex items-center justify-center gap-3">
-              <button
-                className="px-5 py-2.5 rounded-full border border-slate-600 hover:border-slate-500 hover:bg-slate-800/30 text-white font-medium active:scale-95 transition-all text-xs"
-                onClick={() => setIsOpen(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-5 py-2.5 rounded-full bg-[#EF5A5A] hover:bg-[#D94545] text-white font-medium active:scale-95 transition-all text-xs shadow-lg shadow-[#EF5A5A]/15"
-                onClick={() => {
-                  setIsOpen(false);
-                  onDecline();
-                }}
-              >
-                I can no longer attend
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <TicketImage />
     </div>
   );
 };

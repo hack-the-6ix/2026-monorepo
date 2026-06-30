@@ -19,10 +19,12 @@
     "@hackthe6ix/ui": "workspace:*",
     "@opennextjs/cloudflare": "catalog:",
     "classnames": "catalog:",
+    "libphonenumber-js": "^1.13.2",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-icons": "catalog:"
+    "react-icons": "catalog:",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",

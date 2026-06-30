@@ -1,8 +1,122 @@
+
 @import 'tailwindcss';
 @import '@hackthe6ix/ui/theme.css';
 @source '../../../../packages/ui/src';
 
-@source '../**/*.{ts,tsx}';
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
+@theme {
+  --animate-fade-in: fade-in 3s ease-out forwards;
+
+  --animate-dangle: dangle 3s ease-in-out;
+  --animate-swing: swing 3s ease-in-out;
+
+  --animate-menu-reveal: menu-reveal 0.9s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  --animate-menu-hide: menu-hide 0.6s ease-in forwards;
+  --animate-ticket-glow: ticket-glow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    filter: blur(1px); /* Optional: adds a soft look on entry */
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes dangle {
+  0% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(15deg);
+  }
+  35% {
+    transform: rotate(-12deg);
+  }
+  55% {
+    transform: rotate(8deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+  90% {
+    transform: rotate(1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(5deg);
+  }
+  35% {
+    transform: rotate(-4deg);
+  }
+  55% {
+    transform: rotate(3deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+  90% {
+    transform: rotate(1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes menu-reveal {
+  from {
+    clip-path: circle(0% at 95% 5%);
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    clip-path: circle(180% at 95% 5%);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes menu-hide {
+  from {
+    clip-path: circle(180% at 95% 5%);
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    clip-path: circle(0% at 95% 5%);
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+}
+
+@keyframes ticket-glow {
+  from {
+    filter: drop-shadow(0 0 2px rgba(154, 252, 255, 0.91));
+  }
+  to {
+    filter: drop-shadow(0 0 7px rgba(154, 252, 255, 0.91));
+  }
 }

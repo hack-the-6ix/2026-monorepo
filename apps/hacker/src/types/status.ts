@@ -4,4 +4,5 @@ export type HackerStatus =
   | 'waitlist'
   | 'accepted'
   | 'declined'
-  | 'rsvped';
+  | 'rsvped'
+  | 'no_apply';
