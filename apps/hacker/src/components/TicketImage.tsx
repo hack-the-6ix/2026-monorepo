@@ -9,15 +9,15 @@ export default function TickeImage() {
   const firstName = profile?.firstName?.toUpperCase() ?? 'JOHN';
   const lastName = profile?.lastName?.toUpperCase() ?? 'DOE';
   return (
-    <div className="relative w-[300px] h-[600px] aspect-1/2">
+    <div className="relative w-full h-full">
       <Image
         src={ticketImage}
         alt="rsvp ticket"
         width={300}
         height={600}
-        className="w-full h-full object-cover animate-ticket-glow"
+        className="w-full h-full object-fill animate-ticket-glow"
       />
-      <div className="absolute left-0 right-0 bottom-20 flex flex-col text-center px-6">
+      <div className="absolute left-0 right-0 bottom-16 flex flex-col text-center px-6">
         <Typography
           textColor="text-white"
           textSize="paragraph-lg"
