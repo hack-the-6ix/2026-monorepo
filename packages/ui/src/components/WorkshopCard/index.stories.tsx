@@ -2,6 +2,7 @@ import preview from '#/preview';
 
 import {
   WorkshopCard,
+  workshopCardStates,
   workshopColors,
   type WorkshopCardProps,
 } from '.';
@@ -16,12 +17,13 @@ export const Default = meta.story({
       control: 'select',
       options: workshopColors,
     },
+    state: {
+      control: 'select',
+      options: workshopCardStates,
+    },
     variant: {
       control: 'select',
       options: ['default', 'compact'],
-    },
-    active: {
-      control: 'boolean',
     },
   },
   args: {
@@ -30,7 +32,7 @@ export const Default = meta.story({
     endTime: '9:00 AM',
     location: 'Hopin',
     color: 'pink',
-    active: true,
+    state: 'upcoming',
     variant: 'default',
   },
 });
@@ -70,7 +72,7 @@ export const Compact = meta.story({
   ),
 });
 
-export const Inactive = meta.story({
+export const Disabled = meta.story({
   render: () => (
     <div className="flex flex-col gap-4 bg-black p-6">
       <WorkshopCard
@@ -79,7 +81,7 @@ export const Inactive = meta.story({
         endTime="9:00 AM"
         location="Hopin"
         color="pink"
-        active={false}
+        state="disabled"
       />
       <WorkshopCard
         title="Workshop Name"
@@ -87,7 +89,22 @@ export const Inactive = meta.story({
         endTime="9:00 AM"
         location="Hopin"
         color="mint"
-        active
+        state="upcoming"
+      />
+    </div>
+  ),
+});
+
+export const Active = meta.story({
+  render: () => (
+    <div className="bg-black p-6">
+      <WorkshopCard
+        title="Workshop Name"
+        startTime="8:00 AM"
+        endTime="9:00 AM"
+        location="Hopin"
+        color="cyan"
+        state="active"
       />
     </div>
   ),

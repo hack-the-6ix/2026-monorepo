@@ -4,7 +4,8 @@
 @layer components.workshop-card {
   .workshop-card {
     --workshop-accent: var(--color-workshop-pink);
-    @apply flex items-stretch gap-5 overflow-hidden rounded-2xl bg-[#2D3136];
+    background-color: var(--color-workshop-card-bg);
+    @apply flex items-stretch gap-5 overflow-hidden rounded-2xl;
   }
 
   .workshop-card--pink {
@@ -23,8 +24,16 @@
     --workshop-accent: var(--color-workshop-cyan);
   }
 
-  .workshop-card--inactive {
+  .workshop-card--disabled {
     @apply opacity-60;
+  }
+
+  .workshop-card--active {
+    background-color: color-mix(
+      in srgb,
+      var(--color-workshop-card-bg) 75%,
+      transparent
+    );
   }
 
   .workshop-card--compact {
@@ -54,7 +63,12 @@
     color: var(--workshop-accent);
   }
 
-  .workshop-card--inactive .workshop-card__title {
+  .workshop-card--active .workshop-card__title {
+    @apply text-white;
+  }
+
+  .workshop-card--disabled .workshop-card__title,
+  .workshop-card--disabled .workshop-card__details {
     @apply text-[#666666];
   }
 
@@ -62,7 +76,4 @@
     @apply text-white;
   }
 
-  .workshop-card--inactive .workshop-card__details {
-    @apply text-[#666666];
-  }
 }

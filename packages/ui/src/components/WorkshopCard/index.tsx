@@ -7,6 +7,9 @@ import './index.css';
 export const workshopColors = ['pink', 'mint', 'lavender', 'cyan'] as const;
 export type WorkshopColor = (typeof workshopColors)[number];
 
+export const workshopCardStates = ['active', 'disabled', 'upcoming'] as const;
+export type WorkshopCardState = (typeof workshopCardStates)[number];
+
 const colorClassMap: Record<WorkshopColor, string> = {
   pink: 'workshop-card--pink',
   mint: 'workshop-card--mint',
@@ -20,7 +23,7 @@ export type WorkshopCardProps = {
   endTime: string;
   location: string;
   color?: WorkshopColor;
-  active?: boolean;
+  state?: WorkshopCardState;
   variant?: 'default' | 'compact';
   className?: string;
 };
@@ -31,7 +34,7 @@ export function WorkshopCard({
   endTime,
   location,
   color = 'pink',
-  active = true,
+  state = 'upcoming',
   variant = 'default',
   className,
 }: WorkshopCardProps) {
@@ -41,16 +44,17 @@ export function WorkshopCard({
       `${timeRange} | ${location}`
     : `${timeRange} @ ${location}`;
 
+  const cardClassName = cn(
+    'workshop-card',
+    colorClassMap[color],
+    state === 'disabled' && 'workshop-card--disabled',
+    state === 'active' && 'workshop-card--active',
+    variant === 'compact' && 'workshop-card--compact',
+    className,
+  );
+
   return (
-    <div
-      className={cn(
-        'workshop-card',
-        colorClassMap[color],
-        !active && 'workshop-card--inactive',
-        variant === 'compact' && 'workshop-card--compact',
-        className,
-      )}
-    >
+    <div className={cardClassName}>
       {variant === 'default' ?
         <div aria-hidden className="workshop-card__bar" />
       : <div aria-hidden className="workshop-card__swatch" />}
