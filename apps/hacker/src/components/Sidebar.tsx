@@ -17,10 +17,10 @@ const Sidebar = () => {
   return (
     <>
       <nav className="flex flex-col h-full py-12 px-6">
-        <div className="mt-8 mb-12 flex justify-center">
+        <div className="mt-4 mb-12 flex justify-center">
           <Image src={Logo} alt="Hack the 6ix Logo" />
         </div>
-        <div className="flex flex-col gap-4 items-center">
+        <div className="flex flex-col items-center">
           <Button
             as={Link}
             href="/"

@@ -145,3 +145,46 @@ export async function leaveOrRemoveTeamMember(
 export function isUuid(value: string | null) {
   return Boolean(value && uuidPattern.test(value));
 }
+
+export async function changeHackerRsvpStatus(
+  userId: string,
+  status: 'rsvped' | 'declined',
+  seasonCode: string,
+): Promise<MessageResponse> {
+  const body = {
+    seasonCode: seasonCode,
+    response: status,
+  };
+  return fetchHt6<MessageResponse>(`/hackers/${userId}/rsvp`, {
+    method: 'POST',
+    body,
+  });
+}
+
+const rsvpFormId = 'd28f0204-e7a4-4ea3-b2a2-852b67a483ae';
+
+export interface UpsertResponsePayload {
+  sessionToken?: string;
+  targetUserId?: string;
+  responseJson: Record<string, unknown> | null;
+  isSubmitted: boolean;
+}
+
+export interface ApiResponse<Data> {
+  status: number;
+  message: Data;
+}
+
+export async function upsertFormResponse(
+  body: UpsertResponsePayload,
+): Promise<ApiResponse<Record<string, never>>> {
+  const path = `/seasons/S26/forms/${rsvpFormId}/responses`;
+
+  return await fetchHt6<
+    ApiResponse<Record<string, never>>,
+    UpsertResponsePayload
+  >(path, {
+    method: 'POST',
+    body,
+  });
+}

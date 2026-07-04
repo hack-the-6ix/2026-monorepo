@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Typography } from '@hackthe6ix/ui';
+import Link from 'next/link';
 
 interface AcceptedViewProps {
   name: string;
@@ -40,7 +41,7 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
         opportunity to hack with us.
         <br /> <br />
         To confirm your attendance, please RSVP below by{' '}
-        <span className="text-yellow-300">June 24th at 11:59 PM ET</span>.
+        <span className="text-yellow-300">July 6th at 11:59 PM ET</span>.
       </Typography>
 
       <div className="mt-4 w-full flex flex-col md:flex-row items-center justify-center gap-4">
@@ -54,6 +55,8 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
         <Button
           kind="primary"
           className="w-full md:w-auto max-w-[280px] md:max-w-none order-1 md:order-2"
+          as={Link}
+          href="/rsvp-form"
         >
           Accept Invitation
         </Button>

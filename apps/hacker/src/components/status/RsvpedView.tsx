@@ -1,102 +1,219 @@
-import React, { useState } from 'react';
-import { Button, Typography } from '@hackthe6ix/ui';
+import { useHacker } from '@/context/HackerContext';
+import { Typography } from '@hackthe6ix/ui';
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaXTwitter,
+  FaDownload,
+} from 'react-icons/fa6';
+import ticketImage from '../../app/assets/ticket.png';
+import TicketImage from '../TicketImage';
 
-interface RsvpedViewProps {
-  name: string;
-  onDecline: () => void;
-}
+const RsvpedView = () => {
+  const { profile } = useHacker();
+  const firstName = profile?.firstName?.toUpperCase() ?? 'JOHN';
+  const lastName = profile?.lastName?.toUpperCase() ?? 'DOE';
 
-const RsvpedView = ({ name, onDecline }: RsvpedViewProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const generateTicketBlob = (): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        reject(new Error('Could not get canvas context'));
+        return;
+      }
+
+      const img = new window.Image();
+      img.crossOrigin = 'anonymous';
+      img.src = ticketImage.src;
+      img.onload = () => {
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+
+        ctx.drawImage(img, 0, 0);
+
+        const fontSize = Math.round(canvas.height * 0.04);
+        ctx.font = `bold ${fontSize}px sans-serif`;
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        ctx.shadowColor = 'rgba(154, 252, 255, 0.91)';
+        ctx.shadowBlur = 8;
+
+        const x = canvas.width / 2;
+        const targetY = canvas.height * 0.824;
+        const lineHeight = fontSize * 1.25;
+
+        ctx.fillText(firstName, x, targetY - lineHeight / 2);
+        ctx.fillText(lastName, x, targetY + lineHeight / 2);
+
+        canvas.toBlob((blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error('Canvas toBlob returned null'));
+          }
+        }, 'image/png');
+      };
+      img.onerror = () => {
+        reject(new Error('Failed to load ticket image source'));
+      };
+    });
+  };
+
+  const downloadTicket = async () => {
+    try {
+      const blob = await generateTicketBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${firstName.toLowerCase()}_${lastName.toLowerCase()}_ht6_accepted_ticket.png`;
+      link.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('Failed to download ticket:', err);
+    }
+  };
+
+  const shareTicket = async (platform: 'linkedin' | 'instagram') => {
+    try {
+      const blob = await generateTicketBlob();
+      const file = new File([blob], 'ticket.png', { type: 'image/png' });
+
+      if (
+        navigator.share &&
+        navigator.canShare &&
+        navigator.canShare({ files: [file] })
+      ) {
+        await navigator.share({
+          files: [file],
+          title: 'My Hack the 6ix Ticket',
+          text: 'Check out my RSVP ticket for Hack the 6ix! See you there!',
+        });
+        return;
+      }
+    } catch (err) {
+      console.warn('Web Share API failed, using fallback:', err);
+    }
+
+    if (platform === 'linkedin') {
+      const shareUrl =
+        typeof window !== 'undefined' ?
+          `${window.location.origin}/`
+        : 'https://dash.hackthe6ix.com/';
+      window.open(
+        `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
+        '_blank',
+      );
+    } else {
+      window.open('https://www.instagram.com/', '_blank');
+    }
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 space-y-4">
-      <Typography
-        as="p"
-        textSize="subtitle-sm"
-        textWeight="bold"
-        textColor="text-white"
-        className="mt-6 md:mt-32"
-      >
-        Welcome back, {name}!
-      </Typography>
-      <Typography
-        as="h1"
-        textSize="heading-lg"
-        textWeight="bold"
-        textColor="text-white"
-      >
-        Congratulations, you&apos;ve{' '}
-        <span className="text-primary-300">RSVPed! 🎉</span>
-      </Typography>
-      <Typography
-        as="p"
-        textSize="paragraph-lg"
-        textWeight="regular"
-        textColor="text-white"
-        className="max-w-xs md:max-w-none"
-      >
-        Welcome to Hack the 6ix 2026! We are excited to have you hack with us.
-        <br /> <br />
-        Your RSVP has been confirmed. We will reach out with more details as the
-        event approaches!
-      </Typography>
-
-      <div className="mt-4 w-full flex flex-col md:flex-row items-center justify-center gap-4">
-        <Button
-          kind="secondary"
-          className="w-full md:w-auto max-w-[280px] md:max-w-none px-6 hover:bg-slate-500/10 transition order-2 md:order-1"
-          onClick={() => setIsOpen(true)}
+    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen md:pr-10 gap-17 py-10">
+      <div className="flex flex-col items-center md:items-start justify-center text-center md:text-left md:-translate-y-20 md:min-h-[80vh] md:w-[65%]">
+        <Typography
+          as="p"
+          textSize="subtitle-sm"
+          textWeight="bold"
+          textColor="text-white"
+          className="mt-6 md:mt-32"
         >
-          I can no longer attend
-        </Button>
-        <Button
-          kind="primary"
-          disabled
-          className="w-full md:w-auto max-w-[280px] md:max-w-none order-1 md:order-2 opacity-50 cursor-not-allowed"
+          You’re all set!
+        </Typography>
+        <Typography
+          as="h1"
+          textSize="display"
+          textWeight="bold"
+          textColor="text-[#46ECD5]"
+          className="mt-[43px]"
         >
-          Invitation Accepted
-        </Button>
-      </div>
-
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
-          <div className="bg-[#0b0f19] border border-slate-800 rounded-[20px] w-full max-w-[300px] p-6 text-center shadow-2xl relative">
-            <Typography
-              as="h2"
-              textSize="paragraph-lg"
-              textWeight="bold"
-              textColor="text-white"
-              className="mb-3 leading-snug"
-            >
-              Can no longer attend HT6?
-            </Typography>
-            <p className="text-[#A0AEC0] text-xs font-normal leading-relaxed mb-6">
-              This opportunity will be passed onto a waitlisted participant.{' '}
-              <span className="text-[#EF5A5A] font-semibold">
-                This action cannot be undone.
-              </span>
-            </p>
-            <div className="flex items-center justify-center gap-3">
-              <button
-                className="px-5 py-2.5 rounded-full border border-slate-600 hover:border-slate-500 hover:bg-slate-800/30 text-white font-medium active:scale-95 transition-all text-xs"
-                onClick={() => setIsOpen(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-5 py-2.5 rounded-full bg-[#EF5A5A] hover:bg-[#D94545] text-white font-medium active:scale-95 transition-all text-xs shadow-lg shadow-[#EF5A5A]/15"
-                onClick={() => {
-                  setIsOpen(false);
-                  onDecline();
-                }}
-              >
-                I can no longer attend
-              </button>
-            </div>
-          </div>
+          RSVP confirmed!
+        </Typography>
+        <Typography
+          as="p"
+          textSize="paragraph-lg"
+          textWeight="regular"
+          textColor="text-white"
+          className="max-w-xs md:max-w-none mt-[43px]"
+        >
+          We&apos;ve received your information and can&apos;t wait to see what
+          you&apos;ll build at Hack the 6ix!
+          <br />
+          Keep an eye on our Discord for event updates, announcements, and next
+          steps.
+        </Typography>
+        <Typography
+          as="p"
+          textSize="paragraph-lg"
+          textWeight="regular"
+          textColor="text-white"
+          className="mt-[86px]"
+        >
+          Stay connected with HT6:
+        </Typography>
+        <div className="flex mt-[12px] gap-4 text-white">
+          <a
+            href="https://www.facebook.com/Hackthe6ix/"
+            target="_blank"
+            className="hover:text-primary-300 transition"
+          >
+            <FaFacebook size={24} />
+          </a>
+          <a
+            href="https://instagram.com/hackthe6ix"
+            target="_blank"
+            className="hover:text-primary-300 transition"
+          >
+            <FaInstagram size={24} />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/hackthe6ixofficial"
+            target="_blank"
+            className="hover:text-primary-300 transition"
+          >
+            <FaLinkedin size={24} />
+          </a>
+          <a
+            href="https://x.com/hackthe6ix"
+            target="_blank"
+            className="hover:text-primary-300 transition"
+          >
+            <FaXTwitter size={24} />
+          </a>
         </div>
-      )}
+      </div>
+      <div className="flex flex-col items-center gap-6">
+        <div className="w-[245px] h-[498px]">
+          <TicketImage />
+        </div>
+        <div className="flex items-center gap-6 text-white">
+          <button
+            onClick={downloadTicket}
+            className="hover:text-primary-300 transition cursor-pointer"
+            title="Download Ticket"
+          >
+            <FaDownload size={22} />
+          </button>
+          <button
+            onClick={() => shareTicket('instagram')}
+            className="hover:text-primary-300 transition cursor-pointer"
+            title="Share to Instagram"
+          >
+            <FaInstagram size={24} />
+          </button>
+          <button
+            onClick={() => shareTicket('linkedin')}
+            className="hover:text-primary-300 transition cursor-pointer"
+            title="Share to LinkedIn"
+          >
+            <FaLinkedin size={24} />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

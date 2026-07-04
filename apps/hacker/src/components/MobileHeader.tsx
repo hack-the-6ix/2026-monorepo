@@ -1,11 +1,10 @@
 'use client';
 
-import React from 'react';
-import { FaBars } from 'react-icons/fa6';
 import { Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
 import Logo from '@/app/assets/logo.svg';
+import MobileNavbar from './MobileNavbar';
 
 const MobileHeader = () => {
   return (
@@ -34,9 +33,7 @@ const MobileHeader = () => {
           </Typography>
         </div>
       </div>
-      <button className="text-primary-300 hover:opacity-85 active:scale-95 transition-all">
-        <FaBars size={20} />
-      </button>
+      <MobileNavbar />
     </div>
   );
 };

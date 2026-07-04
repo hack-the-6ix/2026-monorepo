@@ -42,6 +42,16 @@ const silverSponsors = [
     alt: 'Poparide',
     href: 'https://www.poparide.com/',
   },
+  {
+    src: assets.sponsorDeloitteLogo,
+    alt: 'Deloitte',
+    href: 'https://www.deloitte.com',
+  },
+  {
+    src: assets.sponsorStay22Logo,
+    alt: 'Stay22',
+    href: 'https://www.stay22.com',
+  },
 ];
 
 const bronzeSponsors: {
@@ -69,6 +79,16 @@ const bronzeSponsors: {
     src: assets.sponsorWarpLogo,
     alt: 'Warp',
     href: 'https://www.warp.dev',
+  },
+  {
+    src: assets.sponsorQualcommLogo,
+    alt: 'Qualcomm',
+    href: 'https://www.qualcomm.com',
+  },
+  {
+    src: assets.sponsorMouserElectronicsLogo,
+    alt: 'Mouser Electronics',
+    href: 'https://www.mouser.com',
   },
 ];
 
