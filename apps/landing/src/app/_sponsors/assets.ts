@@ -7,6 +7,10 @@ import sponsorFdmLogo from '../../assets/sponsors/fdm_logo.png';
 import sponsorPoparideLogo from '../../assets/sponsors/poparide_logo.png';
 import sponsorQnxLogo from '../../assets/sponsors/qnx_logo.png';
 import sponsorShopifyLogo from '../../assets/sponsors/shopify_logo.png';
+import sponsorDeloitteLogo from '../../assets/sponsors/deloitte_logo.png';
+import sponsorMouserElectronicsLogo from '../../assets/sponsors/mouser_electronics_logo.svg';
+import sponsorQualcommLogo from '../../assets/sponsors/qualcomm_logo.png';
+import sponsorStay22Logo from '../../assets/sponsors/stay22_logo.png';
 import Candle from '../../assets/sponsors/sponsor_candle.png';
 import Grass from '../../assets/sponsors/sponsor_grass.png';
 import Hills from '../../assets/sponsors/sponsor_hill.png';
@@ -26,4 +30,8 @@ export const assets = {
   sponsorQnxLogo,
   sponsorShopifyLogo,
   sponsorWarpLogo,
+  sponsorDeloitteLogo,
+  sponsorMouserElectronicsLogo,
+  sponsorQualcommLogo,
+  sponsorStay22Logo,
 };
