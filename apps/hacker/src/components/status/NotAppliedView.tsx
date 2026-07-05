@@ -1,5 +1,5 @@
-import { Button, Typography } from '@hackthe6ix/ui';
-import Link from 'next/link';
+import { Typography } from '@hackthe6ix/ui';
+// import Link from 'next/link';
 
 interface NotAppliedViewProps {
   name: string;
@@ -25,7 +25,7 @@ const NotAppliedView = ({ name }: NotAppliedViewProps) => {
         textColor="text-white"
         className="leading-tight"
       >
-        Applications for Hack the 6ix 2026 are now closed! 
+        Applications for Hack the 6ix 2026 are now closed!
       </Typography>
       <Typography
         as="p"

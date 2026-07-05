@@ -6,13 +6,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
-import { useHacker } from '@/context/HackerContext';
+// import { useHacker } from '@/context/HackerContext';
 
 const Sidebar = () => {
   const pathname = usePathname();
 
-  const { hackerRole } = useHacker();
-  const teamHref = hackerRole?.teamId ? '/team' : '/team-formation';
+  // const { hackerRole } = useHacker();
+  // const teamHref = hackerRole?.teamId ? '/team' : '/team-formation';
   const isActive = (href: string) => pathname === href;
   return (
     <>

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Button, Typography } from '@hackthe6ix/ui';
-import Link from 'next/link';
+// import React, { useState } from 'react';
+import { Typography } from '@hackthe6ix/ui';
+// import Link from 'next/link';
 
 interface AcceptedViewProps {
   name: string;
   onDecline: () => void;
 }
 
-const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const AcceptedView = ({ name }: AcceptedViewProps) => {
+  // const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 space-y-4">
