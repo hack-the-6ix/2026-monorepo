@@ -29,14 +29,14 @@ const Sidebar = () => {
           >
             Application Status
           </Button>
-          <Button
+          {/* <Button
             as={Link}
             href={teamHref}
             kind="tertiary"
             className={`text-primary-400 ${isActive(teamHref) ? 'underline' : ''}`}
           >
             Team Formation
-          </Button>
+          </Button> */}
         </div>
         <div className="mt-auto flex flex-col items-center text-center">
           <div className="flex items-center justify-center">

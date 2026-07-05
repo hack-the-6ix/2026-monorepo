@@ -25,7 +25,7 @@ const NotAppliedView = ({ name }: NotAppliedViewProps) => {
         textColor="text-white"
         className="leading-tight"
       >
-        Looks like you haven&apos;t applied yet!
+        Applications for Hack the 6ix 2026 are now closed! 
       </Typography>
       <Typography
         as="p"
@@ -34,15 +34,15 @@ const NotAppliedView = ({ name }: NotAppliedViewProps) => {
         textColor="text-white"
         className="max-w-xs md:max-w-none"
       >
-        ☟ don&apos;t miss your chance ☟
+        Please come back next year to apply for Hack the 6ix 2027.
       </Typography>
-      <Button
+      {/* <Button
         as={Link}
         href="https://2026.apply.hackthe6ix.com/"
         target="_blank"
       >
         Application portal
-      </Button>
+      </Button> */}
     </div>
   );
 };

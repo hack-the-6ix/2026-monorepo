@@ -40,12 +40,13 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
         Welcome to Hack the 6ix 2026! We are excited to offer you the
         opportunity to hack with us.
         <br /> <br />
-        To confirm your attendance, please RSVP below by{' '}
-        <span className="text-yellow-300">July 6th at 11:59 PM ET</span>.
+        The RSVP deadline has passed.
+        {/* To confirm your attendance, please RSVP below by{' '}
+        <span className="text-yellow-300">July 6th at 11:59 PM ET</span>. */}
       </Typography>
 
       <div className="mt-4 w-full flex flex-col md:flex-row items-center justify-center gap-4">
-        <Button
+        {/* <Button
           kind="secondary"
           className="w-full md:w-auto max-w-[280px] md:max-w-none px-6 hover:bg-teal-500/10 transition order-2 md:order-1"
           onClick={() => setIsOpen(true)}
@@ -59,10 +60,10 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
           href="/rsvp-form"
         >
           Accept Invitation
-        </Button>
+        </Button> */}
       </div>
 
-      {isOpen && (
+      {/* {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
           <div className="bg-[#0b0f19] border border-slate-800 rounded-[20px] w-full max-w-[300px] p-6 text-center shadow-2xl relative">
             <Typography
@@ -99,7 +100,7 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
