@@ -244,8 +244,8 @@ const WaitlistView = ({ name }: WaitlistViewProps) => {
         textWeight="bold"
         textColor="text-white"
       >
-        You have been placed on the{' '}
-        <span className="text-yellow-300">waitlist.</span>
+        Explore your dashboard below and get excited for the event on{' '}
+        <span className="text-yellow-300">July17th</span>!
       </Typography>
       <Typography
         as="p"
@@ -254,7 +254,7 @@ const WaitlistView = ({ name }: WaitlistViewProps) => {
         textColor="text-white"
         className="max-w-xs md:max-w-5xl"
       >
-        I'm testing.
+        Testing.
       </Typography>
       <Typography
         as="p"
