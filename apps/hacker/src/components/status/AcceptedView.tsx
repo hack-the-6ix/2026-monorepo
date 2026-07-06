@@ -29,7 +29,8 @@ const AcceptedView = ({ name }: AcceptedViewProps) => {
       >
         {/* Congratulations, you&apos;ve been{' '}
         <span className="text-primary-300">accepted!</span> */}
-        Unfortunately, the <span className="text-primary-300">RSVP deadline has passed</span>
+        Unfortunately, the{' '}
+        <span className="text-primary-300">RSVP deadline has passed</span>
       </Typography>
       <Typography
         as="p"
