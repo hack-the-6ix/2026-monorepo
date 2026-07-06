@@ -27,8 +27,9 @@ const AcceptedView = ({ name }: AcceptedViewProps) => {
         textWeight="bold"
         textColor="text-white"
       >
-        Congratulations, you&apos;ve been{' '}
-        <span className="text-primary-300">accepted!</span>
+        {/* Congratulations, you&apos;ve been{' '}
+        <span className="text-primary-300">accepted!</span> */}
+        Unfortunately, the <span className="text-primary-300">RSVP deadline has passed</span>
       </Typography>
       <Typography
         as="p"
@@ -37,11 +38,11 @@ const AcceptedView = ({ name }: AcceptedViewProps) => {
         textColor="text-white"
         className="max-w-xs md:max-w-none"
       >
-        Welcome to Hack the 6ix 2026! We are excited to offer you the
+        Please come back next year to apply for Hack the 6ix 2027.
+        {/* Welcome to Hack the 6ix 2026! We are excited to offer you the
         opportunity to hack with us.
         <br /> <br />
-        The RSVP deadline has passed.
-        {/* To confirm your attendance, please RSVP below by{' '}
+        To confirm your attendance, please RSVP below by{' '}
         <span className="text-yellow-300">July 6th at 11:59 PM ET</span>. */}
       </Typography>
 
