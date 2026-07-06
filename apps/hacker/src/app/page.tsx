@@ -47,7 +47,7 @@ export default function Home() {
           />
         );
       case 'rsvped':
-        return <RsvpedView />;
+        return <RsvpedView name={displayName} />;
       case 'declined':
         return <DeclinedView name={displayName} />;
       case 'no_apply':
