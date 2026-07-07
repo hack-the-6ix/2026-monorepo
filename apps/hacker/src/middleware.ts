@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { fetchWithCookies } from '@/actions';
+import { featureFlags } from '@/feature-flags';
 
 const apiUrl =
   process.env.HT6_API_URL ||
@@ -8,6 +9,17 @@ const apiUrl =
   'https://v2.api.hackthe6ix.com/api';
 
 export async function middleware(request: NextRequest) {
+  if (!featureFlags.teamFormationOpen) {
+    if (
+      request.nextUrl.pathname === '/team' ||
+      request.nextUrl.pathname === '/team-formation' ||
+      request.nextUrl.pathname === '/rsvp-form'
+    ) {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+
+    return NextResponse.next();
+  }
   try {
     const res = await fetchWithCookies(request, `${apiUrl}/auth/check`, {
       headers: { Cookie: request.cookies.toString() },
