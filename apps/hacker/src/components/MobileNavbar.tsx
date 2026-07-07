@@ -13,7 +13,7 @@ import './index.css';
 
 const navLinks = [
   { name: 'Application Status', href: '/' },
-  { name: 'Team Formation', href: '/team-formation' },
+  // { name: 'Team Formation', href: '/team-formation' },
 ];
 
 export default function MobileNavbar() {
