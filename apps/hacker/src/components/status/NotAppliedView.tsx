@@ -23,9 +23,9 @@ const NotAppliedView = ({ name }: NotAppliedViewProps) => {
         textSize="heading-lg"
         textWeight="bold"
         textColor="text-white"
-        className="leading-tight"
       >
-        Applications for Hack the 6ix 2026 are now closed!
+        Unfortunately, the{' '}
+        <span className="text-primary-300">RSVP deadline has passed</span>
       </Typography>
       <Typography
         as="p"
