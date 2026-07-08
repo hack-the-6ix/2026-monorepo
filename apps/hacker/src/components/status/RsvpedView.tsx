@@ -221,20 +221,24 @@
 // export default RsvpedView;
 
 import { useState } from 'react';
-import { useHacker } from '@/context/HackerContext';
-import { Button, Typography } from '@hackthe6ix/ui';
 import { FaArrowRightLong } from 'react-icons/fa6';
-import discordIcon from '../../app/assets/discord_icon.png';
+import { Typography } from '@hackthe6ix/ui';
+import Image from 'next/image';
+
+import { changeHackerRsvpStatus, seasonCode } from '@/actions';
+import { useHacker } from '@/context/HackerContext';
+import checkedInImage from '../../app/assets/checked_in.png';
 import devpostIcon from '../../app/assets/devpost_icon.png';
-import checkmarkIcon from '../../app/assets/checkmark.png';
-import exclamationIcon from '../../app/assets/exclamation.png';
+import discordIcon from '../../app/assets/discord_icon.png';
 import moreInfoIcon from '../../app/assets/more_info.png';
+import notCheckedInImage from '../../app/assets/not_checked_in.png';
 import notionIcon from '../../app/assets/notion_icon.png';
 import paperclipIcon from '../../app/assets/paperclip.png';
 import RsvpCancelDialog from './RsvpCancelDialog';
 
 interface RsvpedViewProps {
   name: string;
+  onDecline?: () => void | Promise<void>;
 }
 
 const glassPanelClass =
@@ -254,14 +258,15 @@ const participantCodeHelpText =
   'Show this QR code to check-in, grab food, participate in activities, etc! We recommend screenshotting this.';
 
 const RsvpedView = ({ name }: RsvpedViewProps) => {
-  const { profile } = useHacker();
+  const { profile, hackerRole, refresh } = useHacker();
   const [qrLoadFailed, setQrLoadFailed] = useState(false);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
   const [hasCancelledRsvp, setHasCancelledRsvp] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
 
   const qrCodeSrc =
     profile?.userId ?
-      `/api/users/${encodeURIComponent(profile.userId)}/qr`
+      `/api/ht6/users/${encodeURIComponent(profile.userId)}/qr`
     : null;
   const discordCommand =
     profile?.email ?
@@ -269,8 +274,8 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
     : '/verify your_email@example.com';
 
   return (
-    <div className="mx-auto grid min-h-[80vh] w-full max-w-340 grid-cols-1 gap-6 px-4 pb-12 pt-8 lg:grid-cols-[1fr_320px] lg:px-10">
-      <section className="flex flex-col gap-5 lg:pt-12">
+    <div className="mx-auto grid min-h-[80vh] w-full max-w-340 grid-cols-1 gap-30 px-4 pb-12 pt-8 lg:grid-cols-[1fr_320px] lg:px-10">
+      <section className="flex flex-col gap-7 lg:pt-12">
         <div className="space-y-3">
           <Typography
             as="h1"
@@ -289,56 +294,47 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
             className="max-w-3xl"
           >
             Explore your dashboard below and get excited for the event on{' '}
-            <span className="text-yellow-300">July 17th</span>.
+            <span className="text-yellow-300">July 17th</span>!
           </Typography>
         </div>
-
         <div
-          className={`${glassPanelClass} flex flex-col gap-3 px-5 py-4 md:flex-row md:items-center md:justify-between`}
+          className={`flex w-full items-center justify-between gap-4 rounded-full border-2 px-5 py-4 text-sm font-semibold text-white shadow-[0_8px_22px_rgba(0,0,0,0.18)] transition-colors duration-300 ${
+            hasCancelledRsvp ?
+              'border-[#ff6d73] bg-[#d54b52]'
+            : 'border-[#3fe7a4] bg-[#3e7f7a]'
+          }`}
         >
-          <div className="flex items-center gap-3">
-            <div
-              className={`inline-flex items-center gap-3 rounded-full border-2 px-4 py-2 text-sm font-semibold text-white ${
+          <span className="flex items-center gap-3 leading-none">
+            <span
+              className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-black ${
                 hasCancelledRsvp ?
-                  'border-[#FF6467] bg-[rgba(255,100,103,0.50)]'
-                : 'border-[#44BDA3] bg-[rgba(94,233,181,0.50)]'
+                  'bg-white/20 text-white'
+                : 'bg-[#1ee38e] text-[#0b1f1b]'
               }`}
+              aria-hidden="true"
             >
-              <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/20">
-                <img
-                  src={
-                    hasCancelledRsvp ? exclamationIcon.src : checkmarkIcon.src
-                  }
-                  alt=""
-                  aria-hidden="true"
-                  className="h-4 w-4"
-                />
-              </span>
-              <span className="leading-none">
-                {hasCancelledRsvp ? 'Not checked in' : 'Status: Attending'}
-              </span>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Typography
-              as="p"
-              textSize="label"
-              textWeight="regular"
-              textColor="text-white"
-              className="opacity-80"
-            >
-              Can&apos;t attend anymore?
-            </Typography>
-            <Button
-              kind="tertiary"
-              className="px-0! py-0! text-yellow-300 hover:text-yellow-200"
-              onClick={() => setIsCancelDialogOpen(true)}
-            >
-              Cancel your RSVP
-            </Button>
-          </div>
-        </div>
+              {hasCancelledRsvp ? '!' : '✓'}
+            </span>
+            <span>
+              {hasCancelledRsvp ? 'Status: Not attending' : 'Status: Attending'}
+            </span>
+          </span>
 
+          {hasCancelledRsvp ?
+            <span className="text-white/90">RSVP updated</span>
+          : <button
+              type="button"
+              onClick={() => setIsCancelDialogOpen(true)}
+              className="text-left font-normal text-white transition hover:text-white/85 disabled:cursor-not-allowed disabled:opacity-70"
+              disabled={isCancelling}
+            >
+              Can’t attend anymore? {'  '}
+              <span className="font-semibold text-yellow-300 underline decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200">
+                Cancel your RSVP
+              </span>
+            </button>
+          }
+        </div>
         <div
           className={`${glassPanelClass} flex items-end justify-between gap-4 px-5 py-6`}
         >
@@ -366,7 +362,7 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
             href="https://hackthe6ix.com"
             target="_blank"
             rel="noreferrer"
-            className="text-sm font-semibold text-yellow-300 transition hover:text-yellow-200"
+            className="text-sm font-semibold text-yellow-300 underline decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200"
           >
             See schedule{' '}
             <FaArrowRightLong className="inline-block align-middle" />
@@ -426,8 +422,8 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
                 className="inline-flex h-5 w-5 items-center justify-center rounded-full transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
                 aria-label="More information about participant code"
               >
-                <img
-                  src={moreInfoIcon.src}
+                <Image
+                  src={moreInfoIcon}
                   alt=""
                   aria-hidden="true"
                   className="h-4 w-4"
@@ -441,9 +437,11 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
 
           <div className="rounded-2xl bg-white p-4">
             {qrCodeSrc && !qrLoadFailed ?
-              <img
+              <Image
                 src={qrCodeSrc}
                 alt="Participant QR code"
+                width={256}
+                height={256}
                 className="aspect-square w-full rounded-xl border border-black/20 object-cover"
                 onError={() => {
                   setQrLoadFailed(true);
@@ -457,19 +455,21 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
               </div>
             }
           </div>
-
           <div className="mt-4 flex justify-center">
-            <div className="inline-flex items-center gap-3 rounded-full border-2 border-[#FF6467] bg-[rgba(255,100,103,0.50)] px-4 py-2 text-sm font-semibold text-white">
-              <span
-                className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white/20 text-[10px] font-black text-white"
-                aria-hidden="true"
-              >
-                !
-              </span>
-              <span className="leading-none">
-                {hasCancelledRsvp ? 'RSVP cancelled' : 'Not checked in'}
-              </span>
-            </div>
+            <Image
+              src={
+                hackerRole?.status === 'checked-in' ?
+                  checkedInImage
+                : notCheckedInImage
+              }
+              alt={
+                hackerRole?.status === 'checked-in' ? 'Checked in'
+                : hasCancelledRsvp ?
+                  'RSVP cancelled'
+                : 'Not checked in'
+              }
+              className="h-auto w-[154px]"
+            />
           </div>
         </div>
 
@@ -477,13 +477,13 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
           href="https://discord.gg/hackthe6ix"
           target="_blank"
           rel="noreferrer"
-          className={`${quickLinkPanelClass} block min-h-[210px] px-4 py-4 transition hover:border-teal-300/60`}
+          className={`${quickLinkPanelClass} block min-h-[150px] px-4 py-4 transition hover:border-teal-300/60`}
         >
-          <div className="flex h-full min-h-[170px] flex-col gap-4">
+          <div className="flex h-full flex-col gap-4">
             <div className="flex items-center justify-between gap-3 pt-1">
               <div className="flex items-center gap-3">
-                <img
-                  src={discordIcon.src}
+                <Image
+                  src={discordIcon}
                   alt="Discord icon"
                   className="h-6 w-6 shrink-0"
                 />
@@ -497,8 +497,8 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
                   Hack the 6ix Discord
                 </Typography>
               </div>
-              <img
-                src={paperclipIcon.src}
+              <Image
+                src={paperclipIcon}
                 alt="Link icon"
                 className="h-5 w-5 shrink-0"
               />
@@ -524,8 +524,8 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
         >
           <div className="mb-1 flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <img
-                src={notionIcon.src}
+              <Image
+                src={notionIcon}
                 alt="Notion icon"
                 className="h-6 w-6 shrink-0"
               />
@@ -539,8 +539,8 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
                 Hacker Guide
               </Typography>
             </div>
-            <img
-              src={paperclipIcon.src}
+            <Image
+              src={paperclipIcon}
               alt="Link icon"
               className="h-5 w-5 shrink-0"
             />
@@ -555,8 +555,8 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
         >
           <div className="mb-1 flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <img
-                src={devpostIcon.src}
+              <Image
+                src={devpostIcon}
                 alt="Devpost icon"
                 className="h-6 w-6 shrink-0"
               />
@@ -570,8 +570,8 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
                 Devpost
               </Typography>
             </div>
-            <img
-              src={paperclipIcon.src}
+            <Image
+              src={paperclipIcon}
               alt="Link icon"
               className="h-5 w-5 shrink-0"
             />
@@ -582,9 +582,26 @@ const RsvpedView = ({ name }: RsvpedViewProps) => {
       <RsvpCancelDialog
         open={isCancelDialogOpen}
         onClose={() => setIsCancelDialogOpen(false)}
-        onConfirm={() => {
-          setIsCancelDialogOpen(false);
-          setHasCancelledRsvp(true);
+        onConfirm={async () => {
+          setIsCancelling(true);
+          try {
+            if (profile?.userId) {
+              await changeHackerRsvpStatus(
+                profile.userId,
+                'declined',
+                seasonCode,
+              );
+              await refresh();
+            }
+            setHasCancelledRsvp(true);
+          } catch (err) {
+            console.error('Failed to cancel RSVP', err);
+
+            alert('Failed to cancel RSVP. Please try again.');
+          } finally {
+            setIsCancelDialogOpen(false);
+            setIsCancelling(false);
+          }
         }}
       />
     </div>
