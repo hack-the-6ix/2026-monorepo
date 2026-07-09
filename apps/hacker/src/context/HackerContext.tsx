@@ -39,6 +39,7 @@ interface HackerContextValue {
   profile: UserProfile | null;
   hackerRole: HackerRole | null;
   status: HackerStatus;
+  isWaitlistToAccepted: boolean;
   displayName: string;
   loading: boolean;
   error: string | null;
@@ -75,12 +76,15 @@ export function HackerProvider({ children }: { children: ReactNode }) {
     hackerStatusMap[hackerRole?.status ?? 'no_apply'] ?? 'no_apply';
   const displayName = getDisplayName(profile);
 
+  const isWaitlistToAccepted = hackerRole?.state === 'waitlist_to_accepted';
+
   return (
     <HackerContext.Provider
       value={{
         profile,
         hackerRole,
         status,
+        isWaitlistToAccepted,
         displayName,
         loading,
         error,

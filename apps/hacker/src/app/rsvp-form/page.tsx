@@ -12,6 +12,7 @@ import z from 'zod';
 
 import { changeHackerRsvpStatus, upsertFormResponse } from '@/actions';
 import { useHacker } from '@/context/HackerContext';
+import { featureFlags } from '@/feature-flags';
 import {
   DIETARY_OPTIONS,
   HACKER_TYPE_OPTIONS,
@@ -48,14 +49,18 @@ export type FormData = z.infer<typeof FormDataSchema>;
 
 const RSVPForm = () => {
   const router = useRouter();
-  const { profile, status, loading, refresh } = useHacker();
-
+  const { profile, status, loading, refresh, isWaitlistToAccepted } =
+    useHacker();
+  const canRsvp = featureFlags.teamFormationOpen || isWaitlistToAccepted;
   useEffect(() => {
     if (loading) return;
     if (status !== 'accepted') {
       router.push('/');
     }
-  }, [status, loading, router]);
+    if (!canRsvp) {
+      router.push('/');
+    }
+  }, [status, loading, router, canRsvp]);
 
   const handleSubmit = async () => {
     if (!profile) return;

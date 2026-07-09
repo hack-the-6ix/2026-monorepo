@@ -38,6 +38,7 @@ export interface HackerRole {
   seasonCode: string;
   score: number;
   status: string | null;
+  state?: string | null;
   nfcId: string | null;
   teamId: string | null;
 }

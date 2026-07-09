@@ -18,10 +18,7 @@ export default function NFCRedirectPage({ params }: PageProps) {
 
   useEffect(() => {
     if (loading) return;
-    if (!profile) {
-      router.push('/login');
-      return;
-    }
+    if (!profile) return;
 
     const processNfc = async () => {
       try {
