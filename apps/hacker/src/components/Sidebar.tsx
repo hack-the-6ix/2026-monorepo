@@ -20,7 +20,7 @@ const Sidebar = () => {
         <div className="mt-4 mb-12 flex justify-center">
           <Image src={Logo} alt="Hack the 6ix Logo" />
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center gap-4">
           <Button
             as={Link}
             href="/"
@@ -28,6 +28,14 @@ const Sidebar = () => {
             className={`text-primary-400 ${isActive('/') ? 'underline' : ''}`}
           >
             Application Status
+          </Button>
+          <Button
+            as={Link}
+            href="/schedule"
+            kind="tertiary"
+            className={`text-primary-400 ${isActive('/schedule') ? 'underline' : ''}`}
+          >
+            Schedule
           </Button>
           {/* <Button
             as={Link}

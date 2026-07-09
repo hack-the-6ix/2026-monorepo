@@ -35,7 +35,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <HackerProvider>
           <DynamicBackground />
-          <div className="flex flex-col md:flex-row min-h-screen">
+          <div className="flex min-h-screen flex-col md:h-screen md:flex-row md:overflow-hidden">
             <header className="md:hidden w-full absolute top-0 left-0 right-0 z-10 bg-transparent">
               <MobileHeader />
             </header>
@@ -44,7 +44,7 @@ export default function RootLayout({
                 <Sidebar />
               </aside>
             )}
-            <main className="flex-1 overflow-y-auto pt-20 md:pt-0">
+            <main className="min-w-0 flex-1 overflow-y-auto pt-20 md:pt-0">
               {children}
             </main>
           </div>

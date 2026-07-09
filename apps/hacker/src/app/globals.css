@@ -13,6 +13,32 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
+
+  /* Hide the native scrollbar; ScheduleView renders an always-visible custom
+     rail/thumb because macOS can keep native scrollbars overlay-only. */
+  .schedule-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .schedule-scroll::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .schedule-scroll::-webkit-scrollbar-track,
+  .schedule-scroll::-webkit-scrollbar-thumb {
+    display: none !important;
+    background: transparent !important;
+  }
+
+  @media (min-width: 768px) {
+    .schedule-panel-pinned {
+      border-bottom: 0 !important;
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.18) !important;
+    }
+  }
 }
 
 @theme {

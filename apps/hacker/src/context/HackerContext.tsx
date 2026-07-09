@@ -47,6 +47,30 @@ interface HackerContextValue {
 
 const HackerContext = createContext<HackerContextValue | null>(null);
 
+// Local preview only (NEXT_PUBLIC_PREVIEW=1): use a mock RSVPed hacker instead
+// of the /users/me fetch so the schedule is browsable without a real login
+// (paired with the bypass in middleware.ts). Off by default.
+const PREVIEW = process.env.NEXT_PUBLIC_PREVIEW === '1';
+
+const PREVIEW_PROFILE: UserProfile = {
+  userId: 'preview-user-0001',
+  email: 'preview@hackthe6ix.com',
+  firstName: 'Preview',
+  lastName: 'Hacker',
+  createdAt: '2026-01-01T00:00:00.000Z',
+  isAdmin: false,
+  roles: [
+    {
+      type: 'hacker',
+      seasonCode: 'S26',
+      score: 0,
+      status: 'rsvped',
+      nfcId: 'PREVIEW-NFC-1234',
+      teamId: null,
+    },
+  ],
+};
+
 export function HackerProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -66,6 +90,13 @@ export function HackerProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
+    if (PREVIEW) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setProfile(PREVIEW_PROFILE);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLoading(false);
+      return;
+    }
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void refresh();
   }, []);
