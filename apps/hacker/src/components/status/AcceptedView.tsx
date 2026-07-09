@@ -63,10 +63,7 @@ const AcceptedView = ({
             opportunity to hack with us.
             <br /> <br />
             To confirm your attendance, please RSVP below by{' '}
-            <span className="text-yellow-300">
-              July <s>6th</s> 8th at 11:59 PM ET
-            </span>
-            .
+            <span className="text-yellow-300">July 10th at 11:59 PM ET</span>.
           </>
         }
       </Typography>
