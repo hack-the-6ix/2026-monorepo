@@ -1,4 +1,4 @@
 export const featureFlags = {
   // Flip this back to true to reopen the team formation option
-  teamFormationOpen: true,
+  teamFormationOpen: false,
 } as const;
