@@ -11,7 +11,14 @@ import WaitlistView from '@/components/status/WaitlistView';
 import { useHacker } from '@/context/HackerContext';
 
 export default function Home() {
-  const { profile, status, loading, displayName, refresh } = useHacker();
+  const {
+    profile,
+    status,
+    loading,
+    displayName,
+    refresh,
+    isWaitlistToAccepted,
+  } = useHacker();
 
   const handleDeclineInvite = async () => {
     if (!profile) return;
@@ -33,7 +40,11 @@ export default function Home() {
         return <WaitlistView name={displayName} />;
       case 'accepted':
         return (
-          <AcceptedView name={displayName} onDecline={handleDeclineInvite} />
+          <AcceptedView
+            name={displayName}
+            onDecline={handleDeclineInvite}
+            isWaitlistToAccepted={isWaitlistToAccepted}
+          />
         );
       case 'rsvped':
         return <RsvpedView />;

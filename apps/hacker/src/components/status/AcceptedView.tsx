@@ -7,10 +7,19 @@ import { featureFlags } from '@/feature-flags';
 interface AcceptedViewProps {
   name: string;
   onDecline: () => void;
+  isWaitlistToAccepted: boolean;
 }
 
-const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
+const AcceptedView = ({
+  name,
+  onDecline,
+  isWaitlistToAccepted,
+}: AcceptedViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // If the feature flag is on, everyone accepted can RSVP.
+  // If it's off, only people freshly bumped off the waitlist can RSVP.
+  const canRsvp = featureFlags.teamFormationOpen || isWaitlistToAccepted;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 space-y-4">
@@ -29,12 +38,14 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
         textWeight="bold"
         textColor="text-white"
       >
-        {featureFlags.teamFormationOpen ?
+        {canRsvp ?
           <>
-            Congratulations, you&apos;ve been <span className="text-primary-300">accepted!</span>
+            Congratulations, you&apos;ve been{' '}
+            <span className="text-primary-300">accepted!</span>
           </>
         : <>
-            Unfortunately, the <span className="text-primary-300">RSVP deadline has passed</span>
+            Unfortunately, the{' '}
+            <span className="text-primary-300">RSVP deadline has passed</span>
           </>
         }
       </Typography>
@@ -45,19 +56,22 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
         textColor="text-white"
         className="max-w-xs md:max-w-none"
       >
-        {!featureFlags.teamFormationOpen ?
-          "Please come back next year to apply for Hack the 6ix 2027."
+        {!canRsvp ?
+          'Please come back next year to apply for Hack the 6ix 2027.'
         : <>
             Welcome to Hack the 6ix 2026! We are excited to offer you the
             opportunity to hack with us.
             <br /> <br />
             To confirm your attendance, please RSVP below by{' '}
-            <span className="text-yellow-300">July <s>6th</s> 8th at 11:59 PM ET</span>.
+            <span className="text-yellow-300">
+              July <s>6th</s> 8th at 11:59 PM ET
+            </span>
+            .
           </>
         }
       </Typography>
 
-      {featureFlags.teamFormationOpen && (
+      {canRsvp && (
         <div className="mt-4 w-full flex flex-col md:flex-row items-center justify-center gap-4">
           <Button
             kind="secondary"
@@ -77,7 +91,7 @@ const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
         </div>
       )}
 
-      {featureFlags.teamFormationOpen && isOpen && (
+      {canRsvp && isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
           <div className="bg-[#0b0f19] border border-slate-800 rounded-[20px] w-full max-w-[300px] p-6 text-center shadow-2xl relative">
             <Typography
