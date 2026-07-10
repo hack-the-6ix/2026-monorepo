@@ -9,10 +9,6 @@ const apiUrl =
   'https://v2.api.hackthe6ix.com/api';
 
 export async function middleware(request: NextRequest) {
-  // Local preview only: NEXT_PUBLIC_PREVIEW=1 skips the HT6 auth check so the
-  // schedule can be viewed without logging in. Off by default.
-  if (process.env.NEXT_PUBLIC_PREVIEW === '1') return NextResponse.next();
-
   if (!featureFlags.teamFormationOpen) {
     if (
       request.nextUrl.pathname === '/team' ||
