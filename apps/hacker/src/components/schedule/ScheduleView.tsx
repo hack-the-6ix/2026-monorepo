@@ -120,6 +120,15 @@ const ScheduleFilters = ({
   );
 };
 
+// Real-time indicator line (SVG). `className` positions it at a row's top or
+// bottom edge.
+const NowLine = ({ className }: { className?: string }) => (
+  <div className={cn('pointer-events-none absolute inset-x-1 z-20', className)}>
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img src="/now-line.svg" alt="" aria-hidden className="w-full" />
+  </div>
+);
+
 const ScheduleView = () => {
   const [day, setDay] = useState(0);
   const [active, setActive] =
@@ -157,6 +166,44 @@ const ScheduleView = () => {
     );
     return groupByStartTime(dayEvents);
   }, [days, day, active]);
+
+  // Earliest event start for each day — used to decide which day "now" belongs
+  // to (clamped to the event window: Fri before the event, Sun after).
+  const dayStarts = useMemo(
+    () =>
+      days.map((d) => {
+        const evs = eventsForDayKey(scheduleEvents, d.key);
+        return evs.length ?
+            Math.min(...evs.map((e) => new Date(e.start).getTime()))
+          : Number.POSITIVE_INFINITY;
+      }),
+    [days],
+  );
+
+  // Which day the marker sits on: the last day whose events have started, and
+  // the first day before the event begins.
+  const nowDayIndex = useMemo(() => {
+    if (now === null || days.length === 0) return -1;
+    let di = 0;
+    for (let i = 0; i < dayStarts.length; i++) {
+      const start = dayStarts[i];
+      if (start !== undefined && now >= start) di = i;
+    }
+    return di;
+  }, [now, days, dayStarts]);
+
+  // Group boundary within the viewed day where the marker sits (0 = top/before
+  // the first event, groups.length = bottom/after the last event).
+  const nowIndex = useMemo(() => {
+    if (now === null) return -1;
+    let idx = 0;
+    for (const g of groups) {
+      const start = g.events[0] ? new Date(g.events[0].start).getTime() : 0;
+      if (start <= now) idx++;
+      else break;
+    }
+    return idx;
+  }, [groups, now]);
 
   const stateFor = (e: ScheduleEvent) =>
     now === null ? 'upcoming' : eventState(e, now);
@@ -204,7 +251,7 @@ const ScheduleView = () => {
   }, [groups, updateScrollbar]);
 
   return (
-    <div className="flex flex-col px-6 py-10 text-white md:h-full md:overflow-hidden md:px-8 md:pt-14 md:pb-0">
+    <div className="flex flex-col px-6 py-10 text-white md:h-full md:overflow-hidden md:px-6 md:pt-14 md:pb-0">
       <div className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col overflow-hidden">
         <Typography as="h1" textSize="heading-lg" textWeight="bold">
           Event Schedule
@@ -294,29 +341,28 @@ const ScheduleView = () => {
                     >
                       No events match the selected filters.
                     </Typography>
-                  : groups.map((group) => {
-                      const ongoing = group.events.some(
-                        (e) => stateFor(e) === 'active',
-                      );
+                  : groups.map((group, gi) => {
                       return (
                         <div
                           key={group.time}
                           className="relative flex gap-3 border-b border-white/5 py-2.5 last:border-b-0 md:gap-6 lg:py-2"
                         >
-                          {ongoing && (
-                            <div className="pointer-events-none absolute inset-x-1 top-8 z-10 flex items-center">
-                              <span className="size-3 shrink-0 rounded-full bg-red-500" />
-                              <span className="h-0.5 flex-1 bg-red-500" />
-                            </div>
+                          {day === nowDayIndex && gi === nowIndex && (
+                            <NowLine className="-top-3" />
                           )}
+                          {day === nowDayIndex &&
+                            nowIndex >= groups.length &&
+                            gi === groups.length - 1 && (
+                              <NowLine className="-bottom-3" />
+                            )}
                           <div className="w-16 shrink-0 whitespace-nowrap pt-7 text-xs font-semibold text-white/70 md:w-20 md:text-sm">
                             {group.time}
                           </div>
-                          <div className="flex min-w-0 flex-1 flex-col gap-2.5 md:flex-row md:flex-wrap lg:gap-2">
+                          <div className="flex min-w-0 flex-1 flex-col gap-2.5 md:flex-row lg:gap-2">
                             {group.events.map((ev) => (
                               <WorkshopCard
                                 key={ev.id}
-                                className="w-full md:min-w-[240px] md:flex-1"
+                                className="w-full bg-[#3E4259]/55 md:min-w-0 md:flex-1"
                                 title={ev.title}
                                 startTime={formatTime(ev.start)}
                                 endTime={formatTime(ev.end)}

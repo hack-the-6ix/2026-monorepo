@@ -40,7 +40,7 @@ export default function RootLayout({
               <MobileHeader />
             </header>
             {!IS_UNDER_CONSTRUCTION && (
-              <aside className="w-72 hidden md:block shrink-0">
+              <aside className="w-56 hidden md:block shrink-0 lg:w-72">
                 <Sidebar />
               </aside>
             )}

@@ -72,7 +72,7 @@ const Sidebar = () => {
           <div className="mt-6 flex items-center justify-center">
             <Button
               kind="secondary"
-              className="px-16 rounded-full"
+              className="px-10 rounded-full lg:px-16"
               onClick={() => {
                 console.log('log out');
               }}
