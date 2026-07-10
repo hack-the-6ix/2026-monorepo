@@ -6,14 +6,12 @@ import { FiChevronDown, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Typography, WorkshopCard } from '@hackthe6ix/ui';
 import cn from 'classnames';
 
-import { seasonCode } from '@/actions';
 import { EVENT_NAME } from '@/data/event';
 import {
   buildScheduleDays,
   categoryColor,
   eventsForDayKey,
   eventState,
-  fetchScheduleEvents,
   formatTime,
   groupByStartTime,
   scheduleCategories,
@@ -129,8 +127,6 @@ const ScheduleView = () => {
   const [day, setDay] = useState(0);
   const [active, setActive] =
     useState<Set<ScheduleCategoryKey>>(ALL_CATEGORIES);
-  // null = still loading. Falls back to the mock set if the fetch fails.
-  const [events, setEvents] = useState<ScheduleEvent[] | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollbar, setScrollbar] = useState({
     visible: false,
@@ -148,21 +144,6 @@ const ScheduleView = () => {
     return () => clearInterval(id);
   }, []);
 
-  // Load live events from the backend; fall back to the mock set on failure.
-  useEffect(() => {
-    let cancelled = false;
-    fetchScheduleEvents(seasonCode)
-      .then((evs) => {
-        if (!cancelled) setEvents(evs);
-      })
-      .catch(() => {
-        if (!cancelled) setEvents(scheduleEvents);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
   const toggle = (key: ScheduleCategoryKey) =>
     setActive((prev) => {
       const next = new Set(prev);
@@ -171,24 +152,16 @@ const ScheduleView = () => {
       return next;
     });
 
-  const days = useMemo(() => buildScheduleDays(events ?? []), [events]);
-
-  // Keep the selected day index in range as data loads / changes.
-  useEffect(() => {
-    if (days.length && day > days.length - 1) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setDay(0);
-    }
-  }, [days.length, day]);
+  const days = useMemo(() => buildScheduleDays(scheduleEvents), []);
 
   const groups = useMemo(() => {
     const activeDay = days[day];
     if (!activeDay) return [];
-    const dayEvents = eventsForDayKey(events ?? [], activeDay.key).filter((e) =>
-      active.has(e.category),
+    const dayEvents = eventsForDayKey(scheduleEvents, activeDay.key).filter(
+      (e) => active.has(e.category),
     );
     return groupByStartTime(dayEvents);
-  }, [events, days, day, active]);
+  }, [days, day, active]);
 
   const stateFor = (e: ScheduleEvent) =>
     now === null ? 'upcoming' : eventState(e, now);
@@ -318,25 +291,14 @@ const ScheduleView = () => {
                   onScroll={updateScrollbar}
                   className="schedule-scroll h-full overflow-y-scroll px-4 pt-3 pb-6 md:px-6"
                 >
-                  {events === null ?
+                  {groups.length === 0 ?
                     <Typography
                       as="p"
                       textSize="paragraph-lg"
                       textColor="text-white/60"
                       className="py-10 text-center"
                     >
-                      Loading schedule…
-                    </Typography>
-                  : groups.length === 0 ?
-                    <Typography
-                      as="p"
-                      textSize="paragraph-lg"
-                      textColor="text-white/60"
-                      className="py-10 text-center"
-                    >
-                      {days.length === 0 ?
-                        'No events scheduled yet.'
-                      : 'No events match the selected filters.'}
+                      No events match the selected filters.
                     </Typography>
                   : groups.map((group) => {
                       const ongoing = group.events.some(

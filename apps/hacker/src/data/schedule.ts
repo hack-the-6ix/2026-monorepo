@@ -1,16 +1,6 @@
 import type { WorkshopCardState, WorkshopColor } from '@hackthe6ix/ui';
 
-import { fetchHt6 } from '@/client';
-
-// ---------------------------------------------------------------------------
-// Schedule data.
-//
-// Live events come from the backend (`GET /seasons/:seasonCode/events`) via
-// `fetchScheduleEvents`. That endpoint only returns { eventId, eventName,
-// startTime, endTime }, so `category` (colours + filter) is derived from the
-// name on the frontend and `location` is omitted (the API has none).
-// `scheduleEvents` below is a mock used only as a fallback if the fetch fails.
-// ---------------------------------------------------------------------------
+// Mock schedule data — shown for now until the events API is populated.
 
 export const scheduleCategories = [
   { key: 'main', label: 'Main Events', color: 'lavender' },
@@ -299,90 +289,4 @@ export const groupByStartTime = (events: ScheduleEvent[]): ScheduleRow[] => {
     time: formatTime(start),
     events: group,
   }));
-};
-
-// --- Category inference (the backend events have no category) --------------
-
-/** Best-effort category from the event name, for card colours + filtering. */
-export const deriveCategory = (name: string): ScheduleCategoryKey => {
-  const n = name.toLowerCase();
-  if (
-    /ceremony|opening|closing|judging|hacking|submission|kickoff|keynote|awards|winner/.test(
-      n,
-    )
-  )
-    return 'main';
-  if (
-    /workshop|tutorial|intro to|\b101\b|hack lab|bootcamp|learn|demo\b/.test(n)
-  )
-    return 'workshop';
-  if (/sponsor|tech talk|recruit|career|networking|booth|fair/.test(n))
-    return 'sponsor';
-  if (
-    /lunch|dinner|breakfast|brunch|snack|meal|food|social|karaoke|game|movie|trivia|mixer|party|break|midnight|coffee|yoga|scavenger|music|\bfun\b/.test(
-      n,
-    )
-  )
-    return 'social';
-  return 'main';
-};
-
-// --- Live fetch ------------------------------------------------------------
-
-/**
- * Events longer than this are treated as umbrella / all-weekend markers
- * (e.g. "Hack the 6ix" spanning the whole event, or stray test rows) rather
- * than real schedule items, and are hidden from the timeline.
- */
-const MAX_EVENT_HOURS = 20;
-
-interface ApiEvent {
-  seasonCode: string;
-  eventId: string;
-  eventName: string;
-  startTime: string | null;
-  endTime: string | null;
-}
-
-interface EventsResponse {
-  data: ApiEvent[];
-  pagination?: { page: number; totalPages: number };
-}
-
-/**
- * Fetch the season's events from the backend and map them into
- * `ScheduleEvent`s (deriving category; the API provides no location).
- * Paginates up to a safe cap.
- */
-export const fetchScheduleEvents = async (
-  seasonCode: string,
-): Promise<ScheduleEvent[]> => {
-  const all: ApiEvent[] = [];
-  let page = 1;
-  let totalPages = 1;
-  do {
-    const res = await fetchHt6<EventsResponse>(
-      `/seasons/${seasonCode}/events?page=${page}&pageSize=100`,
-    );
-    all.push(...(res.data ?? []));
-    totalPages = res.pagination?.totalPages ?? 1;
-    page += 1;
-  } while (page <= totalPages && page <= 10);
-
-  return all
-    .filter((e): e is ApiEvent & { startTime: string; endTime: string } => {
-      if (!e.startTime || !e.endTime) return false;
-      const hours =
-        (new Date(e.endTime).getTime() - new Date(e.startTime).getTime()) /
-        3_600_000;
-      // Drop zero/negative-length rows and long umbrella/background events.
-      return hours > 0 && hours <= MAX_EVENT_HOURS;
-    })
-    .map((e) => ({
-      id: e.eventId,
-      title: e.eventName,
-      category: deriveCategory(e.eventName),
-      start: e.startTime,
-      end: e.endTime,
-    }));
 };
