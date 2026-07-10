@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
+import { SCHEDULE_RELEASED } from '@/data/event';
 // import { useHacker } from '@/context/HackerContext';
 
 const Sidebar = () => {
@@ -29,14 +30,16 @@ const Sidebar = () => {
           >
             Application Status
           </Button>
-          <Button
-            as={Link}
-            href="/schedule"
-            kind="tertiary"
-            className={`text-primary-400 ${isActive('/schedule') ? 'underline' : ''}`}
-          >
-            Schedule
-          </Button>
+          {SCHEDULE_RELEASED && (
+            <Button
+              as={Link}
+              href="/schedule"
+              kind="tertiary"
+              className={`text-primary-400 ${isActive('/schedule') ? 'underline' : ''}`}
+            >
+              Schedule
+            </Button>
+          )}
           {/* <Button
             as={Link}
             href={teamHref}

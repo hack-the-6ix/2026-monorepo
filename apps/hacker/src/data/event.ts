@@ -12,4 +12,4 @@ export const EVENT_END = new Date('2026-07-19T17:00:00-04:00');
  * `IS_UNDER_CONSTRUCTION` flag pattern; keeps "schedule page remains the same"
  * true for pre-release states.
  */
-export const SCHEDULE_RELEASED = true;
+export const SCHEDULE_RELEASED: boolean = false;
