@@ -1,7 +1,5 @@
 import type { WorkshopCardState, WorkshopColor } from '@hackthe6ix/ui';
 
-// Mock schedule data — shown for now until the events API is populated.
-
 export const scheduleCategories = [
   { key: 'main', label: 'Main Events', color: 'lavender' },
   { key: 'sponsor', label: 'Sponsor Bay', color: 'pink' },
@@ -19,9 +17,7 @@ export const categoryColor = (key: ScheduleCategoryKey): WorkshopColor =>
   scheduleCategories.find((c) => c.key === key)?.color ?? 'lavender';
 
 export interface ScheduleDay {
-  /** Toronto calendar-day key, e.g. "2026-07-17". */
   key: string;
-  /** Display label, e.g. "Fri, July 17". */
   label: string;
 }
 
@@ -30,15 +26,12 @@ export interface ScheduleEvent {
   title: string;
   category: ScheduleCategoryKey;
   location?: string;
-  /** ISO datetimes. */
   start: string;
   end: string;
-  /** Legacy day index used only by the mock fallback; live grouping uses dates. */
   day?: number;
 }
 
 export const scheduleEvents: ScheduleEvent[] = [
-  // Day 1 — Fri July 17
   {
     id: 'opening',
     title: 'Opening Ceremony',
@@ -111,8 +104,6 @@ export const scheduleEvents: ScheduleEvent[] = [
     start: '2026-07-17T19:00:00-04:00',
     end: '2026-07-17T20:00:00-04:00',
   },
-
-  // Day 2 — Sat July 18
   {
     id: 'breakfast-2',
     title: 'Breakfast',
@@ -167,8 +158,6 @@ export const scheduleEvents: ScheduleEvent[] = [
     start: '2026-07-18T20:00:00-04:00',
     end: '2026-07-18T21:00:00-04:00',
   },
-
-  // Day 3 — Sun July 19
   {
     id: 'submissions-due',
     title: 'Submissions Due',
@@ -204,14 +193,9 @@ const timeFormatter = new Intl.DateTimeFormat('en-US', {
   timeZone: 'America/Toronto',
 });
 
-/** e.g. "8:00 AM" — deterministic (fixed timezone), so SSR-safe. */
 export const formatTime = (iso: string): string =>
   timeFormatter.format(new Date(iso));
 
-/**
- * Time-based card state relative to `now` (defaults to Date.now()).
- * Pass a fixed `now` from a mounted effect to avoid hydration flicker.
- */
 export const eventState = (
   event: ScheduleEvent,
   now: number = Date.now(),
@@ -222,8 +206,6 @@ export const eventState = (
   if (now >= start && now < end) return 'active';
   return 'upcoming';
 };
-
-// --- Day grouping (derived from event dates, in America/Toronto) ----------
 
 const dayKeyFormatter = new Intl.DateTimeFormat('en-CA', {
   year: 'numeric',
@@ -239,11 +221,9 @@ const dayLabelFormatter = new Intl.DateTimeFormat('en-US', {
   timeZone: 'America/Toronto',
 });
 
-/** Toronto calendar-day key for an ISO datetime, e.g. "2026-07-17". */
 export const dayKey = (iso: string): string =>
   dayKeyFormatter.format(new Date(iso));
 
-/** Distinct days present in `events`, sorted chronologically. */
 export const buildScheduleDays = (events: ScheduleEvent[]): ScheduleDay[] => {
   const labels = new Map<string, string>();
   for (const e of events) {
@@ -257,7 +237,6 @@ export const buildScheduleDays = (events: ScheduleEvent[]): ScheduleDay[] => {
   );
 };
 
-/** Events on a given Toronto day, sorted by start time. */
 export const eventsForDayKey = (
   events: ScheduleEvent[],
   key: string,
@@ -271,13 +250,6 @@ export interface ScheduleRow {
   events: ScheduleEvent[];
 }
 
-/**
- * Group events that start at the same time into one row, so simultaneous
- * events render side-by-side. Input is pre-sorted by start, so rows stay
- * chronological. Grouping by start time (rather than merging any overlap)
- * keeps a long umbrella event — e.g. "Hack the 6ix" spanning the whole
- * weekend — from swallowing every other event into a single row.
- */
 export const groupByStartTime = (events: ScheduleEvent[]): ScheduleRow[] => {
   const rows = new Map<string, ScheduleEvent[]>();
   for (const e of events) {

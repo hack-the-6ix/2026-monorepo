@@ -31,7 +31,6 @@ type FilterProps = {
   active: Set<ScheduleCategoryKey>;
   toggle: (key: ScheduleCategoryKey) => void;
   className?: string;
-  /** Mobile only: render the checkboxes as a collapsible dropdown. */
   collapsible?: boolean;
 };
 
@@ -102,8 +101,6 @@ const ScheduleFilters = ({
                 <span
                   className="flex size-5 items-center justify-center rounded-md border-2 transition-colors"
                   style={{
-                    // Category-coloured outline in every state; translucent
-                    // colour fill when checked, a fainter tint when not.
                     borderColor: color,
                     backgroundColor:
                       on ?
@@ -134,8 +131,6 @@ const ScheduleView = () => {
     thumbTop: 0,
   });
 
-  // Start null so SSR renders everything as "upcoming" (matching the first
-  // client render), then update once mounted and refresh every minute.
   const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -172,16 +167,18 @@ const ScheduleView = () => {
 
     const { clientHeight, scrollHeight, scrollTop } = el;
     const maxScrollTop = scrollHeight - clientHeight;
+    const trackHeight = Math.max(clientHeight - SCROLLBAR_TRACK_INSET * 2, 0);
+
+    // Always show the rail; when there's nothing to scroll the thumb fills it.
     if (maxScrollTop <= 1) {
       setScrollbar({
-        visible: false,
-        thumbHeight: 0,
+        visible: true,
+        thumbHeight: trackHeight,
         thumbTop: 0,
       });
       return;
     }
 
-    const trackHeight = Math.max(clientHeight - SCROLLBAR_TRACK_INSET * 2, 0);
     const thumbHeight = Math.max(
       (clientHeight / scrollHeight) * trackHeight,
       MIN_SCROLLBAR_THUMB,
@@ -223,7 +220,6 @@ const ScheduleView = () => {
 
         <div className="mt-8 flex min-h-0 flex-1 flex-col gap-6 lg:flex-row">
           <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-            {/* Filters (mobile / small screens) — collapsible dropdown */}
             <ScheduleFilters
               active={active}
               toggle={toggle}
@@ -233,7 +229,6 @@ const ScheduleView = () => {
 
             <div className="schedule-panel-pinned flex min-h-0 flex-1 flex-col overflow-hidden rounded-[28px] border border-white/25 bg-white/[0.06] bg-gradient-to-b from-white/[0.08] to-transparent ring-1 ring-inset ring-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.18)] backdrop-blur-xl md:rounded-b-none md:border-b-0 md:ring-0">
               <div className="shrink-0 border-b border-white/10">
-                {/* Desktop: day tabs */}
                 <div className="hidden px-6 pt-5 lg:flex">
                   {days.map((d, i) => (
                     <button
@@ -252,7 +247,6 @@ const ScheduleView = () => {
                   ))}
                 </div>
 
-                {/* Mobile: previous / next day navigator */}
                 <div className="flex items-center justify-between px-4 py-4 lg:hidden">
                   <button
                     type="button"
@@ -344,8 +338,6 @@ const ScheduleView = () => {
                     data-schedule-scrollbar
                     className="pointer-events-none absolute top-3.5 right-2 bottom-0 hidden w-2 lg:block"
                   >
-                    {/* Track — fades out toward the bottom so it blends into
-                        the panel's open bottom edge instead of hard-cutting. */}
                     <div className="absolute inset-0 rounded-full bg-white/20 [-webkit-mask-image:linear-gradient(to_bottom,#000_55%,transparent)] [mask-image:linear-gradient(to_bottom,#000_55%,transparent)]" />
                     <div
                       className="absolute left-0 w-full rounded-full bg-white/65"
@@ -360,7 +352,6 @@ const ScheduleView = () => {
             </div>
           </div>
 
-          {/* Filters (desktop) */}
           <aside className="hidden shrink-0 lg:block">
             <ScheduleFilters
               active={active}
