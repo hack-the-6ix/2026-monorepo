@@ -1,10 +1,15 @@
 import type { WorkshopCardState, WorkshopColor } from '@hackthe6ix/ui';
 
+import { fetchHt6 } from '@/client';
+
 // ---------------------------------------------------------------------------
-// MOCK schedule data.
-// The backend does not yet expose an events/schedule endpoint, so these events
-// are hardcoded. When an endpoint is added, replace `scheduleEvents` with a
-// fetch (keeping the same shape) and everything downstream keeps working.
+// Schedule data.
+//
+// Live events come from the backend (`GET /seasons/:seasonCode/events`) via
+// `fetchScheduleEvents`. That endpoint only returns { eventId, eventName,
+// startTime, endTime }, so `category` (colours + filter) is derived from the
+// name on the frontend and `location` is omitted (the API has none).
+// `scheduleEvents` below is a mock used only as a fallback if the fetch fails.
 // ---------------------------------------------------------------------------
 
 export const scheduleCategories = [
@@ -24,26 +29,22 @@ export const categoryColor = (key: ScheduleCategoryKey): WorkshopColor =>
   scheduleCategories.find((c) => c.key === key)?.color ?? 'lavender';
 
 export interface ScheduleDay {
+  /** Toronto calendar-day key, e.g. "2026-07-17". */
+  key: string;
+  /** Display label, e.g. "Fri, July 17". */
   label: string;
-  short: string;
 }
-
-export const scheduleDays: ScheduleDay[] = [
-  { label: 'Fri, July 17', short: 'Jul 17' },
-  { label: 'Sat, July 18', short: 'Jul 18' },
-  { label: 'Sun, July 19', short: 'Jul 19' },
-];
 
 export interface ScheduleEvent {
   id: string;
   title: string;
   category: ScheduleCategoryKey;
-  location: string;
-  /** Day index into `scheduleDays`. */
-  day: number;
-  /** ISO datetimes (America/Toronto, -04:00). */
+  location?: string;
+  /** ISO datetimes. */
   start: string;
   end: string;
+  /** Legacy day index used only by the mock fallback; live grouping uses dates. */
+  day?: number;
 }
 
 export const scheduleEvents: ScheduleEvent[] = [
@@ -232,7 +233,156 @@ export const eventState = (
   return 'upcoming';
 };
 
-export const eventsForDay = (day: number): ScheduleEvent[] =>
-  scheduleEvents
-    .filter((e) => e.day === day)
+// --- Day grouping (derived from event dates, in America/Toronto) ----------
+
+const dayKeyFormatter = new Intl.DateTimeFormat('en-CA', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  timeZone: 'America/Toronto',
+});
+
+const dayLabelFormatter = new Intl.DateTimeFormat('en-US', {
+  weekday: 'short',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'America/Toronto',
+});
+
+/** Toronto calendar-day key for an ISO datetime, e.g. "2026-07-17". */
+export const dayKey = (iso: string): string =>
+  dayKeyFormatter.format(new Date(iso));
+
+/** Distinct days present in `events`, sorted chronologically. */
+export const buildScheduleDays = (events: ScheduleEvent[]): ScheduleDay[] => {
+  const labels = new Map<string, string>();
+  for (const e of events) {
+    if (!e.start) continue;
+    const key = dayKey(e.start);
+    if (!labels.has(key))
+      labels.set(key, dayLabelFormatter.format(new Date(e.start)));
+  }
+  return Array.from(labels, ([key, label]) => ({ key, label })).sort((a, b) =>
+    a.key.localeCompare(b.key),
+  );
+};
+
+/** Events on a given Toronto day, sorted by start time. */
+export const eventsForDayKey = (
+  events: ScheduleEvent[],
+  key: string,
+): ScheduleEvent[] =>
+  events
+    .filter((e) => e.start && dayKey(e.start) === key)
     .sort((a, b) => a.start.localeCompare(b.start));
+
+export interface ScheduleRow {
+  time: string;
+  events: ScheduleEvent[];
+}
+
+/**
+ * Group events that start at the same time into one row, so simultaneous
+ * events render side-by-side. Input is pre-sorted by start, so rows stay
+ * chronological. Grouping by start time (rather than merging any overlap)
+ * keeps a long umbrella event — e.g. "Hack the 6ix" spanning the whole
+ * weekend — from swallowing every other event into a single row.
+ */
+export const groupByStartTime = (events: ScheduleEvent[]): ScheduleRow[] => {
+  const rows = new Map<string, ScheduleEvent[]>();
+  for (const e of events) {
+    const bucket = rows.get(e.start);
+    if (bucket) bucket.push(e);
+    else rows.set(e.start, [e]);
+  }
+  return Array.from(rows, ([start, group]) => ({
+    time: formatTime(start),
+    events: group,
+  }));
+};
+
+// --- Category inference (the backend events have no category) --------------
+
+/** Best-effort category from the event name, for card colours + filtering. */
+export const deriveCategory = (name: string): ScheduleCategoryKey => {
+  const n = name.toLowerCase();
+  if (
+    /ceremony|opening|closing|judging|hacking|submission|kickoff|keynote|awards|winner/.test(
+      n,
+    )
+  )
+    return 'main';
+  if (
+    /workshop|tutorial|intro to|\b101\b|hack lab|bootcamp|learn|demo\b/.test(n)
+  )
+    return 'workshop';
+  if (/sponsor|tech talk|recruit|career|networking|booth|fair/.test(n))
+    return 'sponsor';
+  if (
+    /lunch|dinner|breakfast|brunch|snack|meal|food|social|karaoke|game|movie|trivia|mixer|party|break|midnight|coffee|yoga|scavenger|music|\bfun\b/.test(
+      n,
+    )
+  )
+    return 'social';
+  return 'main';
+};
+
+// --- Live fetch ------------------------------------------------------------
+
+/**
+ * Events longer than this are treated as umbrella / all-weekend markers
+ * (e.g. "Hack the 6ix" spanning the whole event, or stray test rows) rather
+ * than real schedule items, and are hidden from the timeline.
+ */
+const MAX_EVENT_HOURS = 20;
+
+interface ApiEvent {
+  seasonCode: string;
+  eventId: string;
+  eventName: string;
+  startTime: string | null;
+  endTime: string | null;
+}
+
+interface EventsResponse {
+  data: ApiEvent[];
+  pagination?: { page: number; totalPages: number };
+}
+
+/**
+ * Fetch the season's events from the backend and map them into
+ * `ScheduleEvent`s (deriving category; the API provides no location).
+ * Paginates up to a safe cap.
+ */
+export const fetchScheduleEvents = async (
+  seasonCode: string,
+): Promise<ScheduleEvent[]> => {
+  const all: ApiEvent[] = [];
+  let page = 1;
+  let totalPages = 1;
+  do {
+    const res = await fetchHt6<EventsResponse>(
+      `/seasons/${seasonCode}/events?page=${page}&pageSize=100`,
+    );
+    all.push(...(res.data ?? []));
+    totalPages = res.pagination?.totalPages ?? 1;
+    page += 1;
+  } while (page <= totalPages && page <= 10);
+
+  return all
+    .filter((e): e is ApiEvent & { startTime: string; endTime: string } => {
+      if (!e.startTime || !e.endTime) return false;
+      const hours =
+        (new Date(e.endTime).getTime() - new Date(e.startTime).getTime()) /
+        3_600_000;
+      // Drop zero/negative-length rows and long umbrella/background events.
+      return hours > 0 && hours <= MAX_EVENT_HOURS;
+    })
+    .map((e) => ({
+      id: e.eventId,
+      title: e.eventName,
+      category: deriveCategory(e.eventName),
+      start: e.startTime,
+      end: e.endTime,
+    }));
+};

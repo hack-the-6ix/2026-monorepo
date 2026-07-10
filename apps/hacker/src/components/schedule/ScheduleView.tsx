@@ -6,16 +6,20 @@ import { FiChevronDown, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Typography, WorkshopCard } from '@hackthe6ix/ui';
 import cn from 'classnames';
 
+import { seasonCode } from '@/actions';
 import { EVENT_NAME } from '@/data/event';
 import {
+  buildScheduleDays,
   categoryColor,
-  eventsForDay,
+  eventsForDayKey,
   eventState,
+  fetchScheduleEvents,
   formatTime,
+  groupByStartTime,
   scheduleCategories,
   type ScheduleCategoryKey,
-  scheduleDays,
   type ScheduleEvent,
+  scheduleEvents,
 } from '@/data/schedule';
 
 const ALL_CATEGORIES = new Set<ScheduleCategoryKey>(
@@ -125,6 +129,8 @@ const ScheduleView = () => {
   const [day, setDay] = useState(0);
   const [active, setActive] =
     useState<Set<ScheduleCategoryKey>>(ALL_CATEGORIES);
+  // null = still loading. Falls back to the mock set if the fetch fails.
+  const [events, setEvents] = useState<ScheduleEvent[] | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollbar, setScrollbar] = useState({
     visible: false,
@@ -142,6 +148,21 @@ const ScheduleView = () => {
     return () => clearInterval(id);
   }, []);
 
+  // Load live events from the backend; fall back to the mock set on failure.
+  useEffect(() => {
+    let cancelled = false;
+    fetchScheduleEvents(seasonCode)
+      .then((evs) => {
+        if (!cancelled) setEvents(evs);
+      })
+      .catch(() => {
+        if (!cancelled) setEvents(scheduleEvents);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const toggle = (key: ScheduleCategoryKey) =>
     setActive((prev) => {
       const next = new Set(prev);
@@ -150,17 +171,24 @@ const ScheduleView = () => {
       return next;
     });
 
-  const groups = useMemo(() => {
-    const dayEvents = eventsForDay(day).filter((e) => active.has(e.category));
-    const map = new Map<string, ScheduleEvent[]>();
-    for (const e of dayEvents) {
-      const time = formatTime(e.start);
-      const bucket = map.get(time);
-      if (bucket) bucket.push(e);
-      else map.set(time, [e]);
+  const days = useMemo(() => buildScheduleDays(events ?? []), [events]);
+
+  // Keep the selected day index in range as data loads / changes.
+  useEffect(() => {
+    if (days.length && day > days.length - 1) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setDay(0);
     }
-    return Array.from(map, ([time, events]) => ({ time, events }));
-  }, [day, active]);
+  }, [days.length, day]);
+
+  const groups = useMemo(() => {
+    const activeDay = days[day];
+    if (!activeDay) return [];
+    const dayEvents = eventsForDayKey(events ?? [], activeDay.key).filter((e) =>
+      active.has(e.category),
+    );
+    return groupByStartTime(dayEvents);
+  }, [events, days, day, active]);
 
   const stateFor = (e: ScheduleEvent) =>
     now === null ? 'upcoming' : eventState(e, now);
@@ -233,14 +261,14 @@ const ScheduleView = () => {
             <div className="schedule-panel-pinned flex min-h-0 flex-1 flex-col overflow-hidden rounded-[28px] border border-white/25 bg-white/[0.06] bg-gradient-to-b from-white/[0.08] to-transparent ring-1 ring-inset ring-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.18)] backdrop-blur-xl md:rounded-b-none md:border-b-0 md:ring-0">
               <div className="shrink-0 border-b border-white/10">
                 {/* Desktop: day tabs */}
-                <div className="hidden gap-8 overflow-x-auto px-6 pt-5 lg:flex">
-                  {scheduleDays.map((d, i) => (
+                <div className="hidden px-6 pt-5 lg:flex">
+                  {days.map((d, i) => (
                     <button
-                      key={d.label}
+                      key={d.key}
                       type="button"
                       onClick={() => setDay(i)}
                       className={cn(
-                        'whitespace-nowrap pb-3 text-sm font-semibold transition-colors',
+                        'flex-1 whitespace-nowrap pb-3 text-center text-sm font-semibold transition-colors',
                         i === day ?
                           'border-b-2 border-yellow-400 text-yellow-400'
                         : 'text-white/60 hover:text-white',
@@ -268,14 +296,14 @@ const ScheduleView = () => {
                     textWeight="semi-bold"
                     textColor="text-white"
                   >
-                    {scheduleDays[day]?.label}
+                    {days[day]?.label}
                   </Typography>
                   <button
                     type="button"
                     aria-label="Next day"
-                    disabled={day === scheduleDays.length - 1}
+                    disabled={day >= days.length - 1}
                     onClick={() =>
-                      setDay((d) => Math.min(scheduleDays.length - 1, d + 1))
+                      setDay((d) => Math.min(days.length - 1, d + 1))
                     }
                     className="p-1 text-white/70 transition-colors hover:text-white disabled:opacity-30"
                   >
@@ -290,14 +318,25 @@ const ScheduleView = () => {
                   onScroll={updateScrollbar}
                   className="schedule-scroll h-full overflow-y-scroll px-4 pt-3 pb-6 md:px-6"
                 >
-                  {groups.length === 0 ?
+                  {events === null ?
                     <Typography
                       as="p"
                       textSize="paragraph-lg"
                       textColor="text-white/60"
                       className="py-10 text-center"
                     >
-                      No events match the selected filters.
+                      Loading schedule…
+                    </Typography>
+                  : groups.length === 0 ?
+                    <Typography
+                      as="p"
+                      textSize="paragraph-lg"
+                      textColor="text-white/60"
+                      className="py-10 text-center"
+                    >
+                      {days.length === 0 ?
+                        'No events scheduled yet.'
+                      : 'No events match the selected filters.'}
                     </Typography>
                   : groups.map((group) => {
                       const ongoing = group.events.some(
@@ -341,8 +380,11 @@ const ScheduleView = () => {
                   <div
                     aria-hidden="true"
                     data-schedule-scrollbar
-                    className="pointer-events-none absolute top-3.5 right-2 bottom-3.5 hidden w-2 rounded-full bg-white/20 lg:block"
+                    className="pointer-events-none absolute top-3.5 right-2 bottom-0 hidden w-2 lg:block"
                   >
+                    {/* Track — fades out toward the bottom so it blends into
+                        the panel's open bottom edge instead of hard-cutting. */}
+                    <div className="absolute inset-0 rounded-full bg-white/20 [-webkit-mask-image:linear-gradient(to_bottom,#000_55%,transparent)] [mask-image:linear-gradient(to_bottom,#000_55%,transparent)]" />
                     <div
                       className="absolute left-0 w-full rounded-full bg-white/65"
                       style={{
