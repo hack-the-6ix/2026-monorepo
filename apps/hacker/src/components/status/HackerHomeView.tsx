@@ -63,7 +63,7 @@ function Disclosure({
     <div className="flex w-full flex-col gap-1 py-2">
       <button
         type="button"
-        className="group flex w-full cursor-pointer items-center  gap-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 rounded-md"
+        className="group flex w-full cursor-pointer items-center gap-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 rounded-md"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
@@ -94,7 +94,7 @@ function Disclosure({
             textSize="paragraph-sm"
             textWeight="regular"
             textColor="text-white"
-            className="whitespace-pre-line pb-2 pt-1 opacity-75"
+            className="whitespace-pre-line pl-4 pb-2 pt-1 opacity-75"
           >
             {children}
           </Typography>
