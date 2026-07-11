@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
+import DiscordNavButton from '@/components/DiscordNavButton';
 import { useHacker } from '@/context/HackerContext';
 
 const Sidebar = () => {
@@ -48,7 +49,7 @@ const Sidebar = () => {
             Team Formation
           </Button> */}
         </div>
-        <div className="mt-auto flex flex-col items-center text-center">
+        <div className="mt-auto flex w-full flex-col items-stretch text-center">
           <div className="flex items-center justify-center">
             <div>
               <Typography
@@ -71,12 +72,13 @@ const Sidebar = () => {
               </Typography>
             </div>
           </div>
-          <div className="mt-6 flex items-center justify-center">
+          <div className="mt-6 flex w-full flex-col items-stretch gap-4">
+            <DiscordNavButton />
             <Button
               kind="secondary"
-              className="px-16 rounded-full"
+              className="w-full px-16 rounded-full"
               onClick={() => {
-                console.log('log out');
+                console.log('log out'); // TODO: implement logout
               }}
             >
               <Typography
@@ -84,7 +86,6 @@ const Sidebar = () => {
                 textSize="paragraph-sm"
                 textWeight="semi-bold"
                 textColor="text-[#00D5BE]"
-                className=""
               >
                 Log out
               </Typography>

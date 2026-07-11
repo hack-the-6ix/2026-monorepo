@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import DiscordNavButton from '@/components/DiscordNavButton';
 import { useHacker } from '@/context/HackerContext';
 import MenuLegs from '../app/assets/nav/legs.png';
 import MenuBody from '../app/assets/nav/radish_body.png';
@@ -88,6 +89,9 @@ export default function MobileNavbar() {
                   </Link>
                 );
               })}
+              <div className="relative z-40 w-full max-w-xs px-8">
+                <DiscordNavButton />
+              </div>
             </div>
 
             {/* Turnip boi */}
