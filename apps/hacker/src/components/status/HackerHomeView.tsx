@@ -127,7 +127,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
             textColor="text-white"
             className="leading-tight"
           >
-            Welcome back, {name}!
+            Welcome back, <br /> {name}!
           </Typography>
           <Typography
             as="p"
