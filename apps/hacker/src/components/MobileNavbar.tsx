@@ -1,30 +1,58 @@
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import DiscordNavButton from '@/components/DiscordNavButton';
 import { useHacker } from '@/context/HackerContext';
+import type { DashboardPage, RoleType } from '@/lib/dashboard-registry';
+import { getAvailablePages } from '@/lib/dashboard-registry';
+import { roleConfig } from '@/lib/roles';
 import MenuLegs from '../app/assets/nav/legs.png';
 import MenuBody from '../app/assets/nav/radish_body.png';
 import MenuSwing from '../app/assets/nav/swing.png';
 
 import './index.css';
 
+const roleOrder: RoleType[] = [
+  'hacker',
+  'sponsor',
+  'volunteer',
+  'mentor',
+  'admin',
+];
+
 export default function MobileNavbar() {
-  const pathname = usePathname();
-  const { status } = useHacker();
+  const searchParams = useSearchParams();
+  const { status, roleTypes } = useHacker();
   const [burgerVisible, setBurgerVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const pathname =
+    typeof window !== 'undefined' ? window.location.pathname : '/';
+
+  const pages = useMemo(() => getAvailablePages(roleTypes), [roleTypes]);
+
+  const activeTab = searchParams.get('tab') || pages[0]?.id;
   const canAccessRsvpForm = status === 'accepted' || status === 'waitlist';
 
-  const navLinks = [
-    { name: 'Dashboard', href: '/' },
-    ...(canAccessRsvpForm ? [{ name: 'RSVP Form', href: '/rsvp-form' }] : []),
-    // { name: 'Team Formation', href: '/team-formation' },
-  ];
+  const eventPage = pages.find((p) => p.id === 'event');
+  const rolePages = pages
+    .filter((p) => p.id !== 'event')
+    .sort(
+      (a, b) => roleOrder.indexOf(a.roles[0]) - roleOrder.indexOf(b.roles[0]),
+    );
+
+  const groupedRoles = rolePages.reduce(
+    (acc, page) => {
+      const roleType = page.roles[0];
+      if (!acc[roleType]) acc[roleType] = [];
+      acc[roleType].push(page);
+      return acc;
+    },
+    {} as Record<string, DashboardPage[]>,
+  );
 
   if (pathname === '/thank-you') {
     return null;
@@ -47,7 +75,6 @@ export default function MobileNavbar() {
 
   return (
     <div>
-      {/* MOBILE */}
       <div className="z-150 relative flex md:hidden w-full justify-end">
         <button
           onClick={burgerVisible && !isClosing ? closeBurger : openBurger}
@@ -72,31 +99,115 @@ export default function MobileNavbar() {
           <div
             className={`fixed inset-x-0 top-0 z-120 md:hidden flex justify-center ${isClosing ? 'animate-menu-hide' : 'animate-menu-reveal'}`}
           >
-            {/* Menu */}
-            <div className="relative w-full bg-[linear-gradient(210deg,#14204C,#21657F)] rounded-b-3xl py-15 pb-15 flex flex-col gap-8 z-120 items-center">
+            <div className="relative w-full bg-[linear-gradient(210deg,#14204C,#21657F)] rounded-b-3xl py-15 pb-15 flex flex-col gap-5 z-120 items-center">
               <div className="absolute inset-0 bg-black/50 mix-blend-overlay rounded-b-3xl pointer-events-none" />
-              {navLinks.map((link) => {
-                const isActive = link.href.startsWith(pathname);
+
+              {Object.entries(groupedRoles).map(([roleType, pages]) => {
+                const cfg = roleConfig[roleType as RoleType];
+                if (!cfg) return null;
+
                 return (
-                  <Link key={link.href} href={link.href} onClick={closeBurger}>
+                  <div
+                    key={roleType}
+                    className="flex flex-col items-center gap-1"
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className="inline-block size-1.5 rounded-full"
+                        style={{ backgroundColor: cfg.hex }}
+                      />
+                      <Typography
+                        textSize="label"
+                        textWeight="bold"
+                        className="uppercase tracking-wider"
+                        style={{ color: cfg.hex }}
+                      >
+                        {cfg.label}
+                      </Typography>
+                    </div>
+                    {pages.map((page) => {
+                      const isActive = activeTab === page.id;
+                      return (
+                        <Link
+                          key={page.id}
+                          href={`/?tab=${page.id}`}
+                          onClick={closeBurger}
+                        >
+                          <Typography
+                            textSize="paragraph-lg"
+                            textWeight="bold"
+                            style={{
+                              color: isActive ? cfg.hex : undefined,
+                            }}
+                            className={isActive ? '' : 'text-white'}
+                          >
+                            {page.title}
+                          </Typography>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+
+              {rolePages.length > 0 && eventPage && (
+                <div className="w-1/2 border-t border-white/10" />
+              )}
+
+              {eventPage && (
+                <Link href="/?tab=event" onClick={closeBurger}>
+                  <div className="flex flex-col items-center">
+                    <Typography
+                      textSize="label"
+                      textWeight="bold"
+                      className="uppercase tracking-wider text-white/60"
+                    >
+                      Event
+                    </Typography>
                     <Typography
                       textSize="paragraph-lg"
                       textWeight="bold"
-                      className={isActive ? 'text-primary-300' : 'text-white'}
+                      className={
+                        activeTab === 'event' ? 'text-primary-300' : (
+                          'text-white'
+                        )
+                      }
                     >
-                      {link.name}
+                      Schedule &amp; Materials
                     </Typography>
-                  </Link>
-                );
-              })}
-              <div className="relative z-40 w-full max-w-xs px-8">
-                <DiscordNavButton />
-              </div>
+                  </div>
+                </Link>
+              )}
+
+              {canAccessRsvpForm && (
+                <Link href="/rsvp-form" onClick={closeBurger}>
+                  <Typography
+                    textSize="paragraph-lg"
+                    textWeight="bold"
+                    className={
+                      pathname === '/rsvp-form' ? 'text-primary-300' : (
+                        'text-white'
+                      )
+                    }
+                  >
+                    RSVP Form
+                  </Typography>
+                </Link>
+              )}
+
+              {['rsvped', 'waitlist', 'checked-in'].includes(status) && (
+                <div className="relative z-40 w-full max-w-xs px-8 mt-4">
+                  <DiscordNavButton />
+                </div>
+              )}
             </div>
 
-            {/* Turnip boi */}
             <div
-              className={`absolute items-center pointer-events-none z-20 ${canAccessRsvpForm ? 'translate-y-50' : 'translate-y-40'} animate-swing origin-top will-change-transform`}
+              className={`absolute items-center pointer-events-none z-20 ${
+                canAccessRsvpForm || eventPage ? 'translate-y-56' : (
+                  'translate-y-40'
+                )
+              } animate-swing origin-top will-change-transform`}
             >
               <div className="absolute flex flex-col items-center translate-y-17">
                 <Image

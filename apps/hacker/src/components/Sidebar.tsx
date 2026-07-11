@@ -1,99 +1,211 @@
 'use client';
 
+import { useMemo } from 'react';
 import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
 import DiscordNavButton from '@/components/DiscordNavButton';
 import { useHacker } from '@/context/HackerContext';
+import type { DashboardPage, RoleType } from '@/lib/dashboard-registry';
+import { getAvailablePages } from '@/lib/dashboard-registry';
+import { roleConfig } from '@/lib/roles';
+
+const roleOrder: RoleType[] = [
+  'hacker',
+  'sponsor',
+  'volunteer',
+  'mentor',
+  'admin',
+];
 
 const Sidebar = () => {
-  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { status, roleTypes } = useHacker();
 
-  const { status } = useHacker();
-  // const teamHref = hackerRole?.teamId ? '/team' : '/team-formation';
-  const isActive = (href: string) => pathname === href;
+  const pages = useMemo(
+    () => getAvailablePages(roleTypes, status),
+    [roleTypes, status],
+  );
+
+  const activeTab = searchParams.get('tab') || pages[0]?.id;
+
+  const eventPages = pages.filter(
+    (p) => p.id === 'event' || p.id.startsWith('event-'),
+  );
+  const rolePages = pages
+    .filter((p) => p.id !== 'event' && !p.id.startsWith('event-'))
+    .sort(
+      (a, b) => roleOrder.indexOf(a.roles[0]) - roleOrder.indexOf(b.roles[0]),
+    );
+
+  const groupedRoles = rolePages.reduce(
+    (acc, page) => {
+      const roleType = page.roles[0];
+      if (!acc[roleType]) acc[roleType] = [];
+      acc[roleType].push(page);
+      return acc;
+    },
+    {} as Record<string, DashboardPage[]>,
+  );
+
+  const canAccessRsvpForm = status === 'accepted' || status === 'waitlist';
+
   return (
-    <>
-      <nav className="flex flex-col h-full py-12 px-6">
-        <div className="mt-4 mb-12 flex justify-center">
-          <Image src={Logo} alt="Hack the 6ix Logo" />
-        </div>
-        <div className="flex flex-col items-center">
-          <Button
-            as={Link}
-            href="/"
-            kind="tertiary"
-            className={`text-primary-400 ${isActive('/') ? 'underline' : ''}`}
-          >
-            Dashboard
-          </Button>
-          {(status === 'accepted' || status === 'waitlist') && (
-            <Button
-              as={Link}
-              href="/rsvp-form"
-              kind="tertiary"
-              className={`text-primary-400 ${isActive('/rsvp-form') ? 'underline' : ''}`}
-            >
-              RSVP Form
-            </Button>
-          )}
-          {/* <Button
-            as={Link}
-            href={teamHref}
-            kind="tertiary"
-            className={`text-primary-400 ${isActive(teamHref) ? 'underline' : ''}`}
-          >
-            Team Formation
-          </Button> */}
-        </div>
-        <div className="mt-auto flex w-full flex-col items-stretch text-center">
-          <div className="flex items-center justify-center">
-            <div>
+    <nav className="flex flex-col h-full px-6">
+      <div className="py-12 flex justify-center">
+        <Image src={Logo} alt="Hack the 6ix Logo" />
+      </div>
+
+      <div className="flex-1 overflow-y-auto min-h-0 flex flex-col items-center gap-1">
+        {Object.entries(groupedRoles).map(([roleType, pages]) => {
+          const cfg = roleConfig[roleType as RoleType];
+          if (!cfg) return null;
+
+          return (
+            <div key={roleType} className="w-full flex flex-col items-center">
+              <div className="flex items-center justify-center gap-1.5 py-1">
+                <span
+                  className="inline-block size-1.5 rounded-full"
+                  style={{ backgroundColor: cfg.hex }}
+                />
+                <Typography
+                  as="p"
+                  textSize="label"
+                  textWeight="bold"
+                  className="uppercase tracking-wider"
+                  style={{ color: cfg.hex }}
+                >
+                  {cfg.label}
+                </Typography>
+              </div>
+              {pages.map((page) => {
+                const isActive = activeTab === page.id;
+                return (
+                  <Link
+                    key={page.id}
+                    href={`/?tab=${page.id}`}
+                    className="w-full text-center py-2 rounded-lg transition"
+                  >
+                    <Typography
+                      as="p"
+                      textSize="paragraph-sm"
+                      textWeight="semi-bold"
+                      style={{ color: isActive ? cfg.hex : undefined }}
+                      className={isActive ? '' : 'text-white/70'}
+                    >
+                      {isActive && '➢ '}
+                      {page.title}
+                    </Typography>
+                  </Link>
+                );
+              })}
+            </div>
+          );
+        })}
+
+        {rolePages.length > 0 && eventPages.length > 0 && (
+          <div className="w-3/4 border-t border-white/10 my-3" />
+        )}
+
+        {eventPages.length > 0 && (
+          <div className="w-full flex flex-col items-center">
+            <div className="flex items-center justify-center gap-1.5 py-1">
+              <span className="inline-block size-1.5 rounded-full bg-white/40" />
               <Typography
                 as="p"
-                textSize="paragraph-sm"
-                textWeight="semi-bold"
-                textColor="text-white"
+                textSize="label"
+                textWeight="bold"
+                className="uppercase tracking-wider text-white/60"
               >
-                Event date:
-              </Typography>
-              <Typography
-                as="p"
-                textSize="paragraph-lg"
-                textWeight="semi-bold"
-                textColor="text-[#F6BD55]"
-                className="mt-2 text-center"
-              >
-                July 17-19, 2026 <br />
-                Bahen Centre
+                Event
               </Typography>
             </div>
+            {eventPages.map((page) => {
+              const isActive = activeTab === page.id;
+              return (
+                <Link
+                  key={page.id}
+                  href={`/?tab=${page.id}`}
+                  className="w-full text-center py-2 rounded-lg transition"
+                >
+                  <Typography
+                    as="p"
+                    textSize="paragraph-sm"
+                    textWeight="semi-bold"
+                    className={isActive ? 'text-white' : 'text-white/70'}
+                  >
+                    {isActive && '➢ '}
+                    {page.title}
+                  </Typography>
+                </Link>
+              );
+            })}
           </div>
-          <div className="mt-6 flex w-full flex-col items-stretch gap-4">
-            <DiscordNavButton />
-            <Button
-              kind="secondary"
-              className="w-full px-16 rounded-full"
-              onClick={() => {
-                console.log('log out'); // TODO: implement logout
-              }}
+        )}
+
+        {canAccessRsvpForm && (
+          <Button
+            as={Link}
+            href="/rsvp-form"
+            kind="tertiary"
+            className={`mt-2 text-primary-400 ${
+              activeTab === 'rsvp-form' ? 'underline' : ''
+            }`}
+          >
+            RSVP Form
+          </Button>
+        )}
+      </div>
+
+      <div className="mt-auto flex w-full flex-col items-stretch text-center pb-8">
+        <div className="flex items-center justify-center">
+          <div>
+            <Typography
+              as="p"
+              textSize="paragraph-sm"
+              textWeight="semi-bold"
+              textColor="text-white"
             >
-              <Typography
-                as="p"
-                textSize="paragraph-sm"
-                textWeight="semi-bold"
-                textColor="text-[#00D5BE]"
-              >
-                Log out
-              </Typography>
-            </Button>
+              Event date:
+            </Typography>
+            <Typography
+              as="p"
+              textSize="paragraph-lg"
+              textWeight="semi-bold"
+              textColor="text-[#F6BD55]"
+              className="mt-2 text-center"
+            >
+              July 17-19, 2026 <br />
+              Bahen Centre
+            </Typography>
           </div>
         </div>
-      </nav>
-    </>
+        <div className="mt-6 flex w-full flex-col items-stretch gap-4">
+          {['rsvped', 'waitlist', 'checked-in'].includes(status) && (
+            <DiscordNavButton />
+          )}
+          <Button
+            kind="secondary"
+            className="w-full px-16 rounded-full"
+            onClick={() => {
+              console.log('log out');
+            }}
+          >
+            <Typography
+              as="p"
+              textSize="paragraph-sm"
+              textWeight="semi-bold"
+              textColor="text-[#00D5BE]"
+            >
+              Log out
+            </Typography>
+          </Button>
+        </div>
+      </div>
+    </nav>
   );
 };
 
