@@ -42,9 +42,9 @@ const faqItems = [
       'Nope! There will be many events and opportunities where you can find teammates throughout the hackathon. Teams can have between 1–4 members.',
   },
   {
-    title: 'When is check-in and onboarding?',
+    title: 'When is check-in?',
     content:
-      'You must arrive before 11:59 PM EST on Friday July 17th, otherwise your admission may be given to another hacker.',
+      'Check-in is between 5pm-7pm on Friday July 17th. You must arrive before 11:59 PM EST on Friday July 17th, otherwise your admission may be given to another hacker.',
   },
 ];
 
