@@ -7,19 +7,12 @@ import { featureFlags } from '@/feature-flags';
 interface AcceptedViewProps {
   name: string;
   onDecline: () => void;
-  isWaitlistToAccepted: boolean;
 }
 
-const AcceptedView = ({
-  name,
-  onDecline,
-  isWaitlistToAccepted,
-}: AcceptedViewProps) => {
+const AcceptedView = ({ name, onDecline }: AcceptedViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // If the feature flag is on, everyone accepted can RSVP.
-  // If it's off, only people freshly bumped off the waitlist can RSVP.
-  const canRsvp = featureFlags.teamFormationOpen || isWaitlistToAccepted;
+  const canRsvp = featureFlags.teamFormationOpen;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 space-y-4">

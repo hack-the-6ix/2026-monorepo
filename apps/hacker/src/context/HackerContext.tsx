@@ -19,7 +19,7 @@ const hackerStatusMap: Record<string, HackerStatus> = {
   waitlisted: 'waitlist',
   declined: 'declined',
   rsvped: 'rsvped',
-  'checked-in': 'rsvped',
+  'checked-in': 'checked-in',
 };
 
 function getDisplayName(profile: UserProfile | null) {

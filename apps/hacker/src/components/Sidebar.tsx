@@ -7,11 +7,12 @@ import { usePathname } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
 import DiscordNavButton from '@/components/DiscordNavButton';
+import { useHacker } from '@/context/HackerContext';
 
 const Sidebar = () => {
   const pathname = usePathname();
 
-  // const { hackerRole } = useHacker();
+  const { status } = useHacker();
   // const teamHref = hackerRole?.teamId ? '/team' : '/team-formation';
   const isActive = (href: string) => pathname === href;
   return (
@@ -27,8 +28,18 @@ const Sidebar = () => {
             kind="tertiary"
             className={`text-primary-400 ${isActive('/') ? 'underline' : ''}`}
           >
-            Application Status
+            Dashboard
           </Button>
+          {(status === 'accepted' || status === 'waitlist') && (
+            <Button
+              as={Link}
+              href="/rsvp-form"
+              kind="tertiary"
+              className={`text-primary-400 ${isActive('/rsvp-form') ? 'underline' : ''}`}
+            >
+              RSVP Form
+            </Button>
+          )}
           {/* <Button
             as={Link}
             href={teamHref}

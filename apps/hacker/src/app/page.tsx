@@ -3,22 +3,17 @@
 import { changeHackerRsvpStatus } from '@/actions';
 import AcceptedView from '@/components/status/AcceptedView';
 import DeclinedView from '@/components/status/DeclinedView';
+import HackerHomeView from '@/components/status/HackerHomeView';
 import NotAppliedView from '@/components/status/NotAppliedView';
 import RejectedView from '@/components/status/RejectedView';
 import ReviewingView from '@/components/status/ReviewingView';
 import RsvpedView from '@/components/status/RsvpedView';
 import WaitlistView from '@/components/status/WaitlistView';
 import { useHacker } from '@/context/HackerContext';
+import { featureFlags } from '@/feature-flags';
 
 export default function Home() {
-  const {
-    profile,
-    status,
-    loading,
-    displayName,
-    refresh,
-    isWaitlistToAccepted,
-  } = useHacker();
+  const { profile, status, loading, displayName, refresh } = useHacker();
 
   const handleDeclineInvite = async () => {
     if (!profile) return;
@@ -40,14 +35,13 @@ export default function Home() {
         return <WaitlistView name={displayName} />;
       case 'accepted':
         return (
-          <AcceptedView
-            name={displayName}
-            onDecline={handleDeclineInvite}
-            isWaitlistToAccepted={isWaitlistToAccepted}
-          />
+          <AcceptedView name={displayName} onDecline={handleDeclineInvite} />
         );
       case 'rsvped':
-        return <RsvpedView />;
+      case 'checked-in':
+        return featureFlags.rsvpOpen ?
+            <RsvpedView />
+          : <HackerHomeView name={displayName} />;
       case 'declined':
         return <DeclinedView name={displayName} />;
       case 'no_apply':
