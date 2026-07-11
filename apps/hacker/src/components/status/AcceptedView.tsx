@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Typography } from '@hackthe6ix/ui';
 import Link from 'next/link';
-import RsvpCancelDialog from './RsvpCancelDialog';
+
 import { featureFlags } from '@/feature-flags';
 
 interface AcceptedViewProps {

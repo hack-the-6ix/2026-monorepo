@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 type StatusTone = 'success' | 'danger';
 
 import checkmarkIcon from '../../app/assets/checkmark.png';
@@ -24,7 +26,7 @@ const toneStyles: Record<StatusTone, { container: string; icon: string }> = {
 
 const StatusPill = ({ text, tone, className = '' }: StatusPillProps) => {
   const styles = toneStyles[tone];
-  const iconSrc = tone === 'success' ? checkmarkIcon.src : exclamationIcon.src;
+  const icon = tone === 'success' ? checkmarkIcon : exclamationIcon;
 
   return (
     <div
@@ -34,7 +36,7 @@ const StatusPill = ({ text, tone, className = '' }: StatusPillProps) => {
         className={`inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${styles.icon}`}
         aria-hidden="true"
       >
-        <img src={iconSrc} alt="" className="h-4 w-4" />
+        <Image src={icon} alt="" className="h-4 w-4" />
       </span>
       <span className="leading-none">{text}</span>
     </div>
