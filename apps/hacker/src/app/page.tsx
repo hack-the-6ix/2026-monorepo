@@ -8,7 +8,9 @@ import RejectedView from '@/components/status/RejectedView';
 import ReviewingView from '@/components/status/ReviewingView';
 import RsvpedView from '@/components/status/RsvpedView';
 import WaitlistView from '@/components/status/WaitlistView';
+import HackerHomeView from '@/components/status/HackerHomeView';
 import { useHacker } from '@/context/HackerContext';
+import { featureFlags } from '@/feature-flags';
 
 export default function Home() {
   const {
@@ -47,7 +49,9 @@ export default function Home() {
           />
         );
       case 'rsvped':
-        return <RsvpedView name={displayName} />;
+        return featureFlags.rsvpOpen ?
+            <RsvpedView />
+          : <HackerHomeView name={displayName} />;
       case 'declined':
         return <DeclinedView name={displayName} />;
       case 'no_apply':
