@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 
-const apiUrl = process.env.HT6_API_URL || 'https://v2.api.hackthe6ix.com/api';
+import { HT6_API_SERVER_URL } from '@/lib/api';
 
 async function proxyRequest(
   request: NextRequest,
@@ -8,7 +8,7 @@ async function proxyRequest(
 ) {
   const { path } = await params;
   const url = new URL(request.url);
-  const targetUrl = `${apiUrl}/${path.join('/')}${url.search}`;
+  const targetUrl = `${HT6_API_SERVER_URL}/${path.join('/')}${url.search}`;
   const headers = new Headers(request.headers);
 
   headers.delete('host');

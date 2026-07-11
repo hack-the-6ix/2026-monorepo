@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const apiUrl = process.env.HT6_API_URL || 'http://localhost:3000/api';
+import { HT6_API_SERVER_URL } from '@/lib/api';
 
 export async function GET(request: NextRequest) {
   const redirectUrl = request.nextUrl.searchParams.get('redirectUrl');
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const target = new URL(`${apiUrl}/discord/link`);
+  const target = new URL(`${HT6_API_SERVER_URL}/discord/link`);
   target.searchParams.set('redirectUrl', redirectUrl);
   target.searchParams.set('seasonCode', seasonCode);
 
