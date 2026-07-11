@@ -17,7 +17,7 @@ const RsvpCancelDialog = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm transition-all duration-300">
-      <div className="relative w-full max-w-75 rounded-[20px] border border-slate-800 bg-[#0b0f19] p-6 text-center shadow-2xl">
+      <div className="relative w-full max-w-85 rounded-[20px] border border-slate-800 bg-[#0b0f19] p-6 text-center shadow-2xl">
         <Typography
           as="h2"
           textSize="paragraph-lg"

@@ -5,4 +5,5 @@ export type HackerStatus =
   | 'accepted'
   | 'declined'
   | 'rsvped'
-  | 'no_apply';
+  | 'no_apply'
+  | 'checked-in';

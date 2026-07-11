@@ -5,21 +5,25 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { useHacker } from '@/context/HackerContext';
 import MenuLegs from '../app/assets/nav/legs.png';
 import MenuBody from '../app/assets/nav/radish_body.png';
 import MenuSwing from '../app/assets/nav/swing.png';
 
 import './index.css';
 
-const navLinks = [
-  { name: 'Application Status', href: '/' },
-  // { name: 'Team Formation', href: '/team-formation' },
-];
-
 export default function MobileNavbar() {
   const pathname = usePathname();
+  const { status } = useHacker();
   const [burgerVisible, setBurgerVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const canAccessRsvpForm = status === 'accepted' || status === 'waitlist';
+
+  const navLinks = [
+    { name: 'Dashboard', href: '/' },
+    ...(canAccessRsvpForm ? [{ name: 'RSVP Form', href: '/rsvp-form' }] : []),
+    // { name: 'Team Formation', href: '/team-formation' },
+  ];
 
   if (pathname === '/thank-you') {
     return null;
@@ -87,7 +91,9 @@ export default function MobileNavbar() {
             </div>
 
             {/* Turnip boi */}
-            <div className="absolute items-center pointer-events-none z-20 translate-y-40 animate-swing origin-top will-change-transform">
+            <div
+              className={`absolute items-center pointer-events-none z-20 ${canAccessRsvpForm ? 'translate-y-40' : 'translate-y-20'} animate-swing origin-top will-change-transform`}
+            >
               <div className="absolute flex flex-col items-center translate-y-17">
                 <Image
                   src={MenuBody}

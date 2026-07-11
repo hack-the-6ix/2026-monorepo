@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaArrowRightLong } from 'react-icons/fa6';
+import { FaChevronDown } from 'react-icons/fa6';
 import { Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
@@ -26,14 +26,83 @@ const quickLinkPanelClass =
   'rounded-[32px] border border-white/30 bg-[linear-gradient(293deg,rgba(255,255,255,0.40)_3.25%,rgba(16,219,255,0.40)_100%)]';
 
 const faqItems = [
-  'Where will the event be located?',
-  'What should I bring on event day?',
-  'Do I need a team before I arrive?',
-  'When is check-in and onboarding?',
+  {
+    title: 'Where will the event be located?',
+    content:
+      'This year we will be at the Bahen Centre on the University of Toronto’s St. Geroge Campus (40 St. George St, Toronto, ON M5S 2E4).',
+  },
+  {
+    title: 'What should I bring on event day?',
+    content:
+      'Make sure to bring your laptop (or desktop) and a piece of valid student ID or government ID! You can also bring a pillow and blanket if you want to get comfy. A detailed packing list will be sent to hackers who successfully RSVP.',
+  },
+  {
+    title: 'Do I need a team before I arrive?',
+    content:
+      'Nope! There will be many events and opportunities where you can find teammates throughout the hackathon. Teams can have between 1–4 members.',
+  },
+  {
+    title: 'When is check-in and onboarding?',
+    content:
+      'You must arrive before 11:59 PM EST on Friday July 17th, otherwise your admission may be given to another hacker.',
+  },
 ];
 
 const participantCodeHelpText =
   'Show this QR code to check-in, grab food, participate in activities, etc! We recommend screenshotting this.';
+
+function Disclosure({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="flex w-full flex-col gap-1 py-2">
+      <button
+        type="button"
+        className="group flex w-full cursor-pointer items-center  gap-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 rounded-md"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+      >
+        <FaChevronDown
+          className="h-3.5 w-3.5 shrink-0 text-white/60 transition-transform duration-200 ease-in-out group-hover:text-yellow-300"
+          style={{
+            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+          }}
+        />
+        <Typography
+          as="span"
+          textSize="paragraph-sm"
+          textWeight="medium"
+          textColor="text-white"
+          className="opacity-90 transition group-hover:text-yellow-300 group-hover:opacity-100"
+        >
+          {title}
+        </Typography>
+      </button>
+
+      <div
+        className={`grid w-full transition-all duration-300 ease-in-out ${open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+        aria-hidden={!open}
+      >
+        <div className="overflow-hidden">
+          <Typography
+            as="div"
+            textSize="paragraph-sm"
+            textWeight="regular"
+            textColor="text-white"
+            className="whitespace-pre-line pb-2 pt-1 opacity-75"
+          >
+            {children}
+          </Typography>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const HackerHomeView = ({ name }: HackerHomeViewProps) => {
   const { profile, hackerRole, refresh } = useHacker();
@@ -46,13 +115,9 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
     profile?.userId ?
       `/api/ht6/users/${encodeURIComponent(profile.userId)}/qr`
     : null;
-  const discordCommand =
-    profile?.email ?
-      `!verify ${profile.email}`
-    : '/verify your_email@example.com';
 
   return (
-    <div className="mx-auto grid min-h-[80vh] w-full max-w-340 grid-cols-1 gap-30 px-4 pb-12 pt-8 lg:grid-cols-[1fr_320px] lg:px-10">
+    <div className="mx-auto grid min-h-[80vh] w-full max-w-340 grid-cols-1 gap-30 px-8 pb-12 pt-8 lg:grid-cols-[1fr_320px] lg:px-10">
       <section className="flex flex-col gap-7 lg:pt-12">
         <div className="space-y-3">
           <Typography
@@ -98,20 +163,20 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
             </span>
           </span>
 
-          {hasCancelledRsvp ?
-            <span className="text-white/90">RSVP updated</span>
-          : <button
-              type="button"
-              onClick={() => setIsCancelDialogOpen(true)}
-              className="text-left font-normal text-white transition hover:text-white/85 disabled:cursor-not-allowed disabled:opacity-70"
-              disabled={isCancelling}
-            >
-              Can’t attend anymore? {'  '}
-              <span className="font-semibold text-yellow-300 underline decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200">
-                Cancel your RSVP
-              </span>
-            </button>
-          }
+          {hackerRole?.status != 'checked-in' &&
+            (hasCancelledRsvp ?
+              <span className="text-white/90">RSVP updated</span>
+            : <button
+                type="button"
+                onClick={() => setIsCancelDialogOpen(true)}
+                className="text-left font-normal text-white transition hover:text-white/85 disabled:cursor-not-allowed disabled:opacity-70"
+                disabled={isCancelling}
+              >
+                Can’t attend anymore? {'  '}
+                <span className="font-semibold text-yellow-300 underline decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200">
+                  Cancel your RSVP
+                </span>
+              </button>)}
         </div>
         <div
           className={`${glassPanelClass} flex items-end justify-between gap-4 px-5 py-6`}
@@ -137,13 +202,14 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
             </Typography>
           </div>
           <a
-            href="https://hackthe6ix.com"
+            // TODO: UPDATE TO HAVE ACTUAL SCHEDULE
+            // href="https://hackthe6ix.com"
             target="_blank"
             rel="noreferrer"
-            className="text-sm font-semibold text-yellow-300 underline decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200"
+            className="text-sm font-semibold text-yellow-300 decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200"
           >
-            See schedule{' '}
-            <FaArrowRightLong className="inline-block align-middle" />
+            Coming soon{' '}
+            {/* <FaArrowRightLong className="inline-block align-middle" /> */}
           </a>
         </div>
 
@@ -157,27 +223,11 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
           >
             Pre-Hackathon FAQ
           </Typography>
-          <div className="grid gap-x-8 gap-y-2 md:grid-cols-2">
+          <div className="grid grid-cols-2 w-full gap-x-10">
             {faqItems.map((item) => (
-              <button
-                key={item}
-                type="button"
-                onClick={(event) => event.preventDefault()}
-                className="group inline-flex cursor-default items-center gap-2 text-left text-white/90 transition hover:text-white"
-              >
-                <span className="text-sm text-white/60 transition group-hover:text-yellow-300">
-                  {'>'}
-                </span>
-                <Typography
-                  as="span"
-                  textSize="paragraph-sm"
-                  textWeight="medium"
-                  textColor="text-white"
-                  className="opacity-90"
-                >
-                  {item}
-                </Typography>
-              </button>
+              <Disclosure key={item.title} title={item.title}>
+                {item.content}
+              </Disclosure>
             ))}
           </div>
         </div>
@@ -220,15 +270,17 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
                 alt="Participant QR code"
                 width={256}
                 height={256}
+                unoptimized
                 className="aspect-square w-full rounded-xl border border-black/20 object-cover"
-                onError={() => {
+                onError={(e) => {
                   setQrLoadFailed(true);
+                  console.log(e);
                 }}
               />
             : <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-black/20 bg-[linear-gradient(0deg,rgba(0,0,0,0.09)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.09)_1px,transparent_1px)] bg-size-[16px_16px]">
                 <div className="absolute inset-0 m-auto h-12 w-12 rounded-xl bg-[#65f4d4] shadow-[0_0_20px_rgba(101,244,212,0.75)]" />
                 <div className="absolute inset-0 m-auto flex h-12 w-12 items-center justify-center text-sm font-black text-[#112031]">
-                  HT6
+                  ht6
                 </div>
               </div>
             }
@@ -252,10 +304,10 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
         </div>
 
         <a
-          href="https://discord.gg/hackthe6ix"
+          href="https://discord.gg/Nj9jTRcBX"
           target="_blank"
           rel="noreferrer"
-          className={`${quickLinkPanelClass} block min-h-[150px] px-4 py-4 transition hover:border-teal-300/60`}
+          className={`${quickLinkPanelClass} block px-4 py-4 transition hover:border-teal-300/60`}
         >
           <div className="flex h-full flex-col gap-4">
             <div className="flex items-center justify-between gap-3 pt-1">
@@ -281,23 +333,11 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
                 className="h-5 w-5 shrink-0"
               />
             </div>
-            <Typography
-              as="p"
-              textSize="label"
-              textWeight="medium"
-              textColor="text-white"
-              className="opacity-90"
-            >
-              Issue the command in #verification channel
-            </Typography>
-            <div className="mt-auto rounded-full bg-white/15 px-3 py-2 text-center text-[11px] text-white/90">
-              {discordCommand}
-            </div>
           </div>
         </a>
 
         <a
-          href="#"
+          href="https://hackthe6ix.notion.site/hacker-handbook"
           className={`${quickLinkPanelClass} block px-4 py-3 transition hover:border-teal-300/60`}
         >
           <div className="mb-1 flex items-center justify-between gap-3">
@@ -326,7 +366,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
         </a>
 
         <a
-          href="https://devpost.com"
+          href="https://hackthe6ix.notion.site/hacker-handbook?pvs=74"
           target="_blank"
           rel="noreferrer"
           className={`${quickLinkPanelClass} block px-4 py-3 transition hover:border-teal-300/60`}
