@@ -134,7 +134,8 @@ const RSVPForm = () => {
         textWeight="bold"
       >
         NOTE: THE RSVP PERIOD HAS PASSED. THIS FORM IS PRIMARILY FOR WALK-IN
-        PURPOSES. FILLING OUT THIS FORM DOES NOT INDICATE ADMISSION TO THE EVENT
+        PURPOSES. <br />
+        FILLING OUT THIS FORM DOES NOT INDICATE ADMISSION TO THE EVENT
       </Typography>
       <Typography
         textSize="paragraph-lg"
