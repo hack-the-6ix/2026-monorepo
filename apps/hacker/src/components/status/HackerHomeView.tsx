@@ -366,7 +366,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
         </a>
 
         <a
-          href="https://hackthe6ix.notion.site/hacker-handbook?pvs=74"
+          href="http://hack-the-6ix-2026.devpost.com/"
           target="_blank"
           rel="noreferrer"
           className={`${quickLinkPanelClass} block px-4 py-3 transition hover:border-teal-300/60`}
