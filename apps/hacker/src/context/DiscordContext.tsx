@@ -112,11 +112,13 @@ export function DiscordProvider({ children }: { children: ReactNode }) {
 
     oauthProcessedRef.current = true;
     const message = discordMessages[discordStatus] ?? null;
-    if (message) {
-      showToast(message);
-    }
     router.replace(pathname, { scroll: false });
-    void refresh();
+    queueMicrotask(() => {
+      if (message) {
+        showToast(message);
+      }
+      void refresh();
+    });
   }, [searchParams, router, pathname, refresh, showToast]);
 
   useEffect(() => {
@@ -128,10 +130,7 @@ export function DiscordProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (shouldShow) {
-      void refresh();
-    } else {
-      setDiscord(null);
-      setLoading(false);
+      queueMicrotask(() => void refresh());
     }
   }, [shouldShow, refresh]);
 
@@ -162,8 +161,8 @@ export function DiscordProvider({ children }: { children: ReactNode }) {
   return (
     <DiscordContext.Provider
       value={{
-        discord,
-        loading,
+        discord: shouldShow ? discord : null,
+        loading: shouldShow ? loading : false,
         actionLoading,
         shouldShow,
         link,

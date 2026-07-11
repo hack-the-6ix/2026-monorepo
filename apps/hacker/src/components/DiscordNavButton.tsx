@@ -1,7 +1,7 @@
 'use client';
 
-import { Button, Typography } from '@hackthe6ix/ui';
 import { FaDiscord } from 'react-icons/fa6';
+import { Button, Typography } from '@hackthe6ix/ui';
 
 import { useDiscord } from '@/context/DiscordContext';
 
@@ -29,7 +29,7 @@ export default function DiscordNavButton() {
 
   return (
     <div className="flex w-full flex-col gap-2">
-      {discord?.linked ? (
+      {discord?.linked ?
         <Button
           kind="tertiary"
           destructive
@@ -39,8 +39,7 @@ export default function DiscordNavButton() {
         >
           Unlink Discord
         </Button>
-      ) : (
-        <Button
+      : <Button
           kind="primary"
           className="w-full px-16 rounded-full"
           disabled={actionLoading}
@@ -49,7 +48,7 @@ export default function DiscordNavButton() {
         >
           Link Discord
         </Button>
-      )}
+      }
     </div>
   );
 }

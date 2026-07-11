@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import DiscordNavButton from '@/components/DiscordNavButton';
-
 import MenuLegs from '../app/assets/nav/legs.png';
 import MenuBody from '../app/assets/nav/radish_body.png';
 import MenuSwing from '../app/assets/nav/swing.png';

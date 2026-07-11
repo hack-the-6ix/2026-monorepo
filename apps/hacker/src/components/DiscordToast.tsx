@@ -12,7 +12,10 @@ interface DiscordToastProps {
   onDismiss: () => void;
 }
 
-export default function DiscordToast({ message, onDismiss }: DiscordToastProps) {
+export default function DiscordToast({
+  message,
+  onDismiss,
+}: DiscordToastProps) {
   return (
     <div
       className="pointer-events-none fixed inset-x-0 bottom-6 z-[200] flex justify-center px-4"

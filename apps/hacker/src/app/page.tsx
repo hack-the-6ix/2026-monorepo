@@ -1,7 +1,6 @@
 'use client';
 
 import { changeHackerRsvpStatus } from '@/actions';
-
 import AcceptedView from '@/components/status/AcceptedView';
 import DeclinedView from '@/components/status/DeclinedView';
 import NotAppliedView from '@/components/status/NotAppliedView';
@@ -65,7 +64,5 @@ export default function Home() {
     );
   }
 
-  return (
-    <div className="relative min-h-screen">{renderStatusView()}</div>
-  );
+  return <div className="relative min-h-screen">{renderStatusView()}</div>;
 }
