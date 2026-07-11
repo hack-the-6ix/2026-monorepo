@@ -75,10 +75,5 @@ export default function Home() {
     );
   }
 
-  return (
-    <div className="relative min-h-screen">
-      {/* Dynamic application status layout */}
-      {renderStatusView()}
-    </div>
-  );
+  return <div className="relative min-h-screen">{renderStatusView()}</div>;
 }
