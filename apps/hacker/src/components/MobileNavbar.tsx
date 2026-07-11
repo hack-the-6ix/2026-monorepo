@@ -99,140 +99,141 @@ export default function MobileNavbar() {
           <div
             className={`fixed inset-x-0 top-0 z-120 md:hidden flex justify-center ${isClosing ? 'animate-menu-hide' : 'animate-menu-reveal'}`}
           >
-            <div className="relative w-full bg-[linear-gradient(210deg,#14204C,#21657F)] rounded-b-3xl py-15 pb-15 flex flex-col gap-5 z-120 items-center">
-              <div className="absolute inset-0 bg-black/50 mix-blend-overlay rounded-b-3xl pointer-events-none" />
+            {/* Wrapper that holds both siblings so they stack relative to each other */}
+            <div className="relative w-full">
+              {/* Menu */}
+              <div className="relative w-full bg-[linear-gradient(210deg,#14204C,#21657F)] rounded-b-3xl py-15 pb-15 flex flex-col gap-5 z-10 items-center">
+                <div className="absolute inset-0 bg-black/50 mix-blend-overlay rounded-b-3xl pointer-events-none" />
 
-              {Object.entries(groupedRoles).map(([roleType, pages]) => {
-                const cfg = roleConfig[roleType as RoleType];
-                if (!cfg) return null;
+                {Object.entries(groupedRoles).map(([roleType, pages]) => {
+                  const cfg = roleConfig[roleType as RoleType];
+                  if (!cfg) return null;
 
-                return (
-                  <div
-                    key={roleType}
-                    className="flex flex-col items-center gap-1"
-                  >
-                    <div className="flex items-center gap-1.5">
-                      <span
-                        className="inline-block size-1.5 rounded-full"
-                        style={{ backgroundColor: cfg.hex }}
-                      />
+                  return (
+                    <div
+                      key={roleType}
+                      className="flex flex-col items-center gap-1"
+                    >
+                      <div className="flex items-center gap-1.5">
+                        <span
+                          className="inline-block size-1.5 rounded-full"
+                          style={{ backgroundColor: cfg.hex }}
+                        />
+                        <Typography
+                          textSize="label"
+                          textWeight="bold"
+                          className="uppercase tracking-wider"
+                          style={{ color: cfg.hex }}
+                        >
+                          {cfg.label}
+                        </Typography>
+                      </div>
+                      {pages.map((page) => {
+                        const isActive = activeTab === page.id;
+                        return (
+                          <Link
+                            key={page.id}
+                            href={`/?tab=${page.id}`}
+                            onClick={closeBurger}
+                          >
+                            <Typography
+                              textSize="paragraph-lg"
+                              textWeight="bold"
+                              style={{
+                                color: isActive ? cfg.hex : undefined,
+                              }}
+                              className={isActive ? '' : 'text-white'}
+                            >
+                              {page.title}
+                            </Typography>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+
+                {rolePages.length > 0 && eventPage && (
+                  <div className="w-1/2 border-t border-white/10" />
+                )}
+
+                {eventPage && (
+                  <Link href="/?tab=event" onClick={closeBurger}>
+                    <div className="flex flex-col items-center">
                       <Typography
                         textSize="label"
                         textWeight="bold"
-                        className="uppercase tracking-wider"
-                        style={{ color: cfg.hex }}
+                        className="uppercase tracking-wider text-white/60"
                       >
-                        {cfg.label}
+                        Event
+                      </Typography>
+                      <Typography
+                        textSize="paragraph-lg"
+                        textWeight="bold"
+                        className={
+                          activeTab === 'event' ? 'text-primary-300' : (
+                            'text-white'
+                          )
+                        }
+                      >
+                        Schedule &amp; Materials
                       </Typography>
                     </div>
-                    {pages.map((page) => {
-                      const isActive = activeTab === page.id;
-                      return (
-                        <Link
-                          key={page.id}
-                          href={`/?tab=${page.id}`}
-                          onClick={closeBurger}
-                        >
-                          <Typography
-                            textSize="paragraph-lg"
-                            textWeight="bold"
-                            style={{
-                              color: isActive ? cfg.hex : undefined,
-                            }}
-                            className={isActive ? '' : 'text-white'}
-                          >
-                            {page.title}
-                          </Typography>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                );
-              })}
+                  </Link>
+                )}
 
-              {rolePages.length > 0 && eventPage && (
-                <div className="w-1/2 border-t border-white/10" />
-              )}
-
-              {eventPage && (
-                <Link href="/?tab=event" onClick={closeBurger}>
-                  <div className="flex flex-col items-center">
-                    <Typography
-                      textSize="label"
-                      textWeight="bold"
-                      className="uppercase tracking-wider text-white/60"
-                    >
-                      Event
-                    </Typography>
+                {canAccessRsvpForm && (
+                  <Link href="/rsvp-form" onClick={closeBurger}>
                     <Typography
                       textSize="paragraph-lg"
                       textWeight="bold"
                       className={
-                        activeTab === 'event' ? 'text-primary-300' : (
+                        pathname === '/rsvp-form' ? 'text-primary-300' : (
                           'text-white'
                         )
                       }
                     >
-                      Schedule &amp; Materials
+                      RSVP Form
                     </Typography>
+                  </Link>
+                )}
+
+                {(['rsvped', 'waitlist', 'checked-in'].includes(status) ||
+                  roleTypes.some((r) => r !== 'hacker')) && (
+                  <div className="relative z-40 w-full max-w-xs px-8 mt-4">
+                    <DiscordNavButton />
                   </div>
-                </Link>
-              )}
-
-              {canAccessRsvpForm && (
-                <Link href="/rsvp-form" onClick={closeBurger}>
-                  <Typography
-                    textSize="paragraph-lg"
-                    textWeight="bold"
-                    className={
-                      pathname === '/rsvp-form' ? 'text-primary-300' : (
-                        'text-white'
-                      )
-                    }
-                  >
-                    RSVP Form
-                  </Typography>
-                </Link>
-              )}
-
-              {(['rsvped', 'waitlist', 'checked-in'].includes(status) ||
-                roleTypes.some((r) => r !== 'hacker')) && (
-                <div className="relative z-40 w-full max-w-xs px-8 mt-4">
-                  <DiscordNavButton />
-                </div>
-              )}
-            </div>
-
-            <div
-              className={`absolute items-center pointer-events-none z-20 ${
-                canAccessRsvpForm || eventPage ? 'translate-y-56' : (
-                  'translate-y-40'
-                )
-              } animate-swing origin-top will-change-transform`}
-            >
-              <div className="absolute flex flex-col items-center translate-y-17">
-                <Image
-                  src={MenuBody}
-                  alt="radish body"
-                  width={180}
-                  height={180}
-                  className="z-30"
-                />
-                <Image
-                  src={MenuLegs}
-                  alt="radish legs"
-                  width={80}
-                  height={80}
-                  className="animate-dangle origin-top will-change-transform -translate-y-6 -translate-x-0.5 z-10"
-                />
+                )}
               </div>
-              <Image
-                src={MenuSwing}
-                alt="swing set"
-                width={150}
-                height={150}
-                className="mt-4"
-              />
+
+              {/* Turnip boi */}
+              <div className="absolute top-full inset-x-0 flex justify-center pointer-events-none z-0 -mt-6">
+                <div className="flex flex-col items-center animate-swing origin-top will-change-transform">
+                  <div className="absolute flex flex-col items-center translate-y-17">
+                    <Image
+                      src={MenuBody}
+                      alt="radish body"
+                      width={180}
+                      height={180}
+                      className="z-30"
+                    />
+                    <Image
+                      src={MenuLegs}
+                      alt="radish legs"
+                      width={80}
+                      height={80}
+                      className="animate-dangle origin-top will-change-transform -translate-y-6 -translate-x-0.5 z-10"
+                    />
+                  </div>
+                  <Image
+                    src={MenuSwing}
+                    alt="swing set"
+                    width={150}
+                    height={150}
+                    className="mt-4"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </>
