@@ -184,9 +184,8 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="mt-6 flex w-full flex-col items-stretch gap-4">
-          {['rsvped', 'waitlist', 'checked-in'].includes(status) && (
-            <DiscordNavButton />
-          )}
+          {(['rsvped', 'waitlist', 'checked-in'].includes(status) ||
+            roleTypes.some((r) => r !== 'hacker')) && <DiscordNavButton />}
           <Button
             kind="secondary"
             className="w-full px-16 rounded-full"
