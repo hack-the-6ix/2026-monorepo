@@ -96,7 +96,7 @@ export default function MobileNavbar() {
 
             {/* Turnip boi */}
             <div
-              className={`absolute items-center pointer-events-none z-20 ${canAccessRsvpForm ? 'translate-y-40' : 'translate-y-20'} animate-swing origin-top will-change-transform`}
+              className={`absolute items-center pointer-events-none z-20 ${canAccessRsvpForm ? 'translate-y-50' : 'translate-y-40'} animate-swing origin-top will-change-transform`}
             >
               <div className="absolute flex flex-col items-center translate-y-17">
                 <Image

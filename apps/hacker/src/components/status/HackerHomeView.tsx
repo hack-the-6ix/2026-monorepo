@@ -117,7 +117,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
     : null;
 
   return (
-    <div className="mx-auto grid min-h-[80vh] w-full max-w-340 grid-cols-1 gap-30 px-8 pb-12 pt-8 lg:grid-cols-[1fr_320px] lg:px-10">
+    <div className="mx-auto grid min-h-[80vh] w-full max-w-340 grid-cols-1 gap-10 md:gap-30 px-8 pb-12 pt-8 lg:grid-cols-[1fr_320px] lg:px-10">
       <section className="flex flex-col gap-7 lg:pt-12">
         <div className="space-y-3">
           <Typography
@@ -223,7 +223,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
           >
             Pre-Hackathon FAQ
           </Typography>
-          <div className="grid grid-cols-2 w-full gap-x-10">
+          <div className="flex flex-col md:grid md:grid-cols-2 w-full gap-x-10">
             {faqItems.map((item) => (
               <Disclosure key={item.title} title={item.title}>
                 {item.content}
