@@ -153,13 +153,15 @@ export async function changeHackerRsvpStatus(
   seasonCode: string,
 ): Promise<MessageResponse> {
   const body = {
-    seasonCode: seasonCode,
     response: status,
   };
-  return fetchHt6<MessageResponse>(`/hackers/${userId}/rsvp`, {
-    method: 'POST',
-    body,
-  });
+  return fetchHt6<MessageResponse>(
+    `/seasonCode/${seasonCode}/hackers/${userId}/rsvp`,
+    {
+      method: 'POST',
+      body,
+    },
+  );
 }
 
 const rsvpFormId = 'd28f0204-e7a4-4ea3-b2a2-852b67a483ae';
