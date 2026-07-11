@@ -38,6 +38,7 @@ export interface HackerRole {
   seasonCode: string;
   score: number;
   status: string | null;
+  state?: string | null;
   nfcId: string | null;
   teamId: string | null;
 }
@@ -186,5 +187,13 @@ export async function upsertFormResponse(
   >(path, {
     method: 'POST',
     body,
+  });
+}
+
+export async function getUserIdFromNfc(
+  nfcId: string,
+): Promise<{ userId: string }> {
+  return fetchHt6<{ userId: string }>(`/seasons/S26/nfc/id/${nfcId}`, {
+    method: 'GET',
   });
 }

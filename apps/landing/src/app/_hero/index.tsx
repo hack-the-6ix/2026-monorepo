@@ -5,7 +5,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import Section from '../../components/Section';
-import { EVENT_INFO, FORM_CONTENT, HERO_CONTENT } from '../_hero/constants';
+import {
+  DASHBOARD_URL,
+  EVENT_INFO,
+  FORM_CONTENT,
+  HERO_CONTENT,
+} from '../_hero/constants';
 import { assets } from './assets';
 import Banner from './Banner';
 import HeroRadish from './HeroRadish';
@@ -527,9 +532,9 @@ export default function Hero() {
               <div>
                 <Button
                   as={Link}
-                  href="https://2026.apply.hackthe6ix.com"
+                  href={DASHBOARD_URL}
                   kind="primary"
-                  aria-label="Apply Now"
+                  aria-label="Go to Dashboard"
                   className="shrink-0 [@media(max-width:713.68px)]:w-[min(100%,406px)]"
                 >
                   {FORM_CONTENT.buttonText}

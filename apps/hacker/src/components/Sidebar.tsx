@@ -7,18 +7,17 @@ import { usePathname } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
 import DiscordNavButton from '@/components/DiscordNavButton';
-import { useHacker } from '@/context/HackerContext';
 
 const Sidebar = () => {
   const pathname = usePathname();
 
-  const { hackerRole } = useHacker();
-  const teamHref = hackerRole?.teamId ? '/team' : '/team-formation';
+  // const { hackerRole } = useHacker();
+  // const teamHref = hackerRole?.teamId ? '/team' : '/team-formation';
   const isActive = (href: string) => pathname === href;
   return (
     <>
       <nav className="flex flex-col h-full py-12 px-6">
-        <div className="mt-8 mb-12 flex justify-center">
+        <div className="mt-4 mb-12 flex justify-center">
           <Image src={Logo} alt="Hack the 6ix Logo" />
         </div>
         <div className="flex flex-col items-center">
@@ -30,14 +29,14 @@ const Sidebar = () => {
           >
             Application Status
           </Button>
-          <Button
+          {/* <Button
             as={Link}
             href={teamHref}
             kind="tertiary"
             className={`text-primary-400 ${isActive(teamHref) ? 'underline' : ''}`}
           >
             Team Formation
-          </Button>
+          </Button> */}
         </div>
         <div className="mt-auto flex w-full flex-col items-stretch text-center">
           <div className="flex items-center justify-center">
