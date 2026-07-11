@@ -67,12 +67,12 @@ interface DiscordContextValue {
 const DiscordContext = createContext<DiscordContextValue | null>(null);
 
 export function DiscordProvider({ children }: { children: ReactNode }) {
-  const { status } = useHacker();
+  const { roleTypes } = useHacker();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const shouldShow = status === 'rsvped';
+  const shouldShow = roleTypes.length > 0;
 
   const [discord, setDiscord] = useState<DiscordMe | null>(null);
   const [loading, setLoading] = useState(false);

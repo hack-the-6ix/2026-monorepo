@@ -7,3 +7,5 @@ export type HackerStatus =
   | 'rsvped'
   | 'no_apply'
   | 'checked-in';
+
+export type RoleType = 'hacker' | 'sponsor' | 'mentor' | 'volunteer' | 'admin';

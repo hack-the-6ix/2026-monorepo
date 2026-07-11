@@ -117,7 +117,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
     : null;
 
   return (
-    <div className="mx-auto grid min-h-[80vh] w-full max-w-340 grid-cols-1 gap-10 md:gap-30 px-8 pb-12 pt-8 md:grid-cols-[1fr_320px] lg:px-10">
+    <div className="mx-auto grid min-h-[80vh] w-full max-w-340 grid-cols-1 gap-10 md:gap-30 px-8 pb-12 pt-20 md:pt-16 md:grid-cols-[1fr_320px] lg:px-10">
       <section className="flex flex-col gap-7 lg:pt-12">
         <div className="space-y-3">
           <Typography

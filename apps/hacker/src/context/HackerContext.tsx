@@ -9,7 +9,7 @@ import {
 } from 'react';
 
 import { getHackerRole, getMe, HackerRole, UserProfile } from '@/actions';
-import { HackerStatus } from '@/types/status';
+import { HackerStatus, RoleType } from '@/types/status';
 
 const hackerStatusMap: Record<string, HackerStatus> = {
   'no apply': 'no_apply',
@@ -35,6 +35,25 @@ function getDisplayName(profile: UserProfile | null) {
   return emailName || 'Hacker';
 }
 
+function getUserRoleTypes(profile: UserProfile | null): RoleType[] {
+  if (!profile) return [];
+  const types = new Set<RoleType>();
+  for (const role of profile.roles) {
+    if (typeof role === 'object' && role !== null) {
+      const r = role as { type: string };
+      if (
+        r.type === 'hacker' ||
+        r.type === 'sponsor' ||
+        r.type === 'mentor' ||
+        r.type === 'volunteer'
+      ) {
+        types.add(r.type);
+      }
+    }
+  }
+  return Array.from(types);
+}
+
 interface HackerContextValue {
   profile: UserProfile | null;
   hackerRole: HackerRole | null;
@@ -44,6 +63,7 @@ interface HackerContextValue {
   loading: boolean;
   error: string | null;
   refresh: () => Promise<void>;
+  roleTypes: RoleType[];
 }
 
 const HackerContext = createContext<HackerContextValue | null>(null);
@@ -78,6 +98,12 @@ export function HackerProvider({ children }: { children: ReactNode }) {
 
   const isWaitlistToAccepted = hackerRole?.state === 'waitlist_to_accepted';
 
+  const baseRoleTypes = getUserRoleTypes(profile);
+  const roleTypes =
+    profile?.isAdmin ?
+      [...new Set([...baseRoleTypes, 'admin' as const])]
+    : baseRoleTypes;
+
   return (
     <HackerContext.Provider
       value={{
@@ -89,6 +115,7 @@ export function HackerProvider({ children }: { children: ReactNode }) {
         loading,
         error,
         refresh,
+        roleTypes,
       }}
     >
       {children}

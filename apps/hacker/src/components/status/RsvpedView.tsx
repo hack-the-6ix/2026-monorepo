@@ -1,12 +1,13 @@
-import { useHacker } from '@/context/HackerContext';
-import { Typography } from '@hackthe6ix/ui';
 import {
+  FaDownload,
   FaFacebook,
   FaInstagram,
   FaLinkedin,
   FaXTwitter,
-  FaDownload,
 } from 'react-icons/fa6';
+import { Typography } from '@hackthe6ix/ui';
+
+import { useHacker } from '@/context/HackerContext';
 import ticketImage from '../../app/assets/ticket.png';
 import TicketImage from '../TicketImage';
 
