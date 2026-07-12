@@ -49,9 +49,8 @@ export type FormData = z.infer<typeof FormDataSchema>;
 
 const RSVPForm = () => {
   const router = useRouter();
-  const { profile, status, loading, refresh, isWaitlistToAccepted } =
-    useHacker();
-  const canRsvp = featureFlags.teamFormationOpen || isWaitlistToAccepted;
+  const { profile, status, loading, refresh } = useHacker();
+  const canRsvp = featureFlags.teamFormationOpen;
   useEffect(() => {
     if (loading) return;
     if (status !== 'accepted' && status !== 'waitlist') {

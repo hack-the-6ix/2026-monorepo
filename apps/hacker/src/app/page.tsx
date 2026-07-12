@@ -1,73 +1,138 @@
 'use client';
 
-import { changeHackerRsvpStatus } from '@/actions';
-import AcceptedView from '@/components/status/AcceptedView';
-import DeclinedView from '@/components/status/DeclinedView';
-import HackerHomeView from '@/components/status/HackerHomeView';
-import NotAppliedView from '@/components/status/NotAppliedView';
-import RejectedView from '@/components/status/RejectedView';
-import ReviewingView from '@/components/status/ReviewingView';
+import { Suspense, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
+
+import EventDashboard from '@/components/dashboards/EventDashboard';
+import HackerDashboard from '@/components/dashboards/HackerDashboard';
+import MentorDashboard from '@/components/dashboards/MentorDashboard';
+import OrganizerDashboard from '@/components/dashboards/OrganizerDashboard';
+import SponsorDashboard from '@/components/dashboards/SponsorDashboard';
+import VolunteerDashboard from '@/components/dashboards/VolunteerDashboard';
 import RsvpedView from '@/components/status/RsvpedView';
-import WaitlistView from '@/components/status/WaitlistView';
 import { useHacker } from '@/context/HackerContext';
-import { featureFlags } from '@/feature-flags';
+import {
+  getAvailablePages,
+  registerDashboardPage,
+} from '@/lib/dashboard-registry';
 
-export default function Home() {
-  const { profile, status, loading, displayName, refresh } = useHacker();
+registerDashboardPage({
+  id: 'hacker',
+  title: 'Home',
+  roles: ['hacker'],
+  statuses: ['rsvped', 'checked-in'],
+  component: HackerDashboard,
+});
+registerDashboardPage({
+  id: 'ticket',
+  title: 'My Ticket',
+  roles: ['hacker'],
+  statuses: ['rsvped', 'checked-in'],
+  component: RsvpedView,
+});
+registerDashboardPage({
+  id: 'sponsor',
+  title: 'Home',
+  roles: ['sponsor'],
+  component: SponsorDashboard,
+});
+registerDashboardPage({
+  id: 'volunteer',
+  title: 'Home',
+  roles: ['volunteer'],
+  component: VolunteerDashboard,
+});
+registerDashboardPage({
+  id: 'mentor',
+  title: 'Home',
+  roles: ['mentor'],
+  component: MentorDashboard,
+});
+registerDashboardPage({
+  id: 'organizer',
+  title: 'Home',
+  roles: ['admin'],
+  component: OrganizerDashboard,
+});
+registerDashboardPage({
+  id: 'event',
+  title: 'Schedule & Materials',
+  roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
+  statuses: ['rsvped', 'checked-in'],
+  component: EventDashboard,
+});
 
-  const handleDeclineInvite = async () => {
-    if (!profile) return;
-    try {
-      await changeHackerRsvpStatus(profile.userId, 'declined', 'S26');
-      await refresh();
-    } catch (error) {
-      console.error('Failed to decline invite:', error);
-    }
-  };
+function Spinner() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="size-8 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+    </div>
+  );
+}
 
-  const renderStatusView = () => {
-    switch (status) {
-      case 'under_review':
-        return <ReviewingView name={displayName} />;
-      case 'rejected':
-        return <RejectedView name={displayName} />;
-      case 'waitlist':
-        return <WaitlistView name={displayName} />;
-      case 'accepted':
-        return (
-          <AcceptedView name={displayName} onDecline={handleDeclineInvite} />
-        );
-      case 'rsvped':
-      case 'checked-in':
-        return featureFlags.rsvpOpen ?
-            <RsvpedView />
-          : <HackerHomeView name={displayName} />;
-      case 'declined':
-        return <DeclinedView name={displayName} />;
-      case 'no_apply':
-        return <NotAppliedView name={displayName} />;
-      default:
-        return <NotAppliedView name={displayName} />;
-    }
-  };
+function HomeContent() {
+  const searchParams = useSearchParams();
+  const { loading, roleTypes, status } = useHacker();
+
+  const pages = useMemo(
+    () => getAvailablePages(roleTypes, status),
+    [roleTypes, status],
+  );
 
   if (loading) {
+    return <Spinner />;
+  }
+
+  const isHackerNotRsvped =
+    roleTypes?.length === 1 &&
+    roleTypes[0] === 'hacker' &&
+    status &&
+    !['rsvped', 'checked-in'].includes(status);
+
+  if (isHackerNotRsvped) {
     return (
-      <div className="flex min-h-screen items-center justify-center px-6 text-center text-white">
-        <div className="max-w-md space-y-3 rounded-3xl border border-white/10 bg-black/20 px-6 py-8 backdrop-blur-md">
-          <p className="text-sm uppercase tracking-[0.25em] text-yellow-300">
-            Loading
-          </p>
-          <h1 className="text-3xl font-semibold">
-            Fetching your application status
-          </h1>
-          <p className="text-sm text-white/80">
-            We&apos;re checking the backend for the current hacker profile.
-          </p>
-        </div>
+      <div className="relative min-h-screen">
+        <HackerDashboard />
       </div>
     );
   }
 
-  return <div className="relative min-h-screen">{renderStatusView()}</div>;
+  if (pages.length === 0) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center px-8 text-center pt-8">
+        <p className="text-sm uppercase tracking-[0.25em] text-yellow-300">
+          Heya!
+        </p>
+        <h1 className="mt-3 text-3xl font-semibold text-white">
+          Unfortunately,{' '}
+          <span className="text-primary-300">
+            hacker applications are closed
+          </span>
+        </h1>
+        <p className="mt-4 max-w-md text-lg text-white/80">
+          Please come back next year to apply for
+          <br />
+          Hack the 6ix 2027.
+        </p>
+        <p className="mt-8 max-w-md text-sm text-white/50">
+          p.s. If you are a sponsor, volunteer, or mentor, reach out to a Hack
+          the 6ix exec to set up your account.
+        </p>
+      </div>
+    );
+  }
+
+  const tab = searchParams.get('tab') || pages[0]?.id;
+  const activePage = pages.find((p) => p.id === tab) || pages[0];
+
+  const Component = activePage.component;
+  return <Component />;
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <HomeContent />
+    </Suspense>
+  );
 }

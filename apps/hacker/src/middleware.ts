@@ -8,11 +8,8 @@ const apiUrl =
   'https://v2.api.hackthe6ix.com/api';
 
 export async function middleware(request: NextRequest) {
-  if (
-    request.nextUrl.pathname === '/team' ||
-    request.nextUrl.pathname === '/team-formation'
-  ) {
-    return NextResponse.redirect(new URL('/', request.url));
+  if (request.nextUrl.pathname.startsWith('/share')) {
+    return NextResponse.next();
   }
   try {
     const res = await fetchWithCookies(request, `${apiUrl}/auth/check`, {

@@ -1,3 +1,5 @@
+import { HT6_API_CLIENT_URL } from '@/lib/api';
+
 export function getApiErrorMessage(error: unknown, fallback: string) {
   if (
     typeof error === 'object' &&
@@ -87,7 +89,7 @@ export async function fetchHt6<T, P = unknown>(
     }
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_HT6_API_URL || '/api/ht6';
+  const baseUrl = HT6_API_CLIENT_URL;
   const response = await fetch(`${baseUrl}${path}`, fetchOptions);
 
   if (!response.ok) {
@@ -98,8 +100,7 @@ export async function fetchHt6<T, P = unknown>(
 }
 
 export async function fetchUserProfile(userId: string): Promise<UserProfile> {
-  const baseUrl = process.env.NEXT_PUBLIC_HT6_API_URL || '/api/ht6';
-  const response = await fetch(`${baseUrl}/users/${userId}`, {
+  const response = await fetch(`${HT6_API_CLIENT_URL}/users/${userId}`, {
     headers: { Accept: 'application/json' },
     credentials: 'include',
   });
