@@ -55,6 +55,23 @@ export interface ModifyTeamBody {
   teamName?: string;
 }
 
+export interface UpsertResponsePayload {
+  sessionToken?: string;
+  targetUserId?: string;
+  responseJson: Record<string, unknown> | null;
+  isSubmitted: boolean;
+}
+
+export interface ApiResponse<Data> {
+  status: number;
+  message: Data;
+}
+
+export interface FormResponse {
+  seasonCode: string;
+  responseJson: Record<string, string> | null;
+}
+
 type FetchParams = Parameters<typeof fetch>;
 export function fetchWithCookies(
   request: NextRequest,
@@ -166,18 +183,6 @@ export async function changeHackerRsvpStatus(
 
 const rsvpFormId = 'd28f0204-e7a4-4ea3-b2a2-852b67a483ae';
 
-export interface UpsertResponsePayload {
-  sessionToken?: string;
-  targetUserId?: string;
-  responseJson: Record<string, unknown> | null;
-  isSubmitted: boolean;
-}
-
-export interface ApiResponse<Data> {
-  status: number;
-  message: Data;
-}
-
 export async function upsertFormResponse(
   body: UpsertResponsePayload,
 ): Promise<ApiResponse<Record<string, never>>> {
@@ -198,4 +203,16 @@ export async function getUserIdFromNfc(
   return fetchHt6<{ userId: string }>(`/seasons/S26/nfc/id/${nfcId}`, {
     method: 'GET',
   });
+}
+
+export async function getSocialsFormFromNfc(
+  seasonCode: string,
+  nfcId: string,
+): Promise<FormResponse> {
+  return fetchHt6<FormResponse>(
+    `/seasons/${seasonCode}/nfc/${nfcId}/social-response`,
+    {
+      method: 'GET',
+    },
+  );
 }
