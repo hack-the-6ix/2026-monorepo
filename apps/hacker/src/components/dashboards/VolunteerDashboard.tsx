@@ -1,6 +1,6 @@
 'use client';
 
-import { Typography } from '@hackthe6ix/ui';
+import { Button, Typography } from '@hackthe6ix/ui';
 
 import { useHacker } from '@/context/HackerContext';
 
@@ -36,6 +36,18 @@ export default function VolunteerDashboard() {
         Thanks for volunteering at Hack the 6ix 2026! Check back here for
         schedules, tasks, and volunteer resources.
       </Typography>
+      <div className="flex flex-col gap-4 md:flex-row md:gap-5 mt-2">
+        <Button
+          as="a"
+          target="_blank"
+          href="https://admin-v2.hackthe6ix.com/users"
+        >
+          Event Check In and User Information
+        </Button>
+        <Button as="a" href="/?tab=event">
+          Event Schedule
+        </Button>
+      </div>
     </div>
   );
 }

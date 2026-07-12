@@ -84,7 +84,8 @@ function HomeContent() {
   }
 
   const isHackerNotRsvped =
-    roleTypes?.includes('hacker') &&
+    roleTypes?.length === 1 &&
+    roleTypes[0] === 'hacker' &&
     status &&
     !['rsvped', 'checked-in'].includes(status);
 
