@@ -8,7 +8,9 @@ const apiUrl =
   'https://v2.api.hackthe6ix.com/api';
 
 export async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith('/share')) {
+  const pathname = request.nextUrl.pathname;
+
+  if (pathname.startsWith('/share') || pathname.startsWith('/nfc/')) {
     return NextResponse.next();
   }
   try {
