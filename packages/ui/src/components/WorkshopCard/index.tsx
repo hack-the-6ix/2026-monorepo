@@ -21,7 +21,7 @@ export type WorkshopCardProps = {
   title: string;
   startTime: string;
   endTime: string;
-  location: string;
+  location?: string;
   color?: WorkshopColor;
   state?: WorkshopCardState;
   variant?: 'default' | 'compact';
@@ -39,10 +39,9 @@ export function WorkshopCard({
   className,
 }: WorkshopCardProps) {
   const timeRange = `${startTime} - ${endTime}`;
+  const separator = variant === 'compact' ? '|' : '@';
   const details =
-    variant === 'compact' ?
-      `${timeRange} | ${location}`
-    : `${timeRange} @ ${location}`;
+    location ? `${timeRange} ${separator} ${location}` : timeRange;
 
   const cardClassName = cn(
     'workshop-card',

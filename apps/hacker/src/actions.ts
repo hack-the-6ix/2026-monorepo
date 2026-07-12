@@ -47,6 +47,32 @@ export interface MessageResponse {
   message: string;
 }
 
+export interface SeasonEvent {
+  seasonCode: string;
+  eventId: string;
+  eventName: string;
+  startTime: string | null;
+  endTime: string | null;
+  category?: string | null;
+  eventType?: string | null;
+  type?: string | null;
+  location?: string | null;
+  room?: string | null;
+  venue?: string | null;
+}
+
+export interface PaginatedResponse<Data> {
+  data: Data[];
+  pagination?: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+const schedulePageSize = 100;
+
 export interface CreateTeamBody {
   teamName: string;
 }
@@ -112,6 +138,28 @@ export async function getTeamDetails(teamId: string): Promise<TeamDetails> {
 
 export async function getMe(): Promise<UserProfile> {
   return fetchHt6<UserProfile>('/users/me');
+}
+
+export async function listScheduleEvents(): Promise<SeasonEvent[]> {
+  const firstPage = await fetchHt6<PaginatedResponse<SeasonEvent>>(
+    `/seasons/${seasonCode}/events?page=1&pageSize=${schedulePageSize}`,
+  );
+
+  const totalPages = firstPage.pagination?.totalPages ?? 1;
+  if (totalPages <= 1) return firstPage.data;
+
+  const remainingPages = await Promise.all(
+    Array.from({ length: totalPages - 1 }, (_, index) =>
+      fetchHt6<PaginatedResponse<SeasonEvent>>(
+        `/seasons/${seasonCode}/events?page=${index + 2}&pageSize=${schedulePageSize}`,
+      ),
+    ),
+  );
+
+  return [
+    ...firstPage.data,
+    ...remainingPages.flatMap((response) => response.data),
+  ];
 }
 
 export function getHackerRole(profile: UserProfile) {

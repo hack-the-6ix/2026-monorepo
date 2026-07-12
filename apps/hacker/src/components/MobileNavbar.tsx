@@ -3,10 +3,11 @@ import { useMemo, useState } from 'react';
 import { Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import DiscordNavButton from '@/components/DiscordNavButton';
 import { useHacker } from '@/context/HackerContext';
+import { featureFlags } from '@/feature-flags';
 import type { DashboardPage, RoleType } from '@/lib/dashboard-registry';
 import { getAvailablePages } from '@/lib/dashboard-registry';
 import { roleConfig } from '@/lib/roles';
@@ -25,17 +26,22 @@ const roleOrder: RoleType[] = [
 ];
 
 export default function MobileNavbar() {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const { status, roleTypes } = useHacker();
   const [burgerVisible, setBurgerVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const pathname =
-    typeof window !== 'undefined' ? window.location.pathname : '/';
 
-  const pages = useMemo(() => getAvailablePages(roleTypes), [roleTypes]);
+  const pages = useMemo(
+    () => getAvailablePages(roleTypes, status),
+    [roleTypes, status],
+  );
 
-  const activeTab = searchParams.get('tab') || pages[0]?.id;
+  const activeTab =
+    pathname === '/' ? searchParams.get('tab') || pages[0]?.id : null;
   const canAccessRsvpForm = status === 'accepted' || status === 'waitlist';
+  const canAccessSchedule =
+    featureFlags.scheduleReleased || process.env.NEXT_PUBLIC_PREVIEW === '1';
 
   const eventPage = pages.find((p) => p.id === 'event');
   const rolePages = pages
@@ -53,6 +59,7 @@ export default function MobileNavbar() {
     },
     {} as Record<string, DashboardPage[]>,
   );
+  const hasEventNav = Boolean(eventPage) || canAccessSchedule;
 
   if (pathname === '/thank-you') {
     return null;
@@ -153,33 +160,50 @@ export default function MobileNavbar() {
                   );
                 })}
 
-                {rolePages.length > 0 && eventPage && (
+                {rolePages.length > 0 && hasEventNav && (
                   <div className="w-1/2 border-t border-white/10" />
                 )}
 
-                {eventPage && (
-                  <Link href="/?tab=event" onClick={closeBurger}>
-                    <div className="flex flex-col items-center">
-                      <Typography
-                        textSize="label"
-                        textWeight="bold"
-                        className="uppercase tracking-wider text-white/60"
-                      >
-                        Event
-                      </Typography>
-                      <Typography
-                        textSize="paragraph-lg"
-                        textWeight="bold"
-                        className={
-                          activeTab === 'event' ? 'text-primary-300' : (
-                            'text-white'
-                          )
-                        }
-                      >
-                        Schedule &amp; Materials
-                      </Typography>
-                    </div>
-                  </Link>
+                {hasEventNav && (
+                  <div className="flex flex-col items-center gap-1">
+                    <Typography
+                      textSize="label"
+                      textWeight="bold"
+                      className="uppercase tracking-wider text-white/60"
+                    >
+                      Event
+                    </Typography>
+                    {eventPage && (
+                      <Link href="/?tab=event" onClick={closeBurger}>
+                        <Typography
+                          textSize="paragraph-lg"
+                          textWeight="bold"
+                          className={
+                            activeTab === 'event' && pathname === '/' ?
+                              'text-primary-300'
+                            : 'text-white'
+                          }
+                        >
+                          Schedule &amp; Materials
+                        </Typography>
+                      </Link>
+                    )}
+                    {canAccessSchedule && (
+                      <Link href="/schedule" onClick={closeBurger}>
+                        <Typography
+                          textSize="paragraph-lg"
+                          textWeight="bold"
+                          className={
+                            pathname === '/schedule' ? 'text-primary-300' : (
+                              'text-white'
+                            )
+                          }
+                        >
+                          Schedule
+                        </Typography>
+                      </Link>
+                    )}
+                  </div>
                 )}
 
                 {canAccessRsvpForm && (

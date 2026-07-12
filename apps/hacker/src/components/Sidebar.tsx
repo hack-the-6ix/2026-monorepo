@@ -4,11 +4,12 @@ import { useMemo } from 'react';
 import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
 import DiscordNavButton from '@/components/DiscordNavButton';
 import { useHacker } from '@/context/HackerContext';
+import { featureFlags } from '@/feature-flags';
 import type { DashboardPage, RoleType } from '@/lib/dashboard-registry';
 import { getAvailablePages } from '@/lib/dashboard-registry';
 import { roleConfig } from '@/lib/roles';
@@ -22,6 +23,7 @@ const roleOrder: RoleType[] = [
 ];
 
 const Sidebar = () => {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const { status, roleTypes } = useHacker();
 
@@ -30,7 +32,10 @@ const Sidebar = () => {
     [roleTypes, status],
   );
 
-  const activeTab = searchParams.get('tab') || pages[0]?.id;
+  const activeTab =
+    pathname === '/' ? searchParams.get('tab') || pages[0]?.id : null;
+  const canAccessSchedule =
+    featureFlags.scheduleReleased || process.env.NEXT_PUBLIC_PREVIEW === '1';
 
   const eventPages = pages.filter(
     (p) => p.id === 'event' || p.id.startsWith('event-'),
@@ -52,6 +57,7 @@ const Sidebar = () => {
   );
 
   const canAccessRsvpForm = status === 'accepted' || status === 'waitlist';
+  const hasEventNav = eventPages.length > 0 || canAccessSchedule;
 
   return (
     <nav className="flex flex-col h-full px-6">
@@ -106,11 +112,11 @@ const Sidebar = () => {
           );
         })}
 
-        {rolePages.length > 0 && eventPages.length > 0 && (
+        {rolePages.length > 0 && hasEventNav && (
           <div className="w-3/4 border-t border-white/10 my-3" />
         )}
 
-        {eventPages.length > 0 && (
+        {hasEventNav && (
           <div className="w-full flex flex-col items-center">
             <div className="flex items-center justify-center gap-1.5 py-1">
               <span className="inline-block size-1.5 rounded-full bg-white/40" />
@@ -143,6 +149,24 @@ const Sidebar = () => {
                 </Link>
               );
             })}
+            {canAccessSchedule && (
+              <Link
+                href="/schedule"
+                className="w-full text-center py-2 rounded-lg transition"
+              >
+                <Typography
+                  as="p"
+                  textSize="paragraph-sm"
+                  textWeight="semi-bold"
+                  className={
+                    pathname === '/schedule' ? 'text-white' : 'text-white/70'
+                  }
+                >
+                  {pathname === '/schedule' && '➢ '}
+                  Schedule
+                </Typography>
+              </Link>
+            )}
           </div>
         )}
 
@@ -152,7 +176,7 @@ const Sidebar = () => {
             href="/rsvp-form"
             kind="tertiary"
             className={`mt-2 text-primary-400 ${
-              activeTab === 'rsvp-form' ? 'underline' : ''
+              pathname === '/rsvp-form' ? 'underline' : ''
             }`}
           >
             RSVP Form
