@@ -6,8 +6,11 @@ import { FiChevronDown, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Typography, WorkshopCard } from '@hackthe6ix/ui';
 import cn from 'classnames';
 
+import { listScheduleEvents } from '@/actions';
+import { getApiErrorMessage } from '@/client';
 import { EVENT_NAME } from '@/data/event';
 import {
+  apiEventsToScheduleEvents,
   buildScheduleDays,
   categoryColor,
   eventsForDayKey,
@@ -17,7 +20,6 @@ import {
   scheduleCategories,
   type ScheduleCategoryKey,
   type ScheduleEvent,
-  scheduleEvents,
 } from '@/data/schedule';
 
 const ALL_CATEGORIES = new Set<ScheduleCategoryKey>(
@@ -140,7 +142,37 @@ const ScheduleView = () => {
     thumbTop: 0,
   });
 
+  const [events, setEvents] = useState<ScheduleEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [now, setNow] = useState<number | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadSchedule = async () => {
+      try {
+        const apiEvents = await listScheduleEvents();
+        if (cancelled) return;
+
+        setEvents(apiEventsToScheduleEvents(apiEvents));
+        setError(null);
+      } catch (err) {
+        if (cancelled) return;
+
+        setError(getApiErrorMessage(err, 'Unable to load schedule.'));
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    void loadSchedule();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setNow(Date.now());
@@ -156,28 +188,28 @@ const ScheduleView = () => {
       return next;
     });
 
-  const days = useMemo(() => buildScheduleDays(scheduleEvents), []);
+  const days = useMemo(() => buildScheduleDays(events), [events]);
 
   const groups = useMemo(() => {
     const activeDay = days[day];
     if (!activeDay) return [];
-    const dayEvents = eventsForDayKey(scheduleEvents, activeDay.key).filter(
-      (e) => active.has(e.category),
+    const dayEvents = eventsForDayKey(events, activeDay.key).filter((e) =>
+      active.has(e.category),
     );
     return groupByStartTime(dayEvents);
-  }, [days, day, active]);
+  }, [days, day, active, events]);
 
   // Earliest event start for each day — used to decide which day "now" belongs
   // to (clamped to the event window: Fri before the event, Sun after).
   const dayStarts = useMemo(
     () =>
       days.map((d) => {
-        const evs = eventsForDayKey(scheduleEvents, d.key);
+        const evs = eventsForDayKey(events, d.key);
         return evs.length ?
             Math.min(...evs.map((e) => new Date(e.start).getTime()))
           : Number.POSITIVE_INFINITY;
       }),
-    [days],
+    [days, events],
   );
 
   // Which day the marker sits on: the last day whose events have started, and
@@ -310,7 +342,7 @@ const ScheduleView = () => {
                     textWeight="semi-bold"
                     textColor="text-white"
                   >
-                    {days[day]?.label}
+                    {days[day]?.label ?? (loading ? 'Loading' : 'Schedule')}
                   </Typography>
                   <button
                     type="button"
@@ -332,14 +364,34 @@ const ScheduleView = () => {
                   onScroll={updateScrollbar}
                   className="schedule-scroll h-full overflow-y-scroll px-4 pt-3 pb-6 md:px-6"
                 >
-                  {groups.length === 0 ?
+                  {loading ?
                     <Typography
                       as="p"
                       textSize="paragraph-lg"
                       textColor="text-white/60"
                       className="py-10 text-center"
                     >
-                      No events match the selected filters.
+                      Loading schedule...
+                    </Typography>
+                  : error ?
+                    <Typography
+                      as="p"
+                      textSize="paragraph-lg"
+                      textColor="text-white/60"
+                      className="py-10 text-center"
+                    >
+                      {error}
+                    </Typography>
+                  : groups.length === 0 ?
+                    <Typography
+                      as="p"
+                      textSize="paragraph-lg"
+                      textColor="text-white/60"
+                      className="py-10 text-center"
+                    >
+                      {events.length === 0 ?
+                        'No scheduled events yet.'
+                      : 'No events match the selected filters.'}
                     </Typography>
                   : groups.map((group, gi) => {
                       return (

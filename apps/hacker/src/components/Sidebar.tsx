@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
-import { SCHEDULE_RELEASED } from '@/data/event';
+import { featureFlags } from '@/feature-flags';
 // import { useHacker } from '@/context/HackerContext';
 
 const Sidebar = () => {
@@ -30,7 +30,7 @@ const Sidebar = () => {
           >
             Application Status
           </Button>
-          {SCHEDULE_RELEASED && (
+          {featureFlags.scheduleReleased && (
             <Button
               as={Link}
               href="/schedule"

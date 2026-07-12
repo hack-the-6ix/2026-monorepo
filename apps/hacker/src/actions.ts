@@ -46,6 +46,30 @@ export interface MessageResponse {
   message: string;
 }
 
+export interface SeasonEvent {
+  seasonCode: string;
+  eventId: string;
+  eventName: string;
+  startTime: string;
+  endTime: string;
+  category?: string | null;
+  eventType?: string | null;
+  type?: string | null;
+  location?: string | null;
+  room?: string | null;
+  venue?: string | null;
+}
+
+export interface PaginatedResponse<Data> {
+  data: Data[];
+  pagination?: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
 export interface CreateTeamBody {
   teamName: string;
 }
@@ -94,6 +118,14 @@ export async function getTeamDetails(teamId: string): Promise<TeamDetails> {
 
 export async function getMe(): Promise<UserProfile> {
   return fetchHt6<UserProfile>('/users/me');
+}
+
+export async function listScheduleEvents(): Promise<SeasonEvent[]> {
+  const response = await fetchHt6<PaginatedResponse<SeasonEvent>>(
+    `/seasons/${seasonCode}/events`,
+  );
+
+  return response.data;
 }
 
 export function getHackerRole(profile: UserProfile) {
