@@ -104,8 +104,18 @@ export default function NFCRedirectPage({ params }: PageProps) {
     getSocials();
   }, [profile, loading, nfcId, router]);
 
-  if (loading || !socials) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (loading || !socials)
+    return (
+      <div className="text-white w-full h-full text-center items-center">
+        Loading...
+      </div>
+    );
+  if (error)
+    return (
+      <div className="text-red-500  w-full h-full text-center items-center">
+        {error}
+      </div>
+    );
 
   const body = (socials.characterBody as string) || 'turnip';
   const accessory = socials.characterAccessory as string;

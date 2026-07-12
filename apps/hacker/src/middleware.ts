@@ -10,7 +10,7 @@ const apiUrl =
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  if (pathname.startsWith('/share') || pathname.startsWith('/nfc/')) {
+  if (pathname.startsWith('/share')) {
     return NextResponse.next();
   }
   try {
