@@ -12,6 +12,8 @@ import MentorDashboard from '@/components/dashboards/MentorDashboard';
 import OrganizerDashboard from '@/components/dashboards/OrganizerDashboard';
 import SponsorDashboard from '@/components/dashboards/SponsorDashboard';
 import VolunteerDashboard from '@/components/dashboards/VolunteerDashboard';
+import HardwarePortalRedirect from '@/components/HardwarePortalRedirect';
+import RsvpedView from '@/components/status/RsvpedView';
 import { useHacker } from '@/context/HackerContext';
 import { EVENT_LOCATION, EVENT_NAME } from '@/data/event';
 import { HT6_API_CLIENT_URL } from '@/lib/api';
@@ -81,6 +83,13 @@ registerDashboardPage({
   roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
   statuses: ['rsvped', 'checked-in'],
   component: SocialsForm,
+});
+registerDashboardPage({
+  id: 'hardware-portal',
+  title: 'Hardware Portal',
+  roles: ['hacker', 'sponsor', 'volunteer', 'admin'],
+  statuses: ['checked-in'],
+  component: HardwarePortalRedirect,
 });
 
 function Spinner() {

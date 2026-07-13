@@ -42,7 +42,12 @@ const Sidebar = () => {
     (p) => p.id === 'event' || p.id.startsWith('event-'),
   );
   const rolePages = pages
-    .filter((p) => p.id !== 'event' && !p.id.startsWith('event-'))
+    .filter(
+      (p) =>
+        p.id !== 'event' &&
+        !p.id.startsWith('event-') &&
+        p.id !== 'hardware-portal',
+    )
     .sort(
       (a, b) => roleOrder.indexOf(a.roles[0]) - roleOrder.indexOf(b.roles[0]),
     );
@@ -58,6 +63,7 @@ const Sidebar = () => {
   );
 
   const hasEventNav = eventPages.length > 0 || canAccessSchedule;
+  const showHardwarePortal = pages.some((p) => p.id === 'hardware-portal');
 
   const handleLogout = async () => {
     try {
@@ -170,6 +176,7 @@ const Sidebar = () => {
             })}
           </div>
         )}
+
       </div>
 
       <div className="mt-auto flex w-full flex-col items-stretch text-center pb-8">
