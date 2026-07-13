@@ -91,6 +91,15 @@ registerDashboardPage({
   statuses: ['checked-in'],
   component: HardwarePortalRedirect,
 });
+registerDashboardPage({
+  id: 'hardware-portal',
+  title: 'Hardware Portal',
+  // Checked-in hackers plus all sponsors/volunteers/admins (non-hacker roles
+  // bypass the status filter); mentors and non-checked-in hackers are excluded.
+  roles: ['hacker', 'sponsor', 'volunteer', 'admin'],
+  statuses: ['checked-in'],
+  component: HardwarePortalRedirect,
+});
 
 function Spinner() {
   return (

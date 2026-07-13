@@ -177,6 +177,16 @@ const Sidebar = () => {
           </div>
         )}
 
+        {showHardwarePortal && (
+          <Button
+            as={Link}
+            href="/hardware-portal"
+            kind="tertiary"
+            className="mt-2 text-primary-400"
+          >
+            Hardware Portal
+          </Button>
+        )}
       </div>
 
       <div className="mt-auto flex w-full flex-col items-stretch text-center pb-8">
