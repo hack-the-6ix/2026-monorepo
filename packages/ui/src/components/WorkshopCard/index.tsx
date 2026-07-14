@@ -21,11 +21,12 @@ export type WorkshopCardProps = {
   title: string;
   startTime: string;
   endTime: string;
-  location: string;
+  location?: string;
   color?: WorkshopColor;
   state?: WorkshopCardState;
   variant?: 'default' | 'compact';
   className?: string;
+  height?: number;
 };
 
 export function WorkshopCard({
@@ -37,12 +38,14 @@ export function WorkshopCard({
   state = 'upcoming',
   variant = 'default',
   className,
+  height,
 }: WorkshopCardProps) {
+  const isSquished = height !== undefined && height < 80;
+
   const timeRange = `${startTime} - ${endTime}`;
+  const separator = variant === 'compact' ? '|' : '@';
   const details =
-    variant === 'compact' ?
-      `${timeRange} | ${location}`
-    : `${timeRange} @ ${location}`;
+    location ? `${timeRange} ${separator} ${location}` : timeRange;
 
   const cardClassName = cn(
     'workshop-card',
@@ -59,7 +62,12 @@ export function WorkshopCard({
         <div aria-hidden className="workshop-card__bar" />
       : <div aria-hidden className="workshop-card__swatch" />}
 
-      <div className="workshop-card__content">
+      <div
+        className={cn(
+          'workshop-card__content',
+          isSquished && 'gap-0 -translate-y-3.5',
+        )}
+      >
         {variant === 'default' && (
           <Typography
             as="p"
@@ -72,7 +80,9 @@ export function WorkshopCard({
         )}
         <Typography
           as="p"
-          textSize={variant === 'compact' ? 'label' : 'paragraph-lg'}
+          textSize={
+            variant === 'compact' || isSquished ? 'label' : 'paragraph-lg'
+          }
           textWeight="regular"
           className="workshop-card__details m-0"
         >
