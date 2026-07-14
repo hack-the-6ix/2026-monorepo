@@ -5,7 +5,9 @@
   .workshop-card {
     --workshop-accent: var(--color-workshop-pink);
     background-color: var(--color-workshop-card-bg);
-    @apply flex items-stretch gap-5 overflow-hidden rounded-2xl;
+    container-type: inline-size;
+    gap: clamp(0.75rem, 3cqi, 1.25rem);
+    @apply flex items-stretch overflow-hidden rounded-2xl;
   }
 
   .workshop-card--pink {
@@ -51,7 +53,9 @@
   }
 
   .workshop-card__content {
-    @apply flex min-w-0 flex-col gap-2 py-8 pr-6;
+    padding-block: clamp(1rem, 5cqi, 2rem);
+    padding-right: clamp(0.75rem, 3cqi, 1.5rem);
+    @apply flex min-w-0 flex-col gap-2;
   }
 
   .workshop-card--compact .workshop-card__content {
@@ -76,4 +80,13 @@
     @apply text-white;
   }
 
+  .workshop-card:not(.workshop-card--compact) .workshop-card__title {
+    font-size: clamp(0.8125rem, 0.45rem + 3.2cqi, 1.25rem);
+    line-height: 1.15;
+  }
+
+  .workshop-card:not(.workshop-card--compact) .workshop-card__details {
+    font-size: clamp(0.75rem, 0.55rem + 2.2cqi, 1.0625rem);
+    line-height: 1.3;
+  }
 }

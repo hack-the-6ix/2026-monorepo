@@ -47,6 +47,32 @@ export interface MessageResponse {
   message: string;
 }
 
+export interface SeasonEvent {
+  seasonCode: string;
+  eventId: string;
+  eventName: string;
+  startTime: string | null;
+  endTime: string | null;
+  category?: string | null;
+  eventType?: string | null;
+  type?: string | null;
+  location?: string | null;
+  room?: string | null;
+  venue?: string | null;
+}
+
+export interface PaginatedResponse<Data> {
+  data: Data[];
+  pagination?: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+const schedulePageSize = 100;
+
 export interface CreateTeamBody {
   teamName: string;
 }
@@ -112,6 +138,20 @@ export async function getTeamDetails(teamId: string): Promise<TeamDetails> {
 
 export async function getMe(): Promise<UserProfile> {
   return fetchHt6<UserProfile>('/users/me');
+}
+
+export async function listScheduleEvents(): Promise<SeasonEvent[]> {
+  const response = await fetchHt6<PaginatedResponse<SeasonEvent>>(
+    `/seasons/${seasonCode}/events?page=1&pageSize=${schedulePageSize}`,
+  );
+
+  // Return empty array safely if no data comes back
+  if (!response?.data) return [];
+
+  // Filter out the global hackathon check-in event
+  return response.data.filter(
+    (event) => event.eventId !== 'ed5cad7c-e893-4973-8901-2c3a54486f52',
+  );
 }
 
 export function getHackerRole(profile: UserProfile) {
