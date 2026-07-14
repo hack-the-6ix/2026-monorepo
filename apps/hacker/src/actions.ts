@@ -141,25 +141,17 @@ export async function getMe(): Promise<UserProfile> {
 }
 
 export async function listScheduleEvents(): Promise<SeasonEvent[]> {
-  const firstPage = await fetchHt6<PaginatedResponse<SeasonEvent>>(
+  const response = await fetchHt6<PaginatedResponse<SeasonEvent>>(
     `/seasons/${seasonCode}/events?page=1&pageSize=${schedulePageSize}`,
   );
 
-  const totalPages = firstPage.pagination?.totalPages ?? 1;
-  if (totalPages <= 1) return firstPage.data;
+  // Return empty array safely if no data comes back
+  if (!response?.data) return [];
 
-  const remainingPages = await Promise.all(
-    Array.from({ length: totalPages - 1 }, (_, index) =>
-      fetchHt6<PaginatedResponse<SeasonEvent>>(
-        `/seasons/${seasonCode}/events?page=${index + 2}&pageSize=${schedulePageSize}`,
-      ),
-    ),
+  // Filter out the global hackathon check-in event
+  return response.data.filter(
+    (event) => event.eventId !== 'ed5cad7c-e893-4973-8901-2c3a54486f52',
   );
-
-  return [
-    ...firstPage.data,
-    ...remainingPages.flatMap((response) => response.data),
-  ];
 }
 
 export function getHackerRole(profile: UserProfile) {

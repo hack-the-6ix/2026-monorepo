@@ -39,7 +39,6 @@ export default function MobileNavbar() {
 
   const activeTab =
     pathname === '/' ? searchParams.get('tab') || pages[0]?.id : null;
-  const canAccessRsvpForm = status === 'accepted' || status === 'waitlist';
   const canAccessSchedule =
     featureFlags.scheduleReleased || process.env.NEXT_PUBLIC_PREVIEW === '1';
 
@@ -184,42 +183,11 @@ export default function MobileNavbar() {
                             : 'text-white'
                           }
                         >
-                          Schedule &amp; Materials
-                        </Typography>
-                      </Link>
-                    )}
-                    {canAccessSchedule && (
-                      <Link href="/schedule" onClick={closeBurger}>
-                        <Typography
-                          textSize="paragraph-lg"
-                          textWeight="bold"
-                          className={
-                            pathname === '/schedule' ? 'text-primary-300' : (
-                              'text-white'
-                            )
-                          }
-                        >
                           Schedule
                         </Typography>
                       </Link>
                     )}
                   </div>
-                )}
-
-                {canAccessRsvpForm && (
-                  <Link href="/rsvp-form" onClick={closeBurger}>
-                    <Typography
-                      textSize="paragraph-lg"
-                      textWeight="bold"
-                      className={
-                        pathname === '/rsvp-form' ? 'text-primary-300' : (
-                          'text-white'
-                        )
-                      }
-                    >
-                      RSVP Form
-                    </Typography>
-                  </Link>
                 )}
 
                 {(['rsvped', 'waitlist', 'checked-in'].includes(status) ||
@@ -231,7 +199,7 @@ export default function MobileNavbar() {
               </div>
 
               {/* Turnip boi */}
-              <div className="absolute top-full inset-x-0 flex justify-center pointer-events-none z-0 -mt-6">
+              <div className="absolute top-full inset-x-0 flex justify-center pointer-events-none z-0 -mt-10">
                 <div className="flex flex-col items-center animate-swing origin-top will-change-transform">
                   <div className="absolute flex flex-col items-center translate-y-17">
                     <Image

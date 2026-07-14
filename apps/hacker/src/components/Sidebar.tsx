@@ -56,7 +56,6 @@ const Sidebar = () => {
     {} as Record<string, DashboardPage[]>,
   );
 
-  const canAccessRsvpForm = status === 'accepted' || status === 'waitlist';
   const hasEventNav = eventPages.length > 0 || canAccessSchedule;
 
   return (
@@ -149,38 +148,7 @@ const Sidebar = () => {
                 </Link>
               );
             })}
-            {canAccessSchedule && (
-              <Link
-                href="/schedule"
-                className="w-full text-center py-2 rounded-lg transition"
-              >
-                <Typography
-                  as="p"
-                  textSize="paragraph-sm"
-                  textWeight="semi-bold"
-                  className={
-                    pathname === '/schedule' ? 'text-white' : 'text-white/70'
-                  }
-                >
-                  {pathname === '/schedule' && '➢ '}
-                  Schedule
-                </Typography>
-              </Link>
-            )}
           </div>
-        )}
-
-        {canAccessRsvpForm && (
-          <Button
-            as={Link}
-            href="/rsvp-form"
-            kind="tertiary"
-            className={`mt-2 text-primary-400 ${
-              pathname === '/rsvp-form' ? 'underline' : ''
-            }`}
-          >
-            RSVP Form
-          </Button>
         )}
       </div>
 

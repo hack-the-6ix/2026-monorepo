@@ -3,18 +3,18 @@
 import { Suspense, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-import EventDashboard from '@/components/dashboards/EventDashboard';
 import HackerDashboard from '@/components/dashboards/HackerDashboard';
 import MentorDashboard from '@/components/dashboards/MentorDashboard';
 import OrganizerDashboard from '@/components/dashboards/OrganizerDashboard';
 import SponsorDashboard from '@/components/dashboards/SponsorDashboard';
 import VolunteerDashboard from '@/components/dashboards/VolunteerDashboard';
-import RsvpedView from '@/components/status/RsvpedView';
 import { useHacker } from '@/context/HackerContext';
 import {
   getAvailablePages,
   registerDashboardPage,
 } from '@/lib/dashboard-registry';
+import SchedulePage from './event/page';
+import RSVPForm from './rsvp-form/page';
 
 registerDashboardPage({
   id: 'hacker',
@@ -24,11 +24,11 @@ registerDashboardPage({
   component: HackerDashboard,
 });
 registerDashboardPage({
-  id: 'ticket',
-  title: 'My Ticket',
+  id: 'rsvp-form',
+  title: 'RSVP Form',
   roles: ['hacker'],
-  statuses: ['rsvped', 'checked-in'],
-  component: RsvpedView,
+  statuses: ['rsvped', 'waitlist'],
+  component: RSVPForm,
 });
 registerDashboardPage({
   id: 'sponsor',
@@ -56,10 +56,10 @@ registerDashboardPage({
 });
 registerDashboardPage({
   id: 'event',
-  title: 'Schedule & Materials',
+  title: 'Schedule',
   roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
   statuses: ['rsvped', 'checked-in'],
-  component: EventDashboard,
+  component: SchedulePage,
 });
 
 function Spinner() {
