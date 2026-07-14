@@ -20,14 +20,21 @@ registerDashboardPage({
   id: 'hacker',
   title: 'Home',
   roles: ['hacker'],
-  statuses: ['rsvped', 'checked-in'],
+  statuses: [
+    'rsvped',
+    'checked-in',
+    'accepted',
+    'waitlist',
+    'rejected',
+    'declined',
+  ],
   component: HackerDashboard,
 });
 registerDashboardPage({
   id: 'rsvp-form',
   title: 'RSVP Form',
   roles: ['hacker'],
-  statuses: ['rsvped', 'waitlist'],
+  statuses: ['accepted', 'waitlist'],
   component: RSVPForm,
 });
 registerDashboardPage({
@@ -81,20 +88,6 @@ function HomeContent() {
 
   if (loading) {
     return <Spinner />;
-  }
-
-  const isHackerNotRsvped =
-    roleTypes?.length === 1 &&
-    roleTypes[0] === 'hacker' &&
-    status &&
-    !['rsvped', 'checked-in'].includes(status);
-
-  if (isHackerNotRsvped) {
-    return (
-      <div className="relative min-h-screen">
-        <HackerDashboard />
-      </div>
-    );
   }
 
   if (pages.length === 0) {
