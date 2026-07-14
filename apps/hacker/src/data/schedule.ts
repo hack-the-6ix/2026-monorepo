@@ -174,16 +174,3 @@ export interface ScheduleRow {
   time: string;
   events: ScheduleEvent[];
 }
-
-export const groupByStartTime = (events: ScheduleEvent[]): ScheduleRow[] => {
-  const rows = new Map<string, ScheduleEvent[]>();
-  for (const e of events) {
-    const bucket = rows.get(e.start);
-    if (bucket) bucket.push(e);
-    else rows.set(e.start, [e]);
-  }
-  return Array.from(rows, ([start, group]) => ({
-    time: formatTime(start),
-    events: [...group].sort((a, b) => a.title.localeCompare(b.title)),
-  }));
-};

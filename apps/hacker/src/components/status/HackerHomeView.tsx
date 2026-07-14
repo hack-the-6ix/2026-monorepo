@@ -247,7 +247,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
                 {loadingEvents ?
                   'Loading events...'
                 : currentEvents.length > 0 ?
-                  'Happening Now'
+                  'Current Events:'
                 : 'No current events.'}
               </Typography>
               {currentEvents.length === 0 && !loadingEvents && (
