@@ -36,11 +36,7 @@ export interface ApiScheduleEvent {
   startTime?: string | null;
   endTime?: string | null;
   category?: string | null;
-  eventType?: string | null;
-  type?: string | null;
   location?: string | null;
-  room?: string | null;
-  venue?: string | null;
 }
 
 const categoryKeys = new Set<ScheduleCategoryKey>(
@@ -63,9 +59,7 @@ const normalizeCategory = (
 };
 
 const inferCategory = (event: ApiScheduleEvent): ScheduleCategoryKey => {
-  const apiCategory = normalizeCategory(
-    event.category ?? event.eventType ?? event.type,
-  );
+  const apiCategory = normalizeCategory(event.category);
   if (apiCategory) return apiCategory;
 
   const title = event.eventName.toLowerCase();
@@ -88,10 +82,7 @@ const inferCategory = (event: ApiScheduleEvent): ScheduleCategoryKey => {
 };
 
 const eventLocation = (event: ApiScheduleEvent): string | undefined =>
-  event.location?.trim() ||
-  event.room?.trim() ||
-  event.venue?.trim() ||
-  undefined;
+  event.location?.trim() || undefined;
 
 export const apiEventsToScheduleEvents = (
   events: ApiScheduleEvent[],
