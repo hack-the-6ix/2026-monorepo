@@ -8,6 +8,11 @@ const apiUrl =
   'https://v2.api.hackthe6ix.com/api';
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  if (pathname.startsWith('/share')) {
+    return NextResponse.next();
+  }
   try {
     const res = await fetchWithCookies(request, `${apiUrl}/auth/check`, {
       headers: { Cookie: request.cookies.toString() },
@@ -25,5 +30,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ic)$).*)',
+  ],
 };

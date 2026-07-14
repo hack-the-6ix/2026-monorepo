@@ -1,3 +1,5 @@
+import { HT6_API_CLIENT_URL } from '@/lib/api';
+
 export function getApiErrorMessage(error: unknown, fallback: string) {
   if (
     typeof error === 'object' &&
@@ -66,25 +68,11 @@ export interface UserProfile {
   >;
 }
 
-function getAccessToken() {
-  const tokenFromStorage = localStorage.getItem('token') ?? '';
-  const tokenFromCookie =
-    document.cookie.match(/(?:^|; )token=([^;]+)/)?.[1] ?? '';
-
-  return tokenFromStorage || decodeURIComponent(tokenFromCookie);
-}
-
 export async function fetchHt6<T, P = unknown>(
   path: string,
   options: { body?: P; method?: string } = {},
 ): Promise<T> {
-  const token = localStorage.getItem('token');
   const headers: Record<string, string> = {};
-
-  if (token) {
-    headers['X-Access-Token'] = token;
-    headers['Authorization'] = `Bearer ${token}`;
-  }
 
   const fetchOptions: RequestInit = {
     method: options.method || 'GET',
@@ -101,7 +89,7 @@ export async function fetchHt6<T, P = unknown>(
     }
   }
 
-  const baseUrl = process.env.HT6_API_URL || '/api/ht6';
+  const baseUrl = HT6_API_CLIENT_URL;
   const response = await fetch(`${baseUrl}${path}`, fetchOptions);
 
   if (!response.ok) {
@@ -112,23 +100,10 @@ export async function fetchHt6<T, P = unknown>(
 }
 
 export async function fetchUserProfile(userId: string): Promise<UserProfile> {
-  const accessToken = getAccessToken();
-  const headers: Record<string, string> = {
-    Accept: 'application/json',
-  };
-
-  if (accessToken) {
-    headers['X-Access-Token'] = accessToken;
-    headers['Authorization'] = `Bearer ${accessToken}`;
-  }
-
-  const response = await fetch(
-    `${process.env.HT6_API_URL || 'https://v2.api.hackthe6ix.com/api'}/api/users/${userId}`,
-    {
-      headers,
-      credentials: 'include',
-    },
-  );
+  const response = await fetch(`${HT6_API_CLIENT_URL}/users/${userId}`, {
+    headers: { Accept: 'application/json' },
+    credentials: 'include',
+  });
 
   if (!response.ok) {
     throw new Error('Failed to fetch user profile');

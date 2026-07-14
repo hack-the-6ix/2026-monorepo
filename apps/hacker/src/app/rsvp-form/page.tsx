@@ -12,6 +12,7 @@ import z from 'zod';
 
 import { changeHackerRsvpStatus, upsertFormResponse } from '@/actions';
 import { useHacker } from '@/context/HackerContext';
+import { featureFlags } from '@/feature-flags';
 import {
   DIETARY_OPTIONS,
   HACKER_TYPE_OPTIONS,
@@ -49,10 +50,10 @@ export type FormData = z.infer<typeof FormDataSchema>;
 const RSVPForm = () => {
   const router = useRouter();
   const { profile, status, loading, refresh } = useHacker();
-
+  const canRsvp = featureFlags.teamFormationOpen;
   useEffect(() => {
     if (loading) return;
-    if (status !== 'accepted') {
+    if (status !== 'accepted' && status !== 'waitlist') {
       router.push('/');
     }
   }, [status, loading, router]);
@@ -63,7 +64,9 @@ const RSVPForm = () => {
       responseJson: formData,
       isSubmitted: true,
     });
-    await changeHackerRsvpStatus(profile.userId, 'rsvped', 'S26');
+    if (canRsvp) {
+      await changeHackerRsvpStatus(profile.userId, 'rsvped', 'S26');
+    }
     refresh();
     router.push('/');
   };
@@ -123,15 +126,23 @@ const RSVPForm = () => {
   }
 
   return (
-    <div className="flex flex-col items-start justify-center min-h-screen md:w-[70vw] pt-20 p-8 gap-8">
+    <div className="flex flex-col items-start justify-center min-h-screen md:w-[70vw] md:pt-20 p-8 gap-8">
+      <Typography
+        textSize="paragraph-lg"
+        textColor="text-error-500"
+        textWeight="bold"
+      >
+        NOTE: THE RSVP PERIOD HAS PASSED. THIS FORM IS PRIMARILY FOR WALK-IN
+        PURPOSES. <br />
+        FILLING OUT THIS FORM DOES NOT INDICATE ADMISSION TO THE EVENT
+      </Typography>
       <Typography
         textSize="paragraph-lg"
         textColor="text-white"
         textWeight="semi-bold"
       >
-        We&apos;re so excited to have you join us at Hack the 6ix 2026! Take a
-        minute to complete your information now so we can make sure you have
-        everything you need for the event.
+        Take a minute to complete your information now so we can make sure you
+        have everything you need for the event.
       </Typography>
 
       <div className="flex flex-col gap-4 w-full">
