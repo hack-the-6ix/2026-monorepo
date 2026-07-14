@@ -20,7 +20,7 @@ registerDashboardPage({
   id: 'hacker',
   title: 'Home',
   roles: ['hacker'],
-  statuses: ['rsvped', 'checked-in'],
+  statuses: ['rsvped', 'checked-in', 'accepted', 'waitlist'],
   component: HackerDashboard,
 });
 registerDashboardPage({

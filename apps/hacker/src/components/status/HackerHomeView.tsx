@@ -105,7 +105,7 @@ function Disclosure({
 }
 
 const HackerHomeView = ({ name }: HackerHomeViewProps) => {
-  const { profile, hackerRole, refresh } = useHacker();
+  const { profile, hackerRole, refresh, status } = useHacker();
   const [qrLoadFailed, setQrLoadFailed] = useState(false);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
   const [hasCancelledRsvp, setHasCancelledRsvp] = useState(false);
@@ -142,28 +142,37 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
         </div>
         <div
           className={`flex w-full items-center justify-between gap-4 rounded-full border-2 px-5 py-4 text-sm font-semibold text-white shadow-[0_8px_22px_rgba(0,0,0,0.18)] transition-colors duration-300 ${
-            hasCancelledRsvp ?
-              'border-[#ff6d73] bg-[#d54b52]'
+            status === 'waitlist' ? 'border-[#F6BD55] bg-[#B08630]'
+            : hasCancelledRsvp ? 'border-[#ff6d73] bg-[#d54b52]'
             : 'border-[#3fe7a4] bg-[#3e7f7a]'
           }`}
         >
           <span className="flex items-center gap-3 leading-none">
             <span
               className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-black ${
-                hasCancelledRsvp ?
-                  'bg-white/20 text-white'
+                status === 'waitlist' ? 'bg-[#F6BD55] text-[#332200]'
+                : hasCancelledRsvp ? 'bg-white/20 text-white'
                 : 'bg-[#1ee38e] text-[#0b1f1b]'
               }`}
               aria-hidden="true"
             >
-              {hasCancelledRsvp ? '!' : '✓'}
+              {status === 'waitlist' ?
+                '!'
+              : hasCancelledRsvp ?
+                '!'
+              : '✓'}
             </span>
             <span>
-              {hasCancelledRsvp ? 'Status: Not attending' : 'Status: Attending'}
+              {status === 'waitlist' ?
+                'Status: Waitlisted'
+              : hasCancelledRsvp ?
+                'Status: Not attending'
+              : 'Status: Attending'}
             </span>
           </span>
 
-          {hackerRole?.status != 'checked-in' &&
+          {status !== 'waitlist' &&
+            hackerRole?.status != 'checked-in' &&
             (hasCancelledRsvp ?
               <span className="text-white/90">RSVP updated</span>
             : <button
@@ -178,40 +187,42 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
                 </span>
               </button>)}
         </div>
-        <div
-          className={`${glassPanelClass} flex items-end justify-between gap-4 px-5 py-6`}
-        >
-          <div>
-            <Typography
-              as="h2"
-              textSize="subtitle-sm"
-              textWeight="semi-bold"
-              textColor="text-white"
-              className="mb-3"
-            >
-              No current events.
-            </Typography>
-            <Typography
-              as="p"
-              textSize="paragraph-sm"
-              textWeight="regular"
-              textColor="text-white"
-              className="opacity-85"
-            >
-              Check back later to see events!
-            </Typography>
-          </div>
-          <a
-            // TODO: UPDATE TO HAVE ACTUAL SCHEDULE
-            // href="https://hackthe6ix.com"
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm font-semibold text-yellow-300 decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200"
+        {status !== 'waitlist' && (
+          <div
+            className={`${glassPanelClass} flex items-end justify-between gap-4 px-5 py-6`}
           >
-            Coming soon{' '}
-            {/* <FaArrowRightLong className="inline-block align-middle" /> */}
-          </a>
-        </div>
+            <div>
+              <Typography
+                as="h2"
+                textSize="subtitle-sm"
+                textWeight="semi-bold"
+                textColor="text-white"
+                className="mb-3"
+              >
+                No current events.
+              </Typography>
+              <Typography
+                as="p"
+                textSize="paragraph-sm"
+                textWeight="regular"
+                textColor="text-white"
+                className="opacity-85"
+              >
+                Check back later to see events!
+              </Typography>
+            </div>
+            <a
+              // TODO: UPDATE TO HAVE ACTUAL SCHEDULE
+              // href="https://hackthe6ix.com"
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm font-semibold text-yellow-300 decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200"
+            >
+              Coming soon{' '}
+              {/* <FaArrowRightLong className="inline-block align-middle" /> */}
+            </a>
+          </div>
+        )}
 
         <div className={`${glassPanelClass} px-5 py-6`}>
           <Typography
@@ -303,18 +314,51 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
           </div>
         </div>
 
-        <a
-          href="https://discord.gg/Nj9jTRcBX"
-          target="_blank"
-          rel="noreferrer"
-          className={`${quickLinkPanelClass} block px-4 py-4 transition hover:border-teal-300/60`}
-        >
-          <div className="flex h-full flex-col gap-4">
-            <div className="flex items-center justify-between gap-3 pt-1">
+        {status !== 'waitlist' && (
+          <a
+            href="https://discord.gg/Nj9jTRcBX"
+            target="_blank"
+            rel="noreferrer"
+            className={`${quickLinkPanelClass} block px-4 py-4 transition hover:border-teal-300/60`}
+          >
+            <div className="flex h-full flex-col gap-4">
+              <div className="flex items-center justify-between gap-3 pt-1">
+                <div className="flex items-center gap-3">
+                  <Image
+                    src={discordIcon}
+                    alt="Discord icon"
+                    className="h-6 w-6 shrink-0"
+                  />
+                  <Typography
+                    as="h3"
+                    textSize="paragraph-lg"
+                    textWeight="semi-bold"
+                    textColor="text-white"
+                    className="leading-tight"
+                  >
+                    Hack the 6ix Discord
+                  </Typography>
+                </div>
+                <Image
+                  src={paperclipIcon}
+                  alt="Link icon"
+                  className="h-5 w-5 shrink-0"
+                />
+              </div>
+            </div>
+          </a>
+        )}
+
+        {status !== 'waitlist' && (
+          <a
+            href="https://hackthe6ix.notion.site/hacker-handbook"
+            className={`${quickLinkPanelClass} block px-4 py-3 transition hover:border-teal-300/60`}
+          >
+            <div className="mb-1 flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <Image
-                  src={discordIcon}
-                  alt="Discord icon"
+                  src={notionIcon}
+                  alt="Notion icon"
                   className="h-6 w-6 shrink-0"
                 />
                 <Typography
@@ -324,7 +368,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
                   textColor="text-white"
                   className="leading-tight"
                 >
-                  Hack the 6ix Discord
+                  Hacker Guide
                 </Typography>
               </div>
               <Image
@@ -333,68 +377,41 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
                 className="h-5 w-5 shrink-0"
               />
             </div>
-          </div>
-        </a>
+          </a>
+        )}
 
-        <a
-          href="https://hackthe6ix.notion.site/hacker-handbook"
-          className={`${quickLinkPanelClass} block px-4 py-3 transition hover:border-teal-300/60`}
-        >
-          <div className="mb-1 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
+        {status !== 'waitlist' && (
+          <a
+            href="http://hack-the-6ix-2026.devpost.com/"
+            target="_blank"
+            rel="noreferrer"
+            className={`${quickLinkPanelClass} block px-4 py-3 transition hover:border-teal-300/60`}
+          >
+            <div className="mb-1 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <Image
+                  src={devpostIcon}
+                  alt="Devpost icon"
+                  className="h-6 w-6 shrink-0"
+                />
+                <Typography
+                  as="h3"
+                  textSize="paragraph-lg"
+                  textWeight="semi-bold"
+                  textColor="text-white"
+                  className="leading-tight"
+                >
+                  Devpost
+                </Typography>
+              </div>
               <Image
-                src={notionIcon}
-                alt="Notion icon"
-                className="h-6 w-6 shrink-0"
+                src={paperclipIcon}
+                alt="Link icon"
+                className="h-5 w-5 shrink-0"
               />
-              <Typography
-                as="h3"
-                textSize="paragraph-lg"
-                textWeight="semi-bold"
-                textColor="text-white"
-                className="leading-tight"
-              >
-                Hacker Guide
-              </Typography>
             </div>
-            <Image
-              src={paperclipIcon}
-              alt="Link icon"
-              className="h-5 w-5 shrink-0"
-            />
-          </div>
-        </a>
-
-        <a
-          href="http://hack-the-6ix-2026.devpost.com/"
-          target="_blank"
-          rel="noreferrer"
-          className={`${quickLinkPanelClass} block px-4 py-3 transition hover:border-teal-300/60`}
-        >
-          <div className="mb-1 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <Image
-                src={devpostIcon}
-                alt="Devpost icon"
-                className="h-6 w-6 shrink-0"
-              />
-              <Typography
-                as="h3"
-                textSize="paragraph-lg"
-                textWeight="semi-bold"
-                textColor="text-white"
-                className="leading-tight"
-              >
-                Devpost
-              </Typography>
-            </div>
-            <Image
-              src={paperclipIcon}
-              alt="Link icon"
-              className="h-5 w-5 shrink-0"
-            />
-          </div>
-        </a>
+          </a>
+        )}
       </aside>
 
       <RsvpCancelDialog

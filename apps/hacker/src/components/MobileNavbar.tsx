@@ -198,7 +198,7 @@ export default function MobileNavbar() {
                   </Link>
                 )}
 
-                {(['rsvped', 'waitlist', 'checked-in'].includes(status) ||
+                {(['rsvped', 'checked-in'].includes(status) ||
                   roleTypes.some((r) => r !== 'hacker')) && (
                   <div className="relative z-40 w-full max-w-xs px-8 mt-4">
                     <DiscordNavButton />
