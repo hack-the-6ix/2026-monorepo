@@ -52,6 +52,11 @@ const silverSponsors = [
     alt: 'Stay22',
     href: 'https://www.stay22.com',
   },
+  {
+    src: assets.sponsorFreesoloLogo,
+    alt: 'Freesolo',
+    href: 'https://freesolo.co',
+  },
 ];
 
 const bronzeSponsors: {
@@ -89,6 +94,26 @@ const bronzeSponsors: {
     src: assets.sponsorMouserElectronicsLogo,
     alt: 'Mouser Electronics',
     href: 'https://www.mouser.com',
+  },
+  {
+    src: assets.sponsorMlhLogo,
+    alt: 'Major League Hacking',
+    href: 'https://mlh.io',
+  },
+  {
+    src: assets.sponsorExaLogo,
+    alt: 'Exa',
+    href: 'https://exa.ai',
+  },
+  {
+    src: assets.sponsorPhoebeLogo,
+    alt: 'Phoebe',
+    href: 'https://www.phoebe.work',
+  },
+  {
+    src: assets.sponsorUnifoldLogo,
+    alt: 'Unifold',
+    href: 'https://unifold.io',
   },
 ];
 

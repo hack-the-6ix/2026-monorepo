@@ -3,8 +3,13 @@ import sponsorBase44Logo from '../../assets/sponsors/base44_logo.png';
 import sponsorBrucePowerLogo from '../../assets/sponsors/bruce_power_logo.png';
 import sponsorChexyLogo from '../../assets/sponsors/chexy_logo.png';
 import sponsorElevenLabsLogo from '../../assets/sponsors/elevenlabs_logo.png';
+import sponsorExaLogo from '../../assets/sponsors/exa_logo.svg';
 import sponsorFdmLogo from '../../assets/sponsors/fdm_logo.png';
+import sponsorFreesoloLogo from '../../assets/sponsors/freesolo_logo.svg';
+import sponsorMlhLogo from '../../assets/sponsors/mlh_logo.svg';
+import sponsorPhoebeLogo from '../../assets/sponsors/phoebe_logo.svg';
 import sponsorPoparideLogo from '../../assets/sponsors/poparide_logo.png';
+import sponsorUnifoldLogo from '../../assets/sponsors/unifold_logo.png';
 import sponsorQnxLogo from '../../assets/sponsors/qnx_logo.png';
 import sponsorShopifyLogo from '../../assets/sponsors/shopify_logo.png';
 import sponsorDeloitteLogo from '../../assets/sponsors/deloitte_logo.png';
@@ -25,10 +30,15 @@ export const assets = {
   sponsorBrucePowerLogo,
   sponsorChexyLogo,
   sponsorElevenLabsLogo,
+  sponsorExaLogo,
   sponsorFdmLogo,
+  sponsorFreesoloLogo,
+  sponsorMlhLogo,
+  sponsorPhoebeLogo,
   sponsorPoparideLogo,
   sponsorQnxLogo,
   sponsorShopifyLogo,
+  sponsorUnifoldLogo,
   sponsorWarpLogo,
   sponsorDeloitteLogo,
   sponsorMouserElectronicsLogo,
