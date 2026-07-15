@@ -57,12 +57,19 @@ interface ItemFormProps {
   title: string;
   data: ItemFormData;
   onChange: (data: ItemFormData) => void;
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit: () => void;
   onCancel: () => void;
   isLoading: boolean;
   error: Error | null;
   submitLabel: string;
   existingImageUrl?: string | null;
+  // Editing an existing item requires a second confirmation before Save takes
+  // effect, and offers Delete (also confirmed) under the Quantity field.
+  // Creating a new item saves immediately, as before.
+  confirmBeforeSave?: boolean;
+  onDelete?: () => void;
+  deleteLoading?: boolean;
+  deleteError?: Error | null;
 }
 
 function ItemForm({
@@ -75,8 +82,15 @@ function ItemForm({
   error,
   submitLabel,
   existingImageUrl,
+  confirmBeforeSave = false,
+  onDelete,
+  deleteLoading = false,
+  deleteError = null,
 }: ItemFormProps) {
   const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [pendingAction, setPendingAction] = useState<'save' | 'delete' | null>(
+    null,
+  );
 
   useEffect(() => {
     if (!data.imageFile) {
@@ -95,7 +109,17 @@ function ItemForm({
       <div className="w-full max-w-md rounded-card bg-white p-6 shadow-xl">
         <h2 className="mb-5 text-page-title font-semibold text-ink">{title}</h2>
 
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (confirmBeforeSave) {
+              setPendingAction('save');
+            } else {
+              onSubmit();
+            }
+          }}
+          className="space-y-4"
+        >
           <div>
             <label
               htmlFor="item-name"
@@ -159,10 +183,31 @@ function ItemForm({
               onChange={(e) =>
                 onChange({ ...data, initialQuantity: Number(e.target.value) })
               }
+              onWheel={(e) => e.currentTarget.blur()}
               required
               className="mt-1 block w-full rounded-lg border-2 border-slate-line px-3 py-2 text-body text-ink focus:border-brand focus:outline-none"
             />
           </div>
+
+          {onDelete && (
+            <div>
+              <button
+                type="button"
+                onClick={() => setPendingAction('delete')}
+                disabled={isLoading || deleteLoading}
+                className="btn-danger w-full disabled:opacity-50"
+              >
+                Delete Item
+              </button>
+              {deleteError && (
+                <div className="mt-2 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+                  {deleteError instanceof HttpError ?
+                    deleteError.message
+                  : 'Failed to delete item.'}
+                </div>
+              )}
+            </div>
+          )}
 
           {error && (
             <div className="rounded-lg bg-red-50 p-3 text-sm text-red-700">
@@ -177,7 +222,7 @@ function ItemForm({
               type="button"
               onClick={onCancel}
               disabled={isLoading}
-              className="rounded-lg border-2 border-slate-line px-5 py-2 text-body font-medium text-ink hover:bg-slate-strip disabled:opacity-50"
+              className="rounded-lg border-2 border-red-200 px-5 py-2 text-body font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
             >
               Cancel
             </button>
@@ -191,6 +236,56 @@ function ItemForm({
           </div>
         </form>
       </div>
+
+      {pendingAction && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-md rounded-card bg-white p-8 shadow-xl">
+            <h2 className="mb-2 text-page-title font-semibold text-ink">
+              {pendingAction === 'save' ?
+                'Save changes to this item?'
+              : 'Delete this item?'}
+            </h2>
+            <p className="mb-6 text-body text-ink-soft">
+              {pendingAction === 'save' ?
+                'This will update the item as shown in the form.'
+              : 'Are you sure you want to delete this item? This cannot be undone.'
+              }
+            </p>
+
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => setPendingAction(null)}
+                disabled={isLoading || deleteLoading}
+                className="btn-brand-outline disabled:opacity-50"
+              >
+                Go Back
+              </button>
+              {pendingAction === 'save' ?
+                <button
+                  onClick={() => {
+                    onSubmit();
+                    setPendingAction(null);
+                  }}
+                  disabled={isLoading}
+                  className="btn-brand disabled:opacity-50"
+                >
+                  {isLoading ? 'Saving...' : 'Save'}
+                </button>
+              : <button
+                  onClick={() => {
+                    onDelete?.();
+                    setPendingAction(null);
+                  }}
+                  disabled={deleteLoading}
+                  className="btn-danger disabled:opacity-50"
+                >
+                  {deleteLoading ? 'Deleting...' : 'Delete'}
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -213,7 +308,6 @@ export default function ItemsPage() {
 
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState<SortOption>('name-asc');
-  const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [createData, setCreateData] = useState<ItemFormData>(EMPTY_FORM);
   const [editingItem, setEditingItem] = useState<Item | null>(null);
@@ -269,8 +363,7 @@ export default function ItemsPage() {
     },
   );
 
-  const handleCreate = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleCreate = async () => {
     if (!createData.name.trim()) return;
     try {
       await createMutation.mutate({
@@ -282,8 +375,7 @@ export default function ItemsPage() {
     }
   };
 
-  const handleUpdate = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleUpdate = async () => {
     if (!editingItem || !editData.name.trim()) return;
     try {
       await updateMutation.mutate({
@@ -305,15 +397,25 @@ export default function ItemsPage() {
       initialQuantity: item.initialQuantity,
     });
     updateMutation.reset();
+    deleteMutation.reset();
   };
 
   const deleteMutation = useMutation((id: number) => adminApi.deleteItem(id), {
     invalidateKeys: [/^admin-items/, /^user-items/],
     onSuccess: () => {
-      setConfirmDeleteId(null);
+      setEditingItem(null);
       refetch();
     },
   });
+
+  const handleDelete = async () => {
+    if (!editingItem) return;
+    try {
+      await deleteMutation.mutate(editingItem.id);
+    } catch {
+      // error surfaced via mutation state
+    }
+  };
 
   const closeCreate = () => {
     setShowCreateModal(false);
@@ -425,98 +527,75 @@ export default function ItemsPage() {
           </button>
         </div>
 
-        {/* Table header */}
-        <div className="grid grid-cols-[minmax(0,1fr)_150px_150px_180px] border-b-2 border-slate-line bg-slate-soft">
-          <div className="flex items-center px-7 py-col-y">
-            <p className="text-table-header font-bold tracking-tight text-ink">
-              ITEM NAME
-            </p>
-          </div>
-          <div className="flex items-center justify-center border-l-2 border-slate-line px-4 py-col-y">
-            <p className="text-table-header font-bold tracking-tight text-ink">
-              PHOTO
-            </p>
-          </div>
-          <div className="flex items-center border-l-2 border-slate-line px-7 py-col-y">
-            <p className="text-table-header font-bold tracking-tight text-ink">
-              STOCK
-            </p>
-          </div>
-          <div className="flex items-center justify-center border-l-2 border-slate-line px-4 py-col-y">
-            <p className="text-table-header font-bold tracking-tight text-ink">
-              ACTIONS
-            </p>
-          </div>
-        </div>
+        {/* Horizontal scroll below the min-width floor so fixed columns
+            (photo/actions) never bleed into each other. */}
+        <div className="overflow-x-auto">
+          <div className="min-w-[720px]">
+            {/* Table header */}
+            <div className="grid grid-cols-[minmax(0,1fr)_150px_150px_180px] border-b-2 border-slate-line bg-slate-soft">
+              <div className="flex items-center px-7 py-col-y">
+                <p className="hw-col-header font-bold tracking-tight text-ink">
+                  ITEM NAME
+                </p>
+              </div>
+              <div className="flex items-center justify-center border-l-2 border-slate-line px-4 py-col-y">
+                <p className="hw-col-header font-bold tracking-tight text-ink">
+                  PHOTO
+                </p>
+              </div>
+              <div className="flex items-center border-l-2 border-slate-line px-7 py-col-y">
+                <p className="hw-col-header font-bold tracking-tight text-ink">
+                  STOCK
+                </p>
+              </div>
+              <div className="flex items-center justify-center border-l-2 border-slate-line px-4 py-col-y">
+                <p className="hw-col-header font-bold tracking-tight text-ink">
+                  ACTIONS
+                </p>
+              </div>
+            </div>
 
-        {/* Table body */}
-        {filteredItems.length === 0 ?
-          <div className="px-7 py-12 text-center text-body text-ink-mute">
-            {search ?
-              'No items match your search.'
-            : 'No items in inventory. Add your first item!'}
-          </div>
-        : <div className="divide-y-2 divide-slate-line">
-            {filteredItems.map((item) => {
-              const available = item.availableQuantity ?? item.initialQuantity;
-              const total = item.initialQuantity;
-              const isOutOfStock = available === 0;
+            {/* Table body */}
+            {filteredItems.length === 0 ?
+              <div className="px-7 py-12 text-center text-body text-ink-mute">
+                {search ?
+                  'No items match your search.'
+                : 'No items in inventory. Add your first item!'}
+              </div>
+            : <div className="divide-y-2 divide-slate-line">
+                {filteredItems.map((item) => {
+                  const available =
+                    item.availableQuantity ?? item.initialQuantity;
+                  const total = item.initialQuantity;
+                  const isOutOfStock = available === 0;
 
-              return (
-                <div
-                  key={item.id}
-                  className="grid grid-cols-[minmax(0,1fr)_150px_150px_180px]"
-                >
-                  <div className="flex h-row-item items-center px-7">
-                    <p className="truncate text-body text-ink">{item.name}</p>
-                  </div>
-
-                  <div className="flex h-row-item items-center justify-center border-l-2 border-slate-line">
-                    <ItemThumb item={item} />
-                  </div>
-
-                  <div className="flex h-row-item items-center gap-1.5 border-l-2 border-slate-line px-7">
-                    <span
-                      className={`text-body ${isOutOfStock ? 'text-red-500' : 'text-ink'}`}
+                  return (
+                    <div
+                      key={item.id}
+                      className="grid grid-cols-[minmax(0,1fr)_150px_150px_180px]"
                     >
-                      {available}/{total}
-                    </span>
-                    <span className="text-body text-ink-soft">units</span>
-                  </div>
-
-                  <div className="flex h-row-item flex-col items-center justify-center gap-2 border-l-2 border-slate-line bg-slate-soft px-6 py-4">
-                    {confirmDeleteId === item.id ?
-                      <>
-                        <p className="text-xs font-medium text-red-600">
-                          Delete permanently?
+                      <div className="flex h-row-item items-center px-7">
+                        <p className="hw-truncate hw-cell-text text-ink">
+                          {item.name}
                         </p>
-                        <div className="flex w-full gap-1.5">
-                          <button
-                            type="button"
-                            onClick={() => deleteMutation.mutate(item.id)}
-                            disabled={deleteMutation.isLoading}
-                            className="flex-1 rounded-lg border-2 border-red-300 bg-red-50 py-1 text-xs font-medium text-red-600 hover:bg-red-100 disabled:opacity-50"
-                          >
-                            {deleteMutation.isLoading ? '...' : 'Confirm'}
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setConfirmDeleteId(null)}
-                            disabled={deleteMutation.isLoading}
-                            className="flex-1 rounded-lg border-2 border-slate-line bg-white py-1 text-xs font-medium text-ink hover:bg-slate-strip disabled:opacity-50"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                        {deleteMutation.error && (
-                          <p className="text-xs text-red-600">
-                            {deleteMutation.error instanceof HttpError ?
-                              deleteMutation.error.message
-                            : 'Delete failed'}
-                          </p>
-                        )}
-                      </>
-                    : <>
+                      </div>
+
+                      <div className="flex h-row-item items-center justify-center border-l-2 border-slate-line">
+                        <ItemThumb item={item} />
+                      </div>
+
+                      <div className="flex h-row-item items-center gap-1.5 border-l-2 border-slate-line px-7">
+                        <span
+                          className={`hw-cell-text ${isOutOfStock ? 'text-red-500' : 'text-ink'}`}
+                        >
+                          {available}/{total}
+                        </span>
+                        <span className="hw-cell-text text-ink-soft">
+                          units
+                        </span>
+                      </div>
+
+                      <div className="flex h-row-item items-center justify-center gap-2 border-l-2 border-slate-line bg-slate-soft px-6 py-4">
                         <button
                           type="button"
                           onClick={() => openEdit(item)}
@@ -524,24 +603,14 @@ export default function ItemsPage() {
                         >
                           Edit Item
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            deleteMutation.reset();
-                            setConfirmDeleteId(item.id);
-                          }}
-                          className="w-full rounded-lg border-2 border-red-200 bg-white py-1 text-xs font-medium text-red-500 transition-colors hover:bg-red-50"
-                        >
-                          Delete
-                        </button>
-                      </>
-                    }
-                  </div>
-                </div>
-              );
-            })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            }
           </div>
-        }
+        </div>
       </div>
 
       {showCreateModal && (
@@ -568,6 +637,10 @@ export default function ItemsPage() {
           error={updateMutation.error}
           submitLabel="Save Changes"
           existingImageUrl={editingItem.imageUrl}
+          confirmBeforeSave
+          onDelete={handleDelete}
+          deleteLoading={deleteMutation.isLoading}
+          deleteError={deleteMutation.error}
         />
       )}
     </div>

@@ -49,7 +49,7 @@ export const adminApi = {
     return post<Order>('/admin/change-order-status', { orderId, newState });
   },
 
-  orderPickedUp(orderId: number, heldId: string): Promise<Order> {
-    return post<Order>('/admin/order-picked-up', { orderId, heldId });
+  orderPickedUp(orderId: number): Promise<Order> {
+    return post<Order>('/admin/order-picked-up', { orderId });
   },
 };

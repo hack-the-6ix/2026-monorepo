@@ -24,7 +24,7 @@ import { OrdersPage } from '@/hardware-portal/pages/hacker/OrdersPage';
 
 const VIEW_LABEL: Record<PortalView, string> = {
   catalog: 'Catalog',
-  orders: 'My Orders',
+  orders: 'My\u00A0Orders',
   items: 'Inventory',
   summary: 'Summary',
 };
@@ -81,17 +81,15 @@ function PortalTabNav({
       currentOrder.orderItems.reduce((s, oi) => s + oi.quantity, 0)
     : 0;
 
+  // Match the Cart button's sizing: active = filled brand (btn-brand), inactive
+  // = outline (btn-brand-outline). Both are px-6 py-3 text-base rounded-lg.
   const navClass = (active: boolean) =>
-    `px-4 py-2 rounded-md text-sm font-semibold transition-colors ${
-      active ?
-        'bg-brand text-brand-fg'
-      : 'border border-brand text-brand hover:bg-brand/10'
-    }`;
+    active ? 'btn-brand' : 'btn-brand-outline';
 
   return (
     <div className="mb-8 flex items-center justify-between gap-4">
       <h2 className="text-[1.25rem] font-semibold tracking-tight text-brand">
-        HT6 Hardware Checkout
+        HACK THE 6IX HARDWARE
       </h2>
 
       <div className="flex items-center gap-3">

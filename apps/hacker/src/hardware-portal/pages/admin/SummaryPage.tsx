@@ -25,7 +25,7 @@ const ALL_STATES: OrderState[] = [
 ];
 
 const COLUMN_DEFS: { key: SortCol | null; label: string }[] = [
-  { key: 'email', label: 'HACKER NAME' },
+  { key: 'email', label: 'HACKER EMAIL' },
   { key: 'items', label: 'ITEMS' },
   { key: 'status', label: 'STATUS' },
   { key: 'timestamp', label: 'TIMESTAMPS' },
@@ -54,6 +54,9 @@ type StatusInfo = {
   isComplete: boolean;
   isTerminal: boolean;
   priority: number;
+  // Mirrors the hue used for this state's badge on the hacker Orders page
+  // (StatusBadge.tsx), so the two views read consistently.
+  colorClassName: string;
 };
 
 function statusInfo(state: OrderState): StatusInfo {
@@ -64,6 +67,7 @@ function statusInfo(state: OrderState): StatusInfo {
         isComplete: false,
         isTerminal: false,
         priority: 0,
+        colorClassName: 'text-orange-800',
       };
     case 'READY':
       return {
@@ -71,13 +75,15 @@ function statusInfo(state: OrderState): StatusInfo {
         isComplete: false,
         isTerminal: false,
         priority: 1,
+        colorClassName: 'text-blue-800',
       };
     case 'PICKED_UP':
       return {
-        label: 'COMPLETE',
+        label: 'CHECKED OUT',
         isComplete: true,
         isTerminal: false,
         priority: 2,
+        colorClassName: 'text-green-800',
       };
     case 'RESERVED':
       return {
@@ -85,6 +91,7 @@ function statusInfo(state: OrderState): StatusInfo {
         isComplete: false,
         isTerminal: true,
         priority: 3,
+        colorClassName: 'text-yellow-800',
       };
     case 'RETURNED':
       return {
@@ -92,6 +99,7 @@ function statusInfo(state: OrderState): StatusInfo {
         isComplete: false,
         isTerminal: true,
         priority: 4,
+        colorClassName: 'text-gray-800',
       };
     case 'CANCELLED':
       return {
@@ -99,9 +107,16 @@ function statusInfo(state: OrderState): StatusInfo {
         isComplete: false,
         isTerminal: true,
         priority: 5,
+        colorClassName: 'text-red-800',
       };
     default:
-      return { label: state, isComplete: false, isTerminal: true, priority: 6 };
+      return {
+        label: state,
+        isComplete: false,
+        isTerminal: true,
+        priority: 6,
+        colorClassName: 'text-ink',
+      };
   }
 }
 
@@ -213,8 +228,7 @@ export default function SummaryPage() {
   const [sortDir, setSortDir] = useState<SortDir>('asc');
 
   // modals
-  const [pickupModal, setPickupModal] = useState<Order | null>(null);
-  const [heldId, setHeldId] = useState('');
+  const [cancelModal, setCancelModal] = useState<Order | null>(null);
 
   // Fulfilment (change status / pickup) is admin-only on the backend
   // (requireAdmin); staff (sponsors, READADMIN) get a read-only summary.
@@ -235,16 +249,8 @@ export default function SummaryPage() {
   );
 
   const pickupMutation = useMutation(
-    ({ orderId, heldId }: { orderId: number; heldId: string }) =>
-      adminApi.orderPickedUp(orderId, heldId),
-    {
-      invalidateKeys: [/^admin-all-orders/],
-      onSuccess: () => {
-        setPickupModal(null);
-        setHeldId('');
-        refetch();
-      },
-    },
+    ({ orderId }: { orderId: number }) => adminApi.orderPickedUp(orderId),
+    { invalidateKeys: [/^admin-all-orders/], onSuccess: () => refetch() },
   );
 
   // ── Close filter popover on outside click ───────────────────────────────────
@@ -327,14 +333,14 @@ export default function SummaryPage() {
   };
 
   const handleReadyForPickup = async (order: Order) => {
-    if (order.state === 'PENDING') {
-      try {
+    try {
+      if (order.state === 'PENDING') {
         await statusMutation.mutate({ orderId: order.id, newState: 'READY' });
-      } catch {
-        // surfaced via mutation error state
+      } else if (order.state === 'READY') {
+        await pickupMutation.mutate({ orderId: order.id });
       }
-    } else if (order.state === 'READY') {
-      setPickupModal(order);
+    } catch {
+      // surfaced via mutation error state
     }
   };
 
@@ -351,18 +357,8 @@ export default function SummaryPage() {
       await statusMutation.mutate({ orderId: order.id, newState: 'CANCELLED' });
     } catch {
       // surfaced via mutation error state
-    }
-  };
-
-  const handlePickupConfirm = async () => {
-    if (!pickupModal || !heldId.trim()) return;
-    try {
-      await pickupMutation.mutate({
-        orderId: pickupModal.id,
-        heldId: heldId.trim(),
-      });
-    } catch {
-      // surfaced via mutation error state
+    } finally {
+      setCancelModal(null);
     }
   };
 
@@ -495,12 +491,16 @@ export default function SummaryPage() {
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="w-full table-fixed border-collapse [&_td:first-child]:border-l-0 [&_td:last-child]:border-r-0 [&_th:first-child]:border-l-0 [&_th:last-child]:border-r-0">
+          <table className="w-full min-w-[960px] table-fixed border-collapse [&_td:first-child]:border-l-0 [&_td:last-child]:border-r-0 [&_th:first-child]:border-l-0 [&_th:last-child]:border-r-0">
             <colgroup>
-              <col style={{ width: '21%' }} />
+              <col style={{ width: '18%' }} />
               <col style={{ width: '28%' }} />
               <col style={{ width: '16%' }} />
-              <col style={{ width: '20%' }} />
+              {/* Fixed px (not %) so the header label + sort icon never
+                  shrink below their content width, regardless of table
+                  width — a table-fixed percentage column has no per-column
+                  minimum, which previously let this bleed into ACTIONS. */}
+              <col style={{ width: '210px' }} />
               <col />
             </colgroup>
             <thead>
@@ -509,7 +509,7 @@ export default function SummaryPage() {
                   <th
                     key={label}
                     onClick={key ? () => handleSortClick(key) : undefined}
-                    className={`border-2 border-slate-line bg-slate-soft px-7 py-col-y text-left text-table-header font-bold text-ink ${
+                    className={`hw-col-header border-2 border-slate-line bg-slate-soft px-7 py-col-y text-left font-bold text-ink ${
                       key ?
                         'cursor-pointer select-none hover:bg-slate-line'
                       : ''
@@ -543,9 +543,8 @@ export default function SummaryPage() {
                 </tr>
               : orders.map((order) => {
                   const email = order.initiator?.email ?? 'Unknown';
-                  const { label, isComplete, isTerminal } = statusInfo(
-                    order.state as OrderState,
-                  );
+                  const { label, isComplete, isTerminal, colorClassName } =
+                    statusInfo(order.state as OrderState);
                   const isMutating =
                     statusMutation.isLoading || pickupMutation.isLoading;
 
@@ -554,7 +553,7 @@ export default function SummaryPage() {
                       {/* HACKER NAME */}
                       <td className="border-2 border-slate-line px-7 py-5 align-top">
                         <div className="flex items-start justify-between gap-2">
-                          <span className="break-all text-body font-semibold text-ink">
+                          <span className="hw-cell-text break-all font-semibold text-ink">
                             {email}
                           </span>
                           {order.notes && <NotesIcon />}
@@ -579,11 +578,11 @@ export default function SummaryPage() {
                                 />
                               : <div className="h-9 w-9 flex-shrink-0 rounded-md bg-slate-line" />
                               }
-                              <span className="truncate text-body font-medium text-ink">
+                              <span className="hw-truncate hw-cell-text font-medium text-ink">
                                 {oi.item.name}
                               </span>
                             </div>
-                            <span className="ml-3 flex-shrink-0 text-body text-ink-soft">
+                            <span className="hw-cell-text ml-3 flex-shrink-0 text-ink-soft">
                               Units: {oi.quantity}
                             </span>
                           </div>
@@ -593,7 +592,7 @@ export default function SummaryPage() {
                       {/* STATUS */}
                       <td className="border-2 border-slate-line px-7 py-5 align-top">
                         <span
-                          className={`text-body font-semibold ${isComplete ? 'text-[#208170]' : 'text-ink'}`}
+                          className={`hw-cell-text font-semibold ${colorClassName}`}
                         >
                           {label}
                         </span>
@@ -601,7 +600,7 @@ export default function SummaryPage() {
 
                       {/* TIMESTAMPS */}
                       <td className="border-2 border-slate-line px-7 py-5 align-top">
-                        <div className="flex flex-col gap-3 text-body text-ink">
+                        <div className="hw-cell-text flex flex-col gap-3 text-ink">
                           <p>
                             <span className="font-semibold">
                               ORDER PLACED:{' '}
@@ -622,13 +621,6 @@ export default function SummaryPage() {
                       {/* ACTIONS */}
                       <td className="border-2 border-slate-line px-7 py-5 align-top">
                         <div className="flex flex-col items-stretch gap-3">
-                          <button
-                            disabled
-                            className="rounded-lg border-2 border-slate-line bg-slate-soft px-5 py-3 text-body font-medium text-ink-soft disabled:cursor-not-allowed"
-                          >
-                            Edit order
-                          </button>
-
                           {!canManage ?
                             null
                           : isTerminal ?
@@ -637,7 +629,7 @@ export default function SummaryPage() {
                             <button
                               onClick={() => handleMarkReturned(order)}
                               disabled={isMutating}
-                              className="rounded-lg border-2 border-slate-line bg-slate-soft px-5 py-3 text-body font-medium text-ink hover:bg-slate-line disabled:opacity-50"
+                              className="rounded-lg border-2 border-slate-line bg-slate-soft px-3 py-3 hw-cell-text font-medium text-center break-words leading-tight text-ink hover:bg-slate-line disabled:opacity-50"
                             >
                               Mark Returned
                             </button>
@@ -645,16 +637,16 @@ export default function SummaryPage() {
                               <button
                                 onClick={() => handleReadyForPickup(order)}
                                 disabled={isMutating}
-                                className="rounded-lg border-2 border-[#72d6be] bg-[#f2fbf8] px-5 py-3 text-body font-medium text-[#208170] hover:bg-[#e0f6f1] disabled:opacity-50"
+                                className="rounded-lg border-2 border-[#72d6be] bg-[#f2fbf8] px-3 py-3 hw-cell-text font-medium text-center break-words leading-tight text-[#208170] hover:bg-[#e0f6f1] disabled:opacity-50"
                               >
                                 {order.state === 'READY' ?
                                   'Mark Picked Up'
-                                : 'Ready for pickup'}
+                                : 'Mark Ready'}
                               </button>
                               <button
-                                onClick={() => handleCancel(order)}
+                                onClick={() => setCancelModal(order)}
                                 disabled={isMutating}
-                                className="rounded-lg border-2 border-[#ffa2a2] bg-[#fef2f2] px-5 py-3 text-body font-medium text-[#e7000b] hover:bg-red-100 disabled:opacity-50"
+                                className="rounded-lg border-2 border-[#ffa2a2] bg-[#fef2f2] px-3 py-3 hw-cell-text font-medium text-center break-words leading-tight text-[#e7000b] hover:bg-red-100 disabled:opacity-50"
                               >
                                 Cancel
                               </button>
@@ -696,61 +688,44 @@ export default function SummaryPage() {
         )}
       </div>
 
-      {/* Mark Picked Up modal */}
-      {canManage && pickupModal && (
+      {/* Cancel order confirmation modal */}
+      {canManage && cancelModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="w-full max-w-md rounded-card bg-white p-8 shadow-xl">
             <h2 className="mb-2 text-page-title font-semibold text-ink">
-              Mark as Picked Up
+              Cancel this order?
             </h2>
             <p className="mb-6 text-body text-ink-soft">
-              Order #{pickupModal.orderNumber ?? pickupModal.id} —{' '}
-              {pickupModal.initiator?.email}
+              Are you sure you want to delete this order? Only do this if the
+              order cannot be fulfilled due to quantity changes or if the user
+              who placed the order requests cancellation.
             </p>
 
-            <div className="mb-6">
-              <label
-                htmlFor="heldId"
-                className="mb-2 block text-body font-medium text-ink"
-              >
-                ID Being Held (required)
-              </label>
-              <input
-                id="heldId"
-                type="text"
-                value={heldId}
-                onChange={(e) => setHeldId(e.target.value)}
-                placeholder="Enter student ID or identifier"
-                className="w-full rounded-lg border-2 border-slate-line px-4 py-3 text-body text-ink placeholder:text-ink-mute focus:border-brand focus:outline-none"
-              />
-            </div>
-
-            {pickupMutation.error && (
+            {statusMutation.error && (
               <div className="mb-4 rounded-lg bg-red-50 p-3 text-body text-red-700">
-                {pickupMutation.error instanceof HttpError ?
-                  pickupMutation.error.message
-                : 'Failed to mark as picked up.'}
+                {statusMutation.error instanceof HttpError ?
+                  statusMutation.error.message
+                : 'Failed to cancel order.'}
               </div>
             )}
 
-            <div className="flex justify-end gap-4">
+            <div className="flex flex-col gap-3">
               <button
                 onClick={() => {
-                  setPickupModal(null);
-                  setHeldId('');
-                  pickupMutation.reset();
+                  setCancelModal(null);
+                  statusMutation.reset();
                 }}
-                disabled={pickupMutation.isLoading}
+                disabled={statusMutation.isLoading}
                 className="btn-brand-outline disabled:opacity-50"
               >
-                Cancel
+                Go Back
               </button>
               <button
-                onClick={handlePickupConfirm}
-                disabled={pickupMutation.isLoading || !heldId.trim()}
-                className="btn-brand disabled:opacity-50"
+                onClick={() => handleCancel(cancelModal)}
+                disabled={statusMutation.isLoading}
+                className="btn-danger disabled:opacity-50"
               >
-                {pickupMutation.isLoading ? 'Processing...' : 'Confirm Pickup'}
+                {statusMutation.isLoading ? 'Cancelling...' : 'Cancel'}
               </button>
             </div>
           </div>

@@ -204,14 +204,14 @@ export function CartModal() {
           )}
 
           <div className="mt-4 card-panel">
-            <div className="grid grid-cols-[1fr_118px] border-b-2 border-slate-line bg-slate-strip">
+            <div className="grid grid-cols-[minmax(0,1fr)_118px] border-b-2 border-slate-line bg-slate-strip">
               <div className="flex items-center px-5 py-col-y">
-                <p className="text-table-header font-bold tracking-tight text-ink">
+                <p className="hw-col-header font-bold tracking-tight text-ink">
                   ITEM NAME
                 </p>
               </div>
               <div className="flex items-center border-l-2 border-slate-line px-5 py-col-y">
-                <p className="text-table-header font-bold tracking-tight text-ink">
+                <p className="hw-col-header font-bold tracking-tight text-ink">
                   ITEM
                 </p>
               </div>
@@ -230,10 +230,10 @@ export function CartModal() {
                   return (
                     <div
                       key={itemId}
-                      className="grid grid-cols-[1fr_118px] items-center"
+                      className="grid grid-cols-[minmax(0,1fr)_118px] items-center"
                     >
                       <div className="flex min-h-row items-center justify-between gap-3 px-6 py-4">
-                        <p className="text-body text-ink">
+                        <p className="hw-truncate hw-cell-text text-ink">
                           {item?.name ?? `Item #${itemId}`}
                         </p>
 
@@ -251,7 +251,7 @@ export function CartModal() {
                           >
                             <MinusIcon />
                           </button>
-                          <span className="w-5 text-center text-body text-brand">
+                          <span className="w-5 text-center hw-cell-text text-brand">
                             {qty}
                           </span>
                           <button

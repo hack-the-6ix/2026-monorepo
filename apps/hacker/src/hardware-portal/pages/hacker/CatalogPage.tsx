@@ -16,6 +16,12 @@ interface AvailabilityFilters {
   notAvailable: boolean;
 }
 
+const CATALOG_LAYOUT = {
+  sidebarWidth: '11.5rem',
+  minTableWidth: '620px',
+  gridTemplateColumns: 'minmax(0, 1fr) 132px 130px 165px',
+} as const;
+
 function SearchIcon({ className = 'h-5 w-5' }: { className?: string }) {
   return (
     <svg
@@ -133,9 +139,12 @@ function FilterCheckbox({ checked, label, onToggle }: FilterCheckboxProps) {
 
 function FiltersSidebar({ filters, onChange }: FiltersSidebarProps) {
   return (
-    <aside className="sticky top-header-bar w-sidebar shrink-0 self-start card-panel">
+    <aside
+      className="sticky top-header-bar shrink-0 self-start card-panel"
+      style={{ width: CATALOG_LAYOUT.sidebarWidth }}
+    >
       <div className="border-b-2 border-slate-line bg-slate-soft px-7 py-6">
-        <h2 className="text-table-header font-bold tracking-tight text-ink">
+        <h2 className="hw-col-header font-bold tracking-tight text-ink">
           FILTERS
         </h2>
       </div>
@@ -318,89 +327,105 @@ export function CatalogPage() {
               <option value="quantity-asc">Sort: Stock Low to High</option>
             </select>
           </div>
-
-          <div className="grid grid-cols-[minmax(0,1fr)_150px_150px_140px] border-b-2 border-slate-line bg-slate-soft">
-            <div className="flex items-center px-7 py-col-y">
-              <p className="text-table-header font-bold tracking-tight text-ink">
-                ITEM NAME
-              </p>
-            </div>
-            <div className="flex items-center justify-center border-l-2 border-slate-line px-4 py-col-y">
-              <p className="text-table-header font-bold tracking-tight text-ink">
-                ITEM
-              </p>
-            </div>
-            <div className="flex items-center border-l-2 border-slate-line px-7 py-col-y">
-              <p className="text-table-header font-bold tracking-tight text-ink">
-                AVAILABLE
-              </p>
-            </div>
-            <div className="flex items-center justify-center border-l-2 border-slate-line px-4 py-col-y">
-              <p className="text-table-header font-bold tracking-tight text-ink">
-                ADD TO CART
-              </p>
-            </div>
-          </div>
         </div>
 
-        {filteredItems.length === 0 ?
-          <div className="px-7 py-12 text-center text-sm text-ink-mute">
-            {search ? 'No items match your search.' : 'No items available.'}
-          </div>
-        : <div className="divide-y-2 divide-slate-line">
-            {filteredItems.map((item) => {
-              const available = item.availableQuantity ?? item.initialQuantity;
-              const total = item.initialQuantity;
-              const isLoading =
-                reserveMutation.isLoading ||
-                addToReservationMutation.isLoading ||
-                removeFromReservationMutation.isLoading;
-              const cartQty = cartQtyMap.get(item.id) ?? 0;
+        {/* Scroll header + rows together below the min-width floor so fixed
+            columns never bleed. Kept out of the sticky block above so the
+            horizontal scroll container doesn't hijack vertical stickiness. */}
+        <div className="overflow-x-auto">
+          <div style={{ minWidth: CATALOG_LAYOUT.minTableWidth }}>
+            <div
+              className="grid border-b-2 border-slate-line bg-slate-soft"
+              style={{ gridTemplateColumns: CATALOG_LAYOUT.gridTemplateColumns }}
+            >
+              <div className="flex items-center px-7 py-col-y">
+                <p className="hw-col-header font-bold tracking-tight text-ink">
+                  ITEM NAME
+                </p>
+              </div>
+              <div className="flex items-center justify-center border-l-2 border-slate-line px-4 py-col-y">
+                <p className="hw-col-header font-bold tracking-tight text-ink">
+                  ITEM
+                </p>
+              </div>
+              <div className="flex items-center border-l-2 border-slate-line px-7 py-col-y">
+                <p className="hw-col-header font-bold tracking-tight text-ink">
+                  AVAILABLE
+                </p>
+              </div>
+              <div className="flex items-center justify-center border-l-2 border-slate-line px-4 py-col-y">
+                <p className="hw-col-header font-bold tracking-tight text-ink">
+                  ADD TO CART
+                </p>
+              </div>
+            </div>
 
-              return (
-                <div
-                  key={item.id}
-                  className="grid grid-cols-[minmax(0,1fr)_150px_150px_140px]"
-                >
-                  <div className="flex h-row-item items-center px-7">
-                    <p className="truncate text-body text-ink">{item.name}</p>
-                  </div>
-                  <div className="flex h-row-item items-center justify-center border-l-2 border-slate-line">
-                    <ItemThumb item={item} />
-                  </div>
-                  <div className="flex h-row-item items-center border-l-2 border-slate-line px-7">
-                    <p className="text-body text-ink">
-                      {available}/{total}
-                    </p>
-                  </div>
-                  <div className="flex h-row-item items-center justify-center gap-1.5 border-l-2 border-slate-line bg-slate-soft">
-                    <button
-                      type="button"
-                      disabled={cartQty === 0 || isLoading}
-                      onClick={() => handleRemoveFromCart(item.id)}
-                      className="grid h-7 w-7 place-items-center rounded-md border border-brand text-brand hover:bg-brand/10 disabled:cursor-not-allowed disabled:opacity-40"
-                      aria-label={`Remove one ${item.name} from cart`}
+            {filteredItems.length === 0 ?
+              <div className="px-7 py-12 text-center text-sm text-ink-mute">
+                {search ? 'No items match your search.' : 'No items available.'}
+              </div>
+            : <div className="divide-y-2 divide-slate-line">
+                {filteredItems.map((item) => {
+                  const available =
+                    item.availableQuantity ?? item.initialQuantity;
+                  const total = item.initialQuantity;
+                  const isLoading =
+                    reserveMutation.isLoading ||
+                    addToReservationMutation.isLoading ||
+                    removeFromReservationMutation.isLoading;
+                  const cartQty = cartQtyMap.get(item.id) ?? 0;
+
+                  return (
+                    <div
+                      key={item.id}
+                      className="grid"
+                      style={{
+                        gridTemplateColumns: CATALOG_LAYOUT.gridTemplateColumns,
+                      }}
                     >
-                      <MinusIcon />
-                    </button>
-                    <span className="w-5 text-center text-body text-brand">
-                      {cartQty}
-                    </span>
-                    <button
-                      type="button"
-                      disabled={available === 0 || isLoading}
-                      onClick={() => handleAddToCart(item.id)}
-                      className="grid h-7 w-7 place-items-center rounded-md border border-brand text-brand hover:bg-brand/10 disabled:cursor-not-allowed disabled:opacity-40"
-                      aria-label={`Add one ${item.name} to cart`}
-                    >
-                      <PlusIcon />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+                      <div className="flex h-row-item items-center px-7">
+                        <p className="hw-truncate hw-cell-text text-ink">
+                          {item.name}
+                        </p>
+                      </div>
+                      <div className="flex h-row-item items-center justify-center border-l-2 border-slate-line">
+                        <ItemThumb item={item} />
+                      </div>
+                      <div className="flex h-row-item items-center border-l-2 border-slate-line px-7">
+                        <p className="hw-cell-text text-ink">
+                          {available}/{total}
+                        </p>
+                      </div>
+                      <div className="flex h-row-item items-center justify-center gap-1.5 border-l-2 border-slate-line bg-slate-soft">
+                        <button
+                          type="button"
+                          disabled={cartQty === 0 || isLoading}
+                          onClick={() => handleRemoveFromCart(item.id)}
+                          className="grid h-7 w-7 place-items-center rounded-md border border-brand text-brand hover:bg-brand/10 disabled:cursor-not-allowed disabled:opacity-40"
+                          aria-label={`Remove one ${item.name} from cart`}
+                        >
+                          <MinusIcon />
+                        </button>
+                        <span className="w-5 text-center hw-cell-text text-brand">
+                          {cartQty}
+                        </span>
+                        <button
+                          type="button"
+                          disabled={available === 0 || isLoading}
+                          onClick={() => handleAddToCart(item.id)}
+                          className="grid h-7 w-7 place-items-center rounded-md border border-brand text-brand hover:bg-brand/10 disabled:cursor-not-allowed disabled:opacity-40"
+                          aria-label={`Add one ${item.name} to cart`}
+                        >
+                          <PlusIcon />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            }
           </div>
-        }
+        </div>
       </section>
     </div>
   );

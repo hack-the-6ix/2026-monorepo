@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 
 import { HttpError } from '../../api/client';
@@ -31,7 +32,7 @@ function formatCheckedOutTimestamp(iso: string) {
 function TimestampCell({ iso }: { iso: string }) {
   const { dateLine, timeLine } = formatCheckedOutTimestamp(iso);
   return (
-    <div className="text-body leading-5 text-ink">
+    <div className="hw-cell-text leading-5 text-ink">
       <p className="whitespace-nowrap">{dateLine}</p>
       <p className="whitespace-nowrap">{timeLine}</p>
     </div>
@@ -55,7 +56,7 @@ function CheckedOutCell({
         type="button"
         onClick={() => onCancel(order.id)}
         disabled={isCancelling}
-        className="btn-danger-outline"
+        className="btn-danger-outline whitespace-nowrap"
       >
         {isCancelling ? 'Cancelling...' : 'Cancel Order'}
       </button>
@@ -82,6 +83,8 @@ export function OrdersPage() {
     refetch,
   } = useQuery('user-past-orders', userApi.getPastOrders);
 
+  const [cancelOrderId, setCancelOrderId] = useState<number | null>(null);
+
   const cancelMutation = useMutation(
     (orderId: number) => userApi.cancelOrder(orderId),
     { invalidateKeys: [/^user-/] },
@@ -91,12 +94,14 @@ export function OrdersPage() {
     (VISIBLE_STATES as readonly string[]).includes(o.state),
   );
 
-  const handleCancel = async (orderId: number) => {
-    if (!confirm('Are you sure you want to cancel this order?')) return;
+  const confirmCancel = async () => {
+    if (cancelOrderId == null) return;
     try {
-      await cancelMutation.mutate(orderId);
+      await cancelMutation.mutate(cancelOrderId);
     } catch {
       // surfaced via mutation error state
+    } finally {
+      setCancelOrderId(null);
     }
   };
 
@@ -148,41 +153,59 @@ export function OrdersPage() {
             Browse the catalog to add items to your cart
           </Link>
         </div>
-      : <table className="w-full table-fixed border-collapse">
-          <thead className="bg-slate-soft">
-            <tr className="border-b-2 border-slate-line">
-              <th className="w-[16%] border-r-2 border-slate-line px-7 py-col-y text-left text-table-header font-bold tracking-tight text-ink">
-                ORDER NUMBER
-              </th>
-              <th className="w-[40%] border-r-2 border-slate-line px-5 py-col-y text-center text-table-header font-bold tracking-tight text-ink">
-                ITEMS
-              </th>
-              <th className="w-[18%] border-r-2 border-slate-line px-7 py-col-y text-left text-table-header font-bold tracking-tight text-ink">
-                ORDER STATUS
-              </th>
-              <th className="w-[21%] px-7 py-col-y text-left text-table-header font-bold tracking-tight text-ink">
-                CHECKED OUT
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {visibleOrders.map((order) =>
-              order.orderItems.map((oi, idx) => (
+      : <div className="overflow-x-auto">
+          <table className="w-full min-w-[740px] table-fixed border-collapse">
+            <thead className="bg-slate-soft">
+              <tr className="border-b-2 border-slate-line">
+                <th className="w-[16%] border-r-2 border-slate-line px-7 py-col-y text-left hw-col-header font-bold tracking-tight text-ink">
+                  ORDER NUMBER
+                </th>
+                <th className="w-[40%] border-r-2 border-slate-line px-5 py-col-y text-center hw-col-header font-bold tracking-tight text-ink">
+                  ITEMS
+                </th>
+                <th className="w-[18%] border-r-2 border-slate-line px-7 py-col-y text-left hw-col-header font-bold tracking-tight text-ink">
+                  ORDER STATUS
+                </th>
+                <th className="w-[190px] px-7 py-col-y text-left hw-col-header font-bold tracking-tight text-ink">
+                  CHECKED OUT
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {visibleOrders.map((order) => (
                 <tr
-                  key={oi.id}
+                  key={order.id}
                   className="border-b-2 border-slate-line last:border-b-0"
                 >
-                  {idx === 0 && (
-                    <td
-                      rowSpan={order.orderItems.length}
-                      className="border-r-2 border-slate-line px-7 align-middle text-body text-ink"
-                    >
-                      #{order.orderNumber ?? order.id}
-                    </td>
-                  )}
-                  <td className="h-row border-r-2 border-slate-line px-7 align-middle text-body text-ink">
-                    {oi.item.name}
-                    {oi.quantity > 1 ? ` ×${oi.quantity}` : ''}
+                  <td className="hw-cell-text border-r-2 border-slate-line px-7 align-middle text-ink">
+                    #{order.orderNumber ?? order.id}
+                  </td>
+                  <td className="border-r-2 border-slate-line py-3 align-top">
+                    {order.orderItems.map((oi, idx) => (
+                      <div
+                        key={oi.id}
+                        className={`flex items-center justify-between px-7 py-2 ${
+                          idx % 2 === 1 ? 'bg-slate-soft' : 'bg-white'
+                        }`}
+                      >
+                        <div className="flex min-w-0 items-center gap-3">
+                          {oi.item.imageUrl ?
+                            <img
+                              src={oi.item.imageUrl}
+                              alt={oi.item.name}
+                              className="h-9 w-9 flex-shrink-0 rounded-md object-cover"
+                            />
+                          : <div className="h-9 w-9 flex-shrink-0 rounded-md bg-slate-line" />
+                          }
+                          <span className="hw-truncate hw-cell-text font-medium text-ink">
+                            {oi.item.name}
+                          </span>
+                        </div>
+                        <span className="hw-cell-text ml-3 flex-shrink-0 text-ink-soft">
+                          Units: {oi.quantity}
+                        </span>
+                      </div>
+                    ))}
                   </td>
                   <td className="whitespace-nowrap border-r-2 border-slate-line px-4 align-middle">
                     <StatusBadge status={order.state} />
@@ -190,16 +213,50 @@ export function OrdersPage() {
                   <td className="px-7 align-middle">
                     <CheckedOutCell
                       order={order}
-                      onCancel={handleCancel}
+                      onCancel={setCancelOrderId}
                       isCancelling={cancelMutation.isLoading}
                     />
                   </td>
                 </tr>
-              )),
-            )}
-          </tbody>
-        </table>
+              ))}
+            </tbody>
+          </table>
+        </div>
       }
+
+      {cancelOrderId != null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-md rounded-card bg-white p-8 shadow-xl">
+            <h2 className="mb-2 text-page-title font-semibold text-ink">
+              Cancel this order?
+            </h2>
+            <p className="mb-6 text-body text-ink-soft">
+              Are you sure you want to cancel this order? This can&apos;t be
+              undone.
+            </p>
+
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => {
+                  setCancelOrderId(null);
+                  cancelMutation.reset();
+                }}
+                disabled={cancelMutation.isLoading}
+                className="btn-brand-outline disabled:opacity-50"
+              >
+                Go Back
+              </button>
+              <button
+                onClick={confirmCancel}
+                disabled={cancelMutation.isLoading}
+                className="btn-danger disabled:opacity-50"
+              >
+                {cancelMutation.isLoading ? 'Cancelling...' : 'Cancel Order'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
