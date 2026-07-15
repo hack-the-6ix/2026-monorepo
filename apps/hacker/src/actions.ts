@@ -30,7 +30,8 @@ export interface UserProfile {
   firstName: string | null;
   lastName: string | null;
   createdAt: string;
-  isAdmin: boolean;
+  // Admin/organizer access is an `admin` entry in `roles` (see hasAdminRole in
+  // hardware-portal/lib/permissions.ts); the HT6 API returns no top-level flag.
   roles: unknown[];
 }
 

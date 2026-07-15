@@ -42,9 +42,11 @@ export default function MobileNavbar() {
   const canAccessSchedule =
     featureFlags.scheduleReleased || process.env.NEXT_PUBLIC_PREVIEW === '1';
 
-  const eventPage = pages.find((p) => p.id === 'event');
+  const eventPages = pages.filter(
+    (p) => p.id === 'event' || p.id.startsWith('event-'),
+  );
   const rolePages = pages
-    .filter((p) => p.id !== 'event')
+    .filter((p) => p.id !== 'event' && !p.id.startsWith('event-'))
     .sort(
       (a, b) => roleOrder.indexOf(a.roles[0]) - roleOrder.indexOf(b.roles[0]),
     );
@@ -58,7 +60,7 @@ export default function MobileNavbar() {
     },
     {} as Record<string, DashboardPage[]>,
   );
-  const hasEventNav = Boolean(eventPage) || canAccessSchedule;
+  const hasEventNav = eventPages.length > 0 || canAccessSchedule;
 
   if (pathname === '/thank-you') {
     return null;
@@ -172,21 +174,25 @@ export default function MobileNavbar() {
                     >
                       Event
                     </Typography>
-                    {eventPage && (
-                      <Link href="/?tab=event" onClick={closeBurger}>
+                    {eventPages.map((page) => (
+                      <Link
+                        key={page.id}
+                        href={`/?tab=${page.id}`}
+                        onClick={closeBurger}
+                      >
                         <Typography
                           textSize="paragraph-lg"
                           textWeight="bold"
                           className={
-                            activeTab === 'event' && pathname === '/' ?
+                            activeTab === page.id && pathname === '/' ?
                               'text-primary-300'
                             : 'text-white'
                           }
                         >
-                          Schedule
+                          {page.title}
                         </Typography>
                       </Link>
-                    )}
+                    ))}
                   </div>
                 )}
 

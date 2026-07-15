@@ -4,7 +4,7 @@ import { type HackerRole, seasonCode, type UserProfile } from '@/actions';
  * The hardware portal's access tiers, derived from the HT6 profile.
  *
  * Precedence: admin > staff > requester > none.
- *  - admin      → HT6 organizer (profile.isAdmin): inventory CRUD + fulfilment
+ *  - admin      → HT6 organizer (an `admin` role on the profile): inventory CRUD + fulfilment
  *  - staff      → sponsor: view all orders (read-only; fulfilment is admin-only)
  *  - requester  → volunteer or checked-in hacker: browse / reserve / checkout
  *  - none       → everyone else (non-checked-in hacker, mentor, no role): denied
@@ -28,12 +28,19 @@ function hasSeasonRole(
   });
 }
 
+function hasAdminRole(profile: UserProfile): boolean {
+  return profile.roles.some((r) => {
+    if (typeof r !== 'object' || r === null) return false;
+    return (r as { type?: unknown }).type === 'admin';
+  });
+}
+
 export function getPortalRole(
   profile: UserProfile | null,
   hackerRole: HackerRole | null,
 ): PortalRole {
   if (!profile) return 'none';
-  if (profile.isAdmin) return 'admin';
+  if (hasAdminRole(profile)) return 'admin';
   if (hasSeasonRole(profile, 'sponsor')) return 'staff';
   // Volunteers get the checkout view like hackers (backend maps them to USER).
   if (hasSeasonRole(profile, 'volunteer')) return 'requester';
@@ -43,15 +50,44 @@ export function getPortalRole(
   return 'none';
 }
 
-export function portalHome(role: PortalRole): string {
+/**
+ * The portal's sub-views, selected within the dashboard tab via the `?hp=`
+ * query param (the portal no longer has its own routes).
+ */
+export type PortalView = 'catalog' | 'orders' | 'items' | 'summary';
+
+/** The dashboard tab id the portal is mounted under (`/?tab=…`). */
+export const HARDWARE_PORTAL_TAB = 'event-hardware-portal';
+
+/** Href for a portal sub-view within the dashboard tab. */
+export function portalViewHref(view: PortalView): string {
+  return `/?tab=${HARDWARE_PORTAL_TAB}&hp=${view}`;
+}
+
+/** The view each role lands on by default (null → no portal access). */
+export function portalDefaultView(role: PortalRole): PortalView | null {
   switch (role) {
     case 'admin':
-      return '/hardware-portal/admin';
+      return 'items';
     case 'staff':
-      return '/hardware-portal/admin/summary';
+      return 'summary';
     case 'requester':
-      return '/hardware-portal/hacker';
+      return 'catalog';
     default:
-      return '/hardware-portal';
+      return null;
+  }
+}
+
+/** Which sub-views a given role is allowed to see. */
+export function portalViewsForRole(role: PortalRole): PortalView[] {
+  switch (role) {
+    case 'admin':
+      return ['items', 'summary'];
+    case 'staff':
+      return ['summary'];
+    case 'requester':
+      return ['catalog', 'orders'];
+    default:
+      return [];
   }
 }

@@ -42,12 +42,7 @@ const Sidebar = () => {
     (p) => p.id === 'event' || p.id.startsWith('event-'),
   );
   const rolePages = pages
-    .filter(
-      (p) =>
-        p.id !== 'event' &&
-        !p.id.startsWith('event-') &&
-        p.id !== 'hardware-portal',
-    )
+    .filter((p) => p.id !== 'event' && !p.id.startsWith('event-'))
     .sort(
       (a, b) => roleOrder.indexOf(a.roles[0]) - roleOrder.indexOf(b.roles[0]),
     );
@@ -63,7 +58,6 @@ const Sidebar = () => {
   );
 
   const hasEventNav = eventPages.length > 0 || canAccessSchedule;
-  const showHardwarePortal = pages.some((p) => p.id === 'hardware-portal');
 
   const handleLogout = async () => {
     try {
@@ -175,17 +169,6 @@ const Sidebar = () => {
               );
             })}
           </div>
-        )}
-
-        {showHardwarePortal && (
-          <Button
-            as={Link}
-            href="/hardware-portal"
-            kind="tertiary"
-            className="mt-2 text-primary-400"
-          >
-            Hardware Portal
-          </Button>
         )}
       </div>
 

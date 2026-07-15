@@ -49,7 +49,6 @@ export interface UserProfile {
   firstName: string | null;
   lastName: string | null;
   createdAt: string;
-  isAdmin: boolean;
   roles: Array<
     | HackerRole
     | {

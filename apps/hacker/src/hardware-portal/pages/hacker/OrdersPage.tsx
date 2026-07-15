@@ -1,11 +1,14 @@
 'use client';
 
+import Link from 'next/link';
+
 import { HttpError } from '../../api/client';
 import { userApi } from '../../api/user.api';
 import { Spinner } from '../../components/Spinner';
 import { StatusBadge } from '../../components/StatusBadge';
 import { useMutation } from '../../hooks/useMutation';
 import { useQuery } from '../../hooks/useQuery';
+import { portalViewHref } from '../../lib/permissions';
 import type { Order } from '../../types';
 
 const VISIBLE_STATES = ['PENDING', 'READY', 'PICKED_UP', 'RETURNED'] as const;
@@ -138,12 +141,12 @@ export function OrdersPage() {
       {visibleOrders.length === 0 ?
         <div className="px-7 py-16 text-center">
           <p className="text-ink">You haven&apos;t placed any orders yet.</p>
-          <a
-            href="/hardware-portal/hacker"
+          <Link
+            href={portalViewHref('catalog')}
             className="mt-2 inline-block text-sm font-semibold text-brand hover:underline"
           >
             Browse the catalog to add items to your cart
-          </a>
+          </Link>
         </div>
       : <table className="w-full table-fixed border-collapse">
           <thead className="bg-slate-soft">

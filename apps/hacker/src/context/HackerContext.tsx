@@ -53,10 +53,6 @@ function getUserRoleTypes(profile: UserProfile | null): RoleType[] {
     }
   }
 
-  if (profile.isAdmin) {
-    types.add('admin');
-  }
-
   return Array.from(types);
 }
 

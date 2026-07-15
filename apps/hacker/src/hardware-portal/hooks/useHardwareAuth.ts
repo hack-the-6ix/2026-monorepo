@@ -11,7 +11,8 @@ export interface HardwareAuth {
 /**
  * Bridges the dashboard's HackerContext to the hardware portal's permission
  * model. Replaces the old stubbed AuthContext (VITE_DEV_ADMIN) — the portal
- * role is derived from the HT6 profile (isAdmin / roles / checked-in status).
+ * role is derived from the HT6 profile roles (admin role / sponsor / volunteer /
+ * checked-in hacker status).
  */
 export function useHardwareAuth(): HardwareAuth {
   const { profile, hackerRole, loading } = useHacker();

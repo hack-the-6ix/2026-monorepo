@@ -12,8 +12,7 @@ import MentorDashboard from '@/components/dashboards/MentorDashboard';
 import OrganizerDashboard from '@/components/dashboards/OrganizerDashboard';
 import SponsorDashboard from '@/components/dashboards/SponsorDashboard';
 import VolunteerDashboard from '@/components/dashboards/VolunteerDashboard';
-import HardwarePortalRedirect from '@/components/HardwarePortalRedirect';
-import RsvpedView from '@/components/status/RsvpedView';
+import HardwarePortalTab from '@/components/HardwarePortalTab';
 import { useHacker } from '@/context/HackerContext';
 import { EVENT_LOCATION, EVENT_NAME } from '@/data/event';
 import { HT6_API_CLIENT_URL } from '@/lib/api';
@@ -78,27 +77,11 @@ registerDashboardPage({
   component: SchedulePage,
 });
 registerDashboardPage({
-  id: 'event-socials',
-  title: 'Socials',
-  roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
-  statuses: ['rsvped', 'checked-in'],
-  component: SocialsForm,
-});
-registerDashboardPage({
-  id: 'hardware-portal',
+  id: 'event-hardware-portal',
   title: 'Hardware Portal',
   roles: ['hacker', 'sponsor', 'volunteer', 'admin'],
   statuses: ['checked-in'],
-  component: HardwarePortalRedirect,
-});
-registerDashboardPage({
-  id: 'hardware-portal',
-  title: 'Hardware Portal',
-  // Checked-in hackers plus all sponsors/volunteers/admins (non-hacker roles
-  // bypass the status filter); mentors and non-checked-in hackers are excluded.
-  roles: ['hacker', 'sponsor', 'volunteer', 'admin'],
-  statuses: ['checked-in'],
-  component: HardwarePortalRedirect,
+  component: HardwarePortalTab,
 });
 
 function Spinner() {
