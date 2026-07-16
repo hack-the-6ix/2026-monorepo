@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
+import { fetchHt6 } from '@/client';
 import DiscordNavButton from '@/components/DiscordNavButton';
 import { useHacker } from '@/context/HackerContext';
 import { featureFlags } from '@/feature-flags';
@@ -57,6 +58,18 @@ const Sidebar = () => {
   );
 
   const hasEventNav = eventPages.length > 0 || canAccessSchedule;
+
+  const handleLogout = async () => {
+    try {
+      await fetchHt6('/auth/logout', { method: 'POST' });
+      // Hard navigation so middleware re-runs the auth check and
+      // redirects to the login page now that the session is gone.
+      window.location.href = '/';
+    } catch (err) {
+      console.error('Failed to log out', err);
+      alert('Failed to log out. Please try again.');
+    }
+  };
 
   return (
     <nav className="flex flex-col h-full px-6">
@@ -181,9 +194,7 @@ const Sidebar = () => {
           <Button
             kind="secondary"
             className="w-full px-16 rounded-full"
-            onClick={() => {
-              console.log('log out');
-            }}
+            onClick={handleLogout}
           >
             <Typography
               as="p"
