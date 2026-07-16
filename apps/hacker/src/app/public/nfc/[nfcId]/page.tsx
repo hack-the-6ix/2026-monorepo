@@ -4,8 +4,8 @@ interface PageProps {
   params: Promise<{ nfcId: string }>;
 }
 
-export default async function NFCRedirectPage({ params }: PageProps) {
+export default async function PublicNfcPage({ params }: PageProps) {
   const { nfcId } = await params;
 
-  return <NfcSocialProfile nfcId={nfcId} allowAdminRedirect />;
+  return <NfcSocialProfile nfcId={nfcId} />;
 }
