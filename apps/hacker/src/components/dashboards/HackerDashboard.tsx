@@ -1,7 +1,6 @@
 'use client';
 
 import { changeHackerRsvpStatus } from '@/actions';
-import AcceptedView from '@/components/status/AcceptedView';
 import DeclinedView from '@/components/status/DeclinedView';
 import HackerHomeView from '@/components/status/HackerHomeView';
 import NotAppliedView from '@/components/status/NotAppliedView';
@@ -52,7 +51,7 @@ export default function HackerDashboard() {
         );
       case 'accepted':
         return (
-          <AcceptedView name={displayName} onDecline={handleDeclineInvite} />
+          <HackerHomeView name={displayName} onDecline={handleDeclineInvite} />
         );
       case 'checked-in':
       case 'rsvped':
