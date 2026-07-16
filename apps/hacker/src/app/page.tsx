@@ -65,7 +65,7 @@ registerDashboardPage({
   id: 'event',
   title: 'Schedule',
   roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
-  statuses: ['rsvped', 'checked-in'],
+  statuses: ['waitlist', 'accepted', 'rsvped', 'checked-in'],
   component: SchedulePage,
 });
 
