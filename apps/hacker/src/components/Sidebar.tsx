@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
+import { fetchHt6 } from '@/client';
 import DiscordNavButton from '@/components/DiscordNavButton';
 import { useHacker } from '@/context/HackerContext';
 import { featureFlags } from '@/feature-flags';
@@ -57,6 +58,25 @@ const Sidebar = () => {
   );
 
   const hasEventNav = eventPages.length > 0 || canAccessSchedule;
+
+  const handleLogout = async () => {
+    try {
+      const { cognitoLogoutUrl } = await fetchHt6<{
+        message: string;
+        cognitoLogoutUrl: string;
+      }>(
+        `/auth/logout?redirectUrl=${encodeURIComponent(window.location.origin)}`,
+        { method: 'POST' },
+      );
+      // Top-level navigation to Cognito's /logout is required to clear the
+      // hosted-UI session cookie; otherwise the middleware's redirect to
+      // /auth/login silently re-authenticates and the user is never logged out.
+      window.location.href = cognitoLogoutUrl;
+    } catch (err) {
+      console.error('Failed to log out', err);
+      alert('Failed to log out. Please try again.');
+    }
+  };
 
   return (
     <nav className="flex flex-col h-full px-6">
@@ -181,9 +201,7 @@ const Sidebar = () => {
           <Button
             kind="secondary"
             className="w-full px-16 rounded-full"
-            onClick={() => {
-              console.log('log out');
-            }}
+            onClick={handleLogout}
           >
             <Typography
               as="p"
