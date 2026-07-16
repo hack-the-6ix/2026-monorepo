@@ -61,10 +61,17 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     try {
-      await fetchHt6('/auth/logout', { method: 'POST' });
-      // Hard navigation so middleware re-runs the auth check and
-      // redirects to the login page now that the session is gone.
-      window.location.href = '/';
+      const { cognitoLogoutUrl } = await fetchHt6<{
+        message: string;
+        cognitoLogoutUrl: string;
+      }>(
+        `/auth/logout?redirectUrl=${encodeURIComponent(window.location.origin)}`,
+        { method: 'POST' },
+      );
+      // Top-level navigation to Cognito's /logout is required to clear the
+      // hosted-UI session cookie; otherwise the middleware's redirect to
+      // /auth/login silently re-authenticates and the user is never logged out.
+      window.location.href = cognitoLogoutUrl;
     } catch (err) {
       console.error('Failed to log out', err);
       alert('Failed to log out. Please try again.');
