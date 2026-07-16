@@ -1,10 +1,20 @@
-import { useState } from 'react';
-import { FaChevronDown } from 'react-icons/fa6';
-import { Typography } from '@hackthe6ix/ui';
+import { useEffect, useMemo, useState } from 'react';
+import { FaArrowRightLong, FaChevronDown } from 'react-icons/fa6';
+import { Typography, WorkshopCard } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
-import { changeHackerRsvpStatus, seasonCode } from '@/actions';
+import {
+  changeHackerRsvpStatus,
+  listScheduleEvents,
+  seasonCode,
+} from '@/actions';
 import { useHacker } from '@/context/HackerContext';
+import {
+  apiEventsToScheduleEvents,
+  categoryColor,
+  formatTime,
+  type ScheduleEvent,
+} from '@/data/schedule';
 import checkedInImage from '../../app/assets/checked_in.png';
 import devpostIcon from '../../app/assets/devpost_icon.png';
 import discordIcon from '../../app/assets/discord_icon.png';
@@ -111,6 +121,49 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
   const [hasCancelledRsvp, setHasCancelledRsvp] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
 
+  // Current Events State
+  const [events, setEvents] = useState<ScheduleEvent[]>([]);
+  const [loadingEvents, setLoadingEvents] = useState(true);
+  const [now, setNow] = useState<number | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadSchedule = async () => {
+      try {
+        const apiEvents = await listScheduleEvents();
+        if (cancelled) return;
+        setEvents(apiEventsToScheduleEvents(apiEvents));
+      } catch (err) {
+        console.error('Failed to load schedule events', err);
+      } finally {
+        if (!cancelled) setLoadingEvents(false);
+      }
+    };
+
+    void loadSchedule();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setNow(Date.now());
+    const id = setInterval(() => setNow(Date.now()), 60000);
+    return () => clearInterval(id);
+  }, []);
+
+  const currentEvents = useMemo(() => {
+    if (now === null) return [];
+    return events.filter((e) => {
+      const start = new Date(e.start).getTime();
+      const end = new Date(e.end).getTime();
+      return now >= start && now <= end;
+    });
+  }, [events, now]);
+
   const qrCodeSrc =
     profile?.userId ?
       `/api/ht6/users/${encodeURIComponent(profile.userId)}/qr`
@@ -187,42 +240,65 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
                 </span>
               </button>)}
         </div>
-        {status !== 'waitlist' && (
-          <div
-            className={`${glassPanelClass} flex items-end justify-between gap-4 px-5 py-6`}
-          >
+
+        <div className={`${glassPanelClass} flex flex-col gap-4 px-5 py-6`}>
+          <div className="flex items-end justify-between gap-4">
             <div>
               <Typography
                 as="h2"
                 textSize="subtitle-sm"
                 textWeight="semi-bold"
                 textColor="text-white"
-                className="mb-3"
+                className={
+                  currentEvents.length === 0 && !loadingEvents ? 'mb-3' : ''
+                }
               >
-                No current events.
+                {loadingEvents ?
+                  'Loading events...'
+                : currentEvents.length > 0 ?
+                  'Current Events:'
+                : 'No current events.'}
               </Typography>
-              <Typography
-                as="p"
-                textSize="paragraph-sm"
-                textWeight="regular"
-                textColor="text-white"
-                className="opacity-85"
-              >
-                Check back later to see events!
-              </Typography>
+              {currentEvents.length === 0 && !loadingEvents && (
+                <Typography
+                  as="p"
+                  textSize="paragraph-sm"
+                  textWeight="regular"
+                  textColor="text-white"
+                  className="opacity-85"
+                >
+                  Check back later to see events!
+                </Typography>
+              )}
             </div>
             <a
-              // TODO: UPDATE TO HAVE ACTUAL SCHEDULE
-              // href="https://hackthe6ix.com"
+              href="/?tab=event"
               target="_blank"
               rel="noreferrer"
-              className="text-sm font-semibold text-yellow-300 decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200"
+              className="mb-1 shrink-0 text-sm font-semibold underline text-yellow-300 decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200"
             >
-              Coming soon{' '}
-              {/* <FaArrowRightLong className="inline-block align-middle" /> */}
+              See schedule
+              <FaArrowRightLong className="ml-1.5 inline-block align-middle" />
             </a>
           </div>
-        )}
+
+          {currentEvents.length > 0 && !loadingEvents && (
+            <div className="flex flex-col gap-3">
+              {currentEvents.map((ev) => (
+                <WorkshopCard
+                  key={ev.id}
+                  className="w-full bg-[#3E4259]/55"
+                  title={ev.title}
+                  startTime={formatTime(ev.start)}
+                  endTime={formatTime(ev.end)}
+                  location={ev.location}
+                  color={categoryColor(ev.category)}
+                  state="active"
+                />
+              ))}
+            </div>
+          )}
+        </div>
 
         <div className={`${glassPanelClass} px-5 py-6`}>
           <Typography
@@ -349,36 +425,34 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
           </a>
         )}
 
-        {status !== 'waitlist' && (
-          <a
-            href="https://hackthe6ix.notion.site/hacker-handbook"
-            className={`${quickLinkPanelClass} block px-4 py-3 transition hover:border-teal-300/60`}
-          >
-            <div className="mb-1 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <Image
-                  src={notionIcon}
-                  alt="Notion icon"
-                  className="h-6 w-6 shrink-0"
-                />
-                <Typography
-                  as="h3"
-                  textSize="paragraph-lg"
-                  textWeight="semi-bold"
-                  textColor="text-white"
-                  className="leading-tight"
-                >
-                  Hacker Guide
-                </Typography>
-              </div>
+        <a
+          href="https://hackthe6ix.notion.site/hacker-handbook"
+          className={`${quickLinkPanelClass} block px-4 py-3 transition hover:border-teal-300/60`}
+        >
+          <div className="mb-1 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
               <Image
-                src={paperclipIcon}
-                alt="Link icon"
-                className="h-5 w-5 shrink-0"
+                src={notionIcon}
+                alt="Notion icon"
+                className="h-6 w-6 shrink-0"
               />
+              <Typography
+                as="h3"
+                textSize="paragraph-lg"
+                textWeight="semi-bold"
+                textColor="text-white"
+                className="leading-tight"
+              >
+                Hacker Guide
+              </Typography>
             </div>
-          </a>
-        )}
+            <Image
+              src={paperclipIcon}
+              alt="Link icon"
+              className="h-5 w-5 shrink-0"
+            />
+          </div>
+        </a>
 
         {status !== 'waitlist' && (
           <a
