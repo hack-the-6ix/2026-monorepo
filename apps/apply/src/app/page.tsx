@@ -23,11 +23,11 @@ export default function WelcomePage() {
           textWeight="bold"
           textColor="text-white"
         >
-          {applicationFormOpen
-            ? 'Hacker Application'
-            : 'Applications are closed'}
+          {applicationFormOpen ?
+            'Hacker Application'
+          : 'Applications are closed'}
         </Typography>
-        {applicationFormOpen ? (
+        {applicationFormOpen ?
           <>
             <Typography
               as="p"
@@ -55,8 +55,8 @@ export default function WelcomePage() {
             >
               Play HT6 Chef Overflow
             </Button>
-          </>)
-        : (<Typography
+          </>
+        : <Typography
             as="p"
             textSize="subtitle-sm"
             textColor="text-yellow-300"
@@ -71,7 +71,7 @@ export default function WelcomePage() {
               2026.dash.hackthe6ix.com
             </a>
           </Typography>
-        )}
+        }
       </div>
     </main>
   );
