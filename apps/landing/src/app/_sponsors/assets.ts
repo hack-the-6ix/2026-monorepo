@@ -15,6 +15,11 @@ import Grass from '../../assets/sponsors/sponsor_grass.png';
 import Hills from '../../assets/sponsors/sponsor_hill.png';
 import sponsorStay22Logo from '../../assets/sponsors/stay22_logo.png';
 import sponsorWarpLogo from '../../assets/sponsors/warp_logo.png';
+import sponsorBgaLogo from '../../assets/sponsors/bga_logo.png';
+import sponsorCortexLogo from '../../assets/sponsors/cortex_logo.png';
+import sponsorDoseLogo from '../../assets/sponsors/dose_logo.webp';
+import sponsorSolcoaLogo from '../../assets/sponsors/solcoa_logo.jpg';
+import sponsorUnifoldLogo from '../../assets/sponsors/unifold_logo.svg';
 
 export const assets = {
   Candle,
@@ -34,4 +39,9 @@ export const assets = {
   sponsorMouserElectronicsLogo,
   sponsorQualcommLogo,
   sponsorStay22Logo,
+  sponsorBgaLogo,
+  sponsorCortexLogo,
+  sponsorDoseLogo,
+  sponsorSolcoaLogo,
+  sponsorUnifoldLogo
 };
