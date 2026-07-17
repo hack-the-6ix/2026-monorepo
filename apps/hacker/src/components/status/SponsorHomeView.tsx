@@ -226,30 +226,32 @@ const SponsorHomeView = ({ name }: SponsorHomeViewProps) => {
             Explore your dashboard below and get excited for the event on{' '}
             <span className="text-yellow-300">July 17th</span>!
           </Typography>
-          <div className="flex flex-col md:align-middle md:flex-row max-w-full md:justify-between">
-            <Typography
-              as="p"
-              textSize="paragraph-lg"
-              textWeight="regular"
-              textColor="text-white"
-            >
-              Your Hack the 6ix representative:{' '}
-              <span className="text-yellow-300 font-bold">
-                {representativeName}
-              </span>
-            </Typography>
-            <div className="flex flex-col gap-2 text-sm items-end md:items-start md:text-base">
-              {representativePhone && (
-                <a
-                  href={`tel:+1${representativePhone}`}
-                  className="inline-flex items-center gap-2 text-yellow-300 text-md font-bold underline hover:text-yellow-500"
-                >
-                  <FaPhone className="h-4 w-4 shrink-0" />
-                  Call ({representativePhone})
-                </a>
-              )}
+          {representativeName && (
+            <div className="flex flex-col md:align-middle md:flex-row max-w-full md:justify-between">
+              <Typography
+                as="p"
+                textSize="paragraph-lg"
+                textWeight="regular"
+                textColor="text-white"
+              >
+                Your Hack the 6ix representative:{' '}
+                <span className="text-yellow-300 font-bold">
+                  {representativeName}
+                </span>
+              </Typography>
+              <div className="flex flex-col gap-2 text-sm items-end md:items-start md:text-base">
+                {representativePhone && (
+                  <a
+                    href={`tel:+1${representativePhone}`}
+                    className="inline-flex items-center gap-2 text-yellow-300 text-md font-bold underline hover:text-yellow-500"
+                  >
+                    <FaPhone className="h-4 w-4 shrink-0" />
+                    Call ({representativePhone})
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className={`${glassPanelClass} flex flex-col gap-4 px-5 py-6`}>
