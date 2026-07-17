@@ -52,6 +52,11 @@ const silverSponsors = [
     alt: 'Stay22',
     href: 'https://www.stay22.com',
   },
+  {
+    src: assets.sponsorCortexLogo,
+    alt: 'Cortex',
+    href: 'https://www.cortex.io/',
+  },
 ];
 
 const bronzeSponsors: {
@@ -89,6 +94,26 @@ const bronzeSponsors: {
     src: assets.sponsorMouserElectronicsLogo,
     alt: 'Mouser Electronics',
     href: 'https://www.mouser.com',
+  },
+  {
+    src: assets.sponsorUnifoldLogo,
+    alt: 'Unifold',
+    href: 'https://unifold.io/',
+  },
+  {
+    src: assets.sponsorBgaLogo,
+    alt: 'BGA',
+    href: 'https://chainforgood.org/',
+  },
+  {
+    src: assets.sponsorDoseLogo,
+    alt: 'Dose Juice',
+    href: 'https://dosejuice.com/',
+  },
+  {
+    src: assets.sponsorSolcoaLogo,
+    alt: 'Solcoa',
+    href: 'https://solcoaindustries.com/',
   },
 ];
 
