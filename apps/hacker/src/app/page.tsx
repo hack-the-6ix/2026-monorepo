@@ -15,7 +15,6 @@ import VolunteerDashboard from '@/components/dashboards/VolunteerDashboard';
 import HardwarePortalTab from '@/components/HardwarePortalTab';
 import { useHacker } from '@/context/HackerContext';
 import { EVENT_LOCATION, EVENT_NAME } from '@/data/event';
-import { HT6_API_CLIENT_URL } from '@/lib/api';
 import {
   getAvailablePages,
   registerDashboardPage,
@@ -99,13 +98,15 @@ function Spinner() {
   );
 }
 
+const apiUrl = process.env.HT6_API_URL ?? 'https://v2.api.hackthe6ix.com/api';
+
 function SignedOutHome() {
   const signIn = () => {
-    const loginUrl = new URL(
-      `${HT6_API_CLIENT_URL}/auth/login`,
-      window.location.origin,
+    const loginUrl = new URL(`${apiUrl}/auth/login`);
+    loginUrl.searchParams.set(
+      'redirectUrl',
+      process.env.HOST_URL || window.location.origin,
     );
-    loginUrl.searchParams.set('redirectUrl', window.location.origin);
     window.location.href = loginUrl.toString();
   };
 
