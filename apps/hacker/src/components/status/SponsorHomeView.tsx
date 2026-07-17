@@ -9,7 +9,6 @@ import { Typography, WorkshopCard } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
 import {
-  changeHackerRsvpStatus,
   getSponsorRole,
   getUserCheckIns,
   hackathonCheckInEventId,
@@ -28,7 +27,6 @@ import discordIcon from '../../app/assets/discord_icon.png';
 import moreInfoIcon from '../../app/assets/more_info.png';
 import notionIcon from '../../app/assets/notion_icon.png';
 import paperclipIcon from '../../app/assets/paperclip.png';
-import RsvpCancelDialog from './RsvpCancelDialog';
 
 interface SponsorHomeViewProps {
   name: string;
@@ -117,12 +115,9 @@ function Disclosure({
 }
 
 const SponsorHomeView = ({ name }: SponsorHomeViewProps) => {
-  const { profile, refresh } = useHacker();
+  const { profile } = useHacker();
   const sponsorRole = profile ? getSponsorRole(profile) : null;
   const [qrLoadFailed, setQrLoadFailed] = useState(false);
-  const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
-  const [hasCancelledRsvp, setHasCancelledRsvp] = useState(false);
-  const [isCancelling, setIsCancelling] = useState(false);
   const [isCheckedInHackathon, setIsCheckedInHackathon] = useState(false);
 
   // Current Events State
@@ -231,8 +226,7 @@ const SponsorHomeView = ({ name }: SponsorHomeViewProps) => {
             Explore your dashboard below and get excited for the event on{' '}
             <span className="text-yellow-300">July 17th</span>!
           </Typography>
-          {/* TODO: representative */}
-          <div className="flex flex-row max-w-full justify-between">
+          <div className="flex flex-col md:align-middle md:flex-row max-w-full md:justify-between">
             <Typography
               as="p"
               textSize="paragraph-lg"
@@ -244,7 +238,7 @@ const SponsorHomeView = ({ name }: SponsorHomeViewProps) => {
                 {representativeName}
               </span>
             </Typography>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 text-sm items-end md:items-start md:text-base">
               {representativePhone && (
                 <a
                   href={`tel:+1${representativePhone}`}
@@ -256,44 +250,6 @@ const SponsorHomeView = ({ name }: SponsorHomeViewProps) => {
               )}
             </div>
           </div>
-        </div>
-        <div
-          className={`flex w-full items-center justify-between gap-4 rounded-full border-2 px-5 py-4 text-sm font-semibold text-white shadow-[0_8px_22px_rgba(0,0,0,0.18)] transition-colors duration-300 ${
-            hasCancelledRsvp ?
-              'border-[#ff6d73] bg-[#d54b52]'
-            : 'border-[#3fe7a4] bg-[#3e7f7a]'
-          }`}
-        >
-          <span className="flex items-center gap-3 leading-none">
-            <span
-              className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-black ${
-                hasCancelledRsvp ?
-                  'bg-white/20 text-white'
-                : 'bg-[#1ee38e] text-[#0b1f1b]'
-              }`}
-              aria-hidden="true"
-            >
-              {hasCancelledRsvp ? '!' : '✓'}
-            </span>
-            <span>
-              {hasCancelledRsvp ? 'Status: Not attending' : 'Status: Attending'}
-            </span>
-          </span>
-
-          {!isCheckedInHackathon &&
-            (hasCancelledRsvp ?
-              <span className="text-white/90">RSVP updated</span>
-            : <button
-                type="button"
-                onClick={() => setIsCancelDialogOpen(true)}
-                className="text-left font-normal text-white transition hover:text-white/85 disabled:cursor-not-allowed disabled:opacity-70"
-                disabled={isCancelling}
-              >
-                Can’t attend anymore? {'  '}
-                <span className="font-semibold text-yellow-300 underline decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200">
-                  Cancel your RSVP
-                </span>
-              </button>)}
         </div>
 
         <div className={`${glassPanelClass} flex flex-col gap-4 px-5 py-6`}>
@@ -535,32 +491,6 @@ const SponsorHomeView = ({ name }: SponsorHomeViewProps) => {
           </div>
         </a>
       </aside>
-
-      <RsvpCancelDialog
-        open={isCancelDialogOpen}
-        onClose={() => setIsCancelDialogOpen(false)}
-        onConfirm={async () => {
-          setIsCancelling(true);
-          try {
-            if (profile?.userId) {
-              await changeHackerRsvpStatus(
-                profile.userId,
-                'declined',
-                seasonCode,
-              );
-              await refresh();
-            }
-            setHasCancelledRsvp(true);
-          } catch (err) {
-            console.error('Failed to cancel RSVP', err);
-
-            alert('Failed to cancel RSVP. Please try again.');
-          } finally {
-            setIsCancelDialogOpen(false);
-            setIsCancelling(false);
-          }
-        }}
-      />
     </div>
   );
 };
