@@ -3,6 +3,7 @@ import { NextRequest } from 'next/server';
 import { fetchHt6 } from './client';
 
 export const seasonCode = process.env.NEXT_PUBLIC_SEASON_CODE || 'S26';
+export const hackathonCheckInEventId = 'ed5cad7c-e893-4973-8901-2c3a54486f52';
 const uuidPattern =
   /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
@@ -41,6 +42,13 @@ export interface HackerRole {
   state?: string | null;
   nfcId: string | null;
   teamId: string | null;
+}
+
+export interface SponsorRole {
+  type: 'sponsor';
+  seasonCode: string;
+  org: string | null;
+  representative: string | null;
 }
 
 export interface MessageResponse {
@@ -93,10 +101,43 @@ export interface ApiResponse<Data> {
   message: Data;
 }
 
+export interface FormResponseItem {
+  formResponseId: string;
+  formId: string;
+  userId: string;
+  seasonCode: string;
+  responseJson: Record<string, unknown> | null;
+  isSubmitted: boolean;
+  updatedAt: string;
+}
+
+export interface PaginatedFormResponses {
+  data: FormResponseItem[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
 export interface FormResponse {
   seasonCode: string;
   responseJson: Record<string, string> | null;
 }
+
+export interface CheckInRecord {
+  seasonCode?: string;
+  eventId: string;
+  userId: string;
+  authorId?: string | null;
+  checkInNotes?: string | null;
+  createdAt?: string;
+}
+
+export type GetUserCheckInsResponse =
+  | PaginatedResponse<CheckInRecord>
+  | CheckInRecord[];
 
 type FetchParams = Parameters<typeof fetch>;
 export function fetchWithCookies(
@@ -150,7 +191,19 @@ export async function listScheduleEvents(): Promise<SeasonEvent[]> {
 
   // Filter out the global hackathon check-in event
   return response.data.filter(
-    (event) => event.eventId !== 'ed5cad7c-e893-4973-8901-2c3a54486f52',
+    (event) => event.eventId !== hackathonCheckInEventId,
+  );
+}
+
+export async function getUserCheckIns(
+  userId: string,
+  code = seasonCode,
+): Promise<GetUserCheckInsResponse> {
+  return fetchHt6<GetUserCheckInsResponse>(
+    `/seasons/${code}/check-ins?userId=${encodeURIComponent(userId)}`,
+    {
+      method: 'GET',
+    },
   );
 }
 
@@ -162,6 +215,18 @@ export function getHackerRole(profile: UserProfile) {
         r !== null &&
         (r as HackerRole).type === 'hacker' &&
         (r as HackerRole).seasonCode === 'S26',
+    ) ?? null
+  );
+}
+
+export function getSponsorRole(profile: UserProfile) {
+  return (
+    profile.roles.find(
+      (r): r is SponsorRole =>
+        typeof r === 'object' &&
+        r !== null &&
+        (r as SponsorRole).type === 'sponsor' &&
+        (r as SponsorRole).seasonCode === 'S26',
     ) ?? null
   );
 }
@@ -222,11 +287,33 @@ export async function changeHackerRsvpStatus(
 }
 
 const rsvpFormId = 'd28f0204-e7a4-4ea3-b2a2-852b67a483ae';
+export const socialsFormId = 'bf8c3b46-3a50-4642-966f-680f4129c768';
 
-export async function upsertFormResponse(
+export interface FormResponseItem {
+  formResponseId: string;
+  formId: string;
+  userId: string;
+  seasonCode: string;
+  responseJson: Record<string, unknown> | null;
+  isSubmitted: boolean;
+  updatedAt: string;
+}
+
+export interface PaginatedFormResponses {
+  data: FormResponseItem[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+async function upsertFormResponseById(
+  formId: string,
   body: UpsertResponsePayload,
 ): Promise<ApiResponse<Record<string, never>>> {
-  const path = `/seasons/S26/forms/${rsvpFormId}/responses`;
+  const path = `/seasons/S26/forms/${formId}/responses`;
 
   return await fetchHt6<
     ApiResponse<Record<string, never>>,
@@ -235,6 +322,31 @@ export async function upsertFormResponse(
     method: 'POST',
     body,
   });
+}
+
+export async function upsertFormResponse(
+  body: UpsertResponsePayload,
+): Promise<ApiResponse<Record<string, never>>> {
+  return upsertFormResponseById(rsvpFormId, body);
+}
+
+export async function upsertSocialsFormResponse(
+  body: UpsertResponsePayload,
+): Promise<ApiResponse<Record<string, never>>> {
+  return upsertFormResponseById(socialsFormId, body);
+}
+
+export async function getSocialsFormResponse(): Promise<FormResponseItem | null> {
+  const response = await fetchHt6<PaginatedFormResponses>(
+    '/seasons/S26/responses',
+  );
+  return response.data?.find((item) => item.formId === socialsFormId) ?? null;
+}
+
+export async function getResponse(): Promise<PaginatedFormResponses> {
+  const path = '/seasons/S26/responses';
+
+  return await fetchHt6<PaginatedFormResponses>(path);
 }
 
 export async function getUserIdFromNfc(

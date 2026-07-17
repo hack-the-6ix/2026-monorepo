@@ -29,6 +29,8 @@ export interface SelectorProps extends InputGroupProps<'div'> {
     value: string;
   };
   hasOther?: boolean;
+  /** Open the dropdown menu above the input instead of below it. */
+  dropUp?: boolean;
 }
 
 const MAX_OPTIONS = 30;
@@ -38,6 +40,7 @@ export function Selector({
   input,
   controlled,
   hasOther = true,
+  dropUp = false,
   ...props
 }: SelectorProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -162,7 +165,7 @@ export function Selector({
 
       {/* dropdown menu */}
       {isOpen && !isOtherSelected && !props.disabled && (
-        <div className="dropdown_menu">
+        <div className={cn('dropdown_menu', dropUp && 'dropdown_menu--up')}>
           {slicedOptions.map((option) => (
             <div
               key={option.value}

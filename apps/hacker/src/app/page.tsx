@@ -21,6 +21,7 @@ import {
 } from '@/lib/dashboard-registry';
 import SchedulePage from './event/page';
 import RSVPForm from './rsvp-form/page';
+import SocialsForm from './socials/page';
 
 registerDashboardPage({
   id: 'hacker',
@@ -73,6 +74,13 @@ registerDashboardPage({
   roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
   statuses: ['waitlist', 'accepted', 'rsvped', 'checked-in'],
   component: SchedulePage,
+});
+registerDashboardPage({
+  id: 'event-socials',
+  title: 'Socials',
+  roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
+  statuses: ['rsvped', 'checked-in'],
+  component: SocialsForm,
 });
 
 function Spinner() {
