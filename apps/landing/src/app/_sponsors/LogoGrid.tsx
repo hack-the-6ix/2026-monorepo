@@ -172,11 +172,6 @@ const inKinds = [
     href: 'https://www.interviewcake.com/',
   },
   {
-    src: assets.sponsorUnifoldLogo,
-    alt: 'Unifold',
-    href: 'https://unifold.io/',
-  },
-  {
     src: assets.sponsorBgaLogo,
     alt: 'BGA',
     href: 'https://chainforgood.org/',
