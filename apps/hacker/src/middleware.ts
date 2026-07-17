@@ -10,7 +10,13 @@ const apiUrl =
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  if (pathname.startsWith('/share')) {
+  const isPublicRoute =
+    pathname === '/' ||
+    pathname === '/schedule' ||
+    pathname.startsWith('/nfc/') ||
+    pathname.startsWith('/share');
+
+  if (isPublicRoute) {
     return NextResponse.next();
   }
   try {

@@ -1,14 +1,20 @@
 'use client';
 
 import { Suspense, useMemo } from 'react';
+import { FiCalendar, FiLogIn } from 'react-icons/fi';
+import { Button, Typography } from '@hackthe6ix/ui';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
+import Logo from '@/app/assets/logo.svg';
 import HackerDashboard from '@/components/dashboards/HackerDashboard';
 import MentorDashboard from '@/components/dashboards/MentorDashboard';
 import OrganizerDashboard from '@/components/dashboards/OrganizerDashboard';
 import SponsorDashboard from '@/components/dashboards/SponsorDashboard';
 import VolunteerDashboard from '@/components/dashboards/VolunteerDashboard';
 import { useHacker } from '@/context/HackerContext';
+import { EVENT_LOCATION, EVENT_NAME } from '@/data/event';
+import { HT6_API_CLIENT_URL } from '@/lib/api';
 import {
   getAvailablePages,
   registerDashboardPage,
@@ -85,9 +91,79 @@ function Spinner() {
   );
 }
 
+function SignedOutHome() {
+  const signIn = () => {
+    const loginUrl = new URL(
+      `${HT6_API_CLIENT_URL}/auth/login`,
+      window.location.origin,
+    );
+    loginUrl.searchParams.set('redirectUrl', window.location.origin);
+    window.location.href = loginUrl.toString();
+  };
+
+  return (
+    <div className="min-h-screen px-6 py-8 text-white md:px-10">
+      <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-5xl flex-col justify-between gap-12">
+        <header className="flex items-center justify-between">
+          <Image src={Logo} alt="Hack the 6ix Logo" className="h-10 w-auto" />
+        </header>
+
+        <main className="flex flex-1 flex-col items-center justify-center text-center">
+          <Typography
+            as="p"
+            textSize="label"
+            textWeight="bold"
+            textColor="text-yellow-300"
+            className="uppercase tracking-[0.24em]"
+          >
+            July 17-19, 2026 | {EVENT_LOCATION}
+          </Typography>
+          <Typography
+            as="h1"
+            textSize="display"
+            textWeight="extra-bold"
+            textColor="text-white"
+            className="mt-5 max-w-3xl leading-tight"
+          >
+            {EVENT_NAME}
+          </Typography>
+          <Typography
+            as="p"
+            textSize="paragraph-lg"
+            textColor="text-white/75"
+            className="mt-5 max-w-xl"
+          >
+            Sign in to access your dashboard, or view public event information.
+          </Typography>
+
+          <div className="mt-9 flex w-full max-w-md flex-col gap-3 sm:flex-row sm:justify-center">
+            <Button
+              type="button"
+              iconLeft={<FiLogIn />}
+              onClick={signIn}
+              className="w-full sm:w-auto"
+            >
+              Sign in
+            </Button>
+            <Button
+              as="a"
+              href="/schedule"
+              kind="secondary"
+              iconLeft={<FiCalendar />}
+              className="w-full border-white/35 bg-white/[0.06] text-white hover:text-white sm:w-auto"
+            >
+              View schedule
+            </Button>
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+}
+
 function HomeContent() {
   const searchParams = useSearchParams();
-  const { loading, roleTypes, status } = useHacker();
+  const { loading, profile, roleTypes, status } = useHacker();
 
   const pages = useMemo(
     () => getAvailablePages(roleTypes, status),
@@ -96,6 +172,10 @@ function HomeContent() {
 
   if (loading) {
     return <Spinner />;
+  }
+
+  if (!profile) {
+    return <SignedOutHome />;
   }
 
   if (pages.length === 0) {
