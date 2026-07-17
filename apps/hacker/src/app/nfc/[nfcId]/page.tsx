@@ -7,5 +7,5 @@ interface PageProps {
 export default async function NFCRedirectPage({ params }: PageProps) {
   const { nfcId } = await params;
 
-  return <NfcSocialProfile nfcId={nfcId} allowAdminRedirect />;
+  return <NfcSocialProfile nfcId={nfcId} showAdminLookup />;
 }

@@ -14,7 +14,6 @@ export async function middleware(request: NextRequest) {
     pathname === '/' ||
     pathname === '/schedule' ||
     pathname.startsWith('/nfc/') ||
-    pathname.startsWith('/public/') ||
     pathname.startsWith('/share');
 
   if (isPublicRoute) {

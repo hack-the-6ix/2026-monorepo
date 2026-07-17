@@ -51,15 +51,16 @@ function SocialButton({
 
 export default function NfcSocialProfile({
   nfcId,
-  allowAdminRedirect = false,
+  showAdminLookup = false,
 }: {
   nfcId: string;
-  allowAdminRedirect?: boolean;
+  showAdminLookup?: boolean;
 }) {
-  const { profile, loading: profileLoading } = useHacker();
+  const { profile } = useHacker();
   const [socials, setSocials] = useState<Record<string, string> | null>(null);
   const [loadingSocials, setLoadingSocials] = useState(true);
-  const [redirecting, setRedirecting] = useState(false);
+  const [adminLookupLoading, setAdminLookupLoading] = useState(false);
+  const [adminLookupError, setAdminLookupError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const hasPrivilegedAccess = useMemo(
@@ -106,41 +107,34 @@ export default function NfcSocialProfile({
     };
   }, [nfcId]);
 
-  useEffect(() => {
-    if (!allowAdminRedirect || profileLoading || !hasPrivilegedAccess) return;
+  const openAdminProfile = async () => {
+    let shouldResetLoading = true;
 
-    let cancelled = false;
+    try {
+      setAdminLookupLoading(true);
+      setAdminLookupError(null);
+      const response = await getUserIdFromNfc(nfcId);
 
-    const processNfc = async () => {
-      try {
-        setRedirecting(true);
-        const response = await getUserIdFromNfc(nfcId);
-
-        if (cancelled) return;
-
-        if (response?.userId) {
-          window.location.href = `https://admin-v2.hackthe6ix.com/users/${response.userId}`;
-        } else {
-          setError('User not found for this NFC tag.');
-          setRedirecting(false);
-        }
-      } catch (err) {
-        if (!cancelled) {
-          console.error(err);
-          setError(getApiErrorMessage(err, 'Failed to process NFC data.'));
-          setRedirecting(false);
-        }
+      if (response?.userId) {
+        shouldResetLoading = false;
+        window.location.assign(
+          `https://admin-v2.hackthe6ix.com/users/${response.userId}`,
+        );
+        return;
       }
-    };
 
-    void processNfc();
+      setAdminLookupError('User not found for this NFC tag.');
+    } catch (err) {
+      console.error(err);
+      setAdminLookupError(
+        getApiErrorMessage(err, 'Failed to process NFC data.'),
+      );
+    } finally {
+      if (shouldResetLoading) setAdminLookupLoading(false);
+    }
+  };
 
-    return () => {
-      cancelled = true;
-    };
-  }, [allowAdminRedirect, hasPrivilegedAccess, nfcId, profileLoading]);
-
-  if ((loadingSocials && !socials) || redirecting) {
+  if (loadingSocials && !socials) {
     return (
       <div className="text-white w-full min-h-[60vh] flex items-center justify-center text-center">
         Loading...
@@ -243,6 +237,30 @@ export default function NfcSocialProfile({
                 HT6I: <strong>{socials.hackerType}</strong>
               </Typography>
             </Button>
+          )}
+
+          {showAdminLookup && hasPrivilegedAccess && (
+            <div className="flex w-full flex-col items-center gap-2">
+              <Button
+                type="button"
+                kind="secondary"
+                onClick={openAdminProfile}
+                disabled={adminLookupLoading}
+                className="border-white/35 bg-white/[0.06] text-white hover:text-white"
+              >
+                {adminLookupLoading ? 'Opening admin...' : 'Open in admin'}
+              </Button>
+              {adminLookupError && (
+                <Typography
+                  textSize="label"
+                  textWeight="medium"
+                  textColor="text-red-300"
+                  className="text-center"
+                >
+                  {adminLookupError}
+                </Typography>
+              )}
+            </div>
           )}
         </div>
 

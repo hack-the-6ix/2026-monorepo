@@ -98,15 +98,6 @@ function SignedOutHome() {
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-5xl flex-col justify-between gap-12">
         <header className="flex items-center justify-between">
           <Image src={Logo} alt="Hack the 6ix Logo" className="h-10 w-auto" />
-          <Button
-            type="button"
-            kind="secondary"
-            iconLeft={<FiLogIn />}
-            onClick={signIn}
-            className="border-white/35 bg-white/[0.06] text-white hover:text-white"
-          >
-            Sign in
-          </Button>
         </header>
 
         <main className="flex flex-1 flex-col items-center justify-center text-center">

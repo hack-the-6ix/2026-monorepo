@@ -12,11 +12,9 @@ const IS_UNDER_CONSTRUCTION = false;
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { profile } = useHacker();
-  const isSharePage = pathname.startsWith('/share');
   const isPublicPage =
-    isSharePage ||
+    pathname.startsWith('/share') ||
     pathname === '/schedule' ||
-    pathname.startsWith('/public/') ||
     pathname.startsWith('/nfc/') ||
     (pathname === '/' && !profile);
 
