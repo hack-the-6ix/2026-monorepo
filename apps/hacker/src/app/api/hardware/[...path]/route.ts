@@ -1,12 +1,28 @@
 import { NextRequest } from 'next/server';
 
 // Base URL of the hardware backend (deployed from the hardware portal repo).
-// The client calls /api/hardware/<path>; we forward to HARDWARE_API_URL/<path>.
-// Dash auth is the httpOnly `ht6_session` cookie — the browser sends it to this
-// same-origin proxy, and we forward it (plus Authorization / X-Access-Token
-// derived from the session) so the hardware API can verify via HT6 /users/me.
+// Browser → same-origin /api/hardware/* (sends httpOnly ht6_session) → proxy
+// → HARDWARE_API_URL. The hardware API verifies via HT6 /users/me using the
+// session cookie. Do not forward client Authorization / X-Access-Token: those
+// often come from stale localStorage tokens and make cookie auth get skipped.
 const apiUrl =
   process.env.HARDWARE_API_URL || 'https://api.hardware.hackthe6ix.com';
+
+const HOP_BY_HOP = new Set([
+  'connection',
+  'keep-alive',
+  'proxy-authenticate',
+  'proxy-authorization',
+  'te',
+  'trailers',
+  'transfer-encoding',
+  'upgrade',
+  'host',
+  'content-length',
+  // Drop client token headers so cookie auth is always used.
+  'authorization',
+  'x-access-token',
+]);
 
 async function proxyRequest(
   request: NextRequest,
@@ -16,36 +32,24 @@ async function proxyRequest(
   const url = new URL(request.url);
   const targetUrl = `${apiUrl}/${path.join('/')}${url.search}`;
 
-  const headers = new Headers(request.headers);
-  headers.delete('host');
+  const headers = new Headers();
+  request.headers.forEach((value, key) => {
+    if (!HOP_BY_HOP.has(key.toLowerCase())) {
+      headers.set(key, value);
+    }
+  });
 
-  // Explicitly forward cookies. Undici/Workers fetch can drop Cookie when
-  // copying the inbound header map across origins.
+  // Explicit Cookie set — Workers/undici may drop it if only copied from the
+  // inbound header map on cross-origin subrequests.
   const cookie = request.headers.get('cookie') ?? request.cookies.toString();
   if (cookie) {
     headers.set('Cookie', cookie);
-  }
-
-  // Hardware auth accepts Authorization, X-Access-Token, or ht6_session.
-  // Prefer forwarding the session cookie (httpOnly — JS cannot read it).
-  // Only mirror it into token headers when it looks like a JWT; opaque
-  // session IDs must stay on the Cookie path so HT6 /users/me accepts them.
-  const session = request.cookies.get('ht6_session')?.value;
-  const sessionLooksLikeJwt = !!session && session.split('.').length === 3;
-  if (session && sessionLooksLikeJwt) {
-    if (!headers.get('authorization')) {
-      headers.set('Authorization', `Bearer ${session}`);
-    }
-    if (!headers.get('x-access-token')) {
-      headers.set('X-Access-Token', session);
-    }
   }
 
   const response = await fetch(targetUrl, {
     method: request.method,
     headers,
     body: request.body,
-    credentials: 'include',
     duplex: 'half',
   } as RequestInit);
 
