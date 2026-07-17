@@ -45,12 +45,14 @@ function getUserRoleTypes(profile: UserProfile | null): RoleType[] {
         r.type === 'hacker' ||
         r.type === 'sponsor' ||
         r.type === 'mentor' ||
-        r.type === 'volunteer'
+        r.type === 'volunteer' ||
+        r.type === 'admin'
       ) {
         types.add(r.type);
       }
     }
   }
+
   return Array.from(types);
 }
 
@@ -98,11 +100,7 @@ export function HackerProvider({ children }: { children: ReactNode }) {
 
   const isWaitlistToAccepted = hackerRole?.state === 'waitlist_to_accepted';
 
-  const baseRoleTypes = getUserRoleTypes(profile);
-  const roleTypes =
-    profile?.isAdmin ?
-      [...new Set([...baseRoleTypes, 'admin' as const])]
-    : baseRoleTypes;
+  const roleTypes = getUserRoleTypes(profile);
 
   return (
     <HackerContext.Provider

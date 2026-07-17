@@ -1,10 +1,9 @@
 import preview from '#/preview';
-
 import {
   WorkshopCard,
+  type WorkshopCardProps,
   workshopCardStates,
   workshopColors,
-  type WorkshopCardProps,
 } from '.';
 
 const meta = preview

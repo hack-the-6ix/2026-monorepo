@@ -29,8 +29,15 @@ export function getAvailablePages(
   status?: HackerStatus,
 ): DashboardPage[] {
   const pages = getPagesForRoles(roleTypes);
-  if (!status || roleTypes.some((r) => r !== 'hacker')) return pages;
-  return pages.filter(
-    (page) => !page.statuses || page.statuses.includes(status),
-  );
+  return pages.filter((page) => {
+    const hasNonHackerAccess = page.roles.some(
+      (role) => role !== 'hacker' && roleTypes.includes(role),
+    );
+
+    if (hasNonHackerAccess || !page.statuses) {
+      return true;
+    }
+
+    return Boolean(status && page.statuses.includes(status));
+  });
 }

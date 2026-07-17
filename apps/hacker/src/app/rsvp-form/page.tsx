@@ -10,7 +10,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import z from 'zod';
 
-import { changeHackerRsvpStatus, upsertFormResponse } from '@/actions';
+import {
+  changeHackerRsvpStatus,
+  getResponse,
+  upsertFormResponse,
+} from '@/actions';
 import { useHacker } from '@/context/HackerContext';
 import { featureFlags } from '@/feature-flags';
 import {
@@ -47,29 +51,36 @@ const FormDataSchema = z.object({
 });
 export type FormData = z.infer<typeof FormDataSchema>;
 
+function SummaryRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-white/15 bg-white/5 px-4 py-3">
+      <Typography
+        textSize="paragraph-sm"
+        textColor="text-white"
+        textWeight="medium"
+        className="opacity-70"
+      >
+        {label}:{' '}
+      </Typography>
+      <Typography
+        textSize="paragraph-sm"
+        textColor="text-white"
+        textWeight="semi-bold"
+        className="wrap-break-word"
+      >
+        {value}
+      </Typography>
+    </div>
+  );
+}
+
 const RSVPForm = () => {
   const router = useRouter();
   const { profile, status, loading, refresh } = useHacker();
   const canRsvp = featureFlags.teamFormationOpen;
-  useEffect(() => {
-    if (loading) return;
-    if (status !== 'accepted' && status !== 'waitlist') {
-      router.push('/');
-    }
-  }, [status, loading, router]);
-
-  const handleSubmit = async () => {
-    if (!profile) return;
-    await upsertFormResponse({
-      responseJson: formData,
-      isSubmitted: true,
-    });
-    if (canRsvp) {
-      await changeHackerRsvpStatus(profile.userId, 'rsvped', 'S26');
-    }
-    refresh();
-    router.push('/');
-  };
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasLoadedResponse, setHasLoadedResponse] = useState(false);
 
   const [formData, setFormData] = useState<FormData>({
     ECI: {
@@ -92,6 +103,65 @@ const RSVPForm = () => {
       allTerms: false,
     },
   });
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadResponse = async () => {
+      try {
+        const res = await getResponse();
+        if (cancelled) return;
+
+        const currentResponse = res.data?.[0];
+        if (currentResponse?.responseJson) {
+          setFormData(currentResponse.responseJson as FormData);
+        }
+        if (currentResponse?.isSubmitted) {
+          setIsSubmitted(true);
+        }
+      } catch (err) {
+        console.error('Failed to fetch existing RSVP form response', err);
+      } finally {
+        if (!cancelled) {
+          setHasLoadedResponse(true);
+        }
+      }
+    };
+
+    void loadResponse();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (loading || !hasLoadedResponse || isSubmitted) return;
+    if (status !== 'accepted' && status !== 'waitlist') {
+      router.push('/');
+    }
+  }, [status, loading, hasLoadedResponse, isSubmitted, router]);
+
+  const handleSubmit = async () => {
+    if (!profile) return;
+    try {
+      setIsSubmitting(true);
+      await upsertFormResponse({
+        responseJson: formData,
+        isSubmitted: true,
+      });
+      if (canRsvp) {
+        await changeHackerRsvpStatus(profile.userId, 'rsvped', 'S26');
+      }
+      setIsSubmitted(true);
+      await refresh();
+    } catch (err) {
+      console.error('Failed to submit RSVP form', err);
+      alert('Failed to submit form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const updateField = <S extends keyof FormData>(
     section: S,
@@ -121,8 +191,79 @@ const RSVPForm = () => {
     Object.values(section).every(Boolean),
   );
 
-  if (loading) {
+  if (loading || !hasLoadedResponse) {
     return <div>Loading...</div>; // or your loading UI
+  }
+
+  if (isSubmitted) {
+    return (
+      <div className="flex min-h-screen flex-col items-start gap-8 p-8 md:w-[70vw] md:pt-20">
+        <div className="flex w-full flex-col gap-3 rounded-2xl border border-[#3fe7a4]/50 bg-[#3e7f7a]/40 px-5 py-5">
+          <Typography
+            textSize="subtitle-lg"
+            textColor="text-white"
+            textWeight="bold"
+          >
+            Form submitted
+          </Typography>
+          <Typography
+            textSize="paragraph-sm"
+            textColor="text-white"
+            textWeight="medium"
+          >
+            Your RSVP information has been received. Here is a read-only copy of
+            what you submitted.
+          </Typography>
+        </div>
+
+        <div className="flex w-full flex-col gap-4">
+          <Typography
+            textSize="subtitle-lg"
+            textColor="text-white"
+            textWeight="semi-bold"
+          >
+            Emergency contact information
+          </Typography>
+          <div className="grid w-full gap-4 md:w-[50vw] md:grid-cols-2">
+            <SummaryRow label="First name" value={formData.ECI.firstName} />
+            <SummaryRow label="Last name" value={formData.ECI.lastName} />
+            <SummaryRow
+              label="Relationship"
+              value={formData.ECI.relationship}
+            />
+            <SummaryRow label="Phone number" value={formData.ECI.phoneNumber} />
+          </div>
+        </div>
+
+        <div className="flex w-full flex-col gap-4">
+          <Typography
+            textSize="subtitle-lg"
+            textColor="text-white"
+            textWeight="semi-bold"
+          >
+            Your information
+          </Typography>
+          <div className="grid w-full gap-4 md:w-[50vw] md:grid-cols-2">
+            <SummaryRow
+              label="Discord username"
+              value={formData.personal.discordUsername}
+            />
+            <SummaryRow
+              label="HT6I hacker type"
+              value={formData.personal.hackerType}
+            />
+            <SummaryRow
+              label="T-shirt size"
+              value={formData.personal.shirtSize}
+            />
+            <SummaryRow
+              label="Dietary restrictions"
+              value={formData.personal.dietaryRestrictions}
+            />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -470,8 +611,12 @@ const RSVPForm = () => {
           <Button as={Link} href="/" kind="secondary">
             Back
           </Button>
-          <Button onClick={handleSubmit} kind="primary" disabled={!allFilled}>
-            Submit RVSP
+          <Button
+            onClick={handleSubmit}
+            kind="primary"
+            disabled={!allFilled || isSubmitting}
+          >
+            {isSubmitting ? 'Submitting...' : 'Submit RSVP'}
           </Button>
         </div>
       </div>

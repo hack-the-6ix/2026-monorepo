@@ -1,34 +1,48 @@
 'use client';
 
 import { Suspense, useMemo } from 'react';
+import { FiCalendar, FiLogIn } from 'react-icons/fi';
+import { Button, Typography } from '@hackthe6ix/ui';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
-import EventDashboard from '@/components/dashboards/EventDashboard';
+import Logo from '@/app/assets/logo.svg';
 import HackerDashboard from '@/components/dashboards/HackerDashboard';
 import MentorDashboard from '@/components/dashboards/MentorDashboard';
 import OrganizerDashboard from '@/components/dashboards/OrganizerDashboard';
 import SponsorDashboard from '@/components/dashboards/SponsorDashboard';
 import VolunteerDashboard from '@/components/dashboards/VolunteerDashboard';
-import RsvpedView from '@/components/status/RsvpedView';
+import HardwarePortalTab from '@/components/HardwarePortalTab';
 import { useHacker } from '@/context/HackerContext';
+import { EVENT_LOCATION, EVENT_NAME } from '@/data/event';
 import {
   getAvailablePages,
   registerDashboardPage,
 } from '@/lib/dashboard-registry';
+import SchedulePage from './event/page';
+import RSVPForm from './rsvp-form/page';
+import SocialsForm from './socials/page';
 
 registerDashboardPage({
   id: 'hacker',
   title: 'Home',
   roles: ['hacker'],
-  statuses: ['rsvped', 'checked-in'],
+  statuses: [
+    'rsvped',
+    'checked-in',
+    'accepted',
+    'waitlist',
+    'rejected',
+    'declined',
+  ],
   component: HackerDashboard,
 });
 registerDashboardPage({
-  id: 'ticket',
-  title: 'My Ticket',
+  id: 'rsvp-form',
+  title: 'RSVP Form',
   roles: ['hacker'],
-  statuses: ['rsvped', 'checked-in'],
-  component: RsvpedView,
+  statuses: ['accepted', 'waitlist'],
+  component: RSVPForm,
 });
 registerDashboardPage({
   id: 'sponsor',
@@ -56,10 +70,24 @@ registerDashboardPage({
 });
 registerDashboardPage({
   id: 'event',
-  title: 'Schedule & Materials',
+  title: 'Schedule',
+  roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
+  statuses: ['waitlist', 'accepted', 'rsvped', 'checked-in'],
+  component: SchedulePage,
+});
+registerDashboardPage({
+  id: 'event-socials',
+  title: 'Socials',
   roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
   statuses: ['rsvped', 'checked-in'],
-  component: EventDashboard,
+  component: SocialsForm,
+});
+registerDashboardPage({
+  id: 'event-hardware-portal',
+  title: 'Hardware Portal',
+  roles: ['hacker', 'sponsor', 'volunteer', 'admin'],
+  statuses: ['checked-in'],
+  component: HardwarePortalTab,
 });
 
 function Spinner() {
@@ -70,9 +98,81 @@ function Spinner() {
   );
 }
 
+const apiUrl = process.env.HT6_API_URL ?? 'https://v2.api.hackthe6ix.com/api';
+
+function SignedOutHome() {
+  const signIn = () => {
+    const loginUrl = new URL(`${apiUrl}/auth/login`);
+    loginUrl.searchParams.set(
+      'redirectUrl',
+      process.env.HOST_URL || window.location.origin,
+    );
+    window.location.href = loginUrl.toString();
+  };
+
+  return (
+    <div className="min-h-screen px-6 py-8 text-white md:px-10">
+      <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-5xl flex-col justify-between gap-12">
+        <header className="flex items-center justify-between">
+          <Image src={Logo} alt="Hack the 6ix Logo" className="h-10 w-auto" />
+        </header>
+
+        <main className="flex flex-1 flex-col items-center justify-center text-center">
+          <Typography
+            as="p"
+            textSize="label"
+            textWeight="bold"
+            textColor="text-yellow-300"
+            className="uppercase tracking-[0.24em]"
+          >
+            July 17-19, 2026 | {EVENT_LOCATION}
+          </Typography>
+          <Typography
+            as="h1"
+            textSize="display"
+            textWeight="extra-bold"
+            textColor="text-white"
+            className="mt-5 max-w-3xl leading-tight"
+          >
+            {EVENT_NAME}
+          </Typography>
+          <Typography
+            as="p"
+            textSize="paragraph-lg"
+            textColor="text-white/75"
+            className="mt-5 max-w-xl"
+          >
+            Sign in to access your dashboard, or view public event information.
+          </Typography>
+
+          <div className="mt-9 flex w-full max-w-md flex-col gap-3 sm:flex-row sm:justify-center">
+            <Button
+              type="button"
+              iconLeft={<FiLogIn />}
+              onClick={signIn}
+              className="w-full sm:w-auto"
+            >
+              Sign in
+            </Button>
+            <Button
+              as="a"
+              href="/schedule"
+              kind="secondary"
+              iconLeft={<FiCalendar />}
+              className="w-full border-white/35 bg-white/[0.06] text-white hover:text-white sm:w-auto"
+            >
+              View schedule
+            </Button>
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+}
+
 function HomeContent() {
   const searchParams = useSearchParams();
-  const { loading, roleTypes, status } = useHacker();
+  const { loading, profile, roleTypes, status } = useHacker();
 
   const pages = useMemo(
     () => getAvailablePages(roleTypes, status),
@@ -83,18 +183,8 @@ function HomeContent() {
     return <Spinner />;
   }
 
-  const isHackerNotRsvped =
-    roleTypes?.length === 1 &&
-    roleTypes[0] === 'hacker' &&
-    status &&
-    !['rsvped', 'checked-in'].includes(status);
-
-  if (isHackerNotRsvped) {
-    return (
-      <div className="relative min-h-screen">
-        <HackerDashboard />
-      </div>
-    );
+  if (!profile) {
+    return <SignedOutHome />;
   }
 
   if (pages.length === 0) {

@@ -57,6 +57,11 @@ const silverSponsors = [
     alt: 'Freesolo',
     href: 'https://freesolo.co',
   },
+  {
+    src: assets.sponsorCortexLogo,
+    alt: 'Cortex',
+    href: 'https://www.cortex.io/',
+  },
 ];
 
 const bronzeSponsors: {
@@ -165,6 +170,26 @@ const inKinds = [
     src: assets.sponsorInterviewCakeLogo,
     alt: 'Interview cake',
     href: 'https://www.interviewcake.com/',
+  },
+  {
+    src: assets.sponsorUnifoldLogo,
+    alt: 'Unifold',
+    href: 'https://unifold.io/',
+  },
+  {
+    src: assets.sponsorBgaLogo,
+    alt: 'BGA',
+    href: 'https://chainforgood.org/',
+  },
+  {
+    src: assets.sponsorDoseLogo,
+    alt: 'Dose Juice',
+    href: 'https://dosejuice.com/',
+  },
+  {
+    src: assets.sponsorSolcoaLogo,
+    alt: 'Solcoa',
+    href: 'https://solcoaindustries.com/',
   },
 ];
 

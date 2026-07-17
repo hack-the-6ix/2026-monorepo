@@ -4,11 +4,13 @@ import { useMemo } from 'react';
 import { Button, Typography } from '@hackthe6ix/ui';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import Logo from '@/app/assets/logo.svg';
+import { fetchHt6 } from '@/client';
 import DiscordNavButton from '@/components/DiscordNavButton';
 import { useHacker } from '@/context/HackerContext';
+import { featureFlags } from '@/feature-flags';
 import type { DashboardPage, RoleType } from '@/lib/dashboard-registry';
 import { getAvailablePages } from '@/lib/dashboard-registry';
 import { roleConfig } from '@/lib/roles';
@@ -22,6 +24,7 @@ const roleOrder: RoleType[] = [
 ];
 
 const Sidebar = () => {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const { status, roleTypes } = useHacker();
 
@@ -30,7 +33,10 @@ const Sidebar = () => {
     [roleTypes, status],
   );
 
-  const activeTab = searchParams.get('tab') || pages[0]?.id;
+  const activeTab =
+    pathname === '/' ? searchParams.get('tab') || pages[0]?.id : null;
+  const canAccessSchedule =
+    featureFlags.scheduleReleased || process.env.NEXT_PUBLIC_PREVIEW === '1';
 
   const eventPages = pages.filter(
     (p) => p.id === 'event' || p.id.startsWith('event-'),
@@ -51,7 +57,26 @@ const Sidebar = () => {
     {} as Record<string, DashboardPage[]>,
   );
 
-  const canAccessRsvpForm = status === 'accepted' || status === 'waitlist';
+  const hasEventNav = eventPages.length > 0 || canAccessSchedule;
+
+  const handleLogout = async () => {
+    try {
+      const { cognitoLogoutUrl } = await fetchHt6<{
+        message: string;
+        cognitoLogoutUrl: string;
+      }>(
+        `/auth/logout?redirectUrl=${encodeURIComponent(window.location.origin)}`,
+        { method: 'POST' },
+      );
+      // Top-level navigation to Cognito's /logout is required to clear the
+      // hosted-UI session cookie; otherwise the middleware's redirect to
+      // /auth/login silently re-authenticates and the user is never logged out.
+      window.location.href = cognitoLogoutUrl;
+    } catch (err) {
+      console.error('Failed to log out', err);
+      alert('Failed to log out. Please try again.');
+    }
+  };
 
   return (
     <nav className="flex flex-col h-full px-6">
@@ -106,11 +131,11 @@ const Sidebar = () => {
           );
         })}
 
-        {rolePages.length > 0 && eventPages.length > 0 && (
+        {rolePages.length > 0 && hasEventNav && (
           <div className="w-3/4 border-t border-white/10 my-3" />
         )}
 
-        {eventPages.length > 0 && (
+        {hasEventNav && (
           <div className="w-full flex flex-col items-center">
             <div className="flex items-center justify-center gap-1.5 py-1">
               <span className="inline-block size-1.5 rounded-full bg-white/40" />
@@ -145,19 +170,6 @@ const Sidebar = () => {
             })}
           </div>
         )}
-
-        {canAccessRsvpForm && (
-          <Button
-            as={Link}
-            href="/rsvp-form"
-            kind="tertiary"
-            className={`mt-2 text-primary-400 ${
-              activeTab === 'rsvp-form' ? 'underline' : ''
-            }`}
-          >
-            RSVP Form
-          </Button>
-        )}
       </div>
 
       <div className="mt-auto flex w-full flex-col items-stretch text-center pb-8">
@@ -184,14 +196,12 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="mt-6 flex w-full flex-col items-stretch gap-4">
-          {(['rsvped', 'waitlist', 'checked-in'].includes(status) ||
+          {(['rsvped', 'checked-in'].includes(status) ||
             roleTypes.some((r) => r !== 'hacker')) && <DiscordNavButton />}
           <Button
             kind="secondary"
             className="w-full px-16 rounded-full"
-            onClick={() => {
-              console.log('log out');
-            }}
+            onClick={handleLogout}
           >
             <Typography
               as="p"
