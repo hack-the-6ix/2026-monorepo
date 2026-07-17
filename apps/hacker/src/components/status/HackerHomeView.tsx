@@ -15,11 +15,9 @@ import {
   formatTime,
   type ScheduleEvent,
 } from '@/data/schedule';
-import checkedInImage from '../../app/assets/checked_in.png';
 import devpostIcon from '../../app/assets/devpost_icon.png';
 import discordIcon from '../../app/assets/discord_icon.png';
 import moreInfoIcon from '../../app/assets/more_info.png';
-import notCheckedInImage from '../../app/assets/not_checked_in.png';
 import notionIcon from '../../app/assets/notion_icon.png';
 import paperclipIcon from '../../app/assets/paperclip.png';
 import RsvpCancelDialog from './RsvpCancelDialog';
@@ -59,7 +57,7 @@ const faqItems = [
 ];
 
 const participantCodeHelpText =
-  'Show this QR code to check-in, grab food, participate in activities, etc! We recommend screenshotting this.';
+  'Show this QR code to check-in! We recommend screenshotting this.';
 
 function Disclosure({
   title,
@@ -115,7 +113,7 @@ function Disclosure({
 }
 
 const HackerHomeView = ({ name }: HackerHomeViewProps) => {
-  const { profile, hackerRole, refresh } = useHacker();
+  const { profile, hackerRole, refresh, status } = useHacker();
   const [qrLoadFailed, setQrLoadFailed] = useState(false);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
   const [hasCancelledRsvp, setHasCancelledRsvp] = useState(false);
@@ -170,8 +168,8 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
     : null;
 
   return (
-    <div className="mx-auto grid min-h-[80vh] w-full max-w-340 grid-cols-1 gap-10 md:gap-30 px-8 pb-12 pt-20 md:pt-16 md:grid-cols-[1fr_320px] lg:px-10">
-      <section className="flex flex-col gap-7 lg:pt-12">
+    <div className="mx-auto grid min-h-[80vh] max-h-screen w-full max-w-340 grid-cols-1 gap-10 md:gap-28 px-8 pb-12 pt-20 md:pt-16 md:grid-cols-[1fr_300px] lg:px-10">
+      <section className="scrollbar-none flex flex-col gap-7 overflow-y-auto [&::-webkit-scrollbar]:hidden lg:pt-12">
         <div className="space-y-3">
           <Typography
             as="h1"
@@ -195,28 +193,42 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
         </div>
         <div
           className={`flex w-full items-center justify-between gap-4 rounded-full border-2 px-5 py-4 text-sm font-semibold text-white shadow-[0_8px_22px_rgba(0,0,0,0.18)] transition-colors duration-300 ${
-            hasCancelledRsvp ?
-              'border-[#ff6d73] bg-[#d54b52]'
+            status === 'waitlist' || status === 'accepted' ?
+              'border-[#F6BD55] bg-[#B08630]'
+            : hasCancelledRsvp ? 'border-[#ff6d73] bg-[#d54b52]'
             : 'border-[#3fe7a4] bg-[#3e7f7a]'
           }`}
         >
           <span className="flex items-center gap-3 leading-none">
             <span
               className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-black ${
-                hasCancelledRsvp ?
-                  'bg-white/20 text-white'
+                status === 'waitlist' || status === 'accepted' ?
+                  'bg-[#F6BD55] text-[#332200]'
+                : hasCancelledRsvp ? 'bg-white/20 text-white'
                 : 'bg-[#1ee38e] text-[#0b1f1b]'
               }`}
               aria-hidden="true"
             >
-              {hasCancelledRsvp ? '!' : '✓'}
+              {status === 'waitlist' || status === 'accepted' ?
+                '!'
+              : hasCancelledRsvp ?
+                '!'
+              : '✓'}
             </span>
             <span>
-              {hasCancelledRsvp ? 'Status: Not attending' : 'Status: Attending'}
+              {status === 'waitlist' ?
+                'Status: Waitlisted'
+              : status === 'accepted' ?
+                "Status: Accepted but didn't RSVP"
+              : hasCancelledRsvp ?
+                'Status: Not attending'
+              : 'Status: Attending'}
             </span>
           </span>
 
-          {hackerRole?.status != 'checked-in' &&
+          {status !== 'waitlist' &&
+            status !== 'accepted' &&
+            hackerRole?.status != 'checked-in' &&
             (hasCancelledRsvp ?
               <span className="text-white/90">RSVP updated</span>
             : <button
@@ -231,6 +243,86 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
                 </span>
               </button>)}
         </div>
+        {(status === 'waitlist' || status === 'accepted') && (
+          <div className={`${glassPanelClass} flex flex-col gap-4 px-5 py-6`}>
+            <div>
+              <Typography
+                as="h2"
+                textSize="subtitle-sm"
+                textWeight="semi-bold"
+                textColor="text-white"
+                className="mb-3"
+              >
+                How walk-in works
+              </Typography>
+              <div className="space-y-3 opacity-85">
+                <Typography
+                  as="div"
+                  textSize="paragraph-sm"
+                  textWeight="regular"
+                  textColor="text-white"
+                >
+                  <ul className="list-disc space-y-2 pl-5">
+                    <li>
+                      The walk-in sign-up form opens at{' '}
+                      <strong>7:00pm on Friday, July 17th</strong>. It will stay
+                      open until all spots are filled, first-come first-served.
+                    </li>
+                    <li>
+                      Once you fill out the{' '}
+                      <a
+                        href="https://forms.gle/6staW7SNctNyFzZt8"
+                        target="_blank"
+                        className="font-semibold text-yellow-300 underline decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200"
+                      >
+                        walk-in form
+                      </a>{' '}
+                      and{' '}
+                      <a
+                        href="/?tab=rsvp-form"
+                        target="_blank"
+                        className="font-semibold text-yellow-300 underline decoration-yellow-300 decoration-2 underline-offset-4 transition hover:text-yellow-200"
+                      >
+                        RSVP form
+                      </a>
+                      , you have until <strong>7:45pm</strong> to register
+                      in-person on the first on the first floor of Bahen Centre.
+                    </li>
+                    <li>
+                      If you are running late, call our help desk at
+                      437-424-1232 to hold your spot. If we do not hear from you
+                      by 7:45pm, your spot will go to the next person in line.
+                    </li>
+                    <li>
+                      If spots are still open, we will reopen the form at 7:50pm
+                      for another round, with the same 45-minute check-in
+                      window.
+                    </li>
+                  </ul>
+                </Typography>
+                <Typography
+                  as="p"
+                  textSize="paragraph-sm"
+                  textWeight="regular"
+                  textColor="text-white"
+                >
+                  Unfortunately, we do not have an exact number of walk-in spots
+                  yet, but we are estimating around 30-50.
+                </Typography>
+                <Typography
+                  as="p"
+                  textSize="paragraph-sm"
+                  textWeight="regular"
+                  textColor="text-white"
+                >
+                  Do not forget to bring a form of ID to check in. Your
+                  dashboard (including Discord invite link) will be updated
+                  after you check in.
+                </Typography>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className={`${glassPanelClass} flex flex-col gap-4 px-5 py-6`}>
           <div className="flex items-end justify-between gap-4">
@@ -312,7 +404,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
       </section>
 
       <aside className="flex flex-col gap-4 lg:pt-6">
-        <div className={`${glassPanelClass} px-5 py-6`}>
+        <div className={`${glassPanelClass} px-8 pt-8 pb-6`}>
           <div className="mb-4 flex items-center gap-2">
             <Typography
               as="h2"
@@ -320,7 +412,9 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
               textWeight="semi-bold"
               textColor="text-white"
             >
-              Participant Code
+              {status === 'waitlist' || status === 'accepted' ?
+                'Walk-in Code'
+              : 'Participant Code'}
             </Typography>
             <div className="group relative inline-flex shrink-0 items-center justify-center">
               <button
@@ -341,84 +435,89 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
             </div>
           </div>
 
-          <div className="rounded-2xl bg-white p-4">
-            {qrCodeSrc && !qrLoadFailed ?
-              <Image
-                src={qrCodeSrc}
-                alt="Participant QR code"
-                width={256}
-                height={256}
-                unoptimized
-                className="aspect-square w-full rounded-xl border border-black/20 object-cover"
-                onError={(e) => {
-                  setQrLoadFailed(true);
-                  console.log(e);
-                }}
-              />
-            : <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-black/20 bg-[linear-gradient(0deg,rgba(0,0,0,0.09)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.09)_1px,transparent_1px)] bg-size-[16px_16px]">
-                <div className="absolute inset-0 m-auto h-12 w-12 rounded-xl bg-[#65f4d4] shadow-[0_0_20px_rgba(101,244,212,0.75)]" />
-                <div className="absolute inset-0 m-auto flex h-12 w-12 items-center justify-center text-sm font-black text-[#112031]">
-                  ht6
+          <div className="flex flex-col gap-5 pt-2">
+            <div className="rounded-2xl bg-white">
+              {qrCodeSrc && !qrLoadFailed ?
+                <Image
+                  src={qrCodeSrc}
+                  alt="Participant QR code"
+                  width={250}
+                  height={250}
+                  unoptimized
+                  className="aspect-square w-full rounded-xl border border-black/20 object-cover"
+                  onError={(e) => {
+                    setQrLoadFailed(true);
+                    console.log(e);
+                  }}
+                />
+              : <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-black/20 bg-[linear-gradient(0deg,rgba(0,0,0,0.09)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.09)_1px,transparent_1px)] bg-size-[16px_16px]">
+                  <div className="absolute inset-0 m-auto h-12 w-12 rounded-xl bg-[#65f4d4] shadow-[0_0_20px_rgba(101,244,212,0.75)]" />
+                  <div className="absolute inset-0 m-auto flex h-12 w-12 items-center justify-center text-sm font-black text-[#112031]">
+                    ht6
+                  </div>
                 </div>
-              </div>
-            }
-          </div>
-          <div className="mt-4 flex justify-center">
-            <Image
-              src={
-                hackerRole?.status === 'checked-in' ?
-                  checkedInImage
-                : notCheckedInImage
               }
-              alt={
-                hackerRole?.status === 'checked-in' ? 'Checked in'
-                : hasCancelledRsvp ?
-                  'RSVP cancelled'
-                : 'Not checked in'
+            </div>
+            <div className="flex justify-center">
+              {hackerRole?.status === 'checked-in' ?
+                <div className="inline-flex items-center gap-2.5 rounded-full border-2 border-[#3fe7a4] bg-[#3e7f7a] px-2.5 py-1.5 text-[15px] font-semibold text-white">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#1ee38e] text-[11px] font-black text-[#0b1f1b]">
+                    ✓
+                  </span>
+                  Checked in
+                </div>
+              : <div className="inline-flex items-center gap-2.5 rounded-full border-2 border-[#ff6d73] bg-[#9e3f44] px-2.5 py-1.5 text-[15px] font-semibold text-white">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#ff6d73] text-[11px] font-black text-[#5c1a1e]">
+                    !
+                  </span>
+                  Not checked in
+                </div>
               }
-              className="h-auto w-[154px]"
-            />
+            </div>
           </div>
         </div>
 
-        <a
-          href="https://discord.gg/Nj9jTRcBX"
-          target="_blank"
-          rel="noreferrer"
-          className={`${quickLinkPanelClass} block px-4 py-4 transition hover:border-teal-300/60`}
-        >
-          <div className="flex h-full flex-col gap-4">
-            <div className="flex items-center justify-between gap-3 pt-1">
-              <div className="flex items-center gap-3">
+        {status !== 'waitlist' && status !== 'accepted' && (
+          <a
+            href="https://discord.gg/Nj9jTRcBX"
+            target="_blank"
+            rel="noreferrer"
+            className={`${quickLinkPanelClass} block px-5 py-3 transition hover:border-teal-300/60`}
+          >
+            <div className="flex h-full flex-col gap-4">
+              <div className="flex items-center justify-between gap-3 pt-1">
+                <div className="flex items-center gap-3">
+                  <Image
+                    src={discordIcon}
+                    alt="Discord icon"
+                    className="h-6 w-6 shrink-0"
+                  />
+                  <Typography
+                    as="h3"
+                    textSize="paragraph-sm"
+                    textWeight="semi-bold"
+                    textColor="text-white"
+                    className="leading-tight"
+                  >
+                    Hack the 6ix Discord
+                  </Typography>
+                </div>
                 <Image
-                  src={discordIcon}
-                  alt="Discord icon"
-                  className="h-6 w-6 shrink-0"
+                  src={paperclipIcon}
+                  alt="Link icon"
+                  className="h-5 w-5 shrink-0"
                 />
-                <Typography
-                  as="h3"
-                  textSize="paragraph-lg"
-                  textWeight="semi-bold"
-                  textColor="text-white"
-                  className="leading-tight"
-                >
-                  Hack the 6ix Discord
-                </Typography>
               </div>
-              <Image
-                src={paperclipIcon}
-                alt="Link icon"
-                className="h-5 w-5 shrink-0"
-              />
             </div>
-          </div>
-        </a>
+          </a>
+        )}
 
         <a
+          target="_blank"
           href="https://hackthe6ix.notion.site/hacker-handbook"
-          className={`${quickLinkPanelClass} block px-4 py-3 transition hover:border-teal-300/60`}
+          className={`${quickLinkPanelClass} block px-5 py-3 transition hover:border-teal-300/60`}
         >
-          <div className="mb-1 flex items-center justify-between gap-3">
+          <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <Image
                 src={notionIcon}
@@ -427,7 +526,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
               />
               <Typography
                 as="h3"
-                textSize="paragraph-lg"
+                textSize="paragraph-sm"
                 textWeight="semi-bold"
                 textColor="text-white"
                 className="leading-tight"
@@ -443,36 +542,38 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
           </div>
         </a>
 
-        <a
-          href="http://hack-the-6ix-2026.devpost.com/"
-          target="_blank"
-          rel="noreferrer"
-          className={`${quickLinkPanelClass} block px-4 py-3 transition hover:border-teal-300/60`}
-        >
-          <div className="mb-1 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
+        {status !== 'waitlist' && status !== 'accepted' && (
+          <a
+            href="http://hack-the-6ix-2026.devpost.com/"
+            target="_blank"
+            rel="noreferrer"
+            className={`${quickLinkPanelClass} block px-5 py-3 transition hover:border-teal-300/60`}
+          >
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <Image
+                  src={devpostIcon}
+                  alt="Devpost icon"
+                  className="h-6 w-6 shrink-0"
+                />
+                <Typography
+                  as="h3"
+                  textSize="paragraph-sm"
+                  textWeight="semi-bold"
+                  textColor="text-white"
+                  className="leading-tight"
+                >
+                  Devpost
+                </Typography>
+              </div>
               <Image
-                src={devpostIcon}
-                alt="Devpost icon"
-                className="h-6 w-6 shrink-0"
+                src={paperclipIcon}
+                alt="Link icon"
+                className="h-5 w-5 shrink-0"
               />
-              <Typography
-                as="h3"
-                textSize="paragraph-lg"
-                textWeight="semi-bold"
-                textColor="text-white"
-                className="leading-tight"
-              >
-                Devpost
-              </Typography>
             </div>
-            <Image
-              src={paperclipIcon}
-              alt="Link icon"
-              className="h-5 w-5 shrink-0"
-            />
-          </div>
-        </a>
+          </a>
+        )}
       </aside>
 
       <RsvpCancelDialog

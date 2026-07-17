@@ -93,6 +93,26 @@ export interface ApiResponse<Data> {
   message: Data;
 }
 
+export interface FormResponseItem {
+  formResponseId: string;
+  formId: string;
+  userId: string;
+  seasonCode: string;
+  responseJson: Record<string, unknown> | null;
+  isSubmitted: boolean;
+  updatedAt: string;
+}
+
+export interface PaginatedFormResponses {
+  data: FormResponseItem[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
 export interface FormResponse {
   seasonCode: string;
   responseJson: Record<string, string> | null;
@@ -275,9 +295,13 @@ export async function getSocialsFormResponse(): Promise<FormResponseItem | null>
   const response = await fetchHt6<PaginatedFormResponses>(
     '/seasons/S26/responses',
   );
-  return (
-    response.data?.find((item) => item.formId === socialsFormId) ?? null
-  );
+  return response.data?.find((item) => item.formId === socialsFormId) ?? null;
+}
+
+export async function getResponse(): Promise<PaginatedFormResponses> {
+  const path = '/seasons/S26/responses';
+
+  return await fetchHt6<PaginatedFormResponses>(path);
 }
 
 export async function getUserIdFromNfc(
