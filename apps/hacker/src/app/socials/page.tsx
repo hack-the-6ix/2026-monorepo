@@ -4,10 +4,7 @@ import { useEffect, useState } from 'react';
 import { Button, Input, Selector, Typography } from '@hackthe6ix/ui';
 import Link from 'next/link';
 
-import {
-  getSocialsFormResponse,
-  upsertSocialsFormResponse,
-} from '@/actions';
+import { getSocialsFormResponse, upsertSocialsFormResponse } from '@/actions';
 import { getApiErrorMessage } from '@/client';
 import { useHacker } from '@/context/HackerContext';
 import { HACKER_TYPE_OPTIONS } from '../rsvp-form/enum';
@@ -148,7 +145,7 @@ const SocialsForm = () => {
   }
 
   return (
-    <div className="flex flex-col items-start min-h-screen md:w-[70vw] md:py-20 p-8 gap-8">
+    <div className="flex flex-col items-start max-h-screen md:w-[70vw] md:py-20 p-8 gap-8">
       <div className="flex flex-col gap-2">
         <Typography
           textSize="heading-sm"
