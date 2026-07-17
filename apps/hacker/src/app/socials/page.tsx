@@ -148,7 +148,7 @@ const SocialsForm = () => {
   }
 
   return (
-    <div className="flex flex-col items-start justify-center min-h-screen md:w-[70vw] md:pt-20 p-8 gap-8">
+    <div className="flex flex-col items-start min-h-screen md:w-[70vw] md:py-20 p-8 gap-8">
       <div className="flex flex-col gap-2">
         <Typography
           textSize="heading-sm"
@@ -221,8 +221,21 @@ const SocialsForm = () => {
         <Selector
           id="ht6i"
           name="ht6i"
-          label="HT6I hacker type"
+          label={
+            <>
+              HT6I hacker type{' '}
+              <a
+                className="text-primary-300 underline"
+                href="https://ht6i.hackthe6ix.com/home"
+                target="_blank"
+                rel="noreferrer"
+              >
+                (take the quiz)
+              </a>
+            </>
+          }
           hasOther={false}
+          dropUp
           options={HACKER_TYPE_OPTIONS}
           controlled={{
             value: formData.hackerType || '',
