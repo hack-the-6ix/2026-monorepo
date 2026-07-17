@@ -46,6 +46,13 @@ async function proxyRequest(
     headers.set('Cookie', cookie);
   }
 
+  // Belt-and-suspenders: also pass session via a non-forbidden header in case
+  // Cookie is stripped on the next hop. Backend reads X-Ht6-Session.
+  const session = request.cookies.get('ht6_session')?.value;
+  if (session) {
+    headers.set('X-Ht6-Session', session);
+  }
+
   const response = await fetch(targetUrl, {
     method: request.method,
     headers,
