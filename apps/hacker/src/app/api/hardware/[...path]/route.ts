@@ -4,7 +4,8 @@ import { NextRequest } from 'next/server';
 // The client calls /api/hardware/<path>; we forward to HARDWARE_API_URL/<path>,
 // preserving the incoming headers (including the HT6 token attached by
 // hardware-portal/api/client.ts) so the backend can identify the user.
-const apiUrl = process.env.HARDWARE_API_URL || 'http://localhost:3000';
+const apiUrl =
+  process.env.HARDWARE_API_URL || 'https://api.hardware.hackthe6ix.com';
 
 async function proxyRequest(
   request: NextRequest,
