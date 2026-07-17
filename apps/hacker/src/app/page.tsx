@@ -39,13 +39,6 @@ registerDashboardPage({
   component: RSVPForm,
 });
 registerDashboardPage({
-  id: 'socials',
-  title: 'Socials',
-  roles: ['hacker'],
-  statuses: ['rsvped', 'checked-in'],
-  component: SocialsForm,
-});
-registerDashboardPage({
   id: 'sponsor',
   title: 'Home',
   roles: ['sponsor'],
@@ -75,6 +68,13 @@ registerDashboardPage({
   roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
   statuses: ['waitlist', 'accepted', 'rsvped', 'checked-in'],
   component: SchedulePage,
+});
+registerDashboardPage({
+  id: 'event-socials',
+  title: 'Socials',
+  roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
+  statuses: ['rsvped', 'checked-in'],
+  component: SocialsForm,
 });
 
 function Spinner() {
