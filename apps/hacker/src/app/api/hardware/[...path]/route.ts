@@ -27,10 +27,12 @@ async function proxyRequest(
   }
 
   // Hardware auth accepts Authorization, X-Access-Token, or ht6_session.
-  // JS cannot read the httpOnly session cookie, so attach it here when the
-  // browser client did not already supply a token header.
+  // Prefer forwarding the session cookie (httpOnly — JS cannot read it).
+  // Only mirror it into token headers when it looks like a JWT; opaque
+  // session IDs must stay on the Cookie path so HT6 /users/me accepts them.
   const session = request.cookies.get('ht6_session')?.value;
-  if (session) {
+  const sessionLooksLikeJwt = !!session && session.split('.').length === 3;
+  if (session && sessionLooksLikeJwt) {
     if (!headers.get('authorization')) {
       headers.set('Authorization', `Bearer ${session}`);
     }
