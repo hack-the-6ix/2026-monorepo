@@ -43,11 +43,16 @@ async function request<T>(
   endpoint: string,
   options: RequestInit = {},
 ): Promise<T> {
-  const headers: HeadersInit = {
+  const headers = new Headers({
     'Content-Type': 'application/json',
     ...authHeaders(),
-    ...options.headers,
-  };
+  });
+  // Merge any caller-supplied headers on top of the defaults. Going through
+  // the Headers class handles every HeadersInit shape (Headers instance,
+  // [key, value][] tuples, or a plain record) — a plain spread would silently
+  // drop the first two. `.set` gives caller-wins override + case-insensitive
+  // dedup; `new Headers(undefined)` is a valid empty no-op.
+  new Headers(options.headers).forEach((value, key) => headers.set(key, value));
 
   const response = await fetch(`${API_BASE}${endpoint}`, {
     ...options,

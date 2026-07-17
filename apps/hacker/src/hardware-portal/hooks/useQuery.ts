@@ -35,6 +35,46 @@ function registerSubscriber(
   };
 }
 
+// ── Cache listener registry ──────────────────────────────────────
+// Pushes freshly fetched data to every mounted query on the same key.
+// Distinct from `subscribers`, which triggers a *refetch*: a poll tick must
+// fan its result out without making every other consumer hit the network too.
+
+type CacheListener = (entry: CacheEntry<unknown>) => void;
+
+const cacheListeners = new Map<string, Set<CacheListener>>();
+
+function registerCacheListener(
+  key: string,
+  listener: CacheListener,
+): () => void {
+  if (!cacheListeners.has(key)) cacheListeners.set(key, new Set());
+  cacheListeners.get(key)!.add(listener);
+  return () => {
+    const set = cacheListeners.get(key);
+    if (set) {
+      set.delete(listener);
+      if (set.size === 0) cacheListeners.delete(key);
+    }
+  };
+}
+
+function writeCache<T>(key: string, data: T) {
+  const entry: CacheEntry<T> = { data, timestamp: Date.now() };
+  cache.set(key, entry);
+  cacheListeners.get(key)?.forEach((listener) => listener(entry));
+}
+
+// Invalidate by expiring the entry rather than deleting it. Subscribers refetch via
+// cb(true) either way, but keeping the data lets fetchData's stale-while-revalidate
+// branch hold the UI steady instead of blanking it to `data: undefined` mid-refetch.
+// A timestamp of 0 is unconditionally older than STALE_TIME, so a key with no mounted
+// subscriber still refetches on its next mount — the only thing delete bought us.
+function markStale(key: string) {
+  const cached = cache.get(key);
+  if (cached) cache.set(key, { ...cached, timestamp: 0 });
+}
+
 // ── Types ────────────────────────────────────────────────────────
 
 interface QueryState<T> {
@@ -76,15 +116,19 @@ export function useQuery<T>(
         return;
       }
 
+      // isLoading means "nothing to show yet", not "a request is in flight" — the
+      // initial state above assumes the same (`isLoading: !cached && enabled`).
+      // Flipping it true while cached data is on screen makes every consumer's
+      // `if (isLoading) return <Spinner/>` blank the page on each revalidation.
       if (cached) {
-        setState((prev) => ({ ...prev, data: cached.data, isLoading: true }));
+        setState((prev) => ({ ...prev, data: cached.data, isLoading: false }));
       } else {
         setState({ data: undefined, isLoading: true, error: null });
       }
 
       try {
         const data = await fetcherRef.current();
-        cache.set(key, { data, timestamp: Date.now() });
+        writeCache(key, data);
         setState({ data, isLoading: false, error: null });
       } catch (err) {
         setState((prev) => ({
@@ -113,13 +157,22 @@ export function useQuery<T>(
       fetchData(forceRefresh ?? false),
     );
 
+    // Adopt data fetched by any other query on this key (e.g. a poll running in
+    // another component), so consumers of the same key can't drift apart.
+    const unlisten = registerCacheListener(key, (entry) => {
+      setState({ data: entry.data as T, isLoading: false, error: null });
+    });
+
     // Only fetch if this is a new key, not just because fetchData's identity changed
     if (hasFetchedRef.current !== key) {
       hasFetchedRef.current = key;
       fetchData();
     }
 
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+      unlisten();
+    };
   }, [key, enabled, fetchData]);
 
   // Background polling — uses forceRefresh to bypass stale-time without deleting
@@ -143,11 +196,11 @@ export function useQuery<T>(
 
 export function invalidateCache(keyOrPattern: string | RegExp) {
   if (typeof keyOrPattern === 'string') {
-    cache.delete(keyOrPattern);
+    markStale(keyOrPattern);
     subscribers.get(keyOrPattern)?.forEach((cb) => cb(true));
   } else {
-    // Collect from both cache AND subscribers — a key may have already been
-    // evicted from cache but still have a mounted query subscribed to it.
+    // Collect from both cache AND subscribers — a key may not be cached at all but
+    // still have a mounted query subscribed to it.
     const keys = new Set<string>();
     for (const k of cache.keys()) {
       if (keyOrPattern.test(k)) keys.add(k);
@@ -156,7 +209,7 @@ export function invalidateCache(keyOrPattern: string | RegExp) {
       if (keyOrPattern.test(k)) keys.add(k);
     }
     for (const k of keys) {
-      cache.delete(k);
+      markStale(k);
       subscribers.get(k)?.forEach((cb) => cb(true));
     }
   }
@@ -172,7 +225,7 @@ export async function invalidateCacheAndAwait(
   const refetches: Promise<void>[] = [];
 
   const collectAndRefetch = (key: string) => {
-    cache.delete(key);
+    markStale(key);
     subscribers.get(key)?.forEach((cb) => {
       const result = cb(true);
       if (result && typeof result === 'object' && 'then' in result) {

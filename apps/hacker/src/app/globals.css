@@ -22,37 +22,37 @@
   --color-ink-mute: #90a1b9;
 
   /* gray == neutral */
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-500: #6a7282;
-  --color-gray-600: #4a5565;
-  --color-gray-700: #364153;
-  --color-gray-800: #1e2939;
-  --color-gray-900: #101828;
+  --color-hw-gray-100: #f3f4f6;
+  --color-hw-gray-200: #e5e7eb;
+  --color-hw-gray-500: #6a7282;
+  --color-hw-gray-600: #4a5565;
+  --color-hw-gray-700: #364153;
+  --color-hw-gray-800: #1e2939;
+  --color-hw-gray-900: #101828;
 
   /* red == error */
-  --color-red-50: #fef2f2;
-  --color-red-100: #ffe2e2;
-  --color-red-200: #ffc9c9;
-  --color-red-300: #ffa2a2;
-  --color-red-500: #fb2c36;
-  --color-red-600: #e7000b;
-  --color-red-700: #c10007;
-  --color-red-800: #9f0712;
+  --color-hw-red-50: #fef2f2;
+  --color-hw-red-100: #ffe2e2;
+  --color-hw-red-200: #ffc9c9;
+  --color-hw-red-300: #ffa2a2;
+  --color-hw-red-500: #fb2c36;
+  --color-hw-red-600: #e7000b;
+  --color-hw-red-700: #c10007;
+  --color-hw-red-800: #9f0712;
 
   /* green == success */
-  --color-green-100: #dcfce7;
-  --color-green-800: #016630;
+  --color-hw-green-100: #dcfce7;
+  --color-hw-green-800: #016630;
 
   /* orange / amber == warning */
-  --color-orange-100: #fef3c6;
-  --color-orange-800: #973c00;
-  --color-amber-600: #e17100;
+  --color-hw-orange-100: #fef3c6;
+  --color-hw-orange-800: #973c00;
+  --color-hw-amber-600: #e17100;
 
   /* blue == secondary */
-  --color-blue-100: #e0e6ff;
-  --color-blue-600: #6463f1;
-  --color-blue-800: #3e33ae;
+  --color-hw-blue-100: #e0e6ff;
+  --color-hw-blue-600: #6463f1;
+  --color-hw-blue-800: #3e33ae;
 
   /* Typography scale (Tailwind v4 font-size namespace is --text-*) */
   --text-body: 1rem;
@@ -88,16 +88,16 @@
 
   /* Outline danger button (Cancel Order, Cancel Cart) */
   .btn-danger-outline {
-    @apply rounded-lg border border-red-300 px-5 py-2.5 text-sm font-semibold
-           text-red-600 transition-colors hover:bg-red-50
+    @apply rounded-lg border border-hw-red-300 px-5 py-2.5 text-sm font-semibold
+           text-hw-red-600 transition-colors hover:bg-hw-red-50
            disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   /* Red-text danger button, larger sizing for modal confirm actions
      (destructive confirm dialogs, e.g. cancel/delete order or item) */
   .btn-danger {
-    @apply rounded-lg border-2 border-red-300 bg-red-50 px-6 py-3 text-base font-semibold
-           text-red-600 transition-colors hover:bg-red-100
+    @apply rounded-lg border-2 border-hw-red-300 bg-hw-red-50 px-6 py-3 text-base font-semibold
+           text-hw-red-600 transition-colors hover:bg-hw-red-100
            disabled:cursor-not-allowed disabled:opacity-60;
   }
 

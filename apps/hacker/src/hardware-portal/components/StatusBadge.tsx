@@ -7,23 +7,23 @@ const statusConfig: Record<OrderState, { label: string; className: string }> = {
   },
   PENDING: {
     label: 'Pending',
-    className: 'bg-orange-100 text-orange-800',
+    className: 'bg-hw-orange-100 text-hw-orange-800',
   },
   READY: {
     label: 'Ready',
-    className: 'bg-blue-100 text-blue-800',
+    className: 'bg-hw-blue-100 text-hw-blue-800',
   },
   PICKED_UP: {
     label: 'Picked Up',
-    className: 'bg-green-100 text-green-800',
+    className: 'bg-hw-green-100 text-hw-green-800',
   },
   RETURNED: {
     label: 'Returned',
-    className: 'bg-gray-100 text-gray-800',
+    className: 'bg-hw-gray-100 text-hw-gray-800',
   },
   CANCELLED: {
     label: 'Cancelled',
-    className: 'bg-red-100 text-red-800',
+    className: 'bg-hw-red-100 text-hw-red-800',
   },
 };
 

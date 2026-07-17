@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { HttpError } from '../api/client';
 import { userApi } from '../api/user.api';
@@ -86,23 +86,50 @@ function ItemThumb({
 }
 
 export function CartModal() {
-  const { selected, setQuantity, remove, isOpen, close } = useCart();
+  const { isOpen, close } = useCart();
 
   const { data: items } = useQuery('user-items', userApi.getItems);
-  const { data: currentOrder, refetch: refetchCurrentOrder } = useQuery(
+  const [currentOrderPoll, setCurrentOrderPoll] = useState(0);
+  const { data: currentOrder } = useQuery(
     'user-current-order',
     userApi.getCurrentOrder,
+    { pollInterval: currentOrderPoll },
   );
 
   const cartCountdown = useCartCountdown(
     currentOrder?.state === 'RESERVED' ? currentOrder.createdAt : null,
   );
-  const hasReservedCart =
-    currentOrder?.state === 'RESERVED' && cartCountdown !== 'Expired';
+  // Existence + cancelability follow server truth; only checkout is gated on the
+  // client-side hold timer, so an expired-but-still-RESERVED cart is never stuck.
+  const isReserved = currentOrder?.state === 'RESERVED';
 
+  const itemsById = new Map<number, Item>(
+    (items ?? []).map((it) => [it.id, it]),
+  );
+
+  // The cart *is* the RESERVED order. Prefer the live catalog entry over `oi.item`,
+  // a snapshot embedded in the order payload whose availableQuantity is optional and
+  // may be absent or stale — the +/- stock caps below depend on it being current.
+  const rows =
+    isReserved && currentOrder ?
+      currentOrder.orderItems.map((oi) => ({
+        itemId: oi.itemId,
+        qty: oi.quantity,
+        item: itemsById.get(oi.itemId) ?? oi.item,
+      }))
+    : [];
+  const isEmpty = rows.length === 0;
+
+  // Emptiness gates checkout too: '-' can now take every line to zero, leaving an
+  // empty-but-still-RESERVED order that would otherwise submit nothing.
+  const canCheckout = isReserved && cartCountdown !== 'Expired' && !isEmpty;
+
+  // Poll the current order only while a reservation exists, so a still-RESERVED
+  // order that outlives the client countdown converges to server truth (and the
+  // modal recovers) instead of relying on a single one-shot refetch.
   useEffect(() => {
-    if (cartCountdown === 'Expired') refetchCurrentOrder();
-  }, [cartCountdown, refetchCurrentOrder]);
+    setCurrentOrderPoll(isReserved ? 15_000 : 0);
+  }, [isReserved]);
 
   const checkoutMutation = useMutation(() => userApi.checkoutCart(), {
     invalidateKeys: [/^user-/],
@@ -117,6 +144,18 @@ export function CartModal() {
     },
   );
 
+  const addToReservationMutation = useMutation(
+    ({ itemId, quantity }: { itemId: number; quantity: number }) =>
+      userApi.addToReservation(itemId, quantity),
+    { invalidateKeys: [/^user-/] },
+  );
+
+  const removeFromReservationMutation = useMutation(
+    ({ itemId, quantity }: { itemId: number; quantity: number }) =>
+      userApi.removeFromReservation(itemId, quantity),
+    { invalidateKeys: [/^user-/] },
+  );
+
   useEffect(() => {
     if (!isOpen) return;
     const handler = (e: KeyboardEvent) => {
@@ -128,27 +167,29 @@ export function CartModal() {
 
   if (!isOpen) return null;
 
-  const itemsById = new Map<number, Item>(
-    (items ?? []).map((it) => [it.id, it]),
-  );
+  // Quantity edits go straight to the reservation; the server owns the quantity and
+  // the refetch triggered by invalidateKeys brings the new truth back.
+  const isMutating =
+    addToReservationMutation.isLoading ||
+    removeFromReservationMutation.isLoading ||
+    checkoutMutation.isLoading ||
+    cancelMutation.isLoading;
 
-  const localRows = Array.from(selected.entries()).map(([itemId, qty]) => ({
-    itemId,
-    qty,
-    item: itemsById.get(itemId),
-  }));
+  const handleIncrement = async (itemId: number) => {
+    try {
+      await addToReservationMutation.mutate({ itemId, quantity: 1 });
+    } catch {
+      // surfaced via error state
+    }
+  };
 
-  const reservedRows =
-    hasReservedCart && currentOrder ?
-      currentOrder.orderItems.map((oi) => ({
-        itemId: oi.itemId,
-        qty: oi.quantity,
-        item: oi.item,
-      }))
-    : [];
-
-  const rows = hasReservedCart ? reservedRows : localRows;
-  const isEmpty = rows.length === 0;
+  const handleDecrement = async (itemId: number) => {
+    try {
+      await removeFromReservationMutation.mutate({ itemId, quantity: 1 });
+    } catch {
+      // surfaced via error state
+    }
+  };
 
   const handleCheckout = async () => {
     try {
@@ -167,8 +208,13 @@ export function CartModal() {
     }
   };
 
-  const checkoutError = checkoutMutation.error;
-  const cancelError = cancelMutation.error;
+  // A rejected +/- would otherwise be an invisible no-op, since the row quantity
+  // just re-renders from unchanged server state.
+  const actionError =
+    checkoutMutation.error ||
+    cancelMutation.error ||
+    addToReservationMutation.error ||
+    removeFromReservationMutation.error;
 
   return (
     <div
@@ -196,8 +242,13 @@ export function CartModal() {
             Cart
           </h2>
 
-          {hasReservedCart && cartCountdown && (
-            <p className="mt-1 text-center text-sm text-amber-600">
+          {isReserved && cartCountdown === 'Expired' && (
+            <p className="mt-1 text-center text-sm text-hw-red-700">
+              Reservation expired — cancel to release your cart.
+            </p>
+          )}
+          {isReserved && cartCountdown && cartCountdown !== 'Expired' && (
+            <p className="mt-1 text-center text-sm text-hw-amber-600">
               Reserved cart — expires in{' '}
               <span className="font-mono font-semibold">{cartCountdown}</span>
             </p>
@@ -225,8 +276,11 @@ export function CartModal() {
               </div>
             : <div className="max-h-[440px] divide-y-2 divide-slate-line overflow-y-auto">
                 {rows.map(({ itemId, qty, item }) => {
-                  const max =
-                    item?.availableQuantity ?? item?.initialQuantity ?? qty;
+                  // Remaining stock, not this row's quantity: the two are separate
+                  // axes, so '+' is capped on stock running out rather than on
+                  // qty reaching it (matches CatalogPage).
+                  const available =
+                    item.availableQuantity ?? item.initialQuantity;
                   return (
                     <div
                       key={itemId}
@@ -234,20 +288,16 @@ export function CartModal() {
                     >
                       <div className="flex min-h-row items-center justify-between gap-3 px-6 py-4">
                         <p className="hw-truncate hw-cell-text text-ink">
-                          {item?.name ?? `Item #${itemId}`}
+                          {item.name}
                         </p>
 
                         <div className="flex shrink-0 items-center gap-1.5">
                           <button
                             type="button"
-                            disabled={hasReservedCart}
-                            onClick={() =>
-                              qty <= 1 ?
-                                remove(itemId)
-                              : setQuantity(itemId, qty - 1, max)
-                            }
+                            disabled={!isReserved || qty === 0 || isMutating}
+                            onClick={() => handleDecrement(itemId)}
                             className="grid h-7 w-7 place-items-center rounded-md border border-brand text-brand hover:bg-brand/10 disabled:cursor-not-allowed disabled:opacity-40"
-                            aria-label="Decrease quantity"
+                            aria-label={`Remove one ${item.name} from cart`}
                           >
                             <MinusIcon />
                           </button>
@@ -256,10 +306,12 @@ export function CartModal() {
                           </span>
                           <button
                             type="button"
-                            disabled={hasReservedCart || qty >= max}
-                            onClick={() => setQuantity(itemId, qty + 1, max)}
+                            disabled={
+                              !isReserved || available === 0 || isMutating
+                            }
+                            onClick={() => handleIncrement(itemId)}
                             className="grid h-7 w-7 place-items-center rounded-md border border-brand text-brand hover:bg-brand/10 disabled:cursor-not-allowed disabled:opacity-40"
-                            aria-label="Increase quantity"
+                            aria-label={`Add one ${item.name} to cart`}
                           >
                             <PlusIcon />
                           </button>
@@ -275,10 +327,10 @@ export function CartModal() {
             }
           </div>
 
-          {(checkoutError || cancelError) && (
-            <div className="mt-3 rounded-md bg-red-50 p-3 text-sm text-red-700">
-              {(checkoutError || cancelError) instanceof HttpError ?
-                (checkoutError || cancelError)!.message
+          {actionError && (
+            <div className="mt-3 rounded-md bg-hw-red-50 p-3 text-sm text-hw-red-700">
+              {actionError instanceof HttpError ?
+                actionError.message
               : 'Something went wrong. Please try again.'}
             </div>
           )}
@@ -287,11 +339,7 @@ export function CartModal() {
             <button
               type="button"
               onClick={handleCancel}
-              disabled={
-                !hasReservedCart ||
-                cancelMutation.isLoading ||
-                checkoutMutation.isLoading
-              }
+              disabled={!isReserved || isMutating}
               className="btn-danger-outline"
             >
               {cancelMutation.isLoading ? 'Cancelling...' : 'Cancel Cart'}
@@ -299,11 +347,7 @@ export function CartModal() {
             <button
               type="button"
               onClick={handleCheckout}
-              disabled={
-                !hasReservedCart ||
-                checkoutMutation.isLoading ||
-                cancelMutation.isLoading
-              }
+              disabled={!canCheckout || isMutating}
               className="btn-brand"
             >
               {checkoutMutation.isLoading ? 'Submitting...' : 'Checkout'}

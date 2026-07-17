@@ -115,11 +115,11 @@ export function OrdersPage() {
 
   if (error) {
     return (
-      <div className="rounded-lg bg-red-50 p-4 text-center text-red-700">
+      <div className="rounded-lg bg-hw-red-50 p-4 text-center text-hw-red-700">
         Failed to load orders.
         <button
           onClick={refetch}
-          className="ml-2 font-medium underline hover:text-red-800"
+          className="ml-2 font-medium underline hover:text-hw-red-800"
         >
           Retry
         </button>
@@ -136,7 +136,7 @@ export function OrdersPage() {
       </div>
 
       {cancelMutation.error && (
-        <div className="border-b-2 border-slate-line bg-red-50 px-7 py-3 text-sm text-red-700">
+        <div className="border-b-2 border-slate-line bg-hw-red-50 px-7 py-3 text-sm text-hw-red-700">
           {cancelMutation.error instanceof HttpError ?
             cancelMutation.error.message
           : 'Failed to cancel order. Please try again.'}

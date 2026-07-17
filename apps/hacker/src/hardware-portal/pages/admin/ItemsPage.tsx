@@ -125,7 +125,7 @@ function ItemForm({
               htmlFor="item-name"
               className="block text-body font-medium text-ink"
             >
-              Name <span className="text-red-500">*</span>
+              Name <span className="text-hw-red-500">*</span>
             </label>
             <input
               id="item-name"
@@ -173,7 +173,7 @@ function ItemForm({
               htmlFor="item-quantity"
               className="block text-body font-medium text-ink"
             >
-              Quantity <span className="text-red-500">*</span>
+              Quantity <span className="text-hw-red-500">*</span>
             </label>
             <input
               id="item-quantity"
@@ -200,7 +200,7 @@ function ItemForm({
                 Delete Item
               </button>
               {deleteError && (
-                <div className="mt-2 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+                <div className="mt-2 rounded-lg bg-hw-red-50 p-3 text-sm text-hw-red-700">
                   {deleteError instanceof HttpError ?
                     deleteError.message
                   : 'Failed to delete item.'}
@@ -210,7 +210,7 @@ function ItemForm({
           )}
 
           {error && (
-            <div className="rounded-lg bg-red-50 p-3 text-sm text-red-700">
+            <div className="rounded-lg bg-hw-red-50 p-3 text-sm text-hw-red-700">
               {error instanceof HttpError ?
                 error.message
               : 'Something went wrong. Please try again.'}
@@ -222,7 +222,7 @@ function ItemForm({
               type="button"
               onClick={onCancel}
               disabled={isLoading}
-              className="rounded-lg border-2 border-red-200 px-5 py-2 text-body font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
+              className="rounded-lg border-2 border-hw-red-200 px-5 py-2 text-body font-medium text-hw-red-600 hover:bg-hw-red-50 disabled:opacity-50"
             >
               Cancel
             </button>
@@ -468,11 +468,11 @@ export default function ItemsPage() {
 
   if (error) {
     return (
-      <div className="rounded-lg bg-red-50 p-4 text-center text-red-700">
+      <div className="rounded-lg bg-hw-red-50 p-4 text-center text-hw-red-700">
         Failed to load items.
         <button
           onClick={() => refetch()}
-          className="ml-2 font-medium underline hover:text-red-800"
+          className="ml-2 font-medium underline hover:text-hw-red-800"
         >
           Retry
         </button>
@@ -586,7 +586,7 @@ export default function ItemsPage() {
 
                       <div className="flex h-row-item items-center gap-1.5 border-l-2 border-slate-line px-7">
                         <span
-                          className={`hw-cell-text ${isOutOfStock ? 'text-red-500' : 'text-ink'}`}
+                          className={`hw-cell-text ${isOutOfStock ? 'text-hw-red-500' : 'text-ink'}`}
                         >
                           {available}/{total}
                         </span>

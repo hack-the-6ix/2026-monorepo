@@ -11,6 +11,7 @@ import { fetchHt6 } from '@/client';
 import DiscordNavButton from '@/components/DiscordNavButton';
 import { useHacker } from '@/context/HackerContext';
 import { featureFlags } from '@/feature-flags';
+import { clearCache } from '@/hardware-portal/hooks/useQuery';
 import type { DashboardPage, RoleType } from '@/lib/dashboard-registry';
 import { getAvailablePages } from '@/lib/dashboard-registry';
 import { roleConfig } from '@/lib/roles';

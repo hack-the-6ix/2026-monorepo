@@ -1,10 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
+import { HttpError } from '../../api/client';
 import { userApi } from '../../api/user.api';
 import { Spinner } from '../../components/Spinner';
-import { useCartCountdown } from '../../hooks/useCartCountdown';
 import { useMutation } from '../../hooks/useMutation';
 import { useQuery } from '../../hooks/useQuery';
 import type { Item } from '../../types';
@@ -177,25 +177,34 @@ export function CatalogPage() {
     data: items,
     isLoading,
     error,
+    refetch,
   } = useQuery('user-items', userApi.getItems);
+  const [currentOrderPoll, setCurrentOrderPoll] = useState(0);
   const { data: currentOrder } = useQuery(
     'user-current-order',
     userApi.getCurrentOrder,
+    { pollInterval: currentOrderPoll },
   );
-  const cartCountdown = useCartCountdown(
-    currentOrder?.state === 'RESERVED' ? currentOrder.createdAt : null,
-  );
-  const hasReservedCart =
-    currentOrder?.state === 'RESERVED' && cartCountdown !== 'Expired';
+  // Keep the current order fresh while a reservation is held so this page
+  // converges to server truth (e.g. after the hold lapses server-side) instead
+  // of getting stuck routing "Add to cart" to a doomed reserve.
+  useEffect(() => {
+    setCurrentOrderPoll(currentOrder?.state === 'RESERVED' ? 15_000 : 0);
+  }, [currentOrder?.state]);
+  // Server truth only: the client-side hold timer must not gate quantity editing,
+  // or an expired-but-still-RESERVED order would empty cartQtyMap (disabling '-')
+  // and route '+' to reserveOrder, which the server rejects. The countdown gates
+  // checkout, and checkout lives in the cart modal.
+  const isReserved = currentOrder?.state === 'RESERVED';
 
   const cartQtyMap = useMemo(
     () =>
       new Map(
-        hasReservedCart ?
+        isReserved ?
           (currentOrder?.orderItems.map((oi) => [oi.itemId, oi.quantity]) ?? [])
         : [],
       ),
-    [hasReservedCart, currentOrder?.orderItems],
+    [isReserved, currentOrder?.orderItems],
   );
 
   const reserveMutation = useMutation(
@@ -218,7 +227,7 @@ export function CatalogPage() {
 
   const handleAddToCart = async (itemId: number) => {
     try {
-      if (hasReservedCart) {
+      if (isReserved) {
         await addToReservationMutation.mutate({ itemId, quantity: 1 });
       } else {
         await reserveMutation.mutate([{ itemId, quantity: 1 }]);
@@ -235,6 +244,11 @@ export function CatalogPage() {
       // errors surfaced via mutation state
     }
   };
+
+  const cartMutationError =
+    reserveMutation.error ||
+    addToReservationMutation.error ||
+    removeFromReservationMutation.error;
 
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState<SortOption>('name');
@@ -293,8 +307,14 @@ export function CatalogPage() {
 
   if (error) {
     return (
-      <div className="rounded-lg bg-red-50 p-4 text-center text-red-700">
-        Failed to load items. Please try again.
+      <div className="rounded-lg bg-hw-red-50 p-4 text-center text-hw-red-700">
+        Failed to load items.
+        <button
+          onClick={refetch}
+          className="ml-2 font-medium underline hover:text-hw-red-800"
+        >
+          Retry
+        </button>
       </div>
     );
   }
@@ -304,6 +324,13 @@ export function CatalogPage() {
       <FiltersSidebar filters={filters} onChange={setFilters} />
 
       <section className="min-w-0 flex-1 [overflow:clip] rounded-card border-2 border-slate-line bg-white">
+        {cartMutationError && (
+          <div className="border-b-2 border-slate-line bg-hw-red-50 px-5 py-3 text-sm text-hw-red-700">
+            {cartMutationError instanceof HttpError ?
+              cartMutationError.message
+            : 'Something went wrong updating your cart. Please try again.'}
+          </div>
+        )}
         <div className="sticky top-header-bar z-10">
           <div className="flex flex-col gap-3 border-b-2 border-slate-line bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative flex-1 max-w-[520px]">
@@ -336,7 +363,9 @@ export function CatalogPage() {
           <div style={{ minWidth: CATALOG_LAYOUT.minTableWidth }}>
             <div
               className="grid border-b-2 border-slate-line bg-slate-soft"
-              style={{ gridTemplateColumns: CATALOG_LAYOUT.gridTemplateColumns }}
+              style={{
+                gridTemplateColumns: CATALOG_LAYOUT.gridTemplateColumns,
+              }}
             >
               <div className="flex items-center px-7 py-col-y">
                 <p className="hw-col-header font-bold tracking-tight text-ink">

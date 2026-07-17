@@ -67,7 +67,7 @@ function statusInfo(state: OrderState): StatusInfo {
         isComplete: false,
         isTerminal: false,
         priority: 0,
-        colorClassName: 'text-orange-800',
+        colorClassName: 'text-hw-orange-800',
       };
     case 'READY':
       return {
@@ -75,7 +75,7 @@ function statusInfo(state: OrderState): StatusInfo {
         isComplete: false,
         isTerminal: false,
         priority: 1,
-        colorClassName: 'text-blue-800',
+        colorClassName: 'text-hw-blue-800',
       };
     case 'PICKED_UP':
       return {
@@ -83,7 +83,7 @@ function statusInfo(state: OrderState): StatusInfo {
         isComplete: true,
         isTerminal: false,
         priority: 2,
-        colorClassName: 'text-green-800',
+        colorClassName: 'text-hw-green-800',
       };
     case 'RESERVED':
       return {
@@ -99,7 +99,7 @@ function statusInfo(state: OrderState): StatusInfo {
         isComplete: false,
         isTerminal: true,
         priority: 4,
-        colorClassName: 'text-gray-800',
+        colorClassName: 'text-hw-gray-800',
       };
     case 'CANCELLED':
       return {
@@ -107,7 +107,7 @@ function statusInfo(state: OrderState): StatusInfo {
         isComplete: false,
         isTerminal: true,
         priority: 5,
-        colorClassName: 'text-red-800',
+        colorClassName: 'text-hw-red-800',
       };
     default:
       return {
@@ -374,11 +374,11 @@ export default function SummaryPage() {
 
   if (error) {
     return (
-      <div className="rounded-lg bg-red-50 p-4 text-center text-red-700">
+      <div className="rounded-lg bg-hw-red-50 p-4 text-center text-hw-red-700">
         Failed to load summary.
         <button
           onClick={() => refetch()}
-          className="ml-2 font-medium underline hover:text-red-800"
+          className="ml-2 font-medium underline hover:text-hw-red-800"
         >
           Retry
         </button>
@@ -402,7 +402,7 @@ export default function SummaryPage() {
 
       {/* Error banner */}
       {statusMutation.error && (
-        <div className="rounded-lg bg-red-50 p-3 text-body text-red-700">
+        <div className="rounded-lg bg-hw-red-50 p-3 text-body text-hw-red-700">
           {statusMutation.error instanceof HttpError ?
             statusMutation.error.message
           : 'Failed to update order status.'}
@@ -646,7 +646,7 @@ export default function SummaryPage() {
                               <button
                                 onClick={() => setCancelModal(order)}
                                 disabled={isMutating}
-                                className="rounded-lg border-2 border-[#ffa2a2] bg-[#fef2f2] px-3 py-3 hw-cell-text font-medium text-center break-words leading-tight text-[#e7000b] hover:bg-red-100 disabled:opacity-50"
+                                className="rounded-lg border-2 border-[#ffa2a2] bg-[#fef2f2] px-3 py-3 hw-cell-text font-medium text-center break-words leading-tight text-[#e7000b] hover:bg-hw-red-100 disabled:opacity-50"
                               >
                                 Cancel
                               </button>
@@ -702,7 +702,7 @@ export default function SummaryPage() {
             </p>
 
             {statusMutation.error && (
-              <div className="mb-4 rounded-lg bg-red-50 p-3 text-body text-red-700">
+              <div className="mb-4 rounded-lg bg-hw-red-50 p-3 text-body text-hw-red-700">
                 {statusMutation.error instanceof HttpError ?
                   statusMutation.error.message
                 : 'Failed to cancel order.'}
