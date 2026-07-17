@@ -4,6 +4,126 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/* ── Hardware portal (ported from the Vite hardware-app) ──────────────────────
+   The shared UI theme resets the default palette (`--color-*: initial`) and the
+   font-size scale (`--text-*: initial`), so the tokens the ported hardware
+   portal relies on are (re)declared here. Color values for the standard
+   families reuse the design-system hexes (gray==neutral, red==error,
+   green==success, orange/amber==warning, blue==secondary). */
+@theme {
+  /* Brand / surface / ink */
+  --color-brand: #2da990; /* == primary-500 */
+  --color-brand-fg: #f9fafb;
+  --color-slate-line: #cad5e2;
+  --color-slate-strip: #f1f5f9;
+  --color-slate-soft: #f8fafc;
+  --color-ink: #45556c;
+  --color-ink-soft: #62748e;
+  --color-ink-mute: #90a1b9;
+
+  /* gray == neutral */
+  --color-hw-gray-100: #f3f4f6;
+  --color-hw-gray-200: #e5e7eb;
+  --color-hw-gray-500: #6a7282;
+  --color-hw-gray-600: #4a5565;
+  --color-hw-gray-700: #364153;
+  --color-hw-gray-800: #1e2939;
+  --color-hw-gray-900: #101828;
+
+  /* red == error */
+  --color-hw-red-50: #fef2f2;
+  --color-hw-red-100: #ffe2e2;
+  --color-hw-red-200: #ffc9c9;
+  --color-hw-red-300: #ffa2a2;
+  --color-hw-red-500: #fb2c36;
+  --color-hw-red-600: #e7000b;
+  --color-hw-red-700: #c10007;
+  --color-hw-red-800: #9f0712;
+
+  /* green == success */
+  --color-hw-green-100: #dcfce7;
+  --color-hw-green-800: #016630;
+
+  /* orange / amber == warning */
+  --color-hw-orange-100: #fef3c6;
+  --color-hw-orange-800: #973c00;
+  --color-hw-amber-600: #e17100;
+
+  /* blue == secondary */
+  --color-hw-blue-100: #e0e6ff;
+  --color-hw-blue-600: #6463f1;
+  --color-hw-blue-800: #3e33ae;
+
+  /* Typography scale (Tailwind v4 font-size namespace is --text-*) */
+  --text-body: 1rem;
+  --text-table-header: 1.25rem;
+  --text-page-title: 1.75rem;
+
+  /* Spacing / sizing */
+  --spacing-row: 4rem;
+  --spacing-row-item: 8rem;
+  --spacing-col-y: 1rem;
+  --spacing-header-bar: 6.875rem;
+  --spacing-page-max: 90.25rem;
+  --spacing-sidebar: 15rem;
+
+  /* Radius */
+  --radius-card: 1.25rem;
+  --radius-checkbox: 0.3125rem;
+}
+
+@layer components {
+  /* Filled brand button (Cart, Reserve, Checkout) */
+  .btn-brand {
+    @apply rounded-lg border border-brand bg-brand px-6 py-3 text-base font-semibold
+           text-brand-fg transition-colors hover:brightness-95
+           disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  /* Outline brand button (My Orders / Catalog toggle, admin nav) */
+  .btn-brand-outline {
+    @apply whitespace-nowrap rounded-lg border border-brand px-6 py-3 text-base font-semibold
+           text-brand transition-colors hover:bg-brand/10;
+  }
+
+  /* Outline danger button (Cancel Order, Cancel Cart) */
+  .btn-danger-outline {
+    @apply rounded-lg border border-hw-red-300 px-5 py-2.5 text-sm font-semibold
+           text-hw-red-600 transition-colors hover:bg-hw-red-50
+           disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Red-text danger button, larger sizing for modal confirm actions
+     (destructive confirm dialogs, e.g. cancel/delete order or item) */
+  .btn-danger {
+    @apply rounded-lg border-2 border-hw-red-300 bg-hw-red-50 px-6 py-3 text-base font-semibold
+           text-hw-red-600 transition-colors hover:bg-hw-red-100
+           disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  /* White content card with brand border and rounded corners */
+  .card-panel {
+    @apply overflow-hidden rounded-card border-2 border-slate-line bg-white;
+  }
+
+  /* ── Portal table text: shrink with width, then truncate ──────────────
+     Cell text steps down (base → sm → body) as the viewport shrinks so
+     content stays within its column longer before truncating/scrolling. */
+  .hw-cell-text {
+    @apply text-xs sm:text-sm lg:text-body;
+  }
+  /* Compose with hw-cell-text on single-line cells that must ellipsis.
+     min-w-0 is what lets truncate work inside flex/grid children. */
+  .hw-truncate {
+    @apply min-w-0 truncate;
+  }
+  /* Column headers: reduced + responsive, capped at text-sm so they never
+     read as oversized at ordinary desktop widths. */
+  .hw-col-header {
+    @apply text-xs sm:text-sm;
+  }
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
