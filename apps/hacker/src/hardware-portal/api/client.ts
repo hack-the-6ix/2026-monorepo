@@ -4,7 +4,7 @@ import type { ApiError } from '../types';
 // (src/app/api/hardware/[...path]/route.ts), which forwards them to the
 // hardware backend (HARDWARE_API_URL) — avoiding CORS and letting us attach
 // the logged-in hacker's HT6 token.
-const API_BASE = process.env.API_URL || 'https://backend.ht6-2026-hardware-checkout-backend.workers.dev';
+const API_BASE = process.env.API_URL || 'https://api.hardware.hackthe6ix.com';
 
 export class HttpError extends Error {
   status: number;
