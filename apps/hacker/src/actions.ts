@@ -44,6 +44,13 @@ export interface HackerRole {
   teamId: string | null;
 }
 
+export interface SponsorRole {
+  type: 'sponsor';
+  seasonCode: string;
+  org: string | null;
+  representative: string | null;
+}
+
 export interface MessageResponse {
   message: string;
 }
@@ -208,6 +215,18 @@ export function getHackerRole(profile: UserProfile) {
         r !== null &&
         (r as HackerRole).type === 'hacker' &&
         (r as HackerRole).seasonCode === 'S26',
+    ) ?? null
+  );
+}
+
+export function getSponsorRole(profile: UserProfile) {
+  return (
+    profile.roles.find(
+      (r): r is SponsorRole =>
+        typeof r === 'object' &&
+        r !== null &&
+        (r as SponsorRole).type === 'sponsor' &&
+        (r as SponsorRole).seasonCode === 'S26',
     ) ?? null
   );
 }

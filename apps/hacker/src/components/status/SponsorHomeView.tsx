@@ -1,10 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
-import { FaArrowRightLong, FaChevronDown } from 'react-icons/fa6';
+import {
+  FaArrowRightLong,
+  FaChevronDown,
+  FaFile,
+  FaPhone,
+} from 'react-icons/fa6';
 import { Typography, WorkshopCard } from '@hackthe6ix/ui';
 import Image from 'next/image';
 
 import {
   changeHackerRsvpStatus,
+  getSponsorRole,
   getUserCheckIns,
   hackathonCheckInEventId,
   listScheduleEvents,
@@ -17,20 +23,16 @@ import {
   formatTime,
   type ScheduleEvent,
 } from '@/data/schedule';
-import devpostIcon from '../../app/assets/devpost_icon.png';
+import { glassPanelClass } from '@/lib/styles';
 import discordIcon from '../../app/assets/discord_icon.png';
 import moreInfoIcon from '../../app/assets/more_info.png';
 import notionIcon from '../../app/assets/notion_icon.png';
 import paperclipIcon from '../../app/assets/paperclip.png';
 import RsvpCancelDialog from './RsvpCancelDialog';
 
-interface HackerHomeViewProps {
+interface SponsorHomeViewProps {
   name: string;
-  onDecline?: () => void | Promise<void>;
 }
-
-const glassPanelClass =
-  'rounded-[32px] border border-white/50 bg-[linear-gradient(293deg,rgba(255,255,255,0.20)_3.25%,rgba(153,153,153,0.20)_100%)] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]';
 
 const quickLinkPanelClass =
   'rounded-[32px] border border-white/30 bg-[linear-gradient(293deg,rgba(255,255,255,0.40)_3.25%,rgba(16,219,255,0.40)_100%)]';
@@ -114,8 +116,9 @@ function Disclosure({
   );
 }
 
-const HackerHomeView = ({ name }: HackerHomeViewProps) => {
+const SponsorHomeView = ({ name }: SponsorHomeViewProps) => {
   const { profile, refresh } = useHacker();
+  const sponsorRole = profile ? getSponsorRole(profile) : null;
   const [qrLoadFailed, setQrLoadFailed] = useState(false);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
   const [hasCancelledRsvp, setHasCancelledRsvp] = useState(false);
@@ -197,6 +200,14 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
       `/api/ht6/users/${encodeURIComponent(profile.userId)}/qr`
     : null;
 
+  const representativeMatch =
+    sponsorRole?.representative ?
+      /^(.+?)\s*\(([^)]+)\)$/.exec(sponsorRole.representative)
+    : null;
+  const representativeName =
+    representativeMatch?.[1] ?? sponsorRole?.representative ?? null;
+  const representativePhone = representativeMatch?.[2] ?? null;
+
   return (
     <div className="mx-auto grid min-h-[80vh] max-h-screen w-full max-w-340 grid-cols-1 gap-10 md:gap-28 px-8 pb-12 pt-20 md:pt-16 md:grid-cols-[1fr_300px] lg:px-10">
       <section className="scrollbar-none flex flex-col gap-7 overflow-y-auto [&::-webkit-scrollbar]:hidden lg:pt-12">
@@ -221,7 +232,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
             <span className="text-yellow-300">July 17th</span>!
           </Typography>
           {/* TODO: representative */}
-          <div className="flex flex-col max-w-3xl justify-between">
+          <div className="flex flex-row max-w-full justify-between">
             <Typography
               as="p"
               textSize="paragraph-lg"
@@ -229,17 +240,20 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
               textColor="text-white"
             >
               Your Hack the 6ix representative:{' '}
-              <span className="text-yellow-300 font-medium">KELVIN</span>
+              <span className="text-yellow-300 font-bold">
+                {representativeName}
+              </span>
             </Typography>
             <div className="flex flex-col gap-2">
-              <Typography
-                as="p"
-                textSize="paragraph-lg"
-                textWeight="regular"
-                textColor="text-yellow-300"
-              >
-                Call (XXX-XXX-XXXX)
-              </Typography>
+              {representativePhone && (
+                <a
+                  href={`tel:+1${representativePhone}`}
+                  className="inline-flex items-center gap-2 text-yellow-300 text-md font-bold underline hover:text-yellow-500"
+                >
+                  <FaPhone className="h-4 w-4 shrink-0" />
+                  Call ({representativePhone})
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -467,7 +481,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
 
         <a
           target="_blank"
-          href="https://hackthe6ix.notion.site/hacker-handbook"
+          href="https://hackthe6ix.notion.site/Hack-the-6ix-2026-Sponsor-Handbook-3698a3c0bb6d8084a3ede4c2bf1feff4"
           className={`${quickLinkPanelClass} block px-5 py-3 transition hover:border-teal-300/60`}
         >
           <div className="flex items-center justify-between gap-3">
@@ -495,18 +509,14 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
           </div>
         </a>
         <a
-          href="http://hack-the-6ix-2026.devpost.com/"
+          href="/partnership-package-2026.pdf"
           target="_blank"
           rel="noreferrer"
           className={`${quickLinkPanelClass} block px-5 py-3 transition hover:border-teal-300/60`}
         >
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <Image
-                src={devpostIcon}
-                alt="Devpost icon"
-                className="h-6 w-6 shrink-0"
-              />
+              <FaFile className="text-primary-200 h-6" />
               <Typography
                 as="h3"
                 textSize="paragraph-sm"
@@ -555,4 +565,4 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
   );
 };
 
-export default HackerHomeView;
+export default SponsorHomeView;
