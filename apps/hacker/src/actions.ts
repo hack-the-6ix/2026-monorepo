@@ -222,11 +222,33 @@ export async function changeHackerRsvpStatus(
 }
 
 const rsvpFormId = 'd28f0204-e7a4-4ea3-b2a2-852b67a483ae';
+export const socialsFormId = 'bf8c3b46-3a50-4642-966f-680f4129c768';
 
-export async function upsertFormResponse(
+export interface FormResponseItem {
+  formResponseId: string;
+  formId: string;
+  userId: string;
+  seasonCode: string;
+  responseJson: Record<string, unknown> | null;
+  isSubmitted: boolean;
+  updatedAt: string;
+}
+
+export interface PaginatedFormResponses {
+  data: FormResponseItem[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+async function upsertFormResponseById(
+  formId: string,
   body: UpsertResponsePayload,
 ): Promise<ApiResponse<Record<string, never>>> {
-  const path = `/seasons/S26/forms/${rsvpFormId}/responses`;
+  const path = `/seasons/S26/forms/${formId}/responses`;
 
   return await fetchHt6<
     ApiResponse<Record<string, never>>,
@@ -235,6 +257,27 @@ export async function upsertFormResponse(
     method: 'POST',
     body,
   });
+}
+
+export async function upsertFormResponse(
+  body: UpsertResponsePayload,
+): Promise<ApiResponse<Record<string, never>>> {
+  return upsertFormResponseById(rsvpFormId, body);
+}
+
+export async function upsertSocialsFormResponse(
+  body: UpsertResponsePayload,
+): Promise<ApiResponse<Record<string, never>>> {
+  return upsertFormResponseById(socialsFormId, body);
+}
+
+export async function getSocialsFormResponse(): Promise<FormResponseItem | null> {
+  const response = await fetchHt6<PaginatedFormResponses>(
+    '/seasons/S26/responses',
+  );
+  return (
+    response.data?.find((item) => item.formId === socialsFormId) ?? null
+  );
 }
 
 export async function getUserIdFromNfc(
