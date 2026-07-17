@@ -77,6 +77,13 @@ registerDashboardPage({
   component: SchedulePage,
 });
 registerDashboardPage({
+  id: 'event-socials',
+  title: 'Socials',
+  roles: ['hacker', 'sponsor', 'volunteer', 'mentor', 'admin'],
+  statuses: ['rsvped', 'checked-in'],
+  component: SocialsForm,
+});
+registerDashboardPage({
   id: 'event-hardware-portal',
   title: 'Hardware Portal',
   roles: ['hacker', 'sponsor', 'volunteer', 'admin'],
