@@ -3,6 +3,7 @@ import { NextRequest } from 'next/server';
 import { fetchHt6 } from './client';
 
 export const seasonCode = process.env.NEXT_PUBLIC_SEASON_CODE || 'S26';
+export const hackathonCheckInEventId = 'ed5cad7c-e893-4973-8901-2c3a54486f52';
 const uuidPattern =
   /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
@@ -41,6 +42,13 @@ export interface HackerRole {
   state?: string | null;
   nfcId: string | null;
   teamId: string | null;
+}
+
+export interface SponsorRole {
+  type: 'sponsor';
+  seasonCode: string;
+  org: string | null;
+  representative: string | null;
 }
 
 export interface MessageResponse {
@@ -118,6 +126,19 @@ export interface FormResponse {
   responseJson: Record<string, string> | null;
 }
 
+export interface CheckInRecord {
+  seasonCode?: string;
+  eventId: string;
+  userId: string;
+  authorId?: string | null;
+  checkInNotes?: string | null;
+  createdAt?: string;
+}
+
+export type GetUserCheckInsResponse =
+  | PaginatedResponse<CheckInRecord>
+  | CheckInRecord[];
+
 type FetchParams = Parameters<typeof fetch>;
 export function fetchWithCookies(
   request: NextRequest,
@@ -170,7 +191,19 @@ export async function listScheduleEvents(): Promise<SeasonEvent[]> {
 
   // Filter out the global hackathon check-in event
   return response.data.filter(
-    (event) => event.eventId !== 'ed5cad7c-e893-4973-8901-2c3a54486f52',
+    (event) => event.eventId !== hackathonCheckInEventId,
+  );
+}
+
+export async function getUserCheckIns(
+  userId: string,
+  code = seasonCode,
+): Promise<GetUserCheckInsResponse> {
+  return fetchHt6<GetUserCheckInsResponse>(
+    `/seasons/${code}/check-ins?userId=${encodeURIComponent(userId)}`,
+    {
+      method: 'GET',
+    },
   );
 }
 
@@ -182,6 +215,18 @@ export function getHackerRole(profile: UserProfile) {
         r !== null &&
         (r as HackerRole).type === 'hacker' &&
         (r as HackerRole).seasonCode === 'S26',
+    ) ?? null
+  );
+}
+
+export function getSponsorRole(profile: UserProfile) {
+  return (
+    profile.roles.find(
+      (r): r is SponsorRole =>
+        typeof r === 'object' &&
+        r !== null &&
+        (r as SponsorRole).type === 'sponsor' &&
+        (r as SponsorRole).seasonCode === 'S26',
     ) ?? null
   );
 }

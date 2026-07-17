@@ -15,6 +15,7 @@ import {
   formatTime,
   type ScheduleEvent,
 } from '@/data/schedule';
+import { glassPanelClass } from '@/lib/styles';
 import devpostIcon from '../../app/assets/devpost_icon.png';
 import discordIcon from '../../app/assets/discord_icon.png';
 import moreInfoIcon from '../../app/assets/more_info.png';
@@ -26,9 +27,6 @@ interface HackerHomeViewProps {
   name: string;
   onDecline?: () => void | Promise<void>;
 }
-
-const glassPanelClass =
-  'rounded-[32px] border border-white/50 bg-[linear-gradient(293deg,rgba(255,255,255,0.20)_3.25%,rgba(153,153,153,0.20)_100%)] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]';
 
 const quickLinkPanelClass =
   'rounded-[32px] border border-white/30 bg-[linear-gradient(293deg,rgba(255,255,255,0.40)_3.25%,rgba(16,219,255,0.40)_100%)]';
@@ -544,7 +542,7 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
 
         {status !== 'waitlist' && status !== 'accepted' && (
           <a
-            href="http://hack-the-6ix-2026.devpost.com/"
+            href="https://hackthe6ix2026.devpost.com/"
             target="_blank"
             rel="noreferrer"
             className={`${quickLinkPanelClass} block px-5 py-3 transition hover:border-teal-300/60`}
