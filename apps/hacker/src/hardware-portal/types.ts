@@ -20,7 +20,7 @@ export interface Item {
   name: string;
   imageUrl: string | null;
   initialQuantity: number;
-  availableQuantity?: number;
+  currentQuantity?: number;
   createdAt?: string;
   updatedAt?: string;
 }
