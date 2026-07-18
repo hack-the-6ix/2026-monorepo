@@ -443,15 +443,15 @@ export default function ItemsPage() {
       case 'quantity-asc':
         result = [...result].sort(
           (a, b) =>
-            (a.availableQuantity ?? a.initialQuantity) -
-            (b.availableQuantity ?? b.initialQuantity),
+            (a.currentQuantity ?? a.initialQuantity) -
+            (b.currentQuantity ?? b.initialQuantity),
         );
         break;
       case 'quantity-desc':
         result = [...result].sort(
           (a, b) =>
-            (b.availableQuantity ?? b.initialQuantity) -
-            (a.availableQuantity ?? a.initialQuantity),
+            (b.currentQuantity ?? b.initialQuantity) -
+            (a.currentQuantity ?? a.initialQuantity),
         );
         break;
     }
@@ -565,7 +565,7 @@ export default function ItemsPage() {
             : <div className="divide-y-2 divide-slate-line">
                 {filteredItems.map((item) => {
                   const available =
-                    item.availableQuantity ?? item.initialQuantity;
+                    item.currentQuantity ?? item.initialQuantity;
                   const total = item.initialQuantity;
                   const isOutOfStock = available === 0;
 

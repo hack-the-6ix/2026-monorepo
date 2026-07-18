@@ -280,7 +280,7 @@ export function CartModal() {
                   // axes, so '+' is capped on stock running out rather than on
                   // qty reaching it (matches CatalogPage).
                   const available =
-                    item.availableQuantity ?? item.initialQuantity;
+                    item.currentQuantity ?? item.initialQuantity;
                   return (
                     <div
                       key={itemId}

@@ -268,7 +268,7 @@ export function CatalogPage() {
     const neither = !filters.available && !filters.notAvailable;
     if (!both && !neither) {
       result = result.filter((item) => {
-        const avail = item.availableQuantity ?? item.initialQuantity;
+        const avail = item.currentQuantity ?? item.initialQuantity;
         const isAvailable = avail > 0;
         return filters.available ? isAvailable : !isAvailable;
       });
@@ -281,15 +281,15 @@ export function CatalogPage() {
       case 'quantity-asc':
         result = [...result].sort(
           (a, b) =>
-            (a.availableQuantity ?? a.initialQuantity) -
-            (b.availableQuantity ?? b.initialQuantity),
+            (a.currentQuantity ?? a.initialQuantity) -
+            (b.currentQuantity ?? b.initialQuantity),
         );
         break;
       case 'quantity-desc':
         result = [...result].sort(
           (a, b) =>
-            (b.availableQuantity ?? b.initialQuantity) -
-            (a.availableQuantity ?? a.initialQuantity),
+            (b.currentQuantity ?? b.initialQuantity) -
+            (a.currentQuantity ?? a.initialQuantity),
         );
         break;
     }
@@ -396,7 +396,7 @@ export function CatalogPage() {
             : <div className="divide-y-2 divide-slate-line">
                 {filteredItems.map((item) => {
                   const available =
-                    item.availableQuantity ?? item.initialQuantity;
+                    item.currentQuantity ?? item.initialQuantity;
                   const total = item.initialQuantity;
                   const isLoading =
                     reserveMutation.isLoading ||
