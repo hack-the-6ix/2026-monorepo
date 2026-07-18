@@ -114,7 +114,45 @@ const RSVPForm = () => {
 
         const currentResponse = res.data?.[0];
         if (currentResponse?.responseJson) {
-          setFormData(currentResponse.responseJson as FormData);
+          const loadedData = currentResponse.responseJson as Partial<FormData>;
+          setFormData((prev) => ({
+            ECI: {
+              firstName: loadedData.ECI?.firstName ?? prev.ECI.firstName,
+              lastName: loadedData.ECI?.lastName ?? prev.ECI.lastName,
+              relationship:
+                loadedData.ECI?.relationship ?? prev.ECI.relationship,
+              phoneNumber: loadedData.ECI?.phoneNumber ?? prev.ECI.phoneNumber,
+            },
+            personal: {
+              discordUsername:
+                loadedData.personal?.discordUsername ??
+                prev.personal.discordUsername,
+              shirtSize:
+                loadedData.personal?.shirtSize ?? prev.personal.shirtSize,
+              dietaryRestrictions:
+                loadedData.personal?.dietaryRestrictions ??
+                prev.personal.dietaryRestrictions,
+              hackerType:
+                loadedData.personal?.hackerType ?? prev.personal.hackerType,
+            },
+            acknowledgements: {
+              liabilityWaiver:
+                loadedData.acknowledgements?.liabilityWaiver ??
+                prev.acknowledgements.liabilityWaiver,
+              personalProperty:
+                loadedData.acknowledgements?.personalProperty ??
+                prev.acknowledgements.personalProperty,
+              mediaRelease:
+                loadedData.acknowledgements?.mediaRelease ??
+                prev.acknowledgements.mediaRelease,
+              codeOfConduct:
+                loadedData.acknowledgements?.codeOfConduct ??
+                prev.acknowledgements.codeOfConduct,
+              allTerms:
+                loadedData.acknowledgements?.allTerms ??
+                prev.acknowledgements.allTerms,
+            },
+          }));
         }
         if (currentResponse?.isSubmitted) {
           setIsSubmitted(true);
