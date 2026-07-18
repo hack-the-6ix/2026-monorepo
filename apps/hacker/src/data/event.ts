@@ -6,3 +6,7 @@ export const EVENT_LOCATION = 'Bahen Centre';
 // "now" indicator, and gating the during-event dashboard.
 export const EVENT_START = new Date('2026-07-17T09:00:00-04:00');
 export const EVENT_END = new Date('2026-07-19T17:00:00-04:00');
+
+// Hacking ends and submissions are due Sunday at 9:30 AM. Used for the
+// sidebar submission-deadline countdown.
+export const SUBMISSION_DEADLINE = new Date('2026-07-19T09:30:00-04:00');

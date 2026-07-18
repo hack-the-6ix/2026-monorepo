@@ -9,6 +9,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import Logo from '@/app/assets/logo.svg';
 import { fetchHt6 } from '@/client';
 import DiscordNavButton from '@/components/DiscordNavButton';
+import SubmissionCountdown from '@/components/SubmissionCountdown';
 import { useHacker } from '@/context/HackerContext';
 import { featureFlags } from '@/feature-flags';
 import type { DashboardPage, RoleType } from '@/lib/dashboard-registry';
@@ -174,26 +175,7 @@ const Sidebar = () => {
 
       <div className="mt-auto flex w-full flex-col items-stretch text-center pb-8">
         <div className="flex items-center justify-center">
-          <div>
-            <Typography
-              as="p"
-              textSize="paragraph-sm"
-              textWeight="semi-bold"
-              textColor="text-white"
-            >
-              Event date:
-            </Typography>
-            <Typography
-              as="p"
-              textSize="paragraph-lg"
-              textWeight="semi-bold"
-              textColor="text-[#F6BD55]"
-              className="mt-2 text-center"
-            >
-              July 17-19, 2026 <br />
-              Bahen Centre
-            </Typography>
-          </div>
+          <SubmissionCountdown />
         </div>
         <div className="mt-6 flex w-full flex-col items-stretch gap-4">
           {(['rsvped', 'checked-in'].includes(status) ||
