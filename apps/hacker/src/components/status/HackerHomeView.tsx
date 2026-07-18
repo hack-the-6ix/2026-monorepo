@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FaArrowRightLong, FaChevronDown } from 'react-icons/fa6';
 import { Typography, WorkshopCard } from '@hackthe6ix/ui';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
 import {
   changeHackerRsvpStatus,
+  getSocialsFormResponse,
   listScheduleEvents,
   seasonCode,
 } from '@/actions';
+import { ht6iAssets } from '@/app/nfc/[nfcId]/assets';
 import { useHacker } from '@/context/HackerContext';
 import {
   apiEventsToScheduleEvents,
@@ -117,6 +119,38 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
   const [hasCancelledRsvp, setHasCancelledRsvp] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
 
+  const [selectedHt6iImage, setSelectedHt6iImage] =
+    useState<StaticImageData | null>(null);
+
+  useEffect(() => {
+    const loadSocials = async () => {
+      try {
+        const existing = await getSocialsFormResponse();
+        const json = existing?.responseJson ?? {};
+        const hackerType = json.hackerType as string;
+        if (hackerType) {
+          const hackerTypeMap: Record<string, string> = {
+            VIBE: 'vibecoder',
+            TINK: 'tinkerer',
+            HOME: 'workfromhome',
+            LEBR0N: 'lebron',
+            'WING-S': 'redbull',
+            '0PEN2W0RK': 'linkedin',
+          };
+          const assetKey = hackerTypeMap[hackerType];
+          if (assetKey) {
+            const selectedImage =
+              ht6iAssets[assetKey as keyof typeof ht6iAssets];
+            setSelectedHt6iImage(selectedImage);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load socials for character icon', err);
+      }
+    };
+    void loadSocials();
+  }, []);
+
   // Current Events State
   const [events, setEvents] = useState<ScheduleEvent[]>([]);
   const [loadingEvents, setLoadingEvents] = useState(true);
@@ -174,9 +208,17 @@ const HackerHomeView = ({ name }: HackerHomeViewProps) => {
             textSize="heading-lg"
             textWeight="bold"
             textColor="text-white"
-            className="leading-tight"
+            className="leading-tight align-middle"
           >
-            Welcome back, {name}!
+            Welcome back, {name}!{' '}
+            {selectedHt6iImage && (
+              <Image
+                src={selectedHt6iImage}
+                height={48}
+                alt="character"
+                className="inline-block align-middle h-12 w-auto ml-3"
+              />
+            )}
           </Typography>
           <Typography
             as="p"
