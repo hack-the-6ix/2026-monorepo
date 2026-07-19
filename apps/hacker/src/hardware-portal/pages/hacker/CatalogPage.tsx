@@ -413,7 +413,7 @@ export function CatalogPage() {
                       }}
                     >
                       <div className="flex h-row-item items-center px-7">
-                        <p className="hw-truncate hw-cell-text text-ink">
+                        <p className="hw-wrap hw-cell-text text-ink">
                           {item.name}
                         </p>
                       </div>
