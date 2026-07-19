@@ -280,14 +280,14 @@ export function CartModal() {
                   // axes, so '+' is capped on stock running out rather than on
                   // qty reaching it (matches CatalogPage).
                   const available =
-                    item.availableQuantity ?? item.initialQuantity;
+                    item.currentQuantity ?? item.initialQuantity;
                   return (
                     <div
                       key={itemId}
                       className="grid grid-cols-[minmax(0,1fr)_118px] items-center"
                     >
                       <div className="flex min-h-row items-center justify-between gap-3 px-6 py-4">
-                        <p className="hw-truncate hw-cell-text text-ink">
+                        <p className="hw-wrap hw-cell-text text-ink">
                           {item.name}
                         </p>
 

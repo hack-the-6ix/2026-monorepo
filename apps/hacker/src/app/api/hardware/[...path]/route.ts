@@ -1,11 +1,28 @@
 import { NextRequest } from 'next/server';
 
 // Base URL of the hardware backend (deployed from the hardware portal repo).
-// The client calls /api/hardware/<path>; we forward to HARDWARE_API_URL/<path>,
-// preserving the incoming headers (including the HT6 token attached by
-// hardware-portal/api/client.ts) so the backend can identify the user.
+// Browser → same-origin /api/hardware/* (sends httpOnly ht6_session) → proxy
+// → HARDWARE_API_URL. The hardware API verifies via HT6 /users/me using the
+// session cookie. Do not forward client Authorization / X-Access-Token: those
+// often come from stale localStorage tokens and make cookie auth get skipped.
 const apiUrl =
   process.env.HARDWARE_API_URL || 'https://api.hardware.hackthe6ix.com';
+
+const HOP_BY_HOP = new Set([
+  'connection',
+  'keep-alive',
+  'proxy-authenticate',
+  'proxy-authorization',
+  'te',
+  'trailers',
+  'transfer-encoding',
+  'upgrade',
+  'host',
+  'content-length',
+  // Drop client token headers so cookie auth is always used.
+  'authorization',
+  'x-access-token',
+]);
 
 async function proxyRequest(
   request: NextRequest,
@@ -14,15 +31,32 @@ async function proxyRequest(
   const { path } = await params;
   const url = new URL(request.url);
   const targetUrl = `${apiUrl}/${path.join('/')}${url.search}`;
-  const headers = new Headers(request.headers);
 
-  headers.delete('host');
+  const headers = new Headers();
+  request.headers.forEach((value, key) => {
+    if (!HOP_BY_HOP.has(key.toLowerCase())) {
+      headers.set(key, value);
+    }
+  });
+
+  // Explicit Cookie set — Workers/undici may drop it if only copied from the
+  // inbound header map on cross-origin subrequests.
+  const cookie = request.headers.get('cookie') ?? request.cookies.toString();
+  if (cookie) {
+    headers.set('Cookie', cookie);
+  }
+
+  // Belt-and-suspenders: also pass session via a non-forbidden header in case
+  // Cookie is stripped on the next hop. Backend reads X-Ht6-Session.
+  const session = request.cookies.get('ht6_session')?.value;
+  if (session) {
+    headers.set('X-Ht6-Session', session);
+  }
 
   const response = await fetch(targetUrl, {
     method: request.method,
     headers,
     body: request.body,
-    credentials: 'include',
     duplex: 'half',
   } as RequestInit);
 

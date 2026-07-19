@@ -578,7 +578,7 @@ export default function SummaryPage() {
                                 />
                               : <div className="h-9 w-9 flex-shrink-0 rounded-md bg-slate-line" />
                               }
-                              <span className="hw-truncate hw-cell-text font-medium text-ink">
+                              <span className="hw-wrap hw-cell-text font-medium text-ink">
                                 {oi.item.name}
                               </span>
                             </div>
