@@ -138,7 +138,7 @@ function FilterCheckbox({ checked, label, onToggle }: FilterCheckboxProps) {
 
 function FiltersSidebar({ filters, onChange }: FiltersSidebarProps) {
   return (
-    <aside className="card-panel w-full sm:sticky sm:top-header-bar sm:w-[11.5rem] sm:shrink-0 sm:self-start">
+    <aside className="card-panel w-full lg:sticky lg:top-header-bar lg:w-[11.5rem] lg:shrink-0 lg:self-start">
       <div className="border-b-2 border-slate-line bg-slate-soft px-7 py-6">
         <h2 className="hw-col-header font-bold tracking-tight text-ink">
           FILTERS
@@ -147,7 +147,7 @@ function FiltersSidebar({ filters, onChange }: FiltersSidebarProps) {
 
       <div className="px-7 py-6">
         <p className="mb-3 text-body font-bold text-ink">AVAILABLE</p>
-        <div className="flex flex-row flex-wrap gap-x-6 gap-y-2 sm:flex-col sm:gap-2">
+        <div className="flex flex-row flex-wrap gap-x-6 gap-y-2 lg:flex-col lg:gap-2">
           <FilterCheckbox
             checked={filters.available}
             label="Available"
@@ -316,7 +316,7 @@ export function CatalogPage() {
   }
 
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
+    <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-6">
       <FiltersSidebar filters={filters} onChange={setFilters} />
 
       <section className="min-w-0 flex-1 [overflow:clip] rounded-card border-2 border-slate-line bg-white">
