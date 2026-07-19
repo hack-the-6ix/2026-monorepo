@@ -87,12 +87,12 @@ function PortalTabNav({
     active ? 'btn-brand' : 'btn-brand-outline';
 
   return (
-    <div className="mb-8 flex items-center justify-between gap-4">
+    <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <h2 className="text-[1.25rem] font-semibold tracking-tight text-brand">
         HACK THE 6IX HARDWARE
       </h2>
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
         <nav className="flex items-center gap-3">
           {portalViewsForRole(role).map((view) => (
             <Link
