@@ -117,6 +117,12 @@
   .hw-truncate {
     @apply min-w-0 truncate;
   }
+  /* Compose with hw-cell-text on cells whose text should wrap instead of
+     truncating. min-w-0 keeps the flex/grid child shrinkable; break-words
+     wraps normally at spaces and breaks over-long unbroken tokens. */
+  .hw-wrap {
+    @apply min-w-0 break-words;
+  }
   /* Column headers: reduced + responsive, capped at text-sm so they never
      read as oversized at ordinary desktop widths. */
   .hw-col-header {

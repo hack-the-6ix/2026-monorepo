@@ -287,7 +287,7 @@ export function CartModal() {
                       className="grid grid-cols-[minmax(0,1fr)_118px] items-center"
                     >
                       <div className="flex min-h-row items-center justify-between gap-3 px-6 py-4">
-                        <p className="hw-truncate hw-cell-text text-ink">
+                        <p className="hw-wrap hw-cell-text text-ink">
                           {item.name}
                         </p>
 

@@ -17,7 +17,6 @@ interface AvailabilityFilters {
 }
 
 const CATALOG_LAYOUT = {
-  sidebarWidth: '11.5rem',
   minTableWidth: '620px',
   gridTemplateColumns: 'minmax(0, 1fr) 132px 130px 165px',
 } as const;
@@ -139,10 +138,7 @@ function FilterCheckbox({ checked, label, onToggle }: FilterCheckboxProps) {
 
 function FiltersSidebar({ filters, onChange }: FiltersSidebarProps) {
   return (
-    <aside
-      className="sticky top-header-bar shrink-0 self-start card-panel"
-      style={{ width: CATALOG_LAYOUT.sidebarWidth }}
-    >
+    <aside className="card-panel w-full lg:sticky lg:top-header-bar lg:w-[11.5rem] lg:shrink-0 lg:self-start">
       <div className="border-b-2 border-slate-line bg-slate-soft px-7 py-6">
         <h2 className="hw-col-header font-bold tracking-tight text-ink">
           FILTERS
@@ -151,7 +147,7 @@ function FiltersSidebar({ filters, onChange }: FiltersSidebarProps) {
 
       <div className="px-7 py-6">
         <p className="mb-3 text-body font-bold text-ink">AVAILABLE</p>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-row flex-wrap gap-x-6 gap-y-2 lg:flex-col lg:gap-2">
           <FilterCheckbox
             checked={filters.available}
             label="Available"
@@ -320,7 +316,7 @@ export function CatalogPage() {
   }
 
   return (
-    <div className="flex items-start gap-6">
+    <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-6">
       <FiltersSidebar filters={filters} onChange={setFilters} />
 
       <section className="min-w-0 flex-1 [overflow:clip] rounded-card border-2 border-slate-line bg-white">
@@ -413,7 +409,7 @@ export function CatalogPage() {
                       }}
                     >
                       <div className="flex h-row-item items-center px-7">
-                        <p className="hw-truncate hw-cell-text text-ink">
+                        <p className="hw-wrap hw-cell-text text-ink">
                           {item.name}
                         </p>
                       </div>
