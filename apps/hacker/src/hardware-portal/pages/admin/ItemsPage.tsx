@@ -575,7 +575,7 @@ export default function ItemsPage() {
                       className="grid grid-cols-[minmax(0,1fr)_150px_150px_180px]"
                     >
                       <div className="flex h-row-item items-center px-7">
-                        <p className="hw-truncate hw-cell-text text-ink">
+                        <p className="hw-wrap hw-cell-text text-ink">
                           {item.name}
                         </p>
                       </div>

@@ -20,32 +20,15 @@ export class HttpError extends Error {
   }
 }
 
-// Mirrors apps/hacker/src/client.ts (fetchHt6): read the HT6 token from
-// localStorage (falling back to the `token` cookie) and forward it so the
-// hardware backend can identify the user.
-function getAccessToken(): string {
-  if (typeof window === 'undefined') return '';
-  const fromStorage = localStorage.getItem('token') ?? '';
-  const fromCookie = document.cookie.match(/(?:^|; )token=([^;]+)/)?.[1] ?? '';
-  return fromStorage || decodeURIComponent(fromCookie);
-}
-
-function authHeaders(): Record<string, string> {
-  const token = getAccessToken();
-  if (!token) return {};
-  return {
-    'X-Access-Token': token,
-    Authorization: `Bearer ${token}`,
-  };
-}
-
+// Auth is the httpOnly `ht6_session` cookie (same as fetchHt6). Send
+// credentials only — do not attach Authorization from localStorage.token;
+// stale tokens make the hardware API skip cookie verification and 401.
 async function request<T>(
   endpoint: string,
   options: RequestInit = {},
 ): Promise<T> {
   const headers = new Headers({
     'Content-Type': 'application/json',
-    ...authHeaders(),
   });
   // Merge any caller-supplied headers on top of the defaults. Going through
   // the Headers class handles every HeadersInit shape (Headers instance,
@@ -96,7 +79,6 @@ export async function postForm<T>(
   // No Content-Type header — the browser sets it with the multipart boundary.
   const response = await fetch(`${API_BASE}${endpoint}`, {
     method: 'POST',
-    headers: authHeaders(),
     body,
     credentials: 'include',
     cache: 'no-store',
