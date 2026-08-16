@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
     );
     if (!res.ok) throw new Error('Failed auth check. Triggering login');
   } catch (err) {
-    console.error(err, request.cookies);
+    console.error(err);
     const loginUrl = new URL(`${process.env.HT6_API_URL}/auth/login`);
     loginUrl.searchParams.set('redirectUrl', process.env.HOST_URL!);
     return NextResponse.redirect(loginUrl);
